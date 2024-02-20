@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/components/utils/utils.dart';
 
 import 'colors.dart';
 
@@ -8,82 +9,82 @@ import 'colors.dart';
 
   // --- L O G O ---
 
-  TextStyle kSerzif = GoogleFonts.dmSerifText(
+  TextStyle kSerzif(BuildContext context) => GoogleFonts.dmSerifText(
     fontWeight: FontWeight.normal,
     fontSize: 28,
-    color: kNeutral900
+    color: context.isDarkMode ? Colors.white: kNeutral900
   );
 
 
   // --- H E A D I N G ---
 
-  TextStyle kHeadingH1 = GoogleFonts.inter(
+  TextStyle kHeadingH1(BuildContext context) => GoogleFonts.inter(
     fontSize: 32,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kHeadingH2 = GoogleFonts.inter(
+  TextStyle kHeadingH2(BuildContext context) => GoogleFonts.inter(
     fontSize: 28,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kHeadingH3 = GoogleFonts.inter(
+  TextStyle kHeadingH3(BuildContext context) => GoogleFonts.inter(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kHeadingH4 = GoogleFonts.inter(
+  TextStyle kHeadingH4(BuildContext context) => GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kHeadingH5 = GoogleFonts.inter(
+  TextStyle kHeadingH5(BuildContext context) => GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kHeadingH6 = GoogleFonts.inter(
+  TextStyle kHeadingH6(BuildContext context) => GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w600,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
 
 
   // --- S U B T I T L E ---
 
-  TextStyle kSubtitle1 = GoogleFonts.inter(
+  TextStyle kSubtitle1(BuildContext context) => GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.w500,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kSubtitle2 = GoogleFonts.inter(
+  TextStyle kSubtitle2(BuildContext context) => GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kSubtitle3 = GoogleFonts.inter(
+  TextStyle kSubtitle3(BuildContext context) => GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w500,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
 
 
   // --- B O D Y ---
 
-  TextStyle kBody1 = GoogleFonts.inter(
+  TextStyle kBody1(BuildContext context) => GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kBody2 = GoogleFonts.inter(
+  TextStyle kBody2(BuildContext context) => GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
-  TextStyle kBody3 = GoogleFonts.inter(
+  TextStyle kBody3(BuildContext context) => GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w400,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );
 
 
@@ -97,8 +98,8 @@ import 'colors.dart';
 
 
   // --- C A P T I O N ---
-  TextStyle kTextCaption = GoogleFonts.inter(
+  TextStyle kTextCaption(BuildContext context) =>  GoogleFonts.inter(
     fontSize: 10,
     fontWeight: FontWeight.w400,
-    color: kNeutral900,
+    color: context.isDarkMode ? Colors.white: kNeutral900,
   );

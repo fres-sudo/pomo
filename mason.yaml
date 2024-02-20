@@ -1,0 +1,11 @@
+bricks:
+  pine: ^0.1.0+2
+  pine_network_request: ^0.1.0+2
+  pine_network_jto: ^0.1.0+2
+  pine_retrofit: ^0.1.0+2
+  pine_repository: ^0.1.0+2
+  pine_model: ^0.1.0+2
+  pine_dto_mapper: ^0.2.0+1
+  pine_network_response: ^0.1.0+2
+  pine_bloc: ^0.2.0
+  pine_cubit: ^0.2.0
