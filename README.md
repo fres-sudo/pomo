@@ -103,36 +103,37 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Follow these steps to setup the project locally on your machine. Please notice that these steps are for macOS system only, for Linux and Windows machines please take a look at the [official documentation](https://docs.flutter.dev/get-started/install) of Flutter.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+For a correct installation of the project you need to install first Flutter, [here](https://docs.flutter.dev/get-started/install/macos/desktop?tab=download) you can find all the resources for that. Once you install flutter on your macOS system run these command to see if everything is working correcly.
+
+```sh
+  flutter doctor -v
+   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/fres-sudo/pomo.git
    ```
-3. Install NPM packages
+2. Open the project and get the packages
    ```sh
-   npm install
+   flutter pub get
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Run the builder 
+   ```sh
+    dart run build_runner watch --delete-conflicting-outputs
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## ARCHITECTURE
+
+In this project i use the Pine Architecture 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
