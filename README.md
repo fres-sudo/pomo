@@ -83,9 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<a href="https://github.com/fres-sudo/pomo">
-    <img src="assets/thubnail.png" alt="Logo" width="230" height="200">
-  </a>
+![Preview](assets/thubnail.png)
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `fres-sudo`, `pomo`, `twitter_handle`, `francesco-calicchio`, `francescocalicchio@hotmail.com`, `francescocalicchio@hotmail.com`, `Pomo`, `Task management made easy.`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
