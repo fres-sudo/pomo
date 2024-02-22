@@ -83,8 +83,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
+<a href="https://github.com/fres-sudo/pomo">
+    <img src="assets/thubnail.png" alt="Logo" width="230" height="200">
+  </a>
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `fres-sudo`, `pomo`, `twitter_handle`, `francesco-calicchio`, `francescocalicchio@hotmail.com`, `francescocalicchio@hotmail.com`, `Pomo`, `Task management made easy.`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -93,14 +94,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+ <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a>
+ <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
