@@ -131,7 +131,7 @@ For a correct installation of the project you need to install first Flutter, [he
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## ARCHITECTURE
+## Architecture 
 
 In this project i use the Pine Architecture 
 
