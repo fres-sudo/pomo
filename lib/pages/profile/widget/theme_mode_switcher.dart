@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
-import 'package:pomo/routes/app_router.gr.dart';
 
 class ThemeModeSwitcher extends StatelessWidget {
   const ThemeModeSwitcher({super.key});
@@ -15,10 +14,10 @@ class ThemeModeSwitcher extends StatelessWidget {
       builder: (context, state) {
         return Container(
           height: MediaQuery.sizeOf(context).height/3,
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           decoration: BoxDecoration(
             color: context.isDarkMode ? kNeutral900 : Colors.white,
-            borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+            borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
             boxShadow: const [
               BoxShadow(
                   color: Colors.black12, spreadRadius: 1000, blurRadius: 100),

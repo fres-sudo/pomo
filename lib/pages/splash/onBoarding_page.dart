@@ -15,7 +15,7 @@ class OnBoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AutoRouter.of(context);
     return OnBoardingSlider(
-      finishButtonText: "I\'m ready",
+      finishButtonText: "I'm ready",
         finishButtonTextStyle: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w500,

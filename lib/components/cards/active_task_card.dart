@@ -1,24 +1,21 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/models/user/user.dart';
-import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../models/task/task.dart';
 
-class TaskCard extends StatefulWidget {
-  const TaskCard({super.key, required this.task});
+class ActiveTaskCard extends StatefulWidget {
+  const ActiveTaskCard({super.key, required this.task});
 
   final Task task;
 
   @override
-  State<TaskCard> createState() => _TaskCardState();
+  State<ActiveTaskCard> createState() => _ActiveTaskCardState();
 }
 
-class _TaskCardState extends State<TaskCard> {
+class _ActiveTaskCardState extends State<ActiveTaskCard> {
   bool checkBox = false;
 
   @override
@@ -61,7 +58,7 @@ class _TaskCardState extends State<TaskCard> {
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                           color:
-                              context.isDarkMode ? kNeutral100 : kNeutral900),
+                          context.isDarkMode ? kNeutral100 : kNeutral900),
                     ),
                     Text(
                       "${(widget.task.pomodoro * 30).toString()}mins • ${widget.task.pomodoro} pomodoro",
@@ -69,29 +66,20 @@ class _TaskCardState extends State<TaskCard> {
                           fontWeight: FontWeight.w500,
                           fontSize: 11,
                           color:
-                              context.isDarkMode ? kNeutral500 : kNeutral500),
+                          context.isDarkMode ? kNeutral500 : kNeutral500),
                     )
                   ],
                 ),
               ],
             ),
             IconButton(
-              onPressed: () {
-                AutoRouter.of(context).push(WorkSessionRoute(
-                    task: const Task(
-                        id: "id",
-                        name: "name",
-                        pomodoro: 2,
-                        completed: false,
-                        user: User(
-                            id: "id", username: "username", email: "email"))));
-              },
+              onPressed: () {},
               icon: SvgPicture.asset(
                 "assets/icons/play-bold.svg",
                 colorFilter:
-                    const ColorFilter.mode(kPrimary500, BlendMode.srcIn),
+                const ColorFilter.mode(kPrimary500, BlendMode.srcIn),
               ),
-            ),
+            )
           ],
         ),
       ),

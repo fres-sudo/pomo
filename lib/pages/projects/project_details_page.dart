@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/task_card.dart';
@@ -73,7 +71,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           context.isDarkMode ? Colors.white : kNeutral900,
                           BlendMode.srcIn),
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(

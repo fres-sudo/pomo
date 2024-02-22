@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 
 class LightTheme {
@@ -31,7 +30,7 @@ class LightTheme {
       checkboxTheme: CheckboxThemeData(
         splashRadius: 5,
         side: const BorderSide(
-          color: kNeutral50,
+          color: kNeutral400,
         ),
         checkColor: MaterialStateProperty.resolveWith((states) {
           // If the button is pressed, return green, otherwise blue

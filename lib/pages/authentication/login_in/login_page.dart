@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       GestureDetector(
                         onTap: (){
-                          context.pushRoute(SignUpRoute());
+                          context.pushRoute(const SignUpRoute());
                         },
                         child: Text(
                           "Sign up",

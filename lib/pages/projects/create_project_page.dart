@@ -13,7 +13,7 @@ import '../../components/fields/name_text_field.dart';
 
 @RoutePage()
 class CreateProjectPage extends StatefulWidget {
-  CreateProjectPage({super.key});
+  const CreateProjectPage({super.key});
 
   @override
   State<CreateProjectPage> createState() => _CreateProjectPageState();

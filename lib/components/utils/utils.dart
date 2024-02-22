@@ -5,8 +5,6 @@ import 'dart:io' show Platform;
 
 import 'custom_popup.dart';
 
-import 'dart:ui';
-import 'package:flutter/widgets.dart';
 
 extension DarkMode on BuildContext {
   /// is dark mode currently enabled?

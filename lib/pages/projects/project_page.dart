@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/project_card.dart';
@@ -8,7 +7,6 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/models/user/user.dart';
-import 'package:pomo/pages/projects/project_details_page.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 

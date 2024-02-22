@@ -43,7 +43,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(Icons.chevron_left_rounded),
+                        child: const Icon(Icons.chevron_left_rounded),
                       ),
                       const SizedBox(
                         width: 5,

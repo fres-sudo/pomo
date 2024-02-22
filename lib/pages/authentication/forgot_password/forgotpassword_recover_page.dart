@@ -20,7 +20,7 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
   final TextEditingController _confirmPasswordTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
 
-  bool _checkedValue = false;
+  final bool _checkedValue = false;
 
   @override
   void dispose() {

@@ -57,7 +57,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       );
 
       return user;
-    } catch (error, stackTrace) {
+    } catch (error) {
       logger.e('Error signing in: $error');
       throw Exception('Sign-in failed');
     }

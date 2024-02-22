@@ -10,7 +10,7 @@ class RoundedButton extends StatefulWidget {
   }
 
   const RoundedButton({
-    Key? key,
+    super.key,
     required this.child,
     this.width = 311.0,
     this.height = 48.0,
@@ -22,7 +22,7 @@ class RoundedButton extends StatefulWidget {
     this.borderRadius = 16,
     this.progressColor = kPrimary500,
     this.decoration
-  }) : super(key : key);
+  });
 
   final Color? color;
   final Color borderColor;

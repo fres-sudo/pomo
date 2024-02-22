@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +8,7 @@ import '../widgets/rounded_button.dart';
 class CustomPopup extends StatefulWidget {
   final String title, text;
 
-  const CustomPopup({Key? key, required this.title, required this.text}) : super(key: key);
+  const CustomPopup({super.key, required this.title, required this.text});
 
   @override
   CustomPopupState createState() => CustomPopupState();
@@ -141,8 +140,7 @@ class CustomConfirmPopup extends StatefulWidget {
   final Function() noAction;
 
   const CustomConfirmPopup(
-      {Key? key, required this.title, required this.text, required this.yesAction, required this.noAction})
-      : super(key: key);
+      {super.key, required this.title, required this.text, required this.yesAction, required this.noAction});
 
   @override
   CustomConfirmPopupState createState() => CustomConfirmPopupState();

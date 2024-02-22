@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
-import 'package:provider/provider.dart';
 import '../../constants/colors.dart';
-import '../../constants/constants.dart';
 import '../../constants/text.dart';
-import '../../providers/fields/name_provider.dart';
 
 class GeneralField extends StatefulWidget {
   GeneralField(

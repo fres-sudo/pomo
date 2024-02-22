@@ -6,8 +6,7 @@ import 'package:tap_debouncer/tap_debouncer.dart';
 
 @RoutePage()
 class ErrorPage extends StatelessWidget {
-  ErrorPage({Key? key, required this.title, required this.description, required this.image})
-      : super(key: key);
+  const ErrorPage({super.key, required this.title, required this.description, required this.image});
   final String title;
   final String description;
   final String image;

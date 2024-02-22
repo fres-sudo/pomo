@@ -1,6 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:pomo/routes/guard/auth_guard.dart';
-import 'package:pomo/routes/guard/onBoarding_guard.dart';
 
 import 'app_router.gr.dart';
 
@@ -18,6 +16,7 @@ class AppRouter extends $AppRouter {
             AutoRoute(page: ProjectRoute.page, initial: true, fullscreenDialog: true),
             AutoRoute(page: ProjectDetailsRoute.page),
             AutoRoute(page: CreateProjectRoute.page, maintainState: false),
+            AutoRoute(page: WorkSessionRoute.page),
           ]),
           AutoRoute(page: StatsRoute.page),
           AutoRoute(page: QuickSessionRoute.page),
