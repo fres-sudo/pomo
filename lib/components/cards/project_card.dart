@@ -29,7 +29,6 @@ class ProjectCard extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: context.isDarkMode ? kNeutral900 : Colors.white,
         ),
         child: Column(
           children: [
@@ -59,7 +58,7 @@ class ProjectCard extends StatelessWidget {
                   BoxShadow(
                       color: Colors.black12, spreadRadius: 0, blurRadius: 15),
                 ],
-                color: context.isDarkMode ? kNeutral900 : Colors.white,
+                color: Theme.of(context).cardColor
               ),
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -73,11 +72,7 @@ class ProjectCard extends StatelessWidget {
                       Text(
                         project.name.capitalize(),
                           overflow: TextOverflow.ellipsis,
-                         style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: context.isDarkMode ? Colors.white: kNeutral900,
-                          )
+                         style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                       ),
                       const SizedBox(
                         width: 10,

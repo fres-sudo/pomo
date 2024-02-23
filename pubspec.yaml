@@ -47,6 +47,7 @@ dependencies:
   hydrated_bloc: ^9.1.4
   hive: ^2.2.3
   circular_countdown_timer: ^0.2.3
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:

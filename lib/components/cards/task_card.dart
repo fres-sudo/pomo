@@ -29,7 +29,7 @@ class _TaskCardState extends State<TaskCard> {
         padding: const EdgeInsets.only(top: 16, right: 5, bottom: 16, left: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: context.isDarkMode ? kNeutral900 : kNeutral100,
+          color: Theme.of(context).cardColor
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,11 +57,7 @@ class _TaskCardState extends State<TaskCard> {
                   children: [
                     Text(
                       widget.task.name.capitalize(),
-                      style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color:
-                              context.isDarkMode ? kNeutral100 : kNeutral900),
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 14),
                     ),
                     Text(
                       "${(widget.task.pomodoro * 30).toString()}mins • ${widget.task.pomodoro} pomodoro",

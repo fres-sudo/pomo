@@ -10,7 +10,7 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
         page: RootRoute.page,
-        //guards: [ OnBoardingGuard(), AuthGuard()],
+        guards: [ OnBoardingGuard(), AuthGuard()],
         initial: true,
         fullscreenDialog: true,
         children: [
