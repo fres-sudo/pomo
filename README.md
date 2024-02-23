@@ -84,7 +84,18 @@
 ## About The Project
 
 ![Preview](assets/thubnail.png)
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `fres-sudo`, `pomo`, `twitter_handle`, `francesco-calicchio`, `francescocalicchio@hotmail.com`, `francescocalicchio@hotmail.com`, `Pomo`, `Task management made easy.`
+
+Pomo is an app for managing tasks and projects. Users can log in or register and create new project.
+ 
+ - Each project contains a certain number of tasks, users can add/edit/delete tasks. Each project also has contributors, the owner of the project can easly invite new friends to collaborate to the project. 
+
+ - Each task contains several number of pomodoros, when the user start the task he's redirected to the Work Session, where he can start a timer, that uses pomodoro technique.
+
+ - The user can also go and start a Quick Session that is completly indipendent to a project. 
+
+ - In the Statistics page the user can access to all the progress about tasks and project.
+
+ - There is also a Profile page where user can interact with his account.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -131,9 +142,16 @@ For a correct installation of the project you need to install first Flutter, [he
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## ARCHITECTURE
+## Architecture 
 
-In this project i use the Pine Architecture 
+This project uses the Pine Architecture:
+
+<table>
+  <tr>
+    <td valign="top"><img src="assets/pine-architecture.jpg"/></td>
+    <td valign="top"><img src="assets/pine-di.jpeg"/></td>
+  </tr>
+</table>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -143,8 +161,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
