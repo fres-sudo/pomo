@@ -53,14 +53,14 @@ class OnBoardingPage extends StatelessWidget {
                   children: [
                     Text('Manage your time \n as you wish!',
                       textAlign: TextAlign.center,
-                      style: kHeadingH3(context)
+                      style: Theme.of(context).textTheme.displaySmall
                     ),
                     const SizedBox(
                       height: 12,
                     ),
                     Text('Smart and customizable timer that helps \n you manage your time more effectively.',
                       textAlign: TextAlign.center,
-                      style: kBody2(context)
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
 
                   ],
@@ -76,14 +76,14 @@ class OnBoardingPage extends StatelessWidget {
                   children: [
                     Text('Efficient Task Management \n Made Easy',
                       textAlign: TextAlign.center,
-                      style: kHeadingH3(context)
+                      style: Theme.of(context).textTheme.displaySmall
                     ),
                     const SizedBox(
                       height: 12,
                     ),
                     Text('Plan your day, set reminders, and track your \n progress with our intuitive timer app that \n helps you achieve your goals.',
                       textAlign: TextAlign.center,
-                      style: kBody2(context)
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 )

@@ -114,7 +114,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 ),
                 Text(
                   "Name",
-                  style: kSubtitle2(context),
+                  style: Theme.of(context).textTheme.titleMedium
                 ),
                 const SizedBox(
                   height: 6,
@@ -128,7 +128,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 ),
                 Text(
                   "Description",
-                  style: kSubtitle2(context),
+                  style: Theme.of(context).textTheme.titleMedium
                 ),
                 const SizedBox(
                   height: 6,
@@ -143,7 +143,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 ),
                 Text(
                   "Collaborator",
-                  style: kSubtitle2(context),
+                  style: Theme.of(context).textTheme.titleMedium
                 ),
                 const SizedBox(
                   height: 6,
@@ -163,7 +163,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       children: [
                         Text(
                           "Invite a collaborator",
-                          style: kSubtitle2(context),
+                          style:Theme.of(context).textTheme.titleMedium
                         ),
                         SvgPicture.asset("assets/icons/arrow-down.svg", colorFilter: ColorFilter.mode(context.isDarkMode ? kNeutral100 : kNeutral900, BlendMode.srcIn))
                       ],
@@ -175,7 +175,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 ),
                 Text(
                   "Due date",
-                  style: kSubtitle2(context),
+                  style: Theme.of(context).textTheme.titleMedium
                 ),
                 const SizedBox(
                   height: 6,
@@ -189,7 +189,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         child: SfDateRangePicker(
                           todayHighlightColor: kPrimary400,
                           selectionColor: kPrimary400,
-                          selectionTextStyle: kSubtitle2(context),
+                          selectionTextStyle: Theme.of(context).textTheme.titleMedium,
                           onSelectionChanged: _onSelectionChanged,
                           selectionMode: DateRangePickerSelectionMode.single,
                         ),
@@ -207,7 +207,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       children: [
                         Text(
                           "Select date",
-                          style: kSubtitle2(context),
+                          style: Theme.of(context).textTheme.titleMedium
                         ),
                         SvgPicture.asset(
                           "assets/icons/calendar.svg",

@@ -79,11 +79,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               ),
               Text(
                 widget.project.description,
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: kNeutral600,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kNeutral600)
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -108,7 +104,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 children: [
                   Text(
                     "In Progress",
-                    style: kHeadingH5(context),
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(10),
@@ -128,7 +124,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email"),
+                  user: User(id: "id", username: "username", email: "email", token: ''),
                 ),
               ),
               const SizedBox(
@@ -136,7 +132,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               ),
               Text(
                 "Already Done",
-                style: kHeadingH5(context),
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
               ),
               const TaskCard(
                 task: Task(
@@ -144,7 +140,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email"),
+                  user: User(id: "id", username: "username", email: "email", token: ''),
                 ),
               ),
               const TaskCard(
@@ -153,7 +149,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email"),
+                  user: User(id: "id", username: "username", email: "email", token: ''),
                 ),
               ),
             ],

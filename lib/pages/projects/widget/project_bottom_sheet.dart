@@ -47,7 +47,7 @@ class ProjectBottomSheet extends StatelessWidget {
               children: [
                 Text(
                   'Actions',
-                  style: kHeadingH5(context),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -59,7 +59,7 @@ class ProjectBottomSheet extends StatelessWidget {
                   },
                   child: Text(
                     'Edit',
-                    style: kHeadingH5(context),
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                   ),
                 ),
                 const SizedBox(
@@ -71,7 +71,7 @@ class ProjectBottomSheet extends StatelessWidget {
                   },
                   child: Text(
                     'Select',
-                    style: kHeadingH5(context),
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                   ),
                 ),
                 const SizedBox(
@@ -83,7 +83,7 @@ class ProjectBottomSheet extends StatelessWidget {
                   },
                   child: Text(
                     'Share',
-                    style: kHeadingH5(context),
+                    style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
                   ),
                 ),
               ],

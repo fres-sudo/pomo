@@ -49,7 +49,7 @@ class RootPage extends StatelessWidget {
                     icon: SvgPicture.asset(
                       'assets/icons/nav-bar/Light/Document.svg',
                       colorFilter: ColorFilter.mode(
-                          context.isDarkMode ? Colors.white : kNeutral900,
+                          Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
                           BlendMode.srcIn),
                     ),
                     label: "Project",
@@ -60,7 +60,7 @@ class RootPage extends StatelessWidget {
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Graph.svg',
                         colorFilter: ColorFilter.mode(
-                            context.isDarkMode ? Colors.white : kNeutral900,
+                            Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
                             BlendMode.srcIn),
                       ),
                       label: "Stats"),
@@ -70,7 +70,7 @@ class RootPage extends StatelessWidget {
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Play.svg',
                         colorFilter: ColorFilter.mode(
-                            context.isDarkMode ? Colors.white : kNeutral900,
+                            Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
                             BlendMode.srcIn),
                       ),
                       label: "QuickSession"),

@@ -64,7 +64,7 @@ class ProjectPage extends StatelessWidget {
                   ),
                   Text(
                     "You still don't have \n any project",
-                    style: kSubtitle2(context),
+                    style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(
@@ -96,7 +96,7 @@ class ProjectPage extends StatelessWidget {
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                           dueDate: DateTime.now(),
                           owner: const User(
-                              id: "id", username: "username", email: "email"),
+                              id: "id", username: "username", email: "email", token: ''),
                         ),
                       ));
                     },
@@ -108,7 +108,7 @@ class ProjectPage extends StatelessWidget {
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed pharetra nisi.  Vivamus",
                         dueDate: DateTime.now(),
                         owner: const User(
-                            id: "id", username: "username", email: "email"),
+                            id: "id", username: "username", email: "email", token: ''),
                       ),
                     ),
                   ),

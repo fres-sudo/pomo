@@ -33,14 +33,14 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                     "Secure Access in a Snap!",
                     maxLines: 1,
                     overflow: TextOverflow.clip,
-                    style: kHeadingH2(context),
+                    style: Theme.of(context).textTheme.headlineMedium
                   ),
                   const SizedBox(
                     height: 4,
                   ),
                   Text(
                     "Enter the one-time code we just sent to your device to unlock the door to your digital realm. Fast, easy, and extra secure!",
-                    style: kBody2(context),
+                    style: Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 40,
@@ -51,7 +51,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   ),
                    Column(
                     children: [
-                      Text("Don't recive an email yet?", style: kBody2(context)),
+                      Text("Don't recive an email yet?", style: Theme.of(context).textTheme.bodyMedium),
                       // TODO: add counter and if the counter is over highlight in primary color the text below and make it clickable
                       const Text("You can resend code in ... seconds"),
                     ],

@@ -81,7 +81,7 @@ class NameFieldState extends State<NameField> {
               contentPadding: const EdgeInsets.only(bottom: 17, top: 17, left: 16),
               // Error text will be set based on email validation result
             ),
-            style: kSubtitle2(context),
+            style: Theme.of(context).textTheme.titleMedium,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             onChanged: (value) {
               _validateName(value);

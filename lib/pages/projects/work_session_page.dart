@@ -145,7 +145,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: context.isDarkMode
-                              ? kPrimary100.withOpacity(50)
+                              ? kPrimary100
                               : kPrimary100,
                           boxShadow: const [
                             BoxShadow(

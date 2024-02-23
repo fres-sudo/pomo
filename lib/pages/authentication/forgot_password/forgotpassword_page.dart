@@ -50,7 +50,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       Text(
                         "Reset Your Password",
-                        style: kHeadingH2(context),
+                        style: Theme.of(context).textTheme.headlineMedium
                       ),
                     ],
                   ),
@@ -59,14 +59,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                   Text(
                     "Renew your access with a password reset – safeguarding your account with simplicity and peace of mind",
-                    style: kBody2(context),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(
                     height: 40,
                   ),
                   Text(
                     "Email",
-                    style: kSubtitle2(context),
+                    style: Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,

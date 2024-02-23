@@ -61,14 +61,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       Text(
                         "Welcome",
-                        style: kHeadingH2(context),
+                        style: Theme.of(context).textTheme.headlineMedium
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
                         "Create your account.",
-                        style: kBody2(context),
+                        style:Theme.of(context).textTheme.bodyMedium
                       ),
                     ],
                   ),
@@ -83,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Text(
                     "Username",
-                    style: kSubtitle2(context),
+                    style:Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,
@@ -94,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     "Email",
-                    style: kSubtitle2(context),
+                    style:Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,
@@ -105,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     "Password",
-                    style: kSubtitle2(context),
+                    style: Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,
