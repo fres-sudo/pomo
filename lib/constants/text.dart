@@ -12,12 +12,11 @@ import 'colors.dart';
   TextStyle kSerzif(BuildContext context) => GoogleFonts.dmSerifText(
     fontWeight: FontWeight.normal,
     fontSize: 28,
-    color: context.isDarkMode ? Colors.white: kNeutral900
   );
 
 
   // --- H E A D I N G ---
-
+/*
   TextStyle kHeadingH1(BuildContext context) => GoogleFonts.inter(
     fontSize: 32,
     fontWeight: FontWeight.w600,
@@ -103,3 +102,4 @@ import 'colors.dart';
     fontWeight: FontWeight.w400,
     color: context.isDarkMode ? Colors.white: kNeutral900,
   );
+*/

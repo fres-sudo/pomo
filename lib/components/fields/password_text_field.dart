@@ -91,7 +91,7 @@ class PasswordFieldState extends State<PasswordField> {
           filled: true,
           contentPadding: const EdgeInsets.only(bottom: 17, top: 17, left: 16),
         ),
-        style: kSubtitle2(context),
+        style: Theme.of(context).textTheme.titleMedium,
         onChanged: (value) {
           _validatePassword(value);
         },

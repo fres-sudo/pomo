@@ -94,7 +94,7 @@ class ProjectCard extends StatelessWidget {
                   ),
                   Text(
                     DateFormat('MMM dd, yyyy').format(project.dueDate),
-                    style: kBody3(context),
+                    style: Theme.of(context).textTheme.bodySmall
                   ),
                   const SizedBox(
                     height: 12,
@@ -103,7 +103,7 @@ class ProjectCard extends StatelessWidget {
                     project.description.capitalize(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: kBody3(context),
+                    style: Theme.of(context).textTheme.bodySmall
                   ),
                 ],
               ),

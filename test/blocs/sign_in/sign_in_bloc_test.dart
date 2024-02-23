@@ -13,7 +13,7 @@ void main() {
   /// Testing the event [PerformSignInEvent]
   group('when the event PerformSignInEvent is added to the BLoC', () {
     blocTest<SignInBloc, SignInState>(
-      'test that SignInBloc emits SignInState.performing when perform is called',
+      'test that SignInBloc emits SignInState.notSignedIn when perform is called',
       setUp: () {
         //TODO: setup the environment
       },

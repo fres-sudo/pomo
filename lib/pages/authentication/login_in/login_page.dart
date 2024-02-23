@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_text_field.dart';
 import 'package:pomo/components/fields/password_text_field.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     AutoRouter.of(context);
     return Scaffold(
-      backgroundColor: kNeutralBackground,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,14 +60,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         "Welcome back!",
-                        style: kHeadingH2(context),
+                        style: Theme.of(context).textTheme.headlineMedium
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
                         "Enter your email & password for logging in ",
-                        style: kBody2(context),
+                        style: Theme.of(context).textTheme.bodyMedium
                       ),
                     ],
                   ),
@@ -83,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text(
                     "Email",
-                    style: kSubtitle2(context),
+                    style: Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,
@@ -94,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text(
                     "Password",
-                    style: kSubtitle2(context),
+                    style: Theme.of(context).textTheme.titleMedium
                   ),
                   const SizedBox(
                     height: 6,
@@ -120,10 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             "Remember me",
                             style: GoogleFonts.inter(
-                              fontSize: 12,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: kNeutral900
-                            ),
+                                color: kNeutral900),
                           ),
                         ],
                       ),
@@ -134,16 +132,15 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Forgot password?",
                           style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            color: kPrimary500
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: kPrimary500),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(
-                    height:10,
+                    height: 10,
                   ),
                   const Divider(
                     color: kNeutral200,
@@ -153,9 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   RoundedButton(
-                    borderColor: kNeutral200,
+                      borderColor: kNeutral200,
                       width: MediaQuery.sizeOf(context).width,
-                      onPressed: (){},
+                      onPressed: () {},
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -165,11 +162,13 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text("Continue with Google", style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: kNeutral900
-                            ),)
+                            Text(
+                              "Continue with Google",
+                              style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: kNeutral900),
+                            )
                           ],
                         ),
                       )),
@@ -177,20 +176,20 @@ class _LoginPageState extends State<LoginPage> {
                     height: 45,
                   ),
                   RoundedButton(
-                    borderColor: Colors.transparent,
+                      borderColor: Colors.transparent,
                       color: kPrimary500,
                       onPressed: () async {
-
-
+                        context.read<SignInBloc>().perform(
+                            email: _emailTextController.text,
+                            password: _passwordTextController.text);
                       },
-                      child: Text("Log in",
+                      child: Text(
+                        "Log in",
                         style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: kNeutral50
-                        ),
-                      )
-                  ),
+                            color: kNeutral50),
+                      )),
                   const SizedBox(
                     height: 20,
                   ),
@@ -200,23 +199,19 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "Don't have an account?",
                         style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            color: kNeutral900
-                        ),
+                            fontWeight: FontWeight.w500, color: kNeutral900),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           context.pushRoute(const SignUpRoute());
                         },
                         child: Text(
                           "Sign up",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: kPrimary500
-                          ),
+                              fontWeight: FontWeight.w500, color: kPrimary500),
                         ),
                       )
                     ],

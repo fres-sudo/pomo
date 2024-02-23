@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 
 import '../../constants/colors.dart';
@@ -30,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 17),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: const [
                       BoxShadow(
@@ -49,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         Text(
                           "Josh Newman",
-                          style: kSubtitle2(context),
+                          style: Theme.of(context).textTheme.titleMedium
                         ),
                         Text(
                           "@josh",
@@ -86,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Notification", style: kSubtitle2(context),),
+                      Text("Notification", style:Theme.of(context).textTheme.titleMedium,),
                       SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
                     ],
                   )
@@ -100,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Languages", style: kSubtitle2(context),),
+                      Text("Languages", style: Theme.of(context).textTheme.titleMedium,),
                       SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
                     ],
                   )
@@ -121,7 +122,7 @@ class ProfilePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Theme Mode", style: kSubtitle2(context),),
+                        Text("Theme Mode", style: Theme.of(context).textTheme.titleMedium,),
                         SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )
@@ -149,7 +150,7 @@ class ProfilePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Help Center", style: kSubtitle2(context),),
+                        Text("Help Center", style: Theme.of(context).textTheme.titleMedium,),
                         SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )
@@ -163,7 +164,7 @@ class ProfilePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Privacy Policy", style: kSubtitle2(context),),
+                        Text("Privacy Policy", style: Theme.of(context).textTheme.titleMedium,),
                         SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )

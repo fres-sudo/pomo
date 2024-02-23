@@ -9,13 +9,16 @@ class UserMapper extends DTOMapper<UserJTO, User> {
   User fromDTO(UserJTO dto) => User(
     id: dto.id,
     username: dto.username,
-    email: dto.email
+    email: dto.email,
+      token: dto.token,
   );
 
   @override
   UserJTO toDTO(User model) => UserJTO(
     id: model.id,
     username: model.username,
-    email: model.email
+    email: model.email,
+    token: model.token,
   );
+
 }

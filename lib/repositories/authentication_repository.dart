@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pine/pine.dart';
 import 'package:pomo/repositories/mappers/user_mapper.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/jto/user/user_jto.dart';
@@ -6,6 +7,7 @@ import '../constants/constants.dart';
 import '../models/user/user.dart';
 import '../services/network/requests/sign_in/sign_in_request.dart';
 import '../services/network/requests/sign_up/sign_up_request.dart';
+import 'mappers/user_string_mapper.dart';
 
 /// Abstract class of AuthenticationRepository
 abstract class AuthenticationRepository {
@@ -21,6 +23,8 @@ abstract class AuthenticationRepository {
       required String confirmPassword});
 
   Future<void> signOut();
+
+  Future<User?> get currentUser;
 }
 
 /// Implementation of the base interface AuthenticationRepository
@@ -28,11 +32,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({
     required this.authenticationService,
     required this.userMapper,
+    required this.userStringMapper,
     required this.secureStorage,
   });
 
   final AuthenticationService authenticationService;
-  final UserMapper userMapper;
+  final DTOMapper<UserJTO, User> userMapper;
+  final Mapper<User, String> userStringMapper;
   final FlutterSecureStorage secureStorage;
 
   @override
@@ -52,8 +58,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
       await secureStorage.write(
         key: 'user_data',
-        value: userMapper.toDTO(user)
-            .toString(), //TODO: implement correctly the string (json)
+        value: userStringMapper.from(user),
       );
 
       return user;
@@ -94,14 +99,15 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<void> signOut() => secureStorage.delete(key: 'user_data');
 
+  @override
   Future<User?> get currentUser async {
     final json = await secureStorage.read(key: 'user_data');
 
     if (json != null) {
-      return userMapper
-          .fromDTO(json as UserJTO); //TODO: implement correctly the UserJTO
+      return userStringMapper.to(json);
     }
 
     return null;
   }
+
 }

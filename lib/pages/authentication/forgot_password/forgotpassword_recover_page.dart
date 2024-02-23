@@ -44,21 +44,21 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                   children: [
                     Text(
                       "Crafting your shield",
-                      style: kHeadingH2(context),
+                      style: Theme.of(context).textTheme.headlineMedium
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     Text(
                       "Create a robust new password to keep your digital world secure and your information guarded. Your fortress, your rules.",
-                      style: kBody2(context),
+                      style: Theme.of(context).textTheme.bodyMedium
                     ),
                     const SizedBox(
                       height: 40,
                     ),
                     Text(
                       "Password",
-                      style: kSubtitle2(context),
+                      style: Theme.of(context).textTheme.titleMedium
                     ),
                     const SizedBox(
                       height: 6,
@@ -69,7 +69,7 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                     ),
                     Text(
                       "Confirm new password",
-                      style: kSubtitle2(context),
+                      style: Theme.of(context).textTheme.titleMedium
                     ),
                     const SizedBox(
                       height: 6,

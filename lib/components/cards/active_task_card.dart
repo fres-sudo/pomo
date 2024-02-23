@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-
 import '../../models/task/task.dart';
 
 class ActiveTaskCard extends StatefulWidget {
@@ -26,7 +25,7 @@ class _ActiveTaskCardState extends State<ActiveTaskCard> {
         padding: const EdgeInsets.only(top: 16, right: 5, bottom: 16, left: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: context.isDarkMode ? kNeutral900 : kNeutral100,
+          color: Theme.of(context).cardColor
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
