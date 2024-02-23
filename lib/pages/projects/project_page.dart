@@ -40,11 +40,13 @@ class ProjectPage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  GeneralField(
+                  TextFormField(
                     controller: searchController,
-                    prefixIconColor: kNeutral900,
-                    hintText: "Search",
-                    prefixIcon: const Icon(Icons.search),
+                    style: Theme.of(context).textTheme.titleMedium,
+                    decoration: const InputDecoration(
+                      hintText: "Search",
+                      prefixIcon: Icon(Icons.search)
+                    ),
                   ),
                 ],
               ),
@@ -96,7 +98,10 @@ class ProjectPage extends StatelessWidget {
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                           dueDate: DateTime.now(),
                           owner: const User(
-                              id: "id", username: "username", email: "email", token: ''),
+                              id: "id",
+                              username: "username",
+                              email: "email",
+                              token: ''),
                         ),
                       ));
                     },
@@ -108,7 +113,10 @@ class ProjectPage extends StatelessWidget {
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed pharetra nisi.  Vivamus",
                         dueDate: DateTime.now(),
                         owner: const User(
-                            id: "id", username: "username", email: "email", token: ''),
+                            id: "id",
+                            username: "username",
+                            email: "email",
+                            token: ''),
                       ),
                     ),
                   ),

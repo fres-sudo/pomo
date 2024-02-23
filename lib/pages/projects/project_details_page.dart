@@ -46,7 +46,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: SvgPicture.asset(
                           'assets/icons/arrow-left.svg',
                           colorFilter: ColorFilter.mode(
-                              context.isDarkMode ? Colors.white : kNeutral900,
+                              Theme.of(context).iconTheme.color!,
                               BlendMode.srcIn),
                         ),
                       ),
@@ -68,7 +68,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     child: SvgPicture.asset(
                       "assets/icons/kebab.svg",
                       colorFilter: ColorFilter.mode(
-                          context.isDarkMode ? Colors.white : kNeutral900,
+                          Theme.of(context).iconTheme.color!,
                           BlendMode.srcIn),
                     ),
                   ),
@@ -112,7 +112,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     child: SvgPicture.asset(
                       "assets/icons/plus.svg",
                       colorFilter: ColorFilter.mode(
-                          context.isDarkMode ? Colors.white : kNeutral900,
+                          Theme.of(context).iconTheme.color!,
                           BlendMode.srcIn),
                     ),
                   )

@@ -16,7 +16,7 @@ class ThemeModeSwitcher extends StatelessWidget {
           height: MediaQuery.sizeOf(context).height/3,
           padding: const EdgeInsets.only(top: 20),
           decoration: BoxDecoration(
-            color: context.isDarkMode ? kNeutral900 : Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
             boxShadow: const [
               BoxShadow(

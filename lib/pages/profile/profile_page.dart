@@ -66,9 +66,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(
-                    color: kNeutral200,
-                  ),
+                  child: Divider(),
                 ),
                 Text(
                   "General",
@@ -129,9 +127,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(
-                    color: kNeutral200,
-                  ),
+                  child: Divider(),
                 ),
                 Text(
                   "About us",
