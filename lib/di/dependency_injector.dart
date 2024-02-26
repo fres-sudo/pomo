@@ -21,8 +21,6 @@ import '../providers/fields/password_provider.dart';
 import '../repositories/mappers/user_mapper.dart';
 import '../services/network/interceptors/auth_interceptor.dart';
 import '../services/network/jto/user/user_jto.dart';
-import '../services/network/response/sign_in/sign_in_response.dart';
-import '../services/network/response/sign_up/sign_up_response.dart';
 
 part 'blocs.dart';
 

@@ -2,7 +2,7 @@ part of 'dependency_injector.dart';
 
 final List<RepositoryProvider> _repositories = [
   RepositoryProvider<AuthenticationRepository>(create: (context) {
-    final userRepository = AuthenticationRepositoryImpl(
+    final authenticationRepository = AuthenticationRepositoryImpl(
       userMapper: context.read(),
       secureStorage: context.read(),
       authenticationService: context.read(),
@@ -12,10 +12,10 @@ final List<RepositoryProvider> _repositories = [
     context.read<Dio>().interceptors.insert(
           0,
           AuthInterceptor(
-            authenticationRepository: context.read(),
+            authenticationRepository: authenticationRepository,
           ),
         );
 
-    return userRepository;
+    return authenticationRepository;
   }),
 ];
