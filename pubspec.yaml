@@ -48,6 +48,7 @@ dependencies:
   hive: ^2.2.3
   circular_countdown_timer: ^0.2.3
   email_validator: ^2.1.17
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:
