@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: MediaQuery.sizeOf(context).height * 1 / 4,
                   decoration: BoxDecoration(
                       color: kPastelYellow.withOpacity(0.50),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(25),
                         bottomRight: Radius.circular(25),
                       )),
@@ -83,7 +83,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Form(
                     key: _formKey,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.name,
                           controller: _usernameTextController,
                           cursorColor: kPrimary600,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: const InputDecoration(
                             hintText: "Username",
                           ),
@@ -125,6 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.emailAddress,
                           controller: _emailTextController,
                           cursorColor: kPrimary600,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: const InputDecoration(
                             hintText: "Email",
                           ),
@@ -153,8 +154,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           obscureText: _obscureText,
                           controller: _passwordTextController,
                           cursorColor: kPrimary600,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                              hintText: "Email",
+                              hintText: "Password",
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -199,10 +201,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                                 Text(
                                   "I accept terms & conditions",
-                                  style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                      color: kNeutral900),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ],
                             ),
@@ -219,13 +218,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             borderColor: Colors.transparent,
                             color: kPrimary500,
                             onPressed: () async {
-                              // Validate returns true if the form is valid, or false otherwise.
-                              if (!_formKey.currentState!.validate()) {
-                                // If the form is valid, display a snackbar. In the real world,
-                                // you'd often call a server or save the information in a database.
+                              if (_formKey.currentState!.validate()) {
+                                //TODO perform sign up
+                              } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                                       content: Text('Please enter valid information')),
                                 );
                               }
@@ -248,20 +246,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       Text(
                         "Already have an account?",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500, color: kNeutral900),
+                        style: Theme.of(context).textTheme.titleSmall
                       ),
                       const SizedBox(
                         width: 5,
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.pushRoute(LoginRoute());
+                          context.pushRoute(const LoginRoute());
                         },
                         child: Text(
                           "Log in",
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, color: kPrimary500),
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary400)
                         ),
                       )
                     ],
