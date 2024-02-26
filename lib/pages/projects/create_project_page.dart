@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/fields/general_text_field.dart';
@@ -23,6 +25,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _descriptionTextController =
       TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   String _selectedDate = '';
   String _dateCount = '';
@@ -66,10 +70,23 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "New Project",
-                      style: kSerzif(context),
-                    ),
+                    Row(children: [
+                      InkWell(
+                        onTap: () {
+                          AutoRouter.of(context).pop();
+                        },
+                        child: SvgPicture.asset(
+                          'assets/icons/arrow-left.svg',
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color ?? Colors.white,
+                              BlendMode.srcIn),
+                        ),
+                      ),
+                      Text(
+                        "New Project",
+                        style: kSerzif(context),
+                      ),
+                    ]),
                     TextButton(
                         onPressed: () {},
                         child: Text(
@@ -99,52 +116,75 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30)),
                       height: MediaQuery.sizeOf(context).height / 7,
-                      child: Text(
-                        "Add Cover",
-                        style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
-                            color: kNeutral1000),
-                      ),
+                      child: Text("Add Cover",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer)),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 28,
                 ),
-                Text(
-                  "Name",
-                  style: Theme.of(context).textTheme.titleMedium
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                NameField(
-                  controller: _nameTextController,
-                  text: "Input",
-                ),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Name*",
+                            style: Theme.of(context).textTheme.titleMedium),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.name,
+                          controller: _nameTextController,
+                          cursorColor: kPrimary600,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                            hintText: "Name",
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.length < 3) {
+                              return 'Please enter a valid project name';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 28,
+                        ),
+                        Text("Description",
+                            style: Theme.of(context).textTheme.titleMedium),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.name,
+                          controller: _descriptionTextController,
+                          cursorColor: kPrimary600,
+                          maxLines: 5,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                            hintText: "Write your description here...",
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    )),
                 const SizedBox(
                   height: 28,
                 ),
-                Text(
-                  "Description",
-                  style: Theme.of(context).textTheme.titleMedium
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                GeneralField(
-                  controller: _descriptionTextController,
-                  rows: 5,
-                  hintText: "Write your description here...",
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                Text(
-                  "Collaborator",
-                  style: Theme.of(context).textTheme.titleMedium
-                ),
+                Text("Collaborator",
+                    style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(
                   height: 6,
                 ),
@@ -157,15 +197,22 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         vertical: 17, horizontal: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: context.isDarkMode ? kNeutral900 : kNeutral100),
+                        color:
+                            Theme.of(context).inputDecorationTheme.fillColor),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Invite a collaborator",
-                          style:Theme.of(context).textTheme.titleMedium
-                        ),
-                        SvgPicture.asset("assets/icons/arrow-down.svg", colorFilter: ColorFilter.mode(context.isDarkMode ? kNeutral100 : kNeutral900, BlendMode.srcIn))
+                        Text("Invite a collaborator",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: kNeutral600)),
+                        SvgPicture.asset("assets/icons/arrow-down.svg",
+                            colorFilter: ColorFilter.mode(
+                                Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                                BlendMode.srcIn))
                       ],
                     ),
                   ),
@@ -173,23 +220,28 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 const SizedBox(
                   height: 28,
                 ),
-                Text(
-                  "Due date",
-                  style: Theme.of(context).textTheme.titleMedium
-                ),
+                Text("Due date*",
+                    style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(
                   height: 6,
                 ),
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
+                      backgroundColor:
+                          Theme.of(context).bottomSheetTheme.backgroundColor,
+                      useSafeArea: true,
                       context: context,
-                      builder: (_) => Padding(
-                        padding: const EdgeInsets.all(16.0),
+                      builder: (_) => ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
                         child: SfDateRangePicker(
+                          backgroundColor: Theme.of(context)
+                              .bottomSheetTheme
+                              .backgroundColor,
                           todayHighlightColor: kPrimary400,
                           selectionColor: kPrimary400,
-                          selectionTextStyle: Theme.of(context).textTheme.titleMedium,
+                          selectionTextStyle:
+                              Theme.of(context).textTheme.titleMedium,
                           onSelectionChanged: _onSelectionChanged,
                           selectionMode: DateRangePickerSelectionMode.single,
                         ),
@@ -201,26 +253,27 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         vertical: 17, horizontal: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: context.isDarkMode ? kNeutral900 : kNeutral100),
+                        color:
+                            Theme.of(context).inputDecorationTheme.fillColor),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Select date",
-                          style: Theme.of(context).textTheme.titleMedium
-                        ),
+                        Text("Select date",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: kNeutral600)),
                         SvgPicture.asset(
                           "assets/icons/calendar.svg",
                           colorFilter: ColorFilter.mode(
-                              context.isDarkMode ? kNeutral100 : kNeutral900,
+                              Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
                               BlendMode.srcIn),
                         )
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 28,
                 ),
               ],
             ),
