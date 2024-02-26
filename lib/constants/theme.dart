@@ -9,7 +9,7 @@ class LightTheme {
         cardColor: Colors.white,
         dividerColor: kNeutral100,
         textTheme: textTheme,
-        colorScheme: const ColorScheme.light(onSurface: kNeutral900),
+        colorScheme: const ColorScheme.light(onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600,),
         radioTheme: RadioThemeData(
           overlayColor: MaterialStateProperty.resolveWith((states) {
             // If the button is pressed, return green, otherwise blue
@@ -149,6 +149,8 @@ class DarkTheme {
             const BottomSheetThemeData(backgroundColor: kNeutral900),
         colorScheme: const ColorScheme.dark(
           onSurface: Colors.white,
+          onPrimary: kPrimary400,
+          onSecondaryContainer: kNeutral400,
         ),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 5,

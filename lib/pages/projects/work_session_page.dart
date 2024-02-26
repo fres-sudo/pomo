@@ -42,7 +42,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       child: SvgPicture.asset(
                         'assets/icons/arrow-left.svg',
                         colorFilter: ColorFilter.mode(
-                            context.isDarkMode ? Colors.white : kNeutral900,
+                            Theme.of(context).iconTheme.color ?? Colors.white,
                             BlendMode.srcIn),
                       ),
                     ),
@@ -59,7 +59,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: context.isDarkMode ? kNeutral800 : kNeutral200),
+                        color: Theme.of(context).cardColor),
                     child: ToggleButtons(
                         renderBorder: false,
                         splashColor: Colors.transparent,
@@ -83,13 +83,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                           Container(
                             width: MediaQuery.sizeOf(context).width * 1 / 2 - 32,
                             decoration: BoxDecoration(
-                                color: context.isDarkMode
-                                    ? (selectedMode[0]
-                                        ? Colors.black
-                                        : kNeutral800)
-                                    : (selectedMode[0]
-                                        ? Colors.white
-                                        : kNeutral200),
+                                color: selectedMode[0] ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(
                               vertical: 12,
@@ -102,20 +96,14 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                                     fontWeight: FontWeight.w500,
                                     color: selectedMode[0]
                                         ? kPrimary500
-                                        : kNeutral600),
+                                        : Theme.of(context).colorScheme.onSecondaryContainer),
                               ),
                             ),
                           ),
                           Container(
                             width: MediaQuery.sizeOf(context).width * 1 / 2 - 32,
                             decoration: BoxDecoration(
-                                color: context.isDarkMode
-                                    ? (selectedMode[1]
-                                        ? Colors.black
-                                        : kNeutral800)
-                                    : (selectedMode[1]
-                                        ? Colors.white
-                                        : kNeutral200),
+                                color: selectedMode[1] ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(
                               vertical: 12,
@@ -128,7 +116,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                                     fontWeight: FontWeight.w500,
                                     color: selectedMode[1]
                                         ? kPrimary500
-                                        : kNeutral600),
+                                        : Theme.of(context).colorScheme.onSecondaryContainer),
                               ),
                             ),
                           ),
@@ -140,10 +128,10 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: context.isDarkMode ? kPrimary100 : kPrimary100,
-                      boxShadow: const [
+                      color: kPrimary100,
+                      boxShadow: [
                         BoxShadow(
                           color: kPrimary400,
                           spreadRadius: 1,
@@ -175,9 +163,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       width: MediaQuery.of(context).size.width / 2,
                       height: MediaQuery.of(context).size.height / 2,
                       ringColor: kPrimary300,
-                      ringGradient: LinearGradient(
-                        colors: [kPrimary900, kPrimary300],
-                      ),
+
                       fillColor: kPrimary900,
                       fillGradient: RadialGradient(
                         radius: 10,
@@ -206,10 +192,11 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       onChange: (String timeStamp) {
                         print('Countdown Changed $timeStamp');
                       },
-                      timeFormatterFunction:
-                          (defaultFormatterFunction, duration) {
-                        return Function.apply(
-                            defaultFormatterFunction, [duration]);
+                      timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
+                        // Custom time formatter function
+                        int minutes = duration.inMinutes;
+                        int seconds = duration.inSeconds.remainder(60);
+                        return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
                       },
                     ),
                   ),
@@ -220,20 +207,22 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                   const SizedBox(
                     height: 20,
                   ),
+                  _controller.isStarted ?
                   Center(
                     child: InkWell(
-                      onTap: () => _controller.start(),
+                        onTap: () => _controller.pause(),
+                        //icon: Icon(Icons.stop_rounded),
+                        child: Icon(Icons.pause_circle_filled_rounded, color: Theme.of(context).dividerColor,size: 70,)
+                    ),
+                  ) :
+                  Center(
+                    child: InkWell(
+                      onTap: () => _controller.isPaused ? _controller.resume() : _controller.start(),
                       //icon: Icon(Icons.start_rounded),
-                      child: SvgPicture.asset("assets/icons/play-bold.svg"),
+                      child: Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).dividerColor, size: 70,)
                     ),
                   ),
-                  Center(
-                    child: InkWell(
-                      onTap: () => _controller.pause(),
-                      //icon: Icon(Icons.stop_rounded),
-                      child: SvgPicture.asset("assets/icons/pause-bold.svg"),
-                    ),
-                  ),
+
                 ],
               ),
               Container(
