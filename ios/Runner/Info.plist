@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For fetching images from the gallery, used in create new project</string>
 	<key>CFBundleDisplayName</key>
 	<string>Pomo</string>
 	<key>CFBundleExecutable</key>
