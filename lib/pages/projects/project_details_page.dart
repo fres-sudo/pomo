@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/task_card.dart';
-import 'package:pomo/components/utils/utils.dart';
+import 'dart:io';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
 import 'package:pomo/pages/projects/widget/project_bottom_sheet.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../models/project/project.dart';

@@ -1,17 +1,13 @@
-import 'package:auto_route/annotations.dart';
+import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomo/components/fields/general_text_field.dart';
-import 'package:pomo/components/utils/utils.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:intl/intl.dart';
-import '../../components/fields/name_text_field.dart';
 
 @RoutePage()
 class CreateProjectPage extends StatefulWidget {
@@ -28,23 +24,14 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   final _formKey = GlobalKey<FormState>();
 
+  XFile? image; //this is the state variable
+
   String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
+      if (args.value is DateTime) {
         _selectedDate = args.value.toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
       }
     });
   }
@@ -110,13 +97,19 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   radius: const Radius.circular(30),
                   child: InkResponse(
                     splashColor: Colors.transparent,
-                    onTap: () {},
+                    onTap: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final img = await picker.pickImage(source: ImageSource.gallery);
+                      setState(() {
+                        image = img;
+                      });
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30)),
                       height: MediaQuery.sizeOf(context).height / 7,
-                      child: Text("Add Cover",
+                      child: image == null ? Text("Add Cover",
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -124,7 +117,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .onSecondaryContainer)),
+                                      .onSecondaryContainer))
+                          : Image.file(File(image!.path,), fit: BoxFit.cover),
+
                     ),
                   ),
                 ),

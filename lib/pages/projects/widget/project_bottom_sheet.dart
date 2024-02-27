@@ -20,7 +20,8 @@ class ProjectBottomSheet extends StatelessWidget {
           BoxShadow(
               color: Colors.black12, spreadRadius: 1000, blurRadius: 100),
         ],
-        color: Theme.of(context).scaffoldBackgroundColor
+        color: Theme.of(context).bottomSheetTheme
+            .backgroundColor,
       ),
       padding: const EdgeInsets.only(left: 16, bottom: 16),
       child: Center(
