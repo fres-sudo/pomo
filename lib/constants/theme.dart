@@ -96,7 +96,7 @@ class LightTheme {
             selectedItemColor: kPrimary500,
             unselectedItemColor: Colors.black,
             backgroundColor: Colors.white),
-        cardTheme: CardTheme(color: kNeutral100),
+        cardTheme: CardTheme(color: kNeutral100, surfaceTintColor: kNeutral900),
         iconTheme: const IconThemeData(color: kNeutral900),
         dividerTheme: DividerThemeData(
             color: kNeutral200
@@ -114,11 +114,11 @@ class DarkTheme {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
         ),
-        dividerTheme: DividerThemeData(
+        dividerTheme: const DividerThemeData(
           color: kNeutral800
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        cardTheme: CardTheme(color: kNeutral900),
+        cardTheme: CardTheme(color: kNeutral900, surfaceTintColor: kNeutral100),
         inputDecorationTheme: InputDecorationTheme(
           prefixIconColor: kNeutral100,
           fillColor: kNeutral900,

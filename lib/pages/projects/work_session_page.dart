@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:pomo/routes/app_router.gr.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../models/task/task.dart';
@@ -21,7 +22,8 @@ class WorkSessionPage extends StatefulWidget {
 class _WorkSessionPageState extends State<WorkSessionPage> {
   var selectedMode = [true, false];
 
-  final CountDownController _controller = CountDownController();
+  final CountDownController _timerController = CountDownController();
+  final CountDownController _breakController = CountDownController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,16 +126,20 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              selectedMode[0] ?
               Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: kPrimary100,
                       boxShadow: [
                         BoxShadow(
-                          color: kPrimary400,
+                          color: kPrimary400.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 100,
                         ),
@@ -157,15 +163,14 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       color: kPrimary900,
                     ),
                     child: CircularCountDownTimer(
-                      duration: 25 * 60,
+                      duration: 5,
                       initialDuration: 0,
-                      controller: _controller,
+                      controller: _timerController,
                       width: MediaQuery.of(context).size.width / 2,
                       height: MediaQuery.of(context).size.height / 2,
                       ringColor: kPrimary300,
-
                       fillColor: kPrimary900,
-                      fillGradient: RadialGradient(
+                      fillGradient: const RadialGradient(
                         radius: 10,
                         colors: [kPrimary900, kPrimary300],
                       ),
@@ -187,10 +192,85 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         print('Countdown Started');
                       },
                       onComplete: () {
-                        print('Countdown Ended');
+                        setState(() {
+                          selectedMode = [false, true];
+                        });
                       },
-                      onChange: (String timeStamp) {
-                        print('Countdown Changed $timeStamp');
+                      timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
+                        // Custom time formatter function
+                        int minutes = duration.inMinutes;
+                        int seconds = duration.inSeconds.remainder(60);
+                        return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+                      },
+                    ),
+                  ),
+                ],
+              )
+                  : Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kGreen200,
+                      boxShadow: [
+                        BoxShadow(
+                          color: kGreen200.withOpacity(0.51),
+                          spreadRadius: 1,
+                          blurRadius: 100,
+                        ),
+                      ],
+                    ),
+                    height: MediaQuery.sizeOf(context).height / 3,
+                    padding: const EdgeInsets.all(18.5),
+                  ),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height / 3 - 37,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kGreen400,
+                    ),
+                  ),
+                  Container(
+                    height:
+                    MediaQuery.sizeOf(context).height / 3 - (37 * 2),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kGreen600,
+                    ),
+                    child: CircularCountDownTimer(
+                      duration: 5 * 60,
+                      initialDuration: 0,
+                      controller: _breakController,
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: MediaQuery.of(context).size.height / 2,
+                      ringColor: kGreen400,
+                      fillColor: kGreen600,
+                      fillGradient: const RadialGradient(
+                        radius: 10,
+                        colors: [kGreen600, kGreen400],
+                      ),
+                      backgroundColor: kGreen600,
+                      backgroundGradient: null,
+                      strokeWidth: 10.0,
+                      strokeCap: StrokeCap.round,
+                      textStyle: GoogleFonts.inter(
+                        fontSize: 33.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textFormat: CountdownTextFormat.S,
+                      isReverse: true,
+                      isReverseAnimation: true,
+                      isTimerTextShown: true,
+                      autoStart: false,
+                      onStart: () {
+                        print('Countdown Started');
+                      },
+                      onComplete: () {
+                        setState(() {
+                          selectedMode = [true, false];
+                        });
                       },
                       timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
                         // Custom time formatter function
@@ -207,19 +287,26 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _controller.isStarted ?
+                  _timerController.isStarted ?
                   Center(
                     child: InkWell(
-                        onTap: () => _controller.pause(),
+                        onTap: () => _timerController.pause(),
                         //icon: Icon(Icons.stop_rounded),
-                        child: Icon(Icons.pause_circle_filled_rounded, color: Theme.of(context).dividerColor,size: 70,)
+                        child: Icon(Icons.pause_circle_filled_rounded, color: Theme.of(context).iconTheme.color,size: 70,)
                     ),
                   ) :
                   Center(
                     child: InkWell(
-                      onTap: () => _controller.isPaused ? _controller.resume() : _controller.start(),
+                      onTap: () => _timerController.isPaused ? _timerController.resume() : _timerController.start(),
                       //icon: Icon(Icons.start_rounded),
-                      child: Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).dividerColor, size: 70,)
+                      child: Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).iconTheme.color, size: 70,)
+                    ),
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () => AutoRouter.of(context).push(const SessionCompleteRoute()),
+                      //icon: Icon(Icons.start_rounded),
+                      child: Icon(Icons.gif_outlined,color: Theme.of(context).iconTheme.color, size: 70,)
                     ),
                   ),
 
