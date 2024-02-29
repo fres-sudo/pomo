@@ -13,8 +13,8 @@ part 'authentication_service.g.dart';
 abstract class AuthenticationService {
   factory AuthenticationService(Dio dio, {String baseUrl}) = _AuthenticationService;
 
-  @POST('/login')
+  @POST('/api/v1/users/login')
   Future<SignInResponse> signIn(@Body() SignInRequest request);
-  @POST('/signup')
+  @POST('/api/v1/users/signup')
   Future<SignUpResponse> signUp(@Body() SignUpRequest request);
 }                                                                     

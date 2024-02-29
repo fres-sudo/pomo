@@ -165,8 +165,9 @@ class ProfilePage extends StatelessWidget {
                       ],
                     )
                 ),
-                const SizedBox(
-                  height: 20,
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Divider(),
                 ),
                 InkWell(
                     onTap: (){

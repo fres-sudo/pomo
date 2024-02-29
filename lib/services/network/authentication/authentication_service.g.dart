@@ -32,7 +32,7 @@ class _AuthenticationService implements AuthenticationService {
     )
             .compose(
               _dio.options,
-              '/login',
+              '/api/v1/users/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -59,7 +59,7 @@ class _AuthenticationService implements AuthenticationService {
     )
             .compose(
               _dio.options,
-              '/signup',
+              '/api/v1/users/signup',
               queryParameters: queryParameters,
               data: _data,
             )
