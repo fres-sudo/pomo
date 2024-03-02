@@ -7,14 +7,14 @@ class UserStringMapper extends Mapper<User, String> {
   const UserStringMapper();
 
   static const _idField = '_id';
-  static const _usernnameField = 'name';
+  static const _usernameField = 'name';
   static const _emailField = 'email';
   static const _tokenField = 'token';
 
   @override
   String from(User from) => jsonEncode(<String, dynamic>{
     _idField: from.id,
-    _usernnameField: from.username,
+    _usernameField: from.username,
     _emailField: from.email,
     //_tokenField: from.token,
   });
@@ -25,7 +25,7 @@ class UserStringMapper extends Mapper<User, String> {
 
     return User(
       id: json[_idField],
-      username: json[_usernnameField],
+      username: json[_usernameField],
       email: json[_emailField],
       //token: json[_tokenField],
     );
