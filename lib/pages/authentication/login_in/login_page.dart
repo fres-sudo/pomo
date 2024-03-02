@@ -1,17 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
-import 'package:pomo/components/fields/email_text_field.dart';
-import 'package:pomo/components/fields/password_text_field.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 @RoutePage()
@@ -45,7 +42,11 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignIn: () => _onErrorSignIn(context),
-        signedIn: (_) => AutoRouter.of(context).replace(const RootRoute()),
+        signedIn: (user) {
+          context.read<AuthCubit>().authenticated(user);
+          AutoRouter.of(context).replace(const RootRoute());
+          return null;
+        }
       ),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
@@ -240,8 +241,8 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         children: [
                           SizedBox(
-                            child: Divider(),
                             width: MediaQuery.sizeOf(context).width / 2.6,
+                            child: const Divider(),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -251,8 +252,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           SizedBox(
-                            child: Divider(),
                             width: MediaQuery.sizeOf(context).width / 2.6,
+                            child: const Divider(),
                           ),
                         ],
                       ),
