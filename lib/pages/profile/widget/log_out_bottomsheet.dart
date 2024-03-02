@@ -78,8 +78,8 @@ class LogOutBottomSheet extends StatelessWidget {
                   ),
                   onPressed: () async{
                     context.read<AuthCubit>().signOut();
-                    await Future.delayed(const Duration(seconds: 1));
-                    context.router.replace(const RootRoute());
+                   // await Future.delayed(const Duration(seconds: 1));
+                   // context.router.replace(const RootRoute());
                   },
                 ),
               ],
