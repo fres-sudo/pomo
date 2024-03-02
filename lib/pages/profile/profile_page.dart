@@ -10,6 +10,7 @@ import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
+import '../../routes/app_router.gr.dart';
 
 @RoutePage()
 class ProfilePage extends StatelessWidget {
@@ -17,208 +18,214 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Account", style: kSerzif(context)),
-                const SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16, horizontal: 17),
-                  decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.black12,
-                          spreadRadius: 1,
-                          blurRadius: 10),
-                    ],
-                  ),
-                  child: Row(children: [
-                    const CircleAvatar(),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) =>
+          state.whenOrNull(notAuthenticated: () => context.router.replace(const RootRoute())),
+      builder: (context, state){
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Account", style: kSerzif(context)),
                     const SizedBox(
-                      width: 12,
+                      height: 16,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "Josh Newman",
-                            style: Theme
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 17),
+                      decoration: BoxDecoration(
+                        color: Theme
+                            .of(context)
+                            .cardColor,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black12,
+                              spreadRadius: 1,
+                              blurRadius: 10),
+                        ],
+                      ),
+                      child: Row(children: [
+                        const CircleAvatar(),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                state.maybeWhen(authenticated: (user) => user.username, orElse: () => "??"),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .titleMedium
+                            ),
+                            Text(
+                              "@josh",
+                              style: GoogleFonts.inter(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
+                                color: kNeutral600,
+                              ),
+                            ),
+                          ],
+                        )
+                      ]),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Divider(),
+                    ),
+                    Text(
+                      "General",
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: kNeutral600,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Notification", style: Theme
                                 .of(context)
                                 .textTheme
-                                .titleMedium
-                        ),
-                        Text(
-                          "@josh",
-                          style: GoogleFonts.inter(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: kNeutral600,
-                          ),
-                        ),
-                      ],
-                    )
-                  ]),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(),
-                ),
-                Text(
-                  "General",
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: kNeutral600,
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Notification", style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg", height: 18,)
-                      ],
-                    )
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Languages", style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg", height: 18,)
-                      ],
-                    )
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                    onTap: () {
-                      Scaffold.of(context).showBottomSheet(
-                            (BuildContext context) {
-                          return const ThemeModeSwitcher();
+                                .titleMedium,),
+                            SvgPicture.asset(
+                              "assets/icons/arrow-right.svg", height: 18,)
+                          ],
+                        )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Languages", style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium,),
+                            SvgPicture.asset(
+                              "assets/icons/arrow-right.svg", height: 18,)
+                          ],
+                        )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Scaffold.of(context).showBottomSheet(
+                                (BuildContext context) {
+                              return const ThemeModeSwitcher();
+                            },
+                          );
                         },
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Theme Mode", style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg", height: 18,)
-                      ],
-                    )
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(),
-                ),
-                Text(
-                  "About us",
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: kNeutral600,
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Help Center", style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg", height: 18,)
-                      ],
-                    )
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Privacy Policy", style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg", height: 18,)
-                      ],
-                    )
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(),
-                ),
-                InkWell(
-                    onTap: () {
-                      Scaffold.of(context).showBottomSheet(
-                            (BuildContext context) {
-                          return const LogOutBottomSheet();
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Theme Mode", style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium,),
+                            SvgPicture.asset(
+                              "assets/icons/arrow-right.svg", height: 18,)
+                          ],
+                        )
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Divider(),
+                    ),
+                    Text(
+                      "About us",
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: kNeutral600,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Help Center", style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium,),
+                            SvgPicture.asset(
+                              "assets/icons/arrow-right.svg", height: 18,)
+                          ],
+                        )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Privacy Policy", style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium,),
+                            SvgPicture.asset(
+                              "assets/icons/arrow-right.svg", height: 18,)
+                          ],
+                        )
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Divider(),
+                    ),
+                    InkWell(
+                        onTap: () {
+                          showModalBottomSheet(context: context, builder: (BuildContext context) {
+                            return const LogOutBottomSheet();
+                          },
+                              isDismissible: true);
                         },
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: Text("Logout", style: GoogleFonts.inter(
-                        color: kRed600,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),),
-                    )
+                        borderRadius: BorderRadius.circular(20),
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: Text("Logout", style: GoogleFonts.inter(
+                            color: kRed600,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),),
+                        )
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
+
     );
   }
 }
