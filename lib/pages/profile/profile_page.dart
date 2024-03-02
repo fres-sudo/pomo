@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/pages/profile/widget/log_out_bottomsheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 
 import '../../constants/colors.dart';
@@ -14,7 +17,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -29,9 +31,12 @@ class ProfilePage extends StatelessWidget {
                   height: 16,
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 17),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16, horizontal: 17),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
+                    color: Theme
+                        .of(context)
+                        .cardColor,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: const [
                       BoxShadow(
@@ -49,8 +54,11 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Josh Newman",
-                          style: Theme.of(context).textTheme.titleMedium
+                            "Josh Newman",
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .titleMedium
                         ),
                         Text(
                           "@josh",
@@ -80,48 +88,59 @@ class ProfilePage extends StatelessWidget {
                   height: 8,
                 ),
                 InkWell(
-                  onTap: (){},
+                    onTap: () {},
                     borderRadius: BorderRadius.circular(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Notification", style:Theme.of(context).textTheme.titleMedium,),
-                      SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
-                    ],
-                  )
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Notification", style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleMedium,),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg", height: 18,)
+                      ],
+                    )
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 InkWell(
-                  onTap: (){},
+                    onTap: () {},
                     borderRadius: BorderRadius.circular(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Languages", style: Theme.of(context).textTheme.titleMedium,),
-                      SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
-                    ],
-                  )
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Languages", style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleMedium,),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg", height: 18,)
+                      ],
+                    )
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 InkWell(
-                    onTap: (){
+                    onTap: () {
                       Scaffold.of(context).showBottomSheet(
                             (BuildContext context) {
                           return const ThemeModeSwitcher();
                         },
                       );
-
                     },
                     borderRadius: BorderRadius.circular(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Theme Mode", style: Theme.of(context).textTheme.titleMedium,),
-                        SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
+                        Text("Theme Mode", style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleMedium,),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )
                 ),
@@ -141,13 +160,17 @@ class ProfilePage extends StatelessWidget {
                   height: 8,
                 ),
                 InkWell(
-                    onTap: (){},
+                    onTap: () {},
                     borderRadius: BorderRadius.circular(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Help Center", style: Theme.of(context).textTheme.titleMedium,),
-                        SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
+                        Text("Help Center", style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleMedium,),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )
                 ),
@@ -155,13 +178,17 @@ class ProfilePage extends StatelessWidget {
                   height: 20,
                 ),
                 InkWell(
-                    onTap: (){},
+                    onTap: () {},
                     borderRadius: BorderRadius.circular(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Privacy Policy", style: Theme.of(context).textTheme.titleMedium,),
-                        SvgPicture.asset("assets/icons/arrow-right.svg", height: 18,)
+                        Text("Privacy Policy", style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleMedium,),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg", height: 18,)
                       ],
                     )
                 ),
@@ -170,15 +197,22 @@ class ProfilePage extends StatelessWidget {
                   child: Divider(),
                 ),
                 InkWell(
-                    onTap: (){
-
+                    onTap: () {
+                      Scaffold.of(context).showBottomSheet(
+                            (BuildContext context) {
+                          return const LogOutBottomSheet();
+                        },
+                      );
                     },
                     borderRadius: BorderRadius.circular(20),
-                    child: Text("Logout", style: GoogleFonts.inter(
-                      color: kRed600,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),)
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Text("Logout", style: GoogleFonts.inter(
+                        color: kRed600,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),),
+                    )
                 ),
               ],
             ),

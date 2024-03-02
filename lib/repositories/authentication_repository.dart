@@ -1,13 +1,12 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pine/pine.dart';
-import 'package:pomo/repositories/mappers/user_mapper.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
-import 'package:pomo/services/network/jto/user/user_jto.dart';
 import '../constants/constants.dart';
 import '../models/user/user.dart';
 import '../services/network/requests/sign_in/sign_in_request.dart';
 import '../services/network/requests/sign_up/sign_up_request.dart';
-import 'mappers/user_string_mapper.dart';
+import '../services/network/response/sign_in/sign_in_response.dart';
+import '../services/network/response/sign_up/sign_up_response.dart';
 
 /// Abstract class of AuthenticationRepository
 abstract class AuthenticationRepository {
@@ -31,13 +30,15 @@ abstract class AuthenticationRepository {
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({
     required this.authenticationService,
-    required this.userMapper,
+    required this.signInMapper,
+    required this.signUpMapper,
     required this.userStringMapper,
     required this.secureStorage,
   });
 
   final AuthenticationService authenticationService;
-  final DTOMapper<UserJTO, User> userMapper;
+  final DTOMapper<SignInResponse, User> signInMapper;
+  final DTOMapper<SignUpResponse, User> signUpMapper;
   final Mapper<User, String> userStringMapper;
   final FlutterSecureStorage secureStorage;
 
@@ -53,9 +54,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           password: password,
         ),
       );
-
-      final user = userMapper.fromDTO(response.user);
-
+      final user = signInMapper.fromDTO(response);
       await secureStorage.write(
         key: 'user_data',
         value: userStringMapper.from(user),
@@ -63,7 +62,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
       return user;
     } catch (error) {
-      logger.e('Error signing in: $error');
+      logger.e('Error signing in: ${error}');
       throw Exception('Sign-in failed');
     }
   }
@@ -84,14 +83,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         ),
       );
 
-      final user = userMapper.fromDTO(response.user);
+      final user = signUpMapper.fromDTO(response);
 
       return user;
+
     } catch (error) {
       logger.e(
         'Error signing up with name: $username, email $email and password $password',
       );
-
       rethrow;
     }
   }

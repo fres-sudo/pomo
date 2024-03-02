@@ -7,7 +7,12 @@ final List<SingleChildWidget> _mappers = [
   Provider<Mapper<User, String>>(
     create: (_) => const UserStringMapper(),
   ),
-
+  Provider<DTOMapper<SignInResponse, User>>(
+    create: (_) => SignInResponseMapper(),
+  ),
+  Provider<DTOMapper<SignUpResponse, User>>(
+    create: (_) => SignUpResponseMapper(),
+  ),
 
 ];
 

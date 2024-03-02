@@ -123,7 +123,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email", token: ''),
+                  user: User(id: "id", username: "username", email: "email", ),
                 ),
               ),
               const SizedBox(
@@ -139,7 +139,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email", token: ''),
+                  user: User(id: "id", username: "username", email: "email",),
                 ),
               ),
               const TaskCard(
@@ -148,7 +148,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email", token: ''),
+                  user: User(id: "id", username: "username", email: "email", ),
                 ),
               ),
             ],

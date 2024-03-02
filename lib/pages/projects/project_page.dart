@@ -101,7 +101,7 @@ class ProjectPage extends StatelessWidget {
                               id: "id",
                               username: "username",
                               email: "email",
-                              token: ''),
+                          ),
                         ),
                       ));
                     },
@@ -116,7 +116,7 @@ class ProjectPage extends StatelessWidget {
                             id: "id",
                             username: "username",
                             email: "email",
-                            token: ''),
+                            ),
                       ),
                     ),
                   ),

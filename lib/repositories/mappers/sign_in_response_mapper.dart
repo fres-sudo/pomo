@@ -10,7 +10,7 @@ class SignInResponseMapper extends DTOMapper<SignInResponse, User> {
     id: dto.user.id,
     username: dto.user.username,
     email: dto.user.email,
-    token: dto.token,
+    //token: dto.token,
   );
 
   @override

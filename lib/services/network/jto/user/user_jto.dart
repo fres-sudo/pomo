@@ -12,7 +12,7 @@ class UserJTO extends DTO with _$UserJTO {
     @JsonKey(name:'_id')required String id,
     required String username,
     required String email,
-    required String token,
+    //required String token,
 
 }) = _UserJTO;
 
