@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import '../requests/sign_in/sign_in_request.dart';
 import '../requests/sign_up/sign_up_request.dart';

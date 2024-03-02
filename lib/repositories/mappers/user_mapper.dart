@@ -10,7 +10,7 @@ class UserMapper extends DTOMapper<UserJTO, User> {
     id: dto.id,
     username: dto.username,
     email: dto.email,
-      token: dto.token,
+      //token: dto.token,
   );
 
   @override
@@ -18,7 +18,7 @@ class UserMapper extends DTOMapper<UserJTO, User> {
     id: model.id,
     username: model.username,
     email: model.email,
-    token: model.token,
+    //token: model.token,
   );
 
 }

@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignIn: () => _onErrorSignIn(context),
-        signedIn: (_) => context.router.replace(const RootRoute()),
+        signedIn: (_) => AutoRouter.of(context).replace(const RootRoute()),
       ),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
@@ -208,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              state.maybeWhen(signingIn:() => false, orElse: () => true,) ?
+
                               RoundedButton(
                                   borderColor: Colors.transparent,
                                   color: kPrimary500,
@@ -231,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                         color: kNeutral50),
-                                  )) : Center(child: CircularProgressIndicator())
+                                  ))
                             ]),
                       ),
                       const SizedBox(
@@ -337,8 +337,11 @@ class _LoginPageState extends State<LoginPage> {
                                   .titleSmall
                                   ?.copyWith(color: kPrimary400),
                             ),
-                          )
+                          ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 20,
                       )
                     ],
                   ),

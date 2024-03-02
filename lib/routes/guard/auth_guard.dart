@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_router.gr.dart';
@@ -8,9 +9,9 @@ class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
 
+    const storage = FlutterSecureStorage();
     //check if user is authenticated if yes go to root, if not to login
-    var prefs = await SharedPreferences.getInstance();
-    var value = prefs.getString("userData");
+    var value = await storage.read(key: "user_data");
 
     if (value != null) {
       //user logged

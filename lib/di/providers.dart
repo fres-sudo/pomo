@@ -11,7 +11,9 @@ final List<SingleChildWidget> _providers = [
       ),
     ),
   Provider<Dio>(
-    create: (context) => Dio()
+    create: (context) => Dio(
+      BaseOptions(contentType: 'application/json'),
+    )
       ..interceptors.addAll([
         if (kDebugMode) context.read<PrettyDioLogger>(),
       ]),

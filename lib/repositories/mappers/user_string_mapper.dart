@@ -16,7 +16,7 @@ class UserStringMapper extends Mapper<User, String> {
     _idField: from.id,
     _usernnameField: from.username,
     _emailField: from.email,
-    _tokenField: from.token,
+    //_tokenField: from.token,
   });
 
   @override
@@ -27,7 +27,7 @@ class UserStringMapper extends Mapper<User, String> {
       id: json[_idField],
       username: json[_usernnameField],
       email: json[_emailField],
-      token: json[_tokenField],
+      //token: json[_tokenField],
     );
   }
   

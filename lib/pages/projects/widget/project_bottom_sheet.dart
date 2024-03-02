@@ -36,7 +36,8 @@ class ProjectBottomSheet extends StatelessWidget {
               width: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: context.isDarkMode ? kNeutral800 : kNeutral200,
+                color: Theme.of(context).bottomSheetTheme
+                    .backgroundColor,
               ),
             ),
             const SizedBox(
@@ -58,9 +59,12 @@ class ProjectBottomSheet extends StatelessWidget {
                   onTap: (){
                     AutoRouter.of(context).pop();
                   },
-                  child: Text(
-                    'Edit',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Text(
+                      'Edit',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -70,9 +74,12 @@ class ProjectBottomSheet extends StatelessWidget {
                   onTap: (){
                     AutoRouter.of(context).pop();
                   },
-                  child: Text(
-                    'Select',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Text(
+                      'Select',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -82,9 +89,12 @@ class ProjectBottomSheet extends StatelessWidget {
                   onTap: (){
                     AutoRouter.of(context).pop();
                   },
-                  child: Text(
-                    'Share',
-                    style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Text(
+                      'Share',
+                      style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                    ),
                   ),
                 ),
               ],

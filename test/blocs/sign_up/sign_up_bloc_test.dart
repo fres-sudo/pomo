@@ -13,7 +13,7 @@ void main() {
   /// Testing the event [PerformSignUpEvent]
   group('when the event PerformSignUpEvent is added to the BLoC', () {
     blocTest<SignUpBloc, SignUpState>(
-      'test that SignUpBloc emits SignUpState.performing when perform is called',
+      'test that SignUpBloc emits SignUpState.notSignedUp when perform is called',
       setUp: () {
         //TODO: setup the environment
       },

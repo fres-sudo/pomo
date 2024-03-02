@@ -11,7 +11,6 @@ _$UserJTOImpl _$$UserJTOImplFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String,
       username: json['username'] as String,
       email: json['email'] as String,
-      token: json['token'] as String,
     );
 
 Map<String, dynamic> _$$UserJTOImplToJson(_$UserJTOImpl instance) =>
@@ -19,5 +18,4 @@ Map<String, dynamic> _$$UserJTOImplToJson(_$UserJTOImpl instance) =>
       '_id': instance.id,
       'username': instance.username,
       'email': instance.email,
-      'token': instance.token,
     };
