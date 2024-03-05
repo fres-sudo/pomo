@@ -20,10 +20,10 @@ abstract class TaskService {
   Future<TaskJTO> updateTaskById(@Path('id') String id, TaskJTO task);
   @DELETE('/api/v1/tasks/{id}')
   Future<void> deleteTaskById(@Path('id') String id);
-
+//
   @GET('/api/v1/tasks/project/{projectId}')
   Future<List<TaskJTO>> getTasksByProject(@Path('projectId') String id);
-
+//
 
 
 
