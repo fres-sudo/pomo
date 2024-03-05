@@ -24,10 +24,11 @@ abstract class ProjectService {
   @DELETE('/api/v1/projects/{id}')
   Future<void> deleteProjectById(@Path('id') String id);
 
-  @GET('/api/v1/projects/{projectId}/tasks/')
+  //
+  @POST('/api/v1/projects/{projectId}/tasks/')
   Future<ProjectJTO> addTaskToProject(@Path('projectId') String projectId, @Body() TaskJTO task);
   @PATCH('/api/v1/projects/{projectId}/tasks/{taskId}')
   Future<ProjectJTO> updateTaskInProject(@Path('projectId') String projectId, @Path('taskId') String taskId, @Body() TaskJTO body);
   @DELETE('/api/v1/projects/{id}')
   Future<void> deleteTaskFromProject(@Path('projectId') String projectId, @Path('taskId') String taskId);
-}
+}//
