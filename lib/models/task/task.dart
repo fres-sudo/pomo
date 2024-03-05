@@ -16,6 +16,5 @@ class Task with _$Task {
     required bool completed,
     required User user,
     Project? referenceProject,
-
 }) = _Task;
 }

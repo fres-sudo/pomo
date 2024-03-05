@@ -59,14 +59,16 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                state.maybeWhen(authenticated: (user) => user.username, orElse: () => "??"),
+                                state.maybeWhen(authenticated: (user) =>
+                                user.username, orElse: () => "??"),
                                 style: Theme
                                     .of(context)
                                     .textTheme
                                     .titleMedium
                             ),
                             Text(
-                              "@josh",
+                              state.maybeWhen(authenticated: (user) =>
+                              "@${user.username}", orElse: () => "??"),
                               style: GoogleFonts.inter(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w400,
@@ -203,9 +205,11 @@ class ProfilePage extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () {
-                          showModalBottomSheet(context: context, builder: (BuildContext context) {
-                            return const LogOutBottomSheet();
-                          },
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const LogOutBottomSheet();
+                              },
                               isDismissible: true);
                         },
                         borderRadius: BorderRadius.circular(20),

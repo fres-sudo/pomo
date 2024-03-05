@@ -62,7 +62,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
       return user;
     } catch (error) {
-      logger.e('Error signing in: ${error}');
+      logger.e('Error signing in: $error');
       throw Exception('Sign-in failed');
     }
   }

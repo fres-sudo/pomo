@@ -192,7 +192,6 @@ class DarkTheme {
           behavior: SnackBarBehavior.floating,
           backgroundColor: kNeutral1000,
           shape: RoundedRectangleBorder(
-
             borderRadius: BorderRadius.circular(12),
           ),
           contentTextStyle: GoogleFonts.inter(
