@@ -19,4 +19,21 @@ final List<RepositoryProvider> _repositories = [
 
     return authenticationRepository;
   }),
+  RepositoryProvider<ProjectRepository>(create: (context) {
+    final projectRepository = ProjectRepositoryImpl(
+      taskMapper: context.read(),
+      projectMapper: context.read(),
+      projectService: context.read(),
+      userMapper: context.read(),
+    );
+    return projectRepository;
+  }),
+  RepositoryProvider<TaskRepository>(create: (context) {
+    final taskRepository = TaskRepositoryImpl(
+      taskMapper: context.read(),
+      projectMapper: context.read(),
+      taskService: context.read(),
+    );
+    return taskRepository;
+  }),
 ];

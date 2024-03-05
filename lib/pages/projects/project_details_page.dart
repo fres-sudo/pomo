@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/task_card.dart';
-import 'dart:io';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
+import 'package:pomo/pages/projects/widget/create_task_bottom_sheet.dart';
 import 'package:pomo/pages/projects/widget/project_bottom_sheet.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../models/project/project.dart';
@@ -58,8 +59,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   InkWell(
                     borderRadius: BorderRadius.circular(10),
                     onTap: () {
-                      Scaffold.of(context).showBottomSheet(
-                        (BuildContext context) {
+                      showModalBottomSheet(
+                        context: context,
+                        isDismissible : true,
+                        builder: (BuildContext context) {
                           return const ProjectBottomSheet();
                         },
                       );
@@ -67,8 +70,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     child: SvgPicture.asset(
                       "assets/icons/kebab.svg",
                       colorFilter: ColorFilter.mode(
-                          Theme.of(context).iconTheme.color!,
-                          BlendMode.srcIn),
+                          Theme.of(context).iconTheme.color!, BlendMode.srcIn),
                     ),
                   ),
                 ],
@@ -76,10 +78,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               const SizedBox(
                 height: 8,
               ),
-              Text(
-                widget.project.description,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kNeutral600)
-              ),
+              Text(widget.project.description,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: kNeutral600)),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {},
@@ -101,18 +104,22 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "In Progress",
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
-                  ),
+                  Text("In Progress",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall
+                          ?.copyWith(fontSize: 16)),
                   InkWell(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(context: context, builder: (context) {
+                        return CreateTaskBottomSheet();
+                      });
+                    },
                     child: SvgPicture.asset(
                       "assets/icons/plus.svg",
                       colorFilter: ColorFilter.mode(
-                          Theme.of(context).iconTheme.color!,
-                          BlendMode.srcIn),
+                          Theme.of(context).iconTheme.color!, BlendMode.srcIn),
                     ),
                   )
                 ],
@@ -123,23 +130,32 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email", ),
+                  user: User(
+                    id: "id",
+                    username: "username",
+                    email: "email",
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 32,
               ),
-              Text(
-                "Already Done",
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
-              ),
+              Text("Already Done",
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall
+                      ?.copyWith(fontSize: 16)),
               const TaskCard(
                 task: Task(
                   id: "id",
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email",),
+                  user: User(
+                    id: "id",
+                    username: "username",
+                    email: "email",
+                  ),
                 ),
               ),
               const TaskCard(
@@ -148,7 +164,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   name: "name",
                   pomodoro: 2,
                   completed: false,
-                  user: User(id: "id", username: "username", email: "email", ),
+                  user: User(
+                    id: "id",
+                    username: "username",
+                    email: "email",
+                  ),
                 ),
               ),
             ],

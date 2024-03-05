@@ -52,6 +52,7 @@ dependencies:
   image_picker: ^1.0.7
   confetti: ^0.7.0
   equatable: ^2.0.5
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

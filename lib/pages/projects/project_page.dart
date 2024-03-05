@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/project_card.dart';
-import 'package:pomo/components/fields/general_text_field.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -16,7 +15,7 @@ class ProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
+    final TextEditingController searchController = TextEditingController();
 
     return Scaffold(
       body: SafeArea(
@@ -43,6 +42,8 @@ class ProjectPage extends StatelessWidget {
                   TextFormField(
                     controller: searchController,
                     style: Theme.of(context).textTheme.titleMedium,
+                    cursorColor: kPrimary600,
+
                     decoration: const InputDecoration(
                       hintText: "Search",
                       prefixIcon: Icon(Icons.search)
@@ -77,7 +78,7 @@ class ProjectPage extends StatelessWidget {
                     color: kPrimary500,
                     width: MediaQuery.sizeOf(context).width / 2.5,
                     onPressed: () {
-                      AutoRouter.of(context).push(CreateProjectRoute());
+                      AutoRouter.of(context).push(const CreateProjectRoute());
                     },
                     child: Text(
                       "New Project",
