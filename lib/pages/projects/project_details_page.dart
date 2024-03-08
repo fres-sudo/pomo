@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/cards/task_card.dart';
-import 'package:pomo/models/task/task.dart';
-import 'package:pomo/models/user/user.dart';
 import 'package:pomo/pages/projects/widget/create_task_bottom_sheet.dart';
+import 'package:pomo/pages/projects/widget/no_task_view.dart';
 import 'package:pomo/pages/projects/widget/project_bottom_sheet.dart';
 
 import '../../constants/colors.dart';
@@ -61,7 +60,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
-                        isDismissible : true,
+                        isDismissible: true,
                         builder: (BuildContext context) {
                           return const ProjectBottomSheet();
                         },
@@ -101,76 +100,68 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              widget.project.tasks!.isEmpty ?
+              const Center(child: NoTaskView())
+              : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("In Progress",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("In Progress",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(fontSize: 16)),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return CreateTaskBottomSheet();
+                              });
+                        },
+                        child: SvgPicture.asset(
+                          "assets/icons/plus.svg",
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                        ),
+                      )
+                    ],
+                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.project.tasks?.length,
+                      itemBuilder: (context, index) {
+                        if (widget.project.tasks?[index] != null &&
+                            !widget.project.tasks![index].completed) {
+                          return TaskCard(task: widget.project.tasks![index]);
+                        }
+                        return null;
+                      }),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Text("Already Done",
                       style: Theme.of(context)
                           .textTheme
                           .displaySmall
                           ?.copyWith(fontSize: 16)),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
-                        return CreateTaskBottomSheet();
-                      });
-                    },
-                    child: SvgPicture.asset(
-                      "assets/icons/plus.svg",
-                      colorFilter: ColorFilter.mode(
-                          Theme.of(context).iconTheme.color!, BlendMode.srcIn),
-                    ),
-                  )
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.project.tasks?.length,
+                      itemBuilder: (context, index) {
+                        if (widget.project.tasks?[index] != null &&
+                            widget.project.tasks![index].completed) {
+                          return TaskCard(task: widget.project.tasks![index]);
+                        }
+                        return null;
+                      }),
                 ],
               ),
-              const TaskCard(
-                task: Task(
-                  id: "id",
-                  name: "name",
-                  pomodoro: 2,
-                  completed: false,
-                  user: User(
-                    id: "id",
-                    username: "username",
-                    email: "email",
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              Text("Already Done",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall
-                      ?.copyWith(fontSize: 16)),
-              const TaskCard(
-                task: Task(
-                  id: "id",
-                  name: "name",
-                  pomodoro: 2,
-                  completed: false,
-                  user: User(
-                    id: "id",
-                    username: "username",
-                    email: "email",
-                  ),
-                ),
-              ),
-              const TaskCard(
-                task: Task(
-                  id: "id",
-                  name: "name",
-                  pomodoro: 2,
-                  completed: false,
-                  user: User(
-                    id: "id",
-                    username: "username",
-                    email: "email",
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),

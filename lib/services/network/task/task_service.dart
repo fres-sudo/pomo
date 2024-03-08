@@ -11,17 +11,17 @@ part 'task_service.g.dart';
 abstract class TaskService {
   factory TaskService(Dio dio, {String baseUrl}) = _TaskService;
 
-  @POST('/api/v1/tasks/')
+  @POST('/tasks/')
   Future<TaskJTO> createTask(@Body() TaskJTO body);
 
-  @GET('/api/v1/tasks/{id}')
+  @GET('/tasks/{id}')
   Future<TaskJTO> getTaskById(@Path('id') String id);
-  @PATCH('/api/v1/tasks/{id}')
+  @PATCH('/tasks/{id}')
   Future<TaskJTO> updateTaskById(@Path('id') String id, TaskJTO task);
-  @DELETE('/api/v1/tasks/{id}')
+  @DELETE('/tasks/{id}')
   Future<void> deleteTaskById(@Path('id') String id);
 //
-  @GET('/api/v1/tasks/project/{projectId}')
+  @GET('/tasks/project/{projectId}')
   Future<List<TaskJTO>> getTasksByProject(@Path('projectId') String id);
 //
 

@@ -15,6 +15,6 @@ class Task with _$Task {
     required int pomodoro,
     required bool completed,
     required User user,
-    Project? referenceProject,
+    String? referenceProjectId,
 }) = _Task;
 }

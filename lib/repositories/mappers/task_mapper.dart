@@ -4,14 +4,17 @@ import 'package:pomo/repositories/mappers/project_mapper.dart';
 import 'package:pomo/repositories/mappers/user_mapper.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
 
+import '../../models/project/project.dart';
+import '../../models/user/user.dart';
+import '../../services/network/jto/project/project_jto.dart';
+import '../../services/network/jto/user/user_jto.dart';
+
 class TaskMapper extends DTOMapper<TaskJTO, Task> {
   const TaskMapper({
     required this.userMapper,
-    required this.projectMapper,
   });
 
-  final UserMapper userMapper;
-  final ProjectMapper projectMapper;
+  final DTOMapper<UserJTO, User> userMapper;
 
   @override
   Task fromDTO(TaskJTO dto) => Task(
@@ -20,7 +23,7 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
         pomodoro: dto.pomodoro,
         completed: dto.completed,
         user: userMapper.fromDTO(dto.user),
-        referenceProject: dto.referenceProject != null ? projectMapper.fromDTO(dto.referenceProject!) : null
+        referenceProjectId: dto.referenceProjectId,
       );
 
   @override
@@ -30,6 +33,6 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
       pomodoro: model.pomodoro,
       completed: model.completed,
       user: userMapper.toDTO(model.user),
-      referenceProject: model.referenceProject != null ? projectMapper.toDTO(model.referenceProject!) : null
+      referenceProjectId: model.referenceProjectId
   );
 }

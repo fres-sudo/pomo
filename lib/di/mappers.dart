@@ -17,8 +17,9 @@ final List<SingleChildWidget> _mappers = [
     create: (context) => ProjectMapper(userMapper: context.read(), taskMapper: context.read()),
   ),
   Provider<DTOMapper<TaskJTO, Task>>(
-    create: (context) => TaskMapper(userMapper: context.read(), projectMapper: context.read()),
+    create: (context) => TaskMapper(userMapper: context.read()),
   ),
+
 
 
 ];

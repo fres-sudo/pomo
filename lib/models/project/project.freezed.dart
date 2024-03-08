@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Project {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   DateTime get dueDate => throw _privateConstructorUsedError;
-  User get owner => throw _privateConstructorUsedError;
+  String get owner => throw _privateConstructorUsedError;
   String? get imageCover => throw _privateConstructorUsedError;
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<User>? get contributors => throw _privateConstructorUsedError;
@@ -35,16 +35,14 @@ abstract class $ProjectCopyWith<$Res> {
       _$ProjectCopyWithImpl<$Res, Project>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
       String description,
       DateTime dueDate,
-      User owner,
+      String owner,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
-
-  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -60,7 +58,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = null,
     Object? dueDate = null,
@@ -70,10 +68,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? contributors = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -89,7 +87,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as User,
+              as String,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -104,14 +102,6 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
               as List<User>?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get owner {
-    return $UserCopyWith<$Res>(_value.owner, (value) {
-      return _then(_value.copyWith(owner: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -122,17 +112,14 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
       String description,
       DateTime dueDate,
-      User owner,
+      String owner,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
-
-  @override
-  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -146,7 +133,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = null,
     Object? dueDate = null,
@@ -156,10 +143,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? contributors = freezed,
   }) {
     return _then(_$ProjectImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -175,7 +162,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as User,
+              as String,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -196,7 +183,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
 
 class _$ProjectImpl extends _Project {
   const _$ProjectImpl(
-      {required this.id,
+      {this.id,
       required this.name,
       required this.description,
       required this.dueDate,
@@ -209,7 +196,7 @@ class _$ProjectImpl extends _Project {
         super._();
 
   @override
-  final String id;
+  final String? id;
   @override
   final String name;
   @override
@@ -217,7 +204,7 @@ class _$ProjectImpl extends _Project {
   @override
   final DateTime dueDate;
   @override
-  final User owner;
+  final String owner;
   @override
   final String? imageCover;
   final List<Task>? _tasks;
@@ -284,18 +271,18 @@ class _$ProjectImpl extends _Project {
 
 abstract class _Project extends Project {
   const factory _Project(
-      {required final String id,
+      {final String? id,
       required final String name,
       required final String description,
       required final DateTime dueDate,
-      required final User owner,
+      required final String owner,
       final String? imageCover,
       final List<Task>? tasks,
       final List<User>? contributors}) = _$ProjectImpl;
   const _Project._() : super._();
 
   @override
-  String get id;
+  String? get id;
   @override
   String get name;
   @override
@@ -303,7 +290,7 @@ abstract class _Project extends Project {
   @override
   DateTime get dueDate;
   @override
-  User get owner;
+  String get owner;
   @override
   String? get imageCover;
   @override

@@ -1,10 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:io' show Platform;
 
 import 'custom_popup.dart';
 
+Future<String> getUserId() async {
+  const storage = FlutterSecureStorage();
+  var userData = await storage.read(key: "user_data");
+  final Map<String, dynamic> userMap = json.decode(userData!);
+  return userMap['_id'];
+}
 
 extension DarkMode on BuildContext {
   /// is dark mode currently enabled?

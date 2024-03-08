@@ -17,7 +17,9 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import '../blocs/project/project_bloc.dart';
 import '../blocs/sign_up/sign_up_bloc.dart';
+import '../blocs/task/task_bloc.dart';
 import '../constants/constants.dart';
 import '../cubits/auth/auth_cubit.dart';
 import '../cubits/theme/theme_cubit.dart';
@@ -33,7 +35,9 @@ import '../repositories/mappers/user_mapper.dart';
 import '../services/network/interceptors/auth_interceptor.dart';
 import '../services/network/jto/project/project_jto.dart';
 import '../services/network/jto/user/user_jto.dart';
+import '../services/network/project/project_service.dart';
 import '../services/network/response/sign_in/sign_in_response.dart';
+import '../services/network/task/task_service.dart';
 
 part 'blocs.dart';
 

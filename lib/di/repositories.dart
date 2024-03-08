@@ -16,7 +16,6 @@ final List<RepositoryProvider> _repositories = [
             authenticationRepository: authenticationRepository,
           ),
         );
-
     return authenticationRepository;
   }),
   RepositoryProvider<ProjectRepository>(create: (context) {

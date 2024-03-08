@@ -68,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Text(
                               state.maybeWhen(authenticated: (user) =>
-                              "@${user.username}", orElse: () => "??"),
+                              "@${user.id}", orElse: () => "??"),
                               style: GoogleFonts.inter(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w400,

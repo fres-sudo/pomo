@@ -11,24 +11,24 @@ part 'project_service.g.dart';
 abstract class ProjectService {
   factory ProjectService(Dio dio, {String baseUrl}) = _ProjectService;
 
-  @GET('/api/v1/projects/user/{id}')
+  @GET('/projects/user/{id}')
   Future<List<ProjectJTO>> getProjectsByUser(@Path('id') String id);
 
-  @POST('/api/v1/projects/')
+  @POST('/projects/')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
 
-  @GET('/api/v1/projects/{id}')
+  @GET('/projects/{id}')
   Future<ProjectJTO> getProjectById(@Path('id') String id);
-  @PATCH('/api/v1/projects/{id}')
+  @PATCH('/projects/{id}')
   Future<ProjectJTO> updateProjectById(@Path('id') String id, @Body() ProjectJTO body);
-  @DELETE('/api/v1/projects/{id}')
+  @DELETE('/projects/{id}')
   Future<void> deleteProjectById(@Path('id') String id);
 
   //
-  @POST('/api/v1/projects/{projectId}/tasks/')
+  @POST('/projects/{projectId}/tasks/')
   Future<ProjectJTO> addTaskToProject(@Path('projectId') String projectId, @Body() TaskJTO task);
-  @PATCH('/api/v1/projects/{projectId}/tasks/{taskId}')
+  @PATCH('/projects/{projectId}/tasks/{taskId}')
   Future<ProjectJTO> updateTaskInProject(@Path('projectId') String projectId, @Path('taskId') String taskId, @Body() TaskJTO body);
-  @DELETE('/api/v1/projects/{id}')
+  @DELETE('/projects/{id}')
   Future<void> deleteTaskFromProject(@Path('projectId') String projectId, @Path('taskId') String taskId);
 }//

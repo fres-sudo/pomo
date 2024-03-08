@@ -24,6 +24,18 @@ final List<SingleChildWidget> _providers = [
       baseUrl: kServerConnectionIP,
     ),
   ),
+  Provider<ProjectService>(
+    create: (context) => ProjectService(
+      context.read<Dio>(),
+      baseUrl: kServerConnectionIP,
+    ),
+  ),
+  Provider<TaskService>(
+    create: (context) => TaskService(
+      context.read<Dio>(),
+      baseUrl: kServerConnectionIP,
+    ),
+  ),
   Provider<FlutterSecureStorage>(
     create: (_) => const FlutterSecureStorage(),
   ),

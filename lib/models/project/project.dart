@@ -10,11 +10,11 @@ class Project with _$Project {
   const Project._();
 
   const factory Project({
-    required String id,
+    String? id,
     required String name,
     required String description,
     required DateTime dueDate,
-    required User owner,
+    required String owner,
     String? imageCover,
     List<Task>? tasks,
     List<User>? contributors,
