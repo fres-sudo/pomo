@@ -14,5 +14,11 @@ final List<BlocProvider> _blocs = [
   ),
   BlocProvider<SignUpBloc>(
     create: (context) => SignUpBloc(authenticationRepository: context.read()),
-  )
+  ),
+  BlocProvider<ProjectBloc>(
+    create: (context) => ProjectBloc(projectRepository: context.read()),
+  ),
+  BlocProvider<TaskBloc>(
+    create: (context) => TaskBloc(taskRepository: context.read()),
+  ),
 ];

@@ -49,7 +49,11 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(const ProjectState.fetching());
     try{
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
-      emit(ProjectState.fetched(projects));
+      if(projects.isEmpty) {
+        emit(const ProjectState.none());
+      } else {
+        emit(ProjectState.fetched(projects));
+      }
     }catch(_){
       emit(const ProjectState.errorFetching());
     }

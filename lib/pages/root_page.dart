@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pomo/components/utils/utils.dart';
-import 'package:pomo/constants/colors.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()

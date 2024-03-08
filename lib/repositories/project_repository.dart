@@ -1,6 +1,12 @@
+import 'package:pine/utils/dto_mapper.dart';
+
 import '../constants/constants.dart';
 import '../models/project/project.dart';
 import '../models/task/task.dart';
+import '../models/user/user.dart';
+import '../services/network/jto/project/project_jto.dart';
+import '../services/network/jto/task/task_jto.dart';
+import '../services/network/jto/user/user_jto.dart';
 import '../services/network/project/project_service.dart';
 import 'mappers/project_mapper.dart';
 import 'mappers/task_mapper.dart';
@@ -54,9 +60,9 @@ class ProjectRepositoryImpl implements ProjectRepository {
   });
 
   final ProjectService projectService;
-  final UserMapper userMapper;
-  final TaskMapper taskMapper;
-  final ProjectMapper projectMapper;
+  final DTOMapper<UserJTO, User>  userMapper;
+  final DTOMapper<TaskJTO, Task> taskMapper;
+  final DTOMapper<ProjectJTO, Project>  projectMapper;
 
   @override
   Future<Project> addTaskToProject(
@@ -76,11 +82,11 @@ class ProjectRepositoryImpl implements ProjectRepository {
   Future<Project> createProject({required Project project}) async {
     try {
       final newProject =
-          await projectService.createProject(projectMapper.toDTO(project));
+      await projectService.createProject(projectMapper.toDTO(project));
 
       return projectMapper.fromDTO(newProject);
-    } catch (error) {
-      logger.e('Error creating new project in: $error');
+    } catch (error, stack) {
+      logger.e('Error creating new project in: $error. The stack is: \n $stack ');
       throw Exception('Creation failed');
     }
   }

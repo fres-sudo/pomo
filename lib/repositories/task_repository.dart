@@ -1,8 +1,12 @@
 
+import 'package:pine/utils/dto_mapper.dart';
 import 'package:pomo/repositories/mappers/project_mapper.dart';
 
 import '../constants/constants.dart';
+import '../models/project/project.dart';
 import '../models/task/task.dart';
+import '../services/network/jto/project/project_jto.dart';
+import '../services/network/jto/task/task_jto.dart';
 import '../services/network/task/task_service.dart';
 import 'mappers/task_mapper.dart';
 
@@ -35,8 +39,8 @@ class TaskRepositoryImpl implements TaskRepository {
 });
 
   final TaskService taskService;
-  final TaskMapper taskMapper;
-  final ProjectMapper projectMapper;
+  final DTOMapper<TaskJTO, Task> taskMapper;
+  final DTOMapper<ProjectJTO, Project> projectMapper;
 
   @override
   Future<Task> createTask({required Task task}) async {

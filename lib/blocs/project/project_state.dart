@@ -9,6 +9,8 @@ class ProjectState with _$ProjectState {
   
   const factory ProjectState.errorFetching() = ErrorFetchingProjectState;
 
+  const factory ProjectState.none() = NoneProjectState;
+
   const factory ProjectState.getting() = GettingProjectState;
 
   const factory ProjectState.got(Project projects) = GotProjectState;

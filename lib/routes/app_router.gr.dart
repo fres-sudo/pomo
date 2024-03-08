@@ -115,7 +115,7 @@ abstract class $AppRouter extends _i18.RootStackRouter {
     ProjectRoute.name: (routeData) {
       return _i18.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.ProjectPage(),
+        child: _i18.WrappedRoute(child: const _i11.ProjectPage()),
       );
     },
     QuickSessionRoute.name: (routeData) {

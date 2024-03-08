@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-
 import 'app_router.gr.dart';
 import 'guard/auth_guard.dart';
 import 'guard/onBoarding_guard.dart';

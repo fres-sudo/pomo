@@ -21,7 +21,7 @@ mixin _$Task {
   int get pomodoro => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
-  Project? get referenceProject => throw _privateConstructorUsedError;
+  String? get referenceProjectId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
@@ -38,10 +38,9 @@ abstract class $TaskCopyWith<$Res> {
       int pomodoro,
       bool completed,
       User user,
-      Project? referenceProject});
+      String? referenceProjectId});
 
   $UserCopyWith<$Res> get user;
-  $ProjectCopyWith<$Res>? get referenceProject;
 }
 
 /// @nodoc
@@ -62,7 +61,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? pomodoro = null,
     Object? completed = null,
     Object? user = null,
-    Object? referenceProject = freezed,
+    Object? referenceProjectId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,10 +84,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
-      referenceProject: freezed == referenceProject
-          ? _value.referenceProject
-          : referenceProject // ignore: cast_nullable_to_non_nullable
-              as Project?,
+      referenceProjectId: freezed == referenceProjectId
+          ? _value.referenceProjectId
+          : referenceProjectId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -97,18 +96,6 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $UserCopyWith<$Res> get user {
     return $UserCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ProjectCopyWith<$Res>? get referenceProject {
-    if (_value.referenceProject == null) {
-      return null;
-    }
-
-    return $ProjectCopyWith<$Res>(_value.referenceProject!, (value) {
-      return _then(_value.copyWith(referenceProject: value) as $Val);
     });
   }
 }
@@ -126,12 +113,10 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       int pomodoro,
       bool completed,
       User user,
-      Project? referenceProject});
+      String? referenceProjectId});
 
   @override
   $UserCopyWith<$Res> get user;
-  @override
-  $ProjectCopyWith<$Res>? get referenceProject;
 }
 
 /// @nodoc
@@ -149,7 +134,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? pomodoro = null,
     Object? completed = null,
     Object? user = null,
-    Object? referenceProject = freezed,
+    Object? referenceProjectId = freezed,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -172,10 +157,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
-      referenceProject: freezed == referenceProject
-          ? _value.referenceProject
-          : referenceProject // ignore: cast_nullable_to_non_nullable
-              as Project?,
+      referenceProjectId: freezed == referenceProjectId
+          ? _value.referenceProjectId
+          : referenceProjectId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -189,7 +174,7 @@ class _$TaskImpl extends _Task {
       required this.pomodoro,
       required this.completed,
       required this.user,
-      this.referenceProject})
+      this.referenceProjectId})
       : super._();
 
   @override
@@ -203,11 +188,11 @@ class _$TaskImpl extends _Task {
   @override
   final User user;
   @override
-  final Project? referenceProject;
+  final String? referenceProjectId;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProject: $referenceProject)';
+    return 'Task(id: $id, name: $name, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProjectId: $referenceProjectId)';
   }
 
   @override
@@ -222,13 +207,13 @@ class _$TaskImpl extends _Task {
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.referenceProject, referenceProject) ||
-                other.referenceProject == referenceProject));
+            (identical(other.referenceProjectId, referenceProjectId) ||
+                other.referenceProjectId == referenceProjectId));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, pomodoro, completed, user, referenceProject);
+      runtimeType, id, name, pomodoro, completed, user, referenceProjectId);
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +229,7 @@ abstract class _Task extends Task {
       required final int pomodoro,
       required final bool completed,
       required final User user,
-      final Project? referenceProject}) = _$TaskImpl;
+      final String? referenceProjectId}) = _$TaskImpl;
   const _Task._() : super._();
 
   @override
@@ -258,7 +243,7 @@ abstract class _Task extends Task {
   @override
   User get user;
   @override
-  Project? get referenceProject;
+  String? get referenceProjectId;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

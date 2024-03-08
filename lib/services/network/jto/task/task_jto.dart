@@ -16,7 +16,7 @@ class TaskJTO extends DTO with _$TaskJTO {
     required int pomodoro,
     required bool completed,
     required UserJTO user,
-    ProjectJTO? referenceProject,
+    String? referenceProjectId,
 }) = _TaskJTO;
 
   factory TaskJTO.fromJson(Map<String, dynamic> json) =>
