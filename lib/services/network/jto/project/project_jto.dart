@@ -13,7 +13,6 @@ class ProjectJTO extends DTO with _$ProjectJTO {
   const factory ProjectJTO({
     // ignore: invalid_annotation_target
     @JsonKey(name: '_id')String? id,
-    // ignore: invalid_annotation_target
     required String name,
     required String description,
     required DateTime dueDate,

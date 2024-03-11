@@ -79,8 +79,7 @@ class _TaskCardState extends State<TaskCard> {
                         name: "name",
                         pomodoro: 2,
                         completed: false,
-                        user: User(
-                            id: "id", username: "username", email: "email",))));
+                        user: "")));
               },
               icon: SvgPicture.asset(
                 "assets/icons/play-bold.svg",

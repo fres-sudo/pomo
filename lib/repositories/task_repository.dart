@@ -83,8 +83,8 @@ class TaskRepositoryImpl implements TaskRepository {
       final tasks = await taskService.getTasksByProject(projectId);
 
       return tasks.map((t) => taskMapper.fromDTO(t)).toList();
-    } catch (error) {
-      logger.e('Error fetching tasks by project in: $error');
+    } catch (error, stack) {
+      logger.e('Error fetching tasks by project in: $error \n This is the stack: $stack');
       throw Exception('Getter failed');
     }
   }
