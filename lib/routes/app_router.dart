@@ -14,7 +14,7 @@ class AppRouter extends $AppRouter {
         fullscreenDialog: true,
         children: [
           AutoRoute(page: ProjectNavigation.page, fullscreenDialog: true,children: [
-            AutoRoute(page: ProjectRoute.page, initial: true, fullscreenDialog: true),
+            CustomRoute(page: ProjectRoute.page, transitionsBuilder: TransitionsBuilders.fadeIn, initial: true, fullscreenDialog: true),
             AutoRoute(page: ProjectDetailsRoute.page),
           ]),
           AutoRoute(page: StatsRoute.page),

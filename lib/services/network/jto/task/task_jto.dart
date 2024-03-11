@@ -11,11 +11,12 @@ part 'task_jto.freezed.dart';
 @freezed
 class TaskJTO extends DTO with _$TaskJTO {
   const factory TaskJTO({
-    required String id,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: '_id') required String id,
     required String name,
     required int pomodoro,
     required bool completed,
-    required UserJTO user,
+    required String user,
     String? referenceProjectId,
 }) = _TaskJTO;
 

@@ -20,7 +20,7 @@ mixin _$Task {
   String get name => throw _privateConstructorUsedError;
   int get pomodoro => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
+  String get user => throw _privateConstructorUsedError;
   String? get referenceProjectId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,10 +37,8 @@ abstract class $TaskCopyWith<$Res> {
       String name,
       int pomodoro,
       bool completed,
-      User user,
+      String user,
       String? referenceProjectId});
-
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -83,20 +81,12 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as String,
       referenceProjectId: freezed == referenceProjectId
           ? _value.referenceProjectId
           : referenceProjectId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -112,11 +102,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String name,
       int pomodoro,
       bool completed,
-      User user,
+      String user,
       String? referenceProjectId});
-
-  @override
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -156,7 +143,7 @@ class __$$TaskImplCopyWithImpl<$Res>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as String,
       referenceProjectId: freezed == referenceProjectId
           ? _value.referenceProjectId
           : referenceProjectId // ignore: cast_nullable_to_non_nullable
@@ -186,7 +173,7 @@ class _$TaskImpl extends _Task {
   @override
   final bool completed;
   @override
-  final User user;
+  final String user;
   @override
   final String? referenceProjectId;
 
@@ -228,7 +215,7 @@ abstract class _Task extends Task {
       required final String name,
       required final int pomodoro,
       required final bool completed,
-      required final User user,
+      required final String user,
       final String? referenceProjectId}) = _$TaskImpl;
   const _Task._() : super._();
 
@@ -241,7 +228,7 @@ abstract class _Task extends Task {
   @override
   bool get completed;
   @override
-  User get user;
+  String get user;
   @override
   String? get referenceProjectId;
   @override

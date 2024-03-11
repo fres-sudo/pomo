@@ -22,7 +22,7 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
         name: dto.name,
         pomodoro: dto.pomodoro,
         completed: dto.completed,
-        user: userMapper.fromDTO(dto.user),
+        user: dto.user,
         referenceProjectId: dto.referenceProjectId,
       );
 
@@ -32,7 +32,7 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
       name: model.id,
       pomodoro: model.pomodoro,
       completed: model.completed,
-      user: userMapper.toDTO(model.user),
+      user: model.user,
       referenceProjectId: model.referenceProjectId
   );
 }

@@ -100,10 +100,11 @@ abstract class $AppRouter extends _i18.RootStackRouter {
       final args = routeData.argsAs<ProjectDetailsRouteArgs>();
       return _i18.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.ProjectDetailsPage(
+        child: _i18.WrappedRoute(
+            child: _i9.ProjectDetailsPage(
           key: args.key,
           project: args.project,
-        ),
+        )),
       );
     },
     ProjectNavigation.name: (routeData) {

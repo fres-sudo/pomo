@@ -53,6 +53,7 @@ dependencies:
   confetti: ^0.7.0
   equatable: ^2.0.5
   numberpicker: ^2.1.2
+  skeletonizer: ^1.1.0
 
 dev_dependencies:
   flutter_test:
