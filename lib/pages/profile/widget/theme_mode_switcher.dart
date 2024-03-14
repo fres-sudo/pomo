@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/components/utils/utils.dart';
-import 'package:pomo/constants/colors.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 
 class ThemeModeSwitcher extends StatelessWidget {

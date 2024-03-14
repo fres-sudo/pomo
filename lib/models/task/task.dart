@@ -10,11 +10,12 @@ class Task with _$Task {
   const Task._();
 
   const factory Task({
-    required String id,
+    String? id,
     required String name,
+    String? description,
     required int pomodoro,
     required bool completed,
     required String user,
-    String? referenceProjectId,
+    String? referenceProject,
 }) = _Task;
 }

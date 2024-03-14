@@ -5,8 +5,10 @@ import 'package:pomo/constants/colors.dart';
 class LightTheme {
   static get make => ThemeData(
         useMaterial3: true,
+        primaryColor: kPrimary500,
         scaffoldBackgroundColor: kNeutral50,
         cardColor: Colors.white,
+        indicatorColor: kPrimary500,
         dividerColor: kNeutral100,
         textTheme: textTheme,
         colorScheme: const ColorScheme.light(onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600,),
@@ -111,6 +113,8 @@ class DarkTheme {
   static get make => ThemeData.dark(useMaterial3: true).copyWith(
         scaffoldBackgroundColor: const Color(0xFF000000),
         cardColor: kNeutral900,
+        primaryColor: kPrimary500,
+        indicatorColor: kPrimary500,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
         ),

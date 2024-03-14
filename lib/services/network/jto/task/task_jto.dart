@@ -12,12 +12,13 @@ part 'task_jto.freezed.dart';
 class TaskJTO extends DTO with _$TaskJTO {
   const factory TaskJTO({
     // ignore: invalid_annotation_target
-    @JsonKey(name: '_id') required String id,
+    @JsonKey(name: '_id') String? id,
     required String name,
+    String? description,
     required int pomodoro,
     required bool completed,
     required String user,
-    String? referenceProjectId,
+    String? referenceProject,
 }) = _TaskJTO;
 
   factory TaskJTO.fromJson(Map<String, dynamic> json) =>

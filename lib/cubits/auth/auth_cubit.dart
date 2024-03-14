@@ -18,23 +18,24 @@ class AuthCubit extends Cubit<AuthState> {
   /// Create a new instance of [AuthCubit].
   AuthCubit({
     required this.authenticationRepository
-}) : super(const AuthState.checkAuthentication());
-  
-  /// Method used to perform the [checkAuthenticationState] action
-  void checkAuthenticationState() async {
-    final user = await authenticationRepository.currentUser;
+  }) : super(const AuthState.checkAuthentication());
 
+  /// Method used to perform the [checkAuthentication] action
+  FutureOr<void> checkAuthentication() async {
+    final user = await authenticationRepository.currentUser;
     emit(user != null
         ? AuthState.authenticated(user)
-        : const AuthState.notAuthenticated());  }
-  
+        : const AuthState.notAuthenticated());
+  }
+
   /// Method used to perform the [authenticated] action
   void authenticated(User user) => emit(AuthState.authenticated(user));
-  
+
   /// Method used to perform the [signOut] action
-  void signOut() async {
+  FutureOr<void>  signOut() async {
     await authenticationRepository.signOut();
 
-    emit(const AuthState.notAuthenticated());  }
-  
+    emit(const AuthState.notAuthenticated());
+  }
+
 }

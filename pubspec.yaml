@@ -54,6 +54,7 @@ dependencies:
   equatable: ^2.0.5
   numberpicker: ^2.1.2
   skeletonizer: ^1.1.0
+  flutter_slidable: ^3.0.1
 
 dev_dependencies:
   flutter_test:

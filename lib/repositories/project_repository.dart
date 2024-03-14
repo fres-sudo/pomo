@@ -130,8 +130,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
       final projects = await projectService.getProjectsByUser(userId);
 
       return projects.map((p) => projectMapper.fromDTO(p)).toList();
-    } catch (error) {
-      logger.e('Error fetching projects in: $error');
+    } catch (error, stack) {
+      logger.e('Error fetching projects in: $error \n the stack was : $stack');
       throw Exception('Getter failed');
     }
   }

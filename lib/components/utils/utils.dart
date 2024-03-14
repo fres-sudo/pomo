@@ -8,6 +8,27 @@ import 'dart:io' show Platform;
 
 import 'custom_popup.dart';
 
+onErrorState(BuildContext context, String text) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text(
+              'Something went wrong while $text, please try again')),
+    );
+  });
+}
+onSuccessState(BuildContext context, String text,) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text(
+              'Great! You successfully $text')),
+    );
+  });
+}
+
 Future<String> getUserId() async {
   const storage = FlutterSecureStorage();
   var userData = await storage.read(key: "user_data");

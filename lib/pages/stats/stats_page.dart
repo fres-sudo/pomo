@@ -37,11 +37,7 @@ class StatsPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-
-                      ],
-                    )
+                    ToggleButtons(isSelected: [], children: [])
                   ],
                 ),
               )
