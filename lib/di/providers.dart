@@ -40,8 +40,4 @@ final List<SingleChildWidget> _providers = [
     create: (_) => const FlutterSecureStorage(),
   ),
 
-
-  ChangeNotifierProvider(create: (context) => EmailValidProvider()),
-  ChangeNotifierProvider(create: (context) => NameValidProvider()),
-  ChangeNotifierProvider(create: (context) => PasswordValidProvider()),
 ];

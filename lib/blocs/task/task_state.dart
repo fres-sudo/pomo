@@ -3,7 +3,7 @@ part of 'task_bloc.dart';
 @freezed
 class TaskState with _$TaskState {
   
-  const factory TaskState.creating() = CretaingTaskState;
+  const factory TaskState.creating() = CreatingTaskState;
   
   const factory TaskState.created(Task task) = CreatedTaskState;
   
@@ -20,6 +20,8 @@ class TaskState with _$TaskState {
   const factory TaskState.deleted() = DeletedTaskState;
   
   const factory TaskState.errorDeleting() = ErrorDeletingTaskState;
+
+  const factory TaskState.none() = NoneTaskState;
   
   const factory TaskState.fetching() = FetchingTaskState;
   

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
-import 'package:pomo/pages/profile/widget/log_out_bottomsheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 
 import '../../constants/colors.dart';
@@ -19,9 +18,9 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) =>
-          state.whenOrNull(notAuthenticated: () => context.router.replace(const RootRoute())),
-      builder: (context, state){
+      listener: (context, state) => state.whenOrNull(
+          notAuthenticated: () => context.router.replace(const RootRoute())),
+      builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
             child: SafeArea(
@@ -39,9 +38,7 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 17),
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .cardColor,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: const [
                           BoxShadow(
@@ -59,16 +56,14 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                state.maybeWhen(authenticated: (user) =>
-                                user.username, orElse: () => "??"),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .titleMedium
-                            ),
+                                state.maybeWhen(
+                                    authenticated: (user) => user.username,
+                                    orElse: () => "??"),
+                                style: Theme.of(context).textTheme.titleMedium),
                             Text(
-                              state.maybeWhen(authenticated: (user) =>
-                              "@${user.id}", orElse: () => "??"),
+                              state.maybeWhen(
+                                  authenticated: (user) => "@${user.id}",
+                                  orElse: () => "??"),
                               style: GoogleFonts.inter(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w400,
@@ -100,15 +95,16 @@ class ProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Notification", style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleMedium,),
+                            Text(
+                              "Notification",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             SvgPicture.asset(
-                              "assets/icons/arrow-right.svg", height: 18,)
+                              "assets/icons/arrow-right.svg",
+                              height: 18,
+                            )
                           ],
-                        )
-                    ),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
@@ -118,39 +114,42 @@ class ProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Languages", style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleMedium,),
+                            Text(
+                              "Languages",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             SvgPicture.asset(
-                              "assets/icons/arrow-right.svg", height: 18,)
+                              "assets/icons/arrow-right.svg",
+                              height: 18,
+                            )
                           ],
-                        )
-                    ),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
                     InkWell(
                         onTap: () {
-                          Scaffold.of(context).showBottomSheet(
-                                (BuildContext context) {
+                          showModalBottomSheet(
+                            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                            builder: (BuildContext context) {
                               return const ThemeModeSwitcher();
-                            },
+                            }, context: context,
                           );
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Theme Mode", style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleMedium,),
+                            Text(
+                              "Theme Mode",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             SvgPicture.asset(
-                              "assets/icons/arrow-right.svg", height: 18,)
+                              "assets/icons/arrow-right.svg",
+                              height: 18,
+                            )
                           ],
-                        )
-                    ),
+                        )),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
@@ -172,15 +171,16 @@ class ProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Help Center", style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleMedium,),
+                            Text(
+                              "Help Center",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             SvgPicture.asset(
-                              "assets/icons/arrow-right.svg", height: 18,)
+                              "assets/icons/arrow-right.svg",
+                              height: 18,
+                            )
                           ],
-                        )
-                    ),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
@@ -190,15 +190,16 @@ class ProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Privacy Policy", style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleMedium,),
+                            Text(
+                              "Privacy Policy",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             SvgPicture.asset(
-                              "assets/icons/arrow-right.svg", height: 18,)
+                              "assets/icons/arrow-right.svg",
+                              height: 18,
+                            )
                           ],
-                        )
-                    ),
+                        )),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
@@ -208,20 +209,30 @@ class ProfilePage extends StatelessWidget {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return const LogOutBottomSheet();
+                                return DestructionBottomSheet(
+                                  title: "Account",
+                                  buttonText: 'Log Out',
+                                  description:
+                                      "Are you sure you want to log out this account?",
+                                  function: () {
+                                    context.read<AuthCubit>().signOut();
+                                  },
+                                );
                               },
                               isDismissible: true);
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: Text("Logout", style: GoogleFonts.inter(
-                            color: kRed600,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),),
-                        )
-                    ),
+                          child: Text(
+                            "Logout",
+                            style: GoogleFonts.inter(
+                              color: kRed600,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
@@ -229,7 +240,6 @@ class ProfilePage extends StatelessWidget {
           ),
         );
       },
-
     );
   }
 }

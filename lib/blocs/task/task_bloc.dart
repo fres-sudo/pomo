@@ -40,20 +40,21 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   
   /// Method used to add the [GetTasksByProjectTaskEvent] event
   void getTasksByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
-  
-  
+
+
   FutureOr<void> _onCreateTask(
-    CreateTaskTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
+      CreateTaskTaskEvent event,
+      Emitter<TaskState> emit,
+      ) async {
     emit(const TaskState.creating());
     try{
       final newTask = await taskRepository.createTask(task: event.task);
       emit(TaskState.created(newTask));
-    }catch(_){
+    } catch(e) {
       emit(const TaskState.errorCreating());
     }
   }
+
   
   FutureOr<void> _onGetTaskById(
     GetTaskByIdTaskEvent event,
@@ -101,7 +102,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(const TaskState.fetching());
     try{
       final tasks = await taskRepository.getTasksByProject(projectId: event.projectId);
-      emit(TaskState.fetched(tasks));
+      tasks.isEmpty ? emit(const TaskState.none()) : emit(TaskState.fetched(tasks));
     }catch(_){
       emit(const TaskState.errorFetching());
     }

@@ -5,11 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../constants/colors.dart';
-import '../../../cubits/auth/auth_cubit.dart';
+import '../../constants/colors.dart';
+import '../../cubits/auth/auth_cubit.dart';
 
-class LogOutBottomSheet extends StatelessWidget {
-  const LogOutBottomSheet({super.key});
+class DestructionBottomSheet extends StatelessWidget {
+  const DestructionBottomSheet({super.key, required this.title, required this.buttonText, required this.description, required this.function});
+
+  final String title;
+  final String buttonText;
+  final String description;
+  final void Function() function;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,7 @@ class LogOutBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Log Out',
+                Text(title,
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall
@@ -56,7 +61,7 @@ class LogOutBottomSheet extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                Text('Are you sure you want to log out this account?',
+                Text(description,
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall
@@ -69,18 +74,14 @@ class LogOutBottomSheet extends StatelessWidget {
                   progressColor: kNeutral50,
                   borderColor: Colors.transparent,
                 color: kRed500,
+                  onPressed: function,
                   child: Text(
-                    "Log Out",
+                    buttonText,
                     style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: kNeutral50),
                   ),
-                  onPressed: () async{
-                    context.read<AuthCubit>().signOut();
-                   // await Future.delayed(const Duration(seconds: 1));
-                   // context.router.replace(const RootRoute());
-                  },
                 ),
               ],
             ),

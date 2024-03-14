@@ -16,12 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Task {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   int get pomodoro => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   String get user => throw _privateConstructorUsedError;
-  String? get referenceProjectId => throw _privateConstructorUsedError;
+  String? get referenceProject => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
@@ -33,12 +34,13 @@ abstract class $TaskCopyWith<$Res> {
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
+      String? description,
       int pomodoro,
       bool completed,
       String user,
-      String? referenceProjectId});
+      String? referenceProject});
 }
 
 /// @nodoc
@@ -54,22 +56,27 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
+    Object? description = freezed,
     Object? pomodoro = null,
     Object? completed = null,
     Object? user = null,
-    Object? referenceProjectId = freezed,
+    Object? referenceProject = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       pomodoro: null == pomodoro
           ? _value.pomodoro
           : pomodoro // ignore: cast_nullable_to_non_nullable
@@ -82,9 +89,9 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String,
-      referenceProjectId: freezed == referenceProjectId
-          ? _value.referenceProjectId
-          : referenceProjectId // ignore: cast_nullable_to_non_nullable
+      referenceProject: freezed == referenceProject
+          ? _value.referenceProject
+          : referenceProject // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -98,12 +105,13 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
+      String? description,
       int pomodoro,
       bool completed,
       String user,
-      String? referenceProjectId});
+      String? referenceProject});
 }
 
 /// @nodoc
@@ -116,22 +124,27 @@ class __$$TaskImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
+    Object? description = freezed,
     Object? pomodoro = null,
     Object? completed = null,
     Object? user = null,
-    Object? referenceProjectId = freezed,
+    Object? referenceProject = freezed,
   }) {
     return _then(_$TaskImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       pomodoro: null == pomodoro
           ? _value.pomodoro
           : pomodoro // ignore: cast_nullable_to_non_nullable
@@ -144,9 +157,9 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String,
-      referenceProjectId: freezed == referenceProjectId
-          ? _value.referenceProjectId
-          : referenceProjectId // ignore: cast_nullable_to_non_nullable
+      referenceProject: freezed == referenceProject
+          ? _value.referenceProject
+          : referenceProject // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -156,18 +169,21 @@ class __$$TaskImplCopyWithImpl<$Res>
 
 class _$TaskImpl extends _Task {
   const _$TaskImpl(
-      {required this.id,
+      {this.id,
       required this.name,
+      this.description,
       required this.pomodoro,
       required this.completed,
       required this.user,
-      this.referenceProjectId})
+      this.referenceProject})
       : super._();
 
   @override
-  final String id;
+  final String? id;
   @override
   final String name;
+  @override
+  final String? description;
   @override
   final int pomodoro;
   @override
@@ -175,11 +191,11 @@ class _$TaskImpl extends _Task {
   @override
   final String user;
   @override
-  final String? referenceProjectId;
+  final String? referenceProject;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProjectId: $referenceProjectId)';
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProject: $referenceProject)';
   }
 
   @override
@@ -189,18 +205,20 @@ class _$TaskImpl extends _Task {
             other is _$TaskImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.pomodoro, pomodoro) ||
                 other.pomodoro == pomodoro) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.referenceProjectId, referenceProjectId) ||
-                other.referenceProjectId == referenceProjectId));
+            (identical(other.referenceProject, referenceProject) ||
+                other.referenceProject == referenceProject));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, pomodoro, completed, user, referenceProjectId);
+  int get hashCode => Object.hash(runtimeType, id, name, description, pomodoro,
+      completed, user, referenceProject);
 
   @JsonKey(ignore: true)
   @override
@@ -211,18 +229,21 @@ class _$TaskImpl extends _Task {
 
 abstract class _Task extends Task {
   const factory _Task(
-      {required final String id,
+      {final String? id,
       required final String name,
+      final String? description,
       required final int pomodoro,
       required final bool completed,
       required final String user,
-      final String? referenceProjectId}) = _$TaskImpl;
+      final String? referenceProject}) = _$TaskImpl;
   const _Task._() : super._();
 
   @override
-  String get id;
+  String? get id;
   @override
   String get name;
+  @override
+  String? get description;
   @override
   int get pomodoro;
   @override
@@ -230,7 +251,7 @@ abstract class _Task extends Task {
   @override
   String get user;
   @override
-  String? get referenceProjectId;
+  String? get referenceProject;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

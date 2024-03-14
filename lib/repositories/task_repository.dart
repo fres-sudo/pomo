@@ -47,7 +47,6 @@ class TaskRepositoryImpl implements TaskRepository {
     try {
       final newTask =
           await taskService.createTask(taskMapper.toDTO(task));
-
       return taskMapper.fromDTO(newTask);
     } catch (error) {
       logger.e('Error creating new task in: $error');
@@ -92,6 +91,8 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<Task> updateTaskById({required String id, required Task task}) async {
     try {
+      print("TASK NON MAPPATO: $task");
+      print("TASK MAPPATO: ${taskMapper.toDTO(task)}");
       final updatedTask = await taskService.updateTaskById(id, taskMapper.toDTO(task));
 
       return taskMapper.fromDTO(updatedTask);

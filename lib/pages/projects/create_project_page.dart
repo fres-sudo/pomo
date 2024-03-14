@@ -51,8 +51,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
     });
   }
 
-
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -110,15 +108,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           ]),
                           TextButton(
                               onPressed: () {
-
-                                context.read<AuthCubit>.call();
-
+                                String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
                                 context.read<ProjectBloc>().createProject(
                                         project: Project(
                                       name: _nameTextController.text,
                                       description: _descriptionTextController.text,
                                       dueDate: _selectedDate,
-                                      owner: userId,
+                                      owner: id,
                                     ));
                               },
                               child: Text(
