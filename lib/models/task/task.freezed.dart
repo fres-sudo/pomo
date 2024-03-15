@@ -23,6 +23,8 @@ mixin _$Task {
   bool get completed => throw _privateConstructorUsedError;
   String get user => throw _privateConstructorUsedError;
   String? get referenceProject => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get completedAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +42,9 @@ abstract class $TaskCopyWith<$Res> {
       int pomodoro,
       bool completed,
       String user,
-      String? referenceProject});
+      String? referenceProject,
+      DateTime createdAt,
+      DateTime? completedAt});
 }
 
 /// @nodoc
@@ -63,6 +67,8 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? completed = null,
     Object? user = null,
     Object? referenceProject = freezed,
+    Object? createdAt = null,
+    Object? completedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -93,6 +99,14 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.referenceProject
           : referenceProject // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -111,7 +125,9 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       int pomodoro,
       bool completed,
       String user,
-      String? referenceProject});
+      String? referenceProject,
+      DateTime createdAt,
+      DateTime? completedAt});
 }
 
 /// @nodoc
@@ -131,6 +147,8 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? completed = null,
     Object? user = null,
     Object? referenceProject = freezed,
+    Object? createdAt = null,
+    Object? completedAt = freezed,
   }) {
     return _then(_$TaskImpl(
       id: freezed == id
@@ -161,6 +179,14 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.referenceProject
           : referenceProject // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -175,7 +201,9 @@ class _$TaskImpl extends _Task {
       required this.pomodoro,
       required this.completed,
       required this.user,
-      this.referenceProject})
+      this.referenceProject,
+      required this.createdAt,
+      this.completedAt})
       : super._();
 
   @override
@@ -192,10 +220,14 @@ class _$TaskImpl extends _Task {
   final String user;
   @override
   final String? referenceProject;
+  @override
+  final DateTime createdAt;
+  @override
+  final DateTime? completedAt;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProject: $referenceProject)';
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProject: $referenceProject, createdAt: $createdAt, completedAt: $completedAt)';
   }
 
   @override
@@ -213,12 +245,16 @@ class _$TaskImpl extends _Task {
                 other.completed == completed) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.referenceProject, referenceProject) ||
-                other.referenceProject == referenceProject));
+                other.referenceProject == referenceProject) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, name, description, pomodoro,
-      completed, user, referenceProject);
+      completed, user, referenceProject, createdAt, completedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -235,7 +271,9 @@ abstract class _Task extends Task {
       required final int pomodoro,
       required final bool completed,
       required final String user,
-      final String? referenceProject}) = _$TaskImpl;
+      final String? referenceProject,
+      required final DateTime createdAt,
+      final DateTime? completedAt}) = _$TaskImpl;
   const _Task._() : super._();
 
   @override
@@ -252,6 +290,10 @@ abstract class _Task extends Task {
   String get user;
   @override
   String? get referenceProject;
+  @override
+  DateTime get createdAt;
+  @override
+  DateTime? get completedAt;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

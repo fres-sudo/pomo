@@ -23,7 +23,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UpdateTaskByIdTaskEvent>(_onUpdateTaskById);
     on<DeleteTaskByIdTaskEvent>(_onDeleteTaskById);
     on<GetTasksByProjectTaskEvent>(_onGetTasksByProject);
-    
+    on<GetTasksByUserTaskEvent>(_onGetTasksByUser);
+
   }
   
   /// Method used to add the [CreateTaskTaskEvent] event
@@ -40,6 +41,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   
   /// Method used to add the [GetTasksByProjectTaskEvent] event
   void getTasksByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
+
+  /// Method used to add the [GetTasksByUserTaskEvent] event
+  void getTasksByUser({required String userId}) => add(TaskEvent.getTasksByUser(userId: userId));
 
 
   FutureOr<void> _onCreateTask(
@@ -105,6 +109,19 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       tasks.isEmpty ? emit(const TaskState.none()) : emit(TaskState.fetched(tasks));
     }catch(_){
       emit(const TaskState.errorFetching());
+    }
+  }
+
+  FutureOr<void> _onGetTasksByUser(
+    GetTasksByUserTaskEvent event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(const TaskState.fetchingByUser());
+    try{
+      final tasks = await taskRepository.getTasksByUser(userId: event.userId);
+      tasks.isEmpty ? emit(const TaskState.noneUsers()) : emit(TaskState.fetchedByUser(tasks));
+    }catch(_){
+      emit(const TaskState.errorFetchingByUser());
     }
   }
   

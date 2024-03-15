@@ -27,7 +27,4 @@ abstract class TaskService {
   @GET('/tasks/user/{userId}')
   Future<List<TaskJTO>> getTasksByUser(@Path('userId') String id);
 
-
-
-
 }

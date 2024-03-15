@@ -17,5 +17,7 @@ class Task with _$Task {
     required bool completed,
     required String user,
     String? referenceProject,
+    required DateTime createdAt,
+    DateTime? completedAt,
 }) = _Task;
 }
