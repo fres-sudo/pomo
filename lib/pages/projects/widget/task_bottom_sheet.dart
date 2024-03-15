@@ -31,7 +31,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
-    print("REF TASK PROJ: ${widget.task?.referenceProject}");
+    print("REF PROJ: ${widget.project!.id}");
     widget.task != null ? _nameTextEditingController.text = widget.task!.name : "";
     widget.task != null && widget.task?.description != null? _descriptionTextEditingController.text = widget.task!.description!: "";
     widget.task != null ? _currentPomodoroValue = widget.task!.pomodoro: "";
@@ -104,9 +104,11 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                               task: Task(
                                   name: _nameTextEditingController.text,
                                   pomodoro: _currentPomodoroValue,
-                                  completed: widget.task!.completed,
-                                  referenceProject: widget.task?.referenceProject,
-                                  user: "65e31000c48a3a97e1a5147a")
+                                  completed: false,
+                                  referenceProject: widget.project!.id,
+                                  user: "65e31000c48a3a97e1a5147a",
+                                  createdAt: DateTime.now(),
+                              )
                           ) : context.read<TaskBloc>().updateTaskById(
                               id: widget.task!.id!,
                               task: Task(
@@ -115,7 +117,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                   pomodoro: _currentPomodoroValue,
                                   completed: widget.task!.completed,
                                   referenceProject: widget.task?.referenceProject,
-                                  user: "65e31000c48a3a97e1a5147a"));
+                                  user: "65e31000c48a3a97e1a5147a",
+                                  createdAt: widget.task!.createdAt,
+                                  completedAt: widget.task?.completedAt
+                              ));
                           context.router.pop();
                         }
                       },

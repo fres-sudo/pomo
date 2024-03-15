@@ -19,8 +19,12 @@ class AppRouter extends $AppRouter {
           ]),
           AutoRoute(page: StatsRoute.page),
           AutoRoute(page: QuickSessionRoute.page),
-          AutoRoute(page: ProfileRoute.page),
-    ]),
+          AutoRoute(page: ProfileNavigation.page, fullscreenDialog: true,children: [
+            AutoRoute(page: ProfileRoute.page),
+            AutoRoute(page: EditProfileRoute.page),
+          ]),
+
+        ]),
     AutoRoute(page: LoginRoute.page, fullscreenDialog: true, ),
     AutoRoute(page: SignUpRoute.page, fullscreenDialog: true),
     AutoRoute(page: ForgotPasswordOTPRoute.page,),

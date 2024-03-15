@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,45 +35,49 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 17),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black12,
-                              spreadRadius: 1,
-                              blurRadius: 10),
-                        ],
-                      ),
-                      child: Row(children: [
-                        const CircleAvatar(),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                state.maybeWhen(
-                                    authenticated: (user) => user.username,
-                                    orElse: () => "??"),
-                                style: Theme.of(context).textTheme.titleMedium),
-                            Text(
-                              state.maybeWhen(
-                                  authenticated: (user) => "@${user.id}",
-                                  orElse: () => "??"),
-                              style: GoogleFonts.inter(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                                color: kNeutral600,
-                              ),
-                            ),
+                    InkWell(
+                      //borderRadius: BorderRadius.circular(16),
+                      onTap: () => context.router.push(const EditProfileRoute()),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 17),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 1,
+                                blurRadius: 10),
                           ],
-                        )
-                      ]),
+                        ),
+                        child: Row(children: [
+                          const CircleAvatar(),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  state.maybeWhen(
+                                      authenticated: (user) => user.username,
+                                      orElse: () => "??"),
+                                  style: Theme.of(context).textTheme.titleMedium),
+                              Text(
+                                state.maybeWhen(
+                                    authenticated: (user) => "@${user.id}",
+                                    orElse: () => "??"),
+                                style: GoogleFonts.inter(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400,
+                                  color: kNeutral600,
+                                ),
+                              ),
+                            ],
+                          )
+                        ]),
+                      ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),

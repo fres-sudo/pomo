@@ -121,7 +121,10 @@ class _TaskCardState extends State<TaskCard> {
                                 pomodoro: widget.task.pomodoro,
                                 referenceProject: widget.task.referenceProject,
                                 completed: value!,
-                                user: widget.task.user));
+                                user: widget.task.user,
+                                createdAt: widget.task.createdAt,
+                                completedAt: value ? DateTime.now() : null
+                            ));
                       }),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

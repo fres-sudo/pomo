@@ -20,6 +20,8 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
         completed: dto.completed,
         user: dto.user,
         referenceProject: dto.referenceProject,
+        createdAt: dto.createdAt,
+        completedAt: dto.completedAt,
       );
 
   @override
@@ -30,6 +32,8 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
       pomodoro: model.pomodoro,
       completed: model.completed,
       user: model.user,
-      referenceProject: model.referenceProject
+      referenceProject: model.referenceProject,
+      createdAt: model.createdAt,
+      completedAt: model.completedAt
   );
 }

@@ -28,6 +28,14 @@ class TaskState with _$TaskState {
   const factory TaskState.fetched(List<Task> tasks) = FetchedTaskState;
   
   const factory TaskState.errorFetching() = ErrorFetchingTaskState;
+
+  const factory TaskState.noneUsers() = NoneUsersTaskState;
+
+  const factory TaskState.fetchingByUser() = FetchingByUserTaskState;
+
+  const factory TaskState.fetchedByUser(List<Task> tasks) = FetchedByUserTaskState;
+
+  const factory TaskState.errorFetchingByUser() = ErrorFetchingByUserTaskState;
   
   const factory TaskState.getting() = GettingTaskState;
   

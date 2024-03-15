@@ -28,6 +28,9 @@ abstract class TaskRepository {
   Future<List<Task>> getTasksByProject({
     required String projectId,
   });
+  Future<List<Task>> getTasksByUser({
+    required String userId,
+  });
 }
 
 /// Implementation of the base interface TaskRepository
@@ -84,6 +87,18 @@ class TaskRepositoryImpl implements TaskRepository {
       return tasks.map((t) => taskMapper.fromDTO(t)).toList();
     } catch (error, stack) {
       logger.e('Error fetching tasks by project in: $error \n This is the stack: $stack');
+      throw Exception('Getter failed');
+    }
+  }
+
+  @override
+  Future<List<Task>> getTasksByUser({required String userId}) async {
+    try {
+      final tasks = await taskService.getTasksByUser(userId);
+
+      return tasks.map((t) => taskMapper.fromDTO(t)).toList();
+    } catch (error, stack) {
+      logger.e('Error fetching tasks by user in: $error \n This is the stack: $stack');
       throw Exception('Getter failed');
     }
   }

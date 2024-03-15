@@ -12,5 +12,7 @@ class TaskEvent with _$TaskEvent {
   const factory TaskEvent.deleteTaskById({required String id}) = DeleteTaskByIdTaskEvent;
   
   const factory TaskEvent.getTasksByProject({required String projectId}) = GetTasksByProjectTaskEvent;
-  
+
+  const factory TaskEvent.getTasksByUser({required String userId}) = GetTasksByUserTaskEvent;
+
 }
