@@ -31,7 +31,7 @@ class ProjectState with _$ProjectState {
   
   const factory ProjectState.deleting() = DeletingProjectState;
   
-  const factory ProjectState.deleted() = DeletedProjectState;
+  const factory ProjectState.deleted(Project project) = DeletedProjectState;
   
   const factory ProjectState.errorDeleting() = ErrorDeletingProjectState;
   

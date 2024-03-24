@@ -12,10 +12,11 @@ class AuthInterceptor extends QueuedInterceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     final user = await authenticationRepository.currentUser;
 
-    if (user != null) {
-      //options.headers[HttpHeaders.authorizationHeader] = 'Bearer ${user.token}';
-    }
+    //print("USER IN INTECEPTOR: $user");
 
+    if (user != null) {
+      options.headers[HttpHeaders.authorizationHeader] = 'Bearer ${user.token}';
+    }
     super.onRequest(options, handler);
   }
 }

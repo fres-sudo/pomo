@@ -1,21 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
-import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-
 import '../../blocs/project/project_bloc.dart';
+import '../../blocs/user/user_bloc.dart';
 import '../../components/cards/project_card.dart';
 import '../../components/utils/my_progress_indicator.dart';
 import '../../components/utils/utils.dart';
-import '../../models/user/user.dart';
+import '../../components/widgets/snack_bars.dart';
 
 @RoutePage()
 class ProjectPage extends StatefulWidget{
@@ -25,37 +22,49 @@ class ProjectPage extends StatefulWidget{
   State<ProjectPage> createState() => _ProjectPageState();
 }
 
-
 class _ProjectPageState extends State<ProjectPage> {
   final TextEditingController searchController = TextEditingController();
 
   List<Project> projects = [];
   List<Project> searchedProjects = [];
 
-
   void filterSearchResults(String query) {
     setState(() {
-      projects = searchedProjects.where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
+      searchedProjects = projects
+          .where((item) =>
+          item.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
 
-  Future<void> getProj()async {
-    String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-    print("ID: $id");
-    if(id == ""){
-      const storage = FlutterSecureStorage();
-      var value = await storage.read(key: "user_data");
-      print("ID2: ${value}" );
-      context.read<ProjectBloc>().getProjectsByUser(id: value![0]);
-    } else {
-      context.read<ProjectBloc>().getProjectsByUser(id: id);
-    }
+  void updateProjectsView(ProjectState state) {
+    state.maybeWhen(
+      created: (newProject) => setState(() {
+        projects = List<Project>.from(projects);
+        projects.add(newProject);
+      }),
+      deleted: (project) => {
+        setState(() {
+        projects = List<Project>.from(projects);
+        projects.remove(project);
+      }),
+        context.router.replace(const ProjectRoute())
+      },
+      fetched: (projects) => setState(() {
+        this.projects = List<Project>.from(projects);
+      }),
+      orElse: () {},
+    );
   }
 
   @override
   void initState() {
-    context.read<ProjectBloc>().getProjectsByUser(id: "65e31000c48a3a97e1a5147a");
+    context.read<UserBloc>().checkAuthentication();
+    final String userId = context.read<UserBloc>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
+
+    print("projects : ${projects}");
+    if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
+
     super.initState();
   }
 
@@ -70,7 +79,9 @@ class _ProjectPageState extends State<ProjectPage> {
     return BlocConsumer<ProjectBloc, ProjectState>(
         listener: (BuildContext context, ProjectState state) {
       state.whenOrNull(
-        fetched: (List<Project> projects) => {this.projects = projects, this.projects = searchedProjects},
+        fetched: (List<Project> projects) => updateProjectsView(state),
+        created: (project) => updateProjectsView(state),
+        deleted: (project) => updateProjectsView(state),
         errorFetching: () => onErrorState(context, "loading projects"),
       );
     }, builder: (context, state) {
@@ -127,15 +138,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     none: () => const NoProjectView(),
                     fetching: () => const MyProgressIndicator(),
                     errorFetching: () => const ErrorPage(text: "fetch projects",),
-                    fetched: (List<Project> projects) =>
-                       SizedBox(
-                         height: MediaQuery.sizeOf(context).height / 1.6,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: projects.length,
-                            itemBuilder: (context, index) =>
-                                ProjectCard(project: projects[index])),
-                      ),
+                    fetched: (List<Project> projects) => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects),
                     orElse: () => const SizedBox.shrink()),
               ],
             ),
@@ -143,5 +146,20 @@ class _ProjectPageState extends State<ProjectPage> {
         )),
       );
     });
+  }
+
+  Widget _buildProjectsListView(List<Project> projects) {
+    if (projects.isEmpty) {
+      return const NoProjectView();
+    }
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 1.6,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: projects.length,
+        itemBuilder: (context, index) =>
+            ProjectCard(project: projects[index]),
+      ),
+    );
   }
 }

@@ -10,11 +10,14 @@ class UserJTO extends DTO with _$UserJTO {
   const factory UserJTO({
     // ignore: invalid_annotation_target
     @JsonKey(name:'_id')required String id,
+    String? name,
+    String? surname,
     required String username,
     required String email,
-    //required String token,
-
+    String? photo,
+    String? token,
 }) = _UserJTO;
+
 
   factory UserJTO.fromJson(Map<String, dynamic> json) =>
     _$UserJTOFromJson(json);

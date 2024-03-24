@@ -1,12 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
-import 'package:pomo/routes/app_router.gr.dart';
-
 import '../../constants/colors.dart';
-import '../../cubits/auth/auth_cubit.dart';
 
 class DestructionBottomSheet extends StatelessWidget {
   const DestructionBottomSheet({super.key, required this.title, required this.buttonText, required this.description, required this.function});

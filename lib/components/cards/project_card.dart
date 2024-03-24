@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/constants/text.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
@@ -102,7 +101,7 @@ class ProjectCard extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      project.description.capitalize(),
+                      project.description ?? "No description",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall

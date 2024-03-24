@@ -3,13 +3,18 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/pages/stats/logic/stats_brain.dart';
+
+import '../../../models/task/task.dart';
 
 class CustomBarChart extends StatefulWidget {
-  CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor});
+  CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.brain, required this.tasks});
 
   final Color barBackgroundColor;
   final Color barColor;
   final Color touchedBarColor;
+  final StatsBrain brain;
+  final List<Task> tasks;
 
   @override
   State<StatefulWidget> createState() => CustomBarChartState();
@@ -39,7 +44,7 @@ class CustomBarChartState extends State<CustomBarChart> {
                 height: 4,
               ),
               Text(
-                "89%",
+                "${widget.brain.getCompletionPercentageOfWeek(widget.tasks)}%",
                 style: Theme.of(context).textTheme.displayMedium
               ),
               const SizedBox(
@@ -87,23 +92,23 @@ class CustomBarChartState extends State<CustomBarChart> {
       showingTooltipIndicators: showTooltips,
     );
   }
-  //TODO: INSERIRE QUI I DATI CORRETTI
+
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
     switch (i) {
       case 0:
-        return makeGroupData(0, 10, isTouched: i == touchedIndex);
+        return makeGroupData(0, widget.brain.getTaskOfMonday(), isTouched: i == touchedIndex);
       case 1:
-        return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+        return makeGroupData(1, widget.brain.getTaskOfTuesday(), isTouched: i == touchedIndex);
       case 2:
-        return makeGroupData(2, 5, isTouched: i == touchedIndex);
+        return makeGroupData(2, widget.brain.getTaskOfWednesday(), isTouched: i == touchedIndex);
       case 3:
-        return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+        return makeGroupData(3, widget.brain.getTaskOfThursday(), isTouched: i == touchedIndex);
       case 4:
-        return makeGroupData(4, 9, isTouched: i == touchedIndex);
+        return makeGroupData(4, widget.brain.getTaskOfFriday(), isTouched: i == touchedIndex);
       case 5:
-        return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+        return makeGroupData(5, widget.brain.getTaskOfSaturday(), isTouched: i == touchedIndex);
       case 6:
-        return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
+        return makeGroupData(6, widget.brain.getTaskOfSunday(), isTouched: i == touchedIndex);
       default:
         return throw Error();
     }

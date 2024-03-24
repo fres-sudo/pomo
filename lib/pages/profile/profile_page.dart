@@ -1,25 +1,36 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
-import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
-
+import '../../blocs/user/user_bloc.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../routes/app_router.gr.dart';
 
 @RoutePage()
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+
+  @override
+  void initState() {
+    context.read<UserBloc>().checkAuthentication();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) => state.whenOrNull(
+          signedOut: () => context.router.replace(const RootRoute()),
           notAuthenticated: () => context.router.replace(const RootRoute())),
       builder: (context, state) {
         return Scaffold(
@@ -36,7 +47,6 @@ class ProfilePage extends StatelessWidget {
                       height: 16,
                     ),
                     InkWell(
-                      //borderRadius: BorderRadius.circular(16),
                       onTap: () => context.router.push(const EditProfileRoute()),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -61,12 +71,12 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               Text(
                                   state.maybeWhen(
-                                      authenticated: (user) => user.username,
+                                      authenticated: (user) => "${user.name ?? 'Name'} ${user.surname ?? "Surname"}",
                                       orElse: () => "??"),
                                   style: Theme.of(context).textTheme.titleMedium),
                               Text(
                                 state.maybeWhen(
-                                    authenticated: (user) => "@${user.id}",
+                                    authenticated: (user) => "@${user.username}",
                                     orElse: () => "??"),
                                 style: GoogleFonts.inter(
                                   fontSize: 10,
@@ -220,7 +230,7 @@ class ProfilePage extends StatelessWidget {
                                   description:
                                       "Are you sure you want to log out this account?",
                                   function: () {
-                                    context.read<AuthCubit>().signOut();
+                                    context.read<UserBloc>().signOut();
                                   },
                                 );
                               },

@@ -1,26 +1,21 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/models/project/project.dart';
-import 'package:pomo/models/user/user.dart';
-import 'package:pomo/routes/app_router.gr.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
 import '../../blocs/project/project_bloc.dart';
+import '../../blocs/user/user_bloc.dart';
 import '../../components/utils/utils.dart';
-import '../../cubits/auth/auth_cubit.dart';
+import '../../routes/app_router.gr.dart';
 
 @RoutePage()
 class CreateProjectPage extends StatefulWidget {
@@ -72,7 +67,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
         listener: (context, state) {
           state.whenOrNull(
             created: (project) => context.router.push(ProjectDetailsRoute(project: project)),
-            errorCreating: () => _onErrorCreating(context),
+            errorCreating: () => onErrorState(context, "creating project"),
           );
         },
         builder: (context, state) {
@@ -108,21 +103,22 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           ]),
                           TextButton(
                               onPressed: () {
-                                String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                                String id = context.read<UserBloc>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                                _formKey.currentState!.validate() ?
                                 context.read<ProjectBloc>().createProject(
                                         project: Project(
                                       name: _nameTextController.text,
-                                      description: _descriptionTextController.text,
+                                      description: _descriptionTextController.text.isNotEmpty ? _descriptionTextController.text : null,
                                       dueDate: _selectedDate,
                                       owner: id,
-                                    ));
+                                    )) : onInvalidInput(context);
                               },
                               child: Text(
                                 "Create",
                                 style: GoogleFonts.inter(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
-                                    color: _formKey.currentState?.validate() != null ? _formKey.currentState!.validate() ? kPrimary500 : kNeutral400 : kPrimary500),
+                                    color: _formKey.currentState?.validate() != null ? _formKey.currentState!.validate() ? kPrimary500 : kNeutral400 : kNeutral400),
                               ))
                         ],
                       ),
@@ -234,9 +230,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         height: 6,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          print("open bottom sheet");
-                        },
+                        onTap: () => onAvailableSoon(context),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 17, horizontal: 16),
@@ -311,13 +305,12 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
-                                      ?.copyWith(color: kNeutral600)),
+                                     ),
                               SvgPicture.asset(
                                 "assets/icons/calendar.svg",
                                 colorFilter: ColorFilter.mode(
                                     Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer,
+                                        .inputDecorationTheme.prefixIconColor!,
                                     BlendMode.srcIn),
                               )
                             ],
@@ -331,12 +324,5 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
             ),
           );
         });
-  }
-  _onErrorCreating(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('Something went wrong while creating project, please try again')),
-    );
   }
 }

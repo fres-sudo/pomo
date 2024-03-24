@@ -8,8 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
+
+import '../../../blocs/user/user_bloc.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -43,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignIn: () => _onErrorSignIn(context),
         signedIn: (user) {
-          context.read<AuthCubit>().authenticated(user);
-          AutoRouter.of(context).replace(const RootRoute());
+          context.read<UserBloc>().authenticated(user: user);
+          context.router.replace(const RootRoute());
           return null;
         }
       ),

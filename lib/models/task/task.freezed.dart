@@ -20,6 +20,7 @@ mixin _$Task {
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int get pomodoro => throw _privateConstructorUsedError;
+  int? get pomodoroCompleted => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   String get user => throw _privateConstructorUsedError;
   String? get referenceProject => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $TaskCopyWith<$Res> {
       String name,
       String? description,
       int pomodoro,
+      int? pomodoroCompleted,
       bool completed,
       String user,
       String? referenceProject,
@@ -64,6 +66,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? name = null,
     Object? description = freezed,
     Object? pomodoro = null,
+    Object? pomodoroCompleted = freezed,
     Object? completed = null,
     Object? user = null,
     Object? referenceProject = freezed,
@@ -87,6 +90,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.pomodoro
           : pomodoro // ignore: cast_nullable_to_non_nullable
               as int,
+      pomodoroCompleted: freezed == pomodoroCompleted
+          ? _value.pomodoroCompleted
+          : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -123,6 +130,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String name,
       String? description,
       int pomodoro,
+      int? pomodoroCompleted,
       bool completed,
       String user,
       String? referenceProject,
@@ -144,6 +152,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? name = null,
     Object? description = freezed,
     Object? pomodoro = null,
+    Object? pomodoroCompleted = freezed,
     Object? completed = null,
     Object? user = null,
     Object? referenceProject = freezed,
@@ -167,6 +176,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.pomodoro
           : pomodoro // ignore: cast_nullable_to_non_nullable
               as int,
+      pomodoroCompleted: freezed == pomodoroCompleted
+          ? _value.pomodoroCompleted
+          : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -199,6 +212,7 @@ class _$TaskImpl extends _Task {
       required this.name,
       this.description,
       required this.pomodoro,
+      this.pomodoroCompleted,
       required this.completed,
       required this.user,
       this.referenceProject,
@@ -215,6 +229,8 @@ class _$TaskImpl extends _Task {
   @override
   final int pomodoro;
   @override
+  final int? pomodoroCompleted;
+  @override
   final bool completed;
   @override
   final String user;
@@ -227,7 +243,7 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, completed: $completed, user: $user, referenceProject: $referenceProject, createdAt: $createdAt, completedAt: $completedAt)';
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, completed: $completed, user: $user, referenceProject: $referenceProject, createdAt: $createdAt, completedAt: $completedAt)';
   }
 
   @override
@@ -241,6 +257,8 @@ class _$TaskImpl extends _Task {
                 other.description == description) &&
             (identical(other.pomodoro, pomodoro) ||
                 other.pomodoro == pomodoro) &&
+            (identical(other.pomodoroCompleted, pomodoroCompleted) ||
+                other.pomodoroCompleted == pomodoroCompleted) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.user, user) || other.user == user) &&
@@ -253,8 +271,18 @@ class _$TaskImpl extends _Task {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description, pomodoro,
-      completed, user, referenceProject, createdAt, completedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      pomodoro,
+      pomodoroCompleted,
+      completed,
+      user,
+      referenceProject,
+      createdAt,
+      completedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -269,6 +297,7 @@ abstract class _Task extends Task {
       required final String name,
       final String? description,
       required final int pomodoro,
+      final int? pomodoroCompleted,
       required final bool completed,
       required final String user,
       final String? referenceProject,
@@ -284,6 +313,8 @@ abstract class _Task extends Task {
   String? get description;
   @override
   int get pomodoro;
+  @override
+  int? get pomodoroCompleted;
   @override
   bool get completed;
   @override

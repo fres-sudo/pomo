@@ -13,6 +13,7 @@ final List<SingleChildWidget> _providers = [
   Provider<Dio>(
     create: (context) => Dio(
       BaseOptions(contentType: 'application/json'),
+
     )
       ..interceptors.addAll([
         if (kDebugMode) context.read<PrettyDioLogger>(),
@@ -32,6 +33,12 @@ final List<SingleChildWidget> _providers = [
   ),
   Provider<TaskService>(
     create: (context) => TaskService(
+      context.read<Dio>(),
+      baseUrl: kServerConnectionIP,
+    ),
+  ),
+  Provider<UserService>(
+    create: (context) => UserService(
       context.read<Dio>(),
       baseUrl: kServerConnectionIP,
     ),

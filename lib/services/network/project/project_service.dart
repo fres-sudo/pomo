@@ -22,7 +22,7 @@ abstract class ProjectService {
   @PATCH('/projects/{id}')
   Future<ProjectJTO> updateProjectById(@Path('id') String id, @Body() ProjectJTO body);
   @DELETE('/projects/{id}')
-  Future<void> deleteProjectById(@Path('id') String id);
+  Future<ProjectJTO> deleteProjectById(@Path('id') String id);
 
   //
   @POST('/projects/{projectId}/tasks/')

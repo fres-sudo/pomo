@@ -1,0 +1,129 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../constants/colors.dart';
+
+class QuickBreakView extends StatefulWidget {
+  QuickBreakView({super.key, required this.onComplete, required this.breakController});
+
+  final VoidCallback? onComplete;
+  CountDownController breakController;
+
+
+  @override
+  State<QuickBreakView> createState() => _QuickBreakViewState();
+}
+
+class _QuickBreakViewState extends State<QuickBreakView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kGreen200,
+                boxShadow: [
+                  BoxShadow(
+                    color: kGreen200.withOpacity(0.51),
+                    spreadRadius: 1,
+                    blurRadius: 100,
+                  ),
+                ],
+              ),
+              height: MediaQuery.sizeOf(context).height / 3,
+              padding: const EdgeInsets.all(18.5),
+            ),
+            Container(
+              height: MediaQuery.sizeOf(context).height / 3 - 37,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: kGreen400,
+              ),
+            ),
+            Container(
+              height:
+              MediaQuery.sizeOf(context).height / 3 - (37 * 2),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: kGreen600,
+              ),
+              child: CircularCountDownTimer(
+                duration: 5 ,
+                initialDuration: 0,
+                controller: widget.breakController,
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 2,
+                ringColor: kGreen400,
+                fillColor: kGreen600,
+                fillGradient: const RadialGradient(
+                  radius: 10,
+                  colors: [kGreen600, kGreen400],
+                ),
+                backgroundColor: kGreen600,
+                backgroundGradient: null,
+                strokeWidth: 10.0,
+                strokeCap: StrokeCap.round,
+                textStyle: GoogleFonts.inter(
+                  fontSize: 33.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textFormat: CountdownTextFormat.S,
+                isReverse: true,
+                isReverseAnimation: true,
+                isTimerTextShown: true,
+                autoStart: false,
+                onStart: () {
+                  print('Countdown Started');
+                },
+                onComplete: widget.onComplete,
+                timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
+                  // Custom time formatter function
+                  int minutes = duration.inMinutes;
+                  int seconds = duration.inSeconds.remainder(60);
+                  return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+                },
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            Center(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(100),
+                onTap: () {
+                  if (!widget.breakController.isStarted) {
+                    widget.breakController.start();
+                  } else {
+                    if (widget.breakController.isPaused) {
+                      widget.breakController.resume();
+                    } else {
+                      widget.breakController.pause();
+                    }
+                  }
+                  setState(() {}); // Update UI after modifying timer state
+                },
+                child: widget.breakController.isStarted && !widget.breakController.isPaused
+                    ? Icon(Icons.pause_circle_filled_rounded,
+                    color: Theme.of(context).iconTheme.color, size: 70)
+                    : Icon(Icons.play_circle_fill_rounded,
+                    color: Theme.of(context).iconTheme.color, size: 70),
+              ),
+            ),
+
+          ],
+        ),
+      ],
+    );
+  }
+}

@@ -22,7 +22,7 @@ abstract class TaskRepository {
     required String id,
     required Task task,
   });
-  Future<void> deleteTaskById({
+  Future<Task> deleteTaskById({
     required String id,
   });
   Future<List<Task>> getTasksByProject({
@@ -51,16 +51,18 @@ class TaskRepositoryImpl implements TaskRepository {
       final newTask =
           await taskService.createTask(taskMapper.toDTO(task));
       return taskMapper.fromDTO(newTask);
-    } catch (error) {
-      logger.e('Error creating new task in: $error');
+    } catch (error, stack) {
+      logger.e('Error creating new task in: $error, this is the stack: \n $stack');
       throw Exception('Creation failed');
     }
   }
 
   @override
-  Future<void> deleteTaskById({required String id}) async {
+  Future<Task> deleteTaskById({required String id}) async {
     try {
-      await taskService.deleteTaskById(id);
+      final task = await taskService.deleteTaskById(id);
+      return taskMapper.fromDTO(task);
+
     } catch (error) {
       logger.e('Error deleting task in: $error');
       throw Exception('Deleting task failed');
@@ -106,9 +108,7 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<Task> updateTaskById({required String id, required Task task}) async {
     try {
-      print("TASK NON MAPPATO: $task");
-      print("TASK MAPPATO: ${taskMapper.toDTO(task)}");
-      final updatedTask = await taskService.updateTaskById(id, taskMapper.toDTO(task));
+        final updatedTask = await taskService.updateTaskById(id, taskMapper.toDTO(task));
 
       return taskMapper.fromDTO(updatedTask);
     } catch (error) {
