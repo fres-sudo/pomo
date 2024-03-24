@@ -10,6 +10,9 @@ class UserMapper extends DTOMapper<UserJTO, User> {
     id: dto.id,
     username: dto.username,
     email: dto.email,
+    name: dto.name,
+    surname: dto.surname,
+    photo: dto.photo,
       //token: dto.token,
   );
 
@@ -18,6 +21,9 @@ class UserMapper extends DTOMapper<UserJTO, User> {
     id: model.id,
     username: model.username,
     email: model.email,
+    name: model.name,
+    surname: model.surname,
+    photo: model.photo
     //token: model.token,
   );
 

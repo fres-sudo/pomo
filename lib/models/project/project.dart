@@ -12,7 +12,7 @@ class Project with _$Project {
   const factory Project({
     String? id,
     required String name,
-    required String description,
+    String? description,
     required DateTime dueDate,
     required String owner,
     String? imageCover,

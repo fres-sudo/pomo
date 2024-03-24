@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Project {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   DateTime get dueDate => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
   String? get imageCover => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $ProjectCopyWith<$Res> {
   $Res call(
       {String? id,
       String name,
-      String description,
+      String? description,
       DateTime dueDate,
       String owner,
       String? imageCover,
@@ -60,7 +60,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? dueDate = null,
     Object? owner = null,
     Object? imageCover = freezed,
@@ -76,10 +76,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dueDate: null == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
@@ -114,7 +114,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
   $Res call(
       {String? id,
       String name,
-      String description,
+      String? description,
       DateTime dueDate,
       String owner,
       String? imageCover,
@@ -135,7 +135,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? dueDate = null,
     Object? owner = null,
     Object? imageCover = freezed,
@@ -151,10 +151,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       dueDate: null == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
@@ -185,7 +185,7 @@ class _$ProjectImpl extends _Project {
   const _$ProjectImpl(
       {this.id,
       required this.name,
-      required this.description,
+      this.description,
       required this.dueDate,
       required this.owner,
       this.imageCover,
@@ -200,7 +200,7 @@ class _$ProjectImpl extends _Project {
   @override
   final String name;
   @override
-  final String description;
+  final String? description;
   @override
   final DateTime dueDate;
   @override
@@ -273,7 +273,7 @@ abstract class _Project extends Project {
   const factory _Project(
       {final String? id,
       required final String name,
-      required final String description,
+      final String? description,
       required final DateTime dueDate,
       required final String owner,
       final String? imageCover,
@@ -286,7 +286,7 @@ abstract class _Project extends Project {
   @override
   String get name;
   @override
-  String get description;
+  String? get description;
   @override
   DateTime get dueDate;
   @override

@@ -1,10 +1,6 @@
 part of 'dependency_injector.dart';
 
 final List<BlocProvider> _blocs = [
-  BlocProvider<AuthCubit>(
-    create: (context) => AuthCubit(
-      authenticationRepository: context.read(),)..checkAuthentication(),
-  ),
   BlocProvider<ThemeCubit>(
     create: (_) => ThemeCubit(),
   ),
@@ -13,6 +9,9 @@ final List<BlocProvider> _blocs = [
   ),
   BlocProvider<SignUpBloc>(
     create: (context) => SignUpBloc(authenticationRepository: context.read()),
+  ),
+  BlocProvider<UserBloc>(
+    create: (context) => UserBloc(userRepository: context.read(), authenticationRepository: context.read())..checkAuthentication(),
   ),
   BlocProvider<ProjectBloc>(
     create: (context) => ProjectBloc(projectRepository: context.read()),

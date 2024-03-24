@@ -20,19 +20,19 @@ class AppRouter extends $AppRouter {
           AutoRoute(page: StatsRoute.page),
           AutoRoute(page: QuickSessionRoute.page),
           AutoRoute(page: ProfileNavigation.page, fullscreenDialog: true,children: [
-            AutoRoute(page: ProfileRoute.page),
+            CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ProfileRoute.page),
             AutoRoute(page: EditProfileRoute.page),
           ]),
 
         ]),
-    AutoRoute(page: LoginRoute.page, fullscreenDialog: true, ),
-    AutoRoute(page: SignUpRoute.page, fullscreenDialog: true),
-    AutoRoute(page: ForgotPasswordOTPRoute.page,),
-    AutoRoute(page: ForgotPasswordRoute.page,),
-    AutoRoute(page: ForgotPasswordRecoverRoute.page,),
-    AutoRoute(page: OnBoardingRoute.page,  ),
-    AutoRoute(page: CreateProjectRoute.page,),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: LoginRoute.page, fullscreenDialog: true, ),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SignUpRoute.page, fullscreenDialog: true),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ForgotPasswordOTPRoute.page,),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ForgotPasswordRoute.page,),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ForgotPasswordRecoverRoute.page,),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: OnBoardingRoute.page,  ),
     AutoRoute(page: WorkSessionRoute.page),
-    AutoRoute(page: SessionCompleteRoute.page),
+    AutoRoute(page: CreateProjectRoute.page,),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SessionCompleteRoute.page),
   ];
 }

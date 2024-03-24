@@ -17,7 +17,7 @@ class TaskState with _$TaskState {
   
   const factory TaskState.deleting() = DeletingTaskState;
   
-  const factory TaskState.deleted() = DeletedTaskState;
+  const factory TaskState.deleted(Task task) = DeletedTaskState;
   
   const factory TaskState.errorDeleting() = ErrorDeletingTaskState;
 

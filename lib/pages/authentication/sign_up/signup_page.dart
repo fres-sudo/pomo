@@ -8,6 +8,7 @@ import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/rounded_button.dart';
+import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 
 @RoutePage()
@@ -39,8 +40,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpBloc, SignUpState>(
       listener: (BuildContext context, state) => state.whenOrNull(
-        errorSignUp: () => _onErrorSignUp(context),
-        signedUp: (_) => AutoRouter.of(context).replace(const RootRoute()),
+        errorSignUp: () => onErrorState(context, "signing up"),
+        signedUp: (_) => context.router.replace(const RootRoute()),
       ),
       builder: (BuildContext context, SignUpState state) {
         return Scaffold(
@@ -292,12 +293,4 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
   }
-}
-
-_onErrorSignUp(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        content: Text('Something went wrong with sign up, please try again')),
-  );
 }

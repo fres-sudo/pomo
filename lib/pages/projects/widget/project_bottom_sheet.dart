@@ -1,11 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/blocs/project/project_bloc.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
+import 'package:pomo/pages/projects/project_page.dart';
+import 'package:pomo/routes/app_router.gr.dart';
+
+import '../../../components/widgets/destruction_bottomsheet.dart';
+import '../../../models/project/project.dart';
 
 class ProjectBottomSheet extends StatelessWidget {
-  const ProjectBottomSheet({super.key});
+  const ProjectBottomSheet({super.key, required this.project});
+
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +32,7 @@ class ProjectBottomSheet extends StatelessWidget {
         color: Theme.of(context).bottomSheetTheme
             .backgroundColor,
       ),
-      padding: const EdgeInsets.only(left: 16, bottom: 16),
+      padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,48 +64,72 @@ class ProjectBottomSheet extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child:  Divider(),
                 ),
-                InkWell(
-                  onTap: (){
-                    AutoRouter.of(context).pop();
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: Text(
-                      'Edit',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                      },
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width / 2 - 20,
+                        decoration: BoxDecoration(
+                          color: kGreen500.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.share_rounded, color: kGreen500,),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text("Share", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),)
+                          ],
+                        )
+                      ),
                     ),
-                  ),
+                    InkWell(
+                      onTap: (){
+                        context.router.pop().then((value) => showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return DestructionBottomSheet(
+                                title: "Project",
+                                buttonText: 'Delete',
+                                description:
+                                "Are you sure you want to delete this project?",
+                                function: () {
+                                  context.read<ProjectBloc>().deleteProjectById(id: project.id!);
+                                },
+                              );
+                            },
+                            isDismissible: true));
+                      },
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width / 2 - 20,
+                        decoration: BoxDecoration(
+                          color: kRed500.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.delete_forever, color: kRed500,),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text("Delete", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),)
+                          ],
+                        )
+                      ),
+                    )
+                  ],
                 ),
-                const SizedBox(
-                  height: 28,
-                ),
-                InkWell(
-                  onTap: (){
-                    AutoRouter.of(context).pop();
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: Text(
-                      'Select',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                InkWell(
-                  onTap: (){
-                    AutoRouter.of(context).pop();
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: Text(
-                      'Share',
-                      style:Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ],

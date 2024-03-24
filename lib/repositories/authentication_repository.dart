@@ -55,6 +55,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         ),
       );
       final user = signInMapper.fromDTO(response);
+
       await secureStorage.write(
         key: 'user_data',
         value: userStringMapper.from(user),

@@ -14,7 +14,7 @@ class ProjectJTO extends DTO with _$ProjectJTO {
     // ignore: invalid_annotation_target
     @JsonKey(name: '_id')String? id,
     required String name,
-    required String description,
+    String? description,
     required DateTime dueDate,
     required String owner,
     String? imageCover,

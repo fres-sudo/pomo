@@ -2,11 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/pages/error_page.dart';
-import 'package:pomo/pages/projects/views/header_projeect_details.dart';
+import 'package:pomo/pages/projects/views/header_project_details.dart';
 import 'package:pomo/pages/projects/views/no_task_view.dart';
 import '../../blocs/task/task_bloc.dart';
 import '../../components/utils/my_progress_indicator.dart';
-import '../../components/utils/utils.dart';
+import '../../components/widgets/snack_bars.dart';
 import '../../models/project/project.dart';
 import '../../models/task/task.dart';
 import 'views/task_view.dart';
@@ -22,7 +22,8 @@ class ProjectDetailsPage extends StatefulWidget {
 }
 
 class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
-   List<Task>? tasks;
+
+   List<Task> tasks = [];
 
    @override
   void initState() {
@@ -34,6 +35,26 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
      context.read<TaskBloc>().getTasksByProject(projectId: widget.project.id!);
    }
 
+   void updateTaskView(TaskState state, BuildContext context) {
+     state.maybeWhen(
+       created: (newTasks) =>
+       {setState(() {
+         tasks = List<Task>.from(tasks);
+         tasks.add(newTasks);
+       }),
+       onSuccessState(context, "created new task")},
+       deleted: (task) =>
+       {setState(() {
+         tasks = List<Task>.from(tasks);
+         tasks.remove(task);
+       }),
+         onSuccessState(context, "deleted your task")},
+       orElse: () {},
+     );
+
+   }
+
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
@@ -42,10 +63,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           errorFetching: () => onErrorState(context, "loading tasks"),
           errorCreating: () => onErrorState(context, "creating tasks"),
           errorUpdating: () => onErrorState(context, "updating tasks"),
-          updated: (task) { _getTasksByProject(context); onSuccessState(context, "update your task"); },
-          deleted: () { _getTasksByProject(context); onSuccessState(context, "delete your task"); },
+          errorDeleting: () => onErrorState(context, "deleting project"),
+          updated: (task) => _getTasksByProject(context),
+          deleted: (task) => updateTaskView(state, context),
           fetched: (tasks) => this.tasks = tasks,
-          created: (task) { _getTasksByProject(context); onSuccessState(context, "create your task"); },
+          created: (task) => updateTaskView(state, context),
         ),
 
       builder: (context, state) {
@@ -61,14 +83,16 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           fetching: () => const MyProgressIndicator(),
                           creating: () => const MyProgressIndicator(),
                           updating: () => const MyProgressIndicator(),
-                          fetched: (tasks) => TaskView(tasks: tasks, project: widget.project),
-                          deleted: () => TaskView(tasks: tasks!, project: widget.project),
-                          updated: (task) => TaskView(tasks: tasks!, project: widget.project),
+                          fetched: (tasks) => TaskView(tasks: this.tasks, project: widget.project),
+                          deleted: (task) => TaskView(tasks: tasks, project: widget.project),
+                          updated: (task) => TaskView(tasks: tasks, project: widget.project),
+                          created: (task) => TaskView(tasks: tasks, project: widget.project),
                           none: () => NoTaskView(project: widget.project,),
                           errorUpdating: () => const ErrorPage(text: "updating tasks",),
                           errorFetching: () => const ErrorPage(text: "fetching tasks",),
                           errorCreating: () => const ErrorPage(text: "creating tasks",),
-                          orElse: () => const SizedBox.shrink()),
+                          orElse: () => TaskView(tasks: tasks, project: widget.project),
+                      ),
                     ],
                   ),
                 ),

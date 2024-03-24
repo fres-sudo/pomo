@@ -23,8 +23,12 @@ mixin _$UserJTO {
 // ignore: invalid_annotation_target
   @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get surname => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +40,14 @@ abstract class $UserJTOCopyWith<$Res> {
   factory $UserJTOCopyWith(UserJTO value, $Res Function(UserJTO) then) =
       _$UserJTOCopyWithImpl<$Res, UserJTO>;
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String username, String email});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String? name,
+      String? surname,
+      String username,
+      String email,
+      String? photo,
+      String? token});
 }
 
 /// @nodoc
@@ -53,14 +64,26 @@ class _$UserJTOCopyWithImpl<$Res, $Val extends UserJTO>
   @override
   $Res call({
     Object? id = null,
+    Object? name = freezed,
+    Object? surname = freezed,
     Object? username = null,
     Object? email = null,
+    Object? photo = freezed,
+    Object? token = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -69,6 +92,14 @@ class _$UserJTOCopyWithImpl<$Res, $Val extends UserJTO>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +111,14 @@ abstract class _$$UserJTOImplCopyWith<$Res> implements $UserJTOCopyWith<$Res> {
       __$$UserJTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String username, String email});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String? name,
+      String? surname,
+      String username,
+      String email,
+      String? photo,
+      String? token});
 }
 
 /// @nodoc
@@ -95,14 +133,26 @@ class __$$UserJTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = freezed,
+    Object? surname = freezed,
     Object? username = null,
     Object? email = null,
+    Object? photo = freezed,
+    Object? token = freezed,
   }) {
     return _then(_$UserJTOImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -111,6 +161,14 @@ class __$$UserJTOImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -120,8 +178,12 @@ class __$$UserJTOImplCopyWithImpl<$Res>
 class _$UserJTOImpl implements _UserJTO {
   const _$UserJTOImpl(
       {@JsonKey(name: '_id') required this.id,
+      this.name,
+      this.surname,
       required this.username,
-      required this.email});
+      required this.email,
+      this.photo,
+      this.token});
 
   factory _$UserJTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserJTOImplFromJson(json);
@@ -131,13 +193,21 @@ class _$UserJTOImpl implements _UserJTO {
   @JsonKey(name: '_id')
   final String id;
   @override
+  final String? name;
+  @override
+  final String? surname;
+  @override
   final String username;
   @override
   final String email;
+  @override
+  final String? photo;
+  @override
+  final String? token;
 
   @override
   String toString() {
-    return 'UserJTO(id: $id, username: $username, email: $email)';
+    return 'UserJTO(id: $id, name: $name, surname: $surname, username: $username, email: $email, photo: $photo, token: $token)';
   }
 
   @override
@@ -146,14 +216,19 @@ class _$UserJTOImpl implements _UserJTO {
         (other.runtimeType == runtimeType &&
             other is _$UserJTOImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, email);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, surname, username, email, photo, token);
 
   @JsonKey(ignore: true)
   @override
@@ -172,8 +247,12 @@ class _$UserJTOImpl implements _UserJTO {
 abstract class _UserJTO implements UserJTO {
   const factory _UserJTO(
       {@JsonKey(name: '_id') required final String id,
+      final String? name,
+      final String? surname,
       required final String username,
-      required final String email}) = _$UserJTOImpl;
+      required final String email,
+      final String? photo,
+      final String? token}) = _$UserJTOImpl;
 
   factory _UserJTO.fromJson(Map<String, dynamic> json) = _$UserJTOImpl.fromJson;
 
@@ -181,9 +260,17 @@ abstract class _UserJTO implements UserJTO {
   @JsonKey(name: '_id')
   String get id;
   @override
+  String? get name;
+  @override
+  String? get surname;
+  @override
   String get username;
   @override
   String get email;
+  @override
+  String? get photo;
+  @override
+  String? get token;
   @override
   @JsonKey(ignore: true)
   _$$UserJTOImplCopyWith<_$UserJTOImpl> get copyWith =>

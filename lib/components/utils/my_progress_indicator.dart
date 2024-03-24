@@ -11,11 +11,12 @@ class MyProgressIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery
-              .sizeOf(context)
-              .height / 3.4,),
-          const CircularProgressIndicator(color: kPrimary500,)
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height / 3.4,
+          ),
+          const CircularProgressIndicator(
+            color: kPrimary500,
+          ),
         ]);
-
   }
 }

@@ -31,7 +31,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
-    print("REF PROJ: ${widget.project!.id}");
     widget.task != null ? _nameTextEditingController.text = widget.task!.name : "";
     widget.task != null && widget.task?.description != null? _descriptionTextEditingController.text = widget.task!.description!: "";
     widget.task != null ? _currentPomodoroValue = widget.task!.pomodoro: "";
@@ -94,6 +93,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                         if (_nameTextEditingController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
+                              duration: Duration(seconds: 1),
                               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                               content: Text('Please enter valid information'),
                             ),
@@ -103,7 +103,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           context.read<TaskBloc>().createTask(
                               task: Task(
                                   name: _nameTextEditingController.text,
+                                  description: _descriptionTextEditingController.text,
                                   pomodoro: _currentPomodoroValue,
+                                  pomodoroCompleted: 0,
                                   completed: false,
                                   referenceProject: widget.project!.id,
                                   user: "65e31000c48a3a97e1a5147a",
@@ -115,6 +117,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                   id:widget.task!.id!,
                                   name: _nameTextEditingController.text,
                                   pomodoro: _currentPomodoroValue,
+                                  pomodoroCompleted: widget.task?.pomodoroCompleted,
                                   completed: widget.task!.completed,
                                   referenceProject: widget.task?.referenceProject,
                                   user: "65e31000c48a3a97e1a5147a",

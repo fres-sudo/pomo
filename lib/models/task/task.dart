@@ -14,6 +14,7 @@ class Task with _$Task {
     required String name,
     String? description,
     required int pomodoro,
+    int? pomodoroCompleted,
     required bool completed,
     required String user,
     String? referenceProject,

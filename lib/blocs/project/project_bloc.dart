@@ -104,8 +104,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     emit(const ProjectState.deleting());
     try{
-      await projectRepository.deleteProjectById(id: event.id);
-      emit(const ProjectState.deleted());
+      final project = await projectRepository.deleteProjectById(id: event.id);
+      emit(ProjectState.deleted(project));
     }catch(_){
       emit(const ProjectState.errorDeleting());
   }

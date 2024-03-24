@@ -31,7 +31,7 @@ abstract class ProjectRepository {
     required Project project,
   });
 
-  Future<void> deleteProjectById({
+  Future<Project> deleteProjectById({
     required String id,
   });
 
@@ -92,11 +92,13 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<void> deleteProjectById({required String id}) async {
+  Future<Project> deleteProjectById({required String id}) async {
     try {
-      await projectService.deleteProjectById(id);
-    } catch (error) {
-      logger.e('Error deleting project in: $error');
+      final project = await projectService.deleteProjectById(id);
+      return projectMapper.fromDTO(project);
+
+    } catch (error, stack) {
+      logger.e('Error deleting project in: $error. The stack is: \n $stack');
       throw Exception('Deleting failed');
     }
   }

@@ -35,4 +35,11 @@ final List<RepositoryProvider> _repositories = [
     );
     return taskRepository;
   }),
+  RepositoryProvider<UserRepository>(create: (context) {
+    final userRepository = UserRepositoryImpl(
+      userService: context.read(),
+      userMapper: context.read(),
+    );
+    return userRepository;
+  }),
 ];
