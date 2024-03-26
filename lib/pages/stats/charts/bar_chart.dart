@@ -3,12 +3,13 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/constants/colors.dart';
 import 'package:pomo/pages/stats/logic/stats_brain.dart';
 
 import '../../../models/task/task.dart';
 
 class CustomBarChart extends StatefulWidget {
-  CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.brain, required this.tasks});
+  const CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.brain, required this.tasks});
 
   final Color barBackgroundColor;
   final Color barColor;
@@ -118,7 +119,7 @@ class CustomBarChartState extends State<CustomBarChart> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.blueGrey,
+          tooltipBgColor: Theme.of(context).dividerColor,
           tooltipHorizontalAlignment: FLHorizontalAlignment.right,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
@@ -150,19 +151,11 @@ class CustomBarChartState extends State<CustomBarChart> {
             }
             return BarTooltipItem(
               '$weekDay\n',
-              const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              Theme.of(context).textTheme.titleSmall!,
               children: <TextSpan>[
                 TextSpan(
                   text: (rod.toY - 1).toString(),
-                  style: TextStyle(
-                    color: widget.touchedBarColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500)
                 ),
               ],
             );

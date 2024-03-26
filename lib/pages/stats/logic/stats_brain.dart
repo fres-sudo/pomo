@@ -17,7 +17,7 @@ class StatsBrain {
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(today.subtract(Duration(days: 1)))).toList();
+        task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Calculate the total focus time
     double totalFocusTime = completedToday.length * 25 / 60; // Convert from minutes to hours
@@ -31,7 +31,7 @@ class StatsBrain {
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(today.subtract(Duration(days: 1)))).toList();
+        task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Calculate the total break time
     double totalBreakTime = completedToday.length * 5 / 60; // Convert from minutes to hours
@@ -45,7 +45,7 @@ class StatsBrain {
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(today.subtract(Duration(days: 1)))).toList();
+        task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Total number of completed tasks
     int totalTasks = completedToday.length;
@@ -54,12 +54,12 @@ class StatsBrain {
 
   double getFocusTimeYesterday() {
     // Get yesterday's start date
-    DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
+    DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(yesterday.subtract(Duration(days: 1))) &&
+        task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
     // Calculate the total focus time
@@ -69,12 +69,12 @@ class StatsBrain {
 
   double getBreakTimeYesterday() {
     // Get yesterday's start date
-    DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
+    DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(yesterday.subtract(Duration(days: 1))) &&
+        task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
     // Calculate the total break time
@@ -84,12 +84,12 @@ class StatsBrain {
 
   int getAllTasksYesterday() {
     // Get yesterday's start date
-    DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
+    DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
     task.completed &&
-        task.createdAt.isAfter(yesterday.subtract(Duration(days: 1))) &&
+        task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
     // Total number of completed tasks

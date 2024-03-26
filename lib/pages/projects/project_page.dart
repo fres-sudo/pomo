@@ -11,7 +11,6 @@ import '../../blocs/project/project_bloc.dart';
 import '../../blocs/user/user_bloc.dart';
 import '../../components/cards/project_card.dart';
 import '../../components/utils/my_progress_indicator.dart';
-import '../../components/utils/utils.dart';
 import '../../components/widgets/snack_bars.dart';
 
 @RoutePage()
@@ -61,8 +60,6 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     context.read<UserBloc>().checkAuthentication();
     final String userId = context.read<UserBloc>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
-
-    print("projects : ${projects}");
     if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
 
     super.initState();
@@ -115,7 +112,17 @@ class _ProjectPageState extends State<ProjectPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Let's work", style: kSerzif(context)),
-                        const CircleAvatar()
+                        CircleAvatar(
+                            backgroundImage: context.read<UserBloc>().state.maybeWhen(
+                              authenticated: (user) {
+                                if (user.photo == null) {
+                                  return const AssetImage("assets/images/propic-placeholder.jpg");
+                                } else {
+                                  return NetworkImage(user.photo!);
+                                }
+                              },
+                              orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -138,8 +145,8 @@ class _ProjectPageState extends State<ProjectPage> {
                     none: () => const NoProjectView(),
                     fetching: () => const MyProgressIndicator(),
                     errorFetching: () => const ErrorPage(text: "fetch projects",),
-                    fetched: (List<Project> projects) => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects),
-                    orElse: () => const SizedBox.shrink()),
+                    //fetched: (List<Project> projects) => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects),
+                    orElse: () => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects)),
               ],
             ),
           ),

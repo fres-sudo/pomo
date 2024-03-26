@@ -12,7 +12,7 @@ void main() {
   setUp(() {
     dto = ProjectJTOFixture.factory().makeSingle();
 
-    model = Project();
+    model = const Project();
     mapper = const ProjectMapper();
   });
 

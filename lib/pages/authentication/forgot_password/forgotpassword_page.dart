@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
-import 'package:pomo/pages/authentication/forgot_password/forgotpassword_otp_page.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../components/fields/email_text_field.dart';
 import '../../../constants/colors.dart';
-import '../../../constants/text.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailTextController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -50,7 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       Text(
                         "Reset Your Password",
-                        style: Theme.of(context).textTheme.headlineMedium
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700)
                       ),
                     ],
                   ),
@@ -59,7 +61,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                   Text(
                     "Renew your access with a password reset – safeguarding your account with simplicity and peace of mind",
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
                   ),
                   const SizedBox(
                     height: 40,
@@ -71,7 +73,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(
                     height: 6,
                   ),
-                  EmailField(controller: _emailTextController),
+                  Form(child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailTextController,
+                    cursorColor: kPrimary600,
+                    autovalidateMode:
+                    AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                      hintText: "Email",
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                    ],
+                    style: Theme.of(context).textTheme.titleMedium,
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !EmailValidator.validate(value)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
+                  )),
+
                   const SizedBox(
                     height: 28,
                   ),
@@ -84,10 +108,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
               child: RoundedButton(
-                color: kPrimary500,
+                color: Theme.of(context).primaryColor,
                 borderColor: Colors.transparent,
                 child: Text(
-                  "Continue",
+                  "Send Email",
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -95,19 +119,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true).push(
-                    PageRouteBuilder(
-                      pageBuilder: (c, a1, a2) =>
-                          ForgotPasswordOTPPage(email: _emailTextController.text),
-                      transitionsBuilder:
-                          (c, anim, a2, child) =>
-                          FadeTransition(
-                              opacity: anim,
-                              child: child),
-                      transitionDuration:
-                      const Duration(milliseconds: 300),
-                    ),
-                  );
+                  EmailValidator.validate(_emailTextController.text) ? context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text)) : onInvalidInput(context);
                 },
               ),
             ),

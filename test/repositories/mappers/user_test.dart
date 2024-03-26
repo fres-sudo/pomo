@@ -12,7 +12,7 @@ void main() {
   setUp(() {
     dto = StringJTOFixture.factory().makeSingle();
 
-    model = User();
+    model = const User();
     mapper = const User();
   });
 

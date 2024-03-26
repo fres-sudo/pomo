@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../blocs/user/user_bloc.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
@@ -72,9 +74,18 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcIn),
                       ),
                       label: "QuickSession"),
-                  const BottomNavigationBarItem(
+                   BottomNavigationBarItem(
                       icon: CircleAvatar(
                         radius: 13,
+                          backgroundImage: context.read<UserBloc>().state.maybeWhen(
+                            authenticated: (user) {
+                              if (user.photo == null) {
+                                return const AssetImage("assets/images/propic-placeholder.jpg");
+                              } else {
+                                return NetworkImage(user.photo!);
+                              }
+                            },
+                            orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
                       ),
                       label: "Profile"),
                 ],

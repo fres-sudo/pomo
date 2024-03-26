@@ -43,13 +43,13 @@ class ProjectCard extends StatelessWidget {
                     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                 child: Container(
                   height: height * 1 / 2.8 * 1 / 2.5,
-                  decoration: const BoxDecoration(
-                    boxShadow: [
+                  decoration: BoxDecoration(
+                    boxShadow: const [
                       BoxShadow(
                           color: Colors.black12, spreadRadius: 0, blurRadius: 15),
                     ],
                     image: DecorationImage(
-                      image: NetworkImage('https://picsum.photos/250?image=11'),
+                      image: /* project.imageCover != null ? NetworkImage(project.imageCover!) : */ Image.asset("assets/images/project-placeholder.png").image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -98,7 +98,7 @@ class ProjectCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodySmall
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 8,
                     ),
                     Text(
                       project.description ?? "No description",

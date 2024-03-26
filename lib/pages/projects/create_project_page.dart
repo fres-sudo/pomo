@@ -66,7 +66,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
     return BlocConsumer<ProjectBloc, ProjectState>(
         listener: (context, state) {
           state.whenOrNull(
-            created: (project) => context.router.push(ProjectDetailsRoute(project: project)),
+            created: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
             errorCreating: () => onErrorState(context, "creating project"),
           );
         },

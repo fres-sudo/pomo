@@ -4,7 +4,6 @@ import 'package:pomo/components/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../../constants/colors.dart';
 import '../../constants/constants.dart';
-import '../../constants/text.dart';
 import '../../providers/fields/name_provider.dart';
 
 class NameField extends StatefulWidget {

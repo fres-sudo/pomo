@@ -62,7 +62,17 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         child: Row(children: [
-                          const CircleAvatar(),
+                          CircleAvatar(
+                              backgroundImage: state.maybeWhen(
+                                authenticated: (user) {
+                                  if (user.photo == null) {
+                                    return const AssetImage("assets/images/propic-placeholder.jpg");
+                                  } else {
+                                    return NetworkImage(user.photo!);
+                                  }
+                                },
+                                orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
+                          ),
                           const SizedBox(
                             width: 12,
                           ),

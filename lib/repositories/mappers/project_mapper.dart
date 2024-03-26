@@ -1,8 +1,6 @@
 import 'package:pine/pine.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/models/task/task.dart';
-import 'package:pomo/repositories/mappers/task_mapper.dart';
-import 'package:pomo/repositories/mappers/user_mapper.dart';
 import 'package:pomo/services/network/jto/project/project_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
 

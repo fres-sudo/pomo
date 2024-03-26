@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/constants/text.dart';
 import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../../providers/fields/email_provider.dart';

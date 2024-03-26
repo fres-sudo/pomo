@@ -8,9 +8,6 @@ import '../services/network/jto/project/project_jto.dart';
 import '../services/network/jto/task/task_jto.dart';
 import '../services/network/jto/user/user_jto.dart';
 import '../services/network/project/project_service.dart';
-import 'mappers/project_mapper.dart';
-import 'mappers/task_mapper.dart';
-import 'mappers/user_mapper.dart';
 
 /// Abstract class of ProjectRepository
 abstract class ProjectRepository {

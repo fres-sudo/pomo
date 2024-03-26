@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pomo/constants/colors.dart';
 
 import '../../../models/task/task.dart';
 
@@ -15,7 +16,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
       child: Container(
         height: MediaQuery
             .sizeOf(context)
-            .height / 3.2,
+            .height / 2.5,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(20),
@@ -38,13 +39,13 @@ class InfoTaskBottomSheet extends StatelessWidget {
               width: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).bottomSheetTheme.backgroundColor?.withRed(10)
+                color: Theme.of(context).bottomSheetTheme.backgroundColor
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.info_outline_rounded,size: 20,),
+                const Icon(Icons.info_outline_rounded,size: 20,),
                 const SizedBox(
                   width: 8,
                 ),
@@ -59,7 +60,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Name:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor),),
+                Text("Name:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
                 Text(task.name, style: Theme.of(context).textTheme.titleMedium,)
             ],),
             const SizedBox(
@@ -68,7 +69,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Description:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor),),
+                Text("Description:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
                 Text(task.description ?? "No description", style: Theme.of(context).textTheme.titleMedium,)
             ],),
             const SizedBox(
@@ -77,7 +78,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Pomodoro:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor),),
+                Text("Pomodoro:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color:kNeutral500),),
                 Text(task.pomodoro.toString(), style: Theme.of(context).textTheme.titleMedium,)
               ],),
             const SizedBox(
@@ -86,7 +87,16 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Created At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor),),
+                Text("Pomodoro completed:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text(task.pomodoroCompleted.toString(), style: Theme.of(context).textTheme.titleMedium,)
+              ],),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Created At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
                 Text(DateFormat('MMM dd, yyyy').format(task.createdAt), style: Theme.of(context).textTheme.titleMedium,)
             ],),
             const SizedBox(
@@ -96,7 +106,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Completed At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor),),
+                Text("Completed At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
                 Text(DateFormat('MMM dd, yyyy').format(task.completedAt!), style: Theme.of(context).textTheme.titleMedium,)
             ],) : const SizedBox(),
             const SizedBox(

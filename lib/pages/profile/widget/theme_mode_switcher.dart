@@ -26,8 +26,9 @@ class ThemeModeSwitcher extends StatelessWidget {
                 .map(
                   (mode) => RadioListTile<ThemeMode>(
                   value: mode,
+                  activeColor: Theme.of(context).primaryColor,
                   title: Text(
-                      '${mode.name[0].toUpperCase()}${mode.name.substring(1).toLowerCase()}'),
+                      '${mode.name[0].toUpperCase()}${mode.name.substring(1).toLowerCase()}', style: Theme.of(context).textTheme.titleMedium,),
                   groupValue: state.mode,
                   onChanged: (value) {
                     context.read<ThemeCubit>().changeMode(value);

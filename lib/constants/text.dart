@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomo/components/utils/utils.dart';
 
-import 'colors.dart';
 
 // ----- T E X T ------
 
