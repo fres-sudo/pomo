@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/routes/app_router.gr.dart';
@@ -148,14 +147,18 @@ class _TaskCardState extends State<TaskCard> {
                               .displaySmall
                               ?.copyWith(fontSize: 14),
                         ),
-                        Text(
-                          "${(widget.task.pomodoro * 30).toString()}mins • ${widget.task.pomodoro} pomodoro",
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 11,
-                              color:
-                                  context.isDarkMode ? kNeutral500 : kNeutral500),
-                        )
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(text: widget.task.pomodoro > 1 ? "${durationToString(
+                                  widget.task.pomodoro * 30)} hours " : "${widget.task.pomodoro * 30} mins", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500)),
+                              TextSpan(text: " • ${widget.task.pomodoro} pomodoro", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500) ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ],

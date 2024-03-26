@@ -72,7 +72,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 updateUserSecureStorage(
                     user.name!.capitalize(), user.surname!.capitalize(), user.photo);
               }
-
             },
             errorUpdating: () => onErrorState(context, "updating user"));
       },
@@ -140,7 +139,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
                          CircleAvatar(
-                          backgroundImage: image != null ? FileImage(File(image!.path)) : null,
+                          backgroundImage: image != null ? FileImage(File(image!.path)) : (
+                          state.maybeWhen(
+                            authenticated: (user) {
+                              if (user.photo == null) {
+                                return const AssetImage("assets/images/propic-placeholder.jpg");
+                              } else {
+                                return NetworkImage(user.photo!);
+                              }
+                            },
+                            orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
+                          ),
                           radius: 40,
                         ),
                         GestureDetector(
@@ -244,16 +253,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           cursorColor: kPrimary600,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                              suffixIcon: Icon(
+                              suffixIcon: const Icon(
                                 Icons.lock,
                                 size: 20,
-                                color: Theme.of(context).dividerColor,
+                                color: kNeutral500
                               ),
                               hintText: user.email),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(color: Theme.of(context).dividerColor),
+                              ?.copyWith(color: kNeutral500),
                         ),
                       ],
                     ),

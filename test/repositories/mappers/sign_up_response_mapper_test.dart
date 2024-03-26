@@ -12,7 +12,7 @@ void main() {
   setUp(() {
     dto = SignUpResponseResponseFixture.factory().makeSingle();
 
-    model = User();
+    model = const User();
     mapper = const SignUpResponseMapper();
   });
 

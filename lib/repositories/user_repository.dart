@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pine/utils/dto_mapper.dart';
 import 'package:pomo/services/network/user/user_service.dart';

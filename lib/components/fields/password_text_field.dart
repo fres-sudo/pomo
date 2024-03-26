@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../../constants/colors.dart';
-import '../../constants/text.dart';
 import '../../providers/fields/password_provider.dart';
 
 class PasswordField extends StatefulWidget {

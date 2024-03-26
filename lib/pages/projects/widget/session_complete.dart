@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
-import 'package:pomo/pages/projects/project_page.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 @RoutePage()
@@ -98,7 +97,7 @@ class _SessionCompletePageState extends State<SessionCompletePage> {
                     children: [
                       RoundedButton(
                         onPressed: () {
-                          AutoRouter.of(context).push( ProjectRoute());
+                          AutoRouter.of(context).push( const ProjectRoute());
                         },
                         color: Theme.of(context).colorScheme.onPrimary,
                         child: Text("Back Home",style: Theme.of(context).textTheme.titleMedium),

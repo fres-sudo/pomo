@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:pomo/pages/projects/views/break_view.dart';
@@ -101,7 +100,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         id: widget.task.id!,
                         task: widget.task.copyWith(
                             pomodoroCompleted: (widget.task.pomodoroCompleted! + 1),
-                            completed: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted,
+                            completed: widget.task.pomodoro == widget.task.pomodoroCompleted,
                             completedAt: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted ? DateTime.now() : null,
                         ));
 
@@ -150,7 +149,12 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       ],
                     ),
                     Text(
-                      "${widget.task.pomodoroCompleted}/${widget.task.pomodoro}",
+                      "${context.read<TaskBloc>().state.maybeWhen(
+                          updated: (task) => {
+                            task.pomodoroCompleted,
+                            print("task completed: ${task.pomodoroCompleted}"),
+                          },
+                          orElse: ()=> widget.task.pomodoroCompleted)}/${widget.task.pomodoro}",
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

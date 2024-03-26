@@ -104,6 +104,7 @@ abstract class $AppRouter extends _i19.RootStackRouter {
         child: _i10.ProjectDetailsPage(
           key: args.key,
           project: args.project,
+          isCreatedProject: args.isCreatedProject,
         ),
       );
     },
@@ -319,12 +320,14 @@ class ProjectDetailsRoute extends _i19.PageRouteInfo<ProjectDetailsRouteArgs> {
   ProjectDetailsRoute({
     _i20.Key? key,
     required _i21.Project project,
+    bool isCreatedProject = false,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           ProjectDetailsRoute.name,
           args: ProjectDetailsRouteArgs(
             key: key,
             project: project,
+            isCreatedProject: isCreatedProject,
           ),
           initialChildren: children,
         );
@@ -339,15 +342,18 @@ class ProjectDetailsRouteArgs {
   const ProjectDetailsRouteArgs({
     this.key,
     required this.project,
+    this.isCreatedProject = false,
   });
 
   final _i20.Key? key;
 
   final _i21.Project project;
 
+  final bool isCreatedProject;
+
   @override
   String toString() {
-    return 'ProjectDetailsRouteArgs{key: $key, project: $project}';
+    return 'ProjectDetailsRouteArgs{key: $key, project: $project, isCreatedProject: $isCreatedProject}';
   }
 }
 

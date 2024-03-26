@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../components/widgets/rounded_button.dart';
 import '../../../constants/colors.dart';
-import '../../../constants/text.dart';
 import 'forgotpassword_recover_page.dart';
 
 @RoutePage()
@@ -40,7 +39,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   ),
                   Text(
                     "Enter the one-time code we just sent to your device to unlock the door to your digital realm. Fast, easy, and extra secure!",
-                    style: Theme.of(context).textTheme.titleMedium
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor)
                   ),
                   const SizedBox(
                     height: 40,

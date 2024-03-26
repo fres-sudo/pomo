@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/text.dart';
@@ -12,9 +11,10 @@ import '../../../routes/app_router.gr.dart';
 import '../widget/project_bottom_sheet.dart';
 
 class HeaderProjectDetails extends StatelessWidget {
-  const HeaderProjectDetails({super.key, required this.project});
+  const HeaderProjectDetails({super.key, required this.project, this.isProjectCreated = false});
 
   final Project project;
+  final bool isProjectCreated;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HeaderProjectDetails extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    context.router.replace(const ProjectRoute());
+                    isProjectCreated ? context.router.replace(const ProjectRoute()): context.router.pop();
                   },
                   child: SvgPicture.asset(
                     'assets/icons/arrow-left.svg',
@@ -91,7 +91,7 @@ class HeaderProjectDetails extends StatelessWidget {
               ),
             ),
             Text("Due date: ${DateFormat('MMM dd, yyyy').format(project.dueDate)}",
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).dividerColor),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500),
             )
           ],
         ),

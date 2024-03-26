@@ -53,6 +53,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         emit(const ProjectState.none());
       } else {
         emit(ProjectState.fetched(projects));
+        emit(ProjectState.retrieveProject(projects));
       }
     }catch(_){
       emit(const ProjectState.errorFetching());
@@ -67,6 +68,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     try{
       final project = await projectRepository.createProject(project: event.project);
       emit(ProjectState.created(project));
+
     }catch(_){
       emit(const ProjectState.errorCreating());
     }

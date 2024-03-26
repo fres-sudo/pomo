@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,7 +7,7 @@ import '../../../models/project/project.dart';
 import '../widget/task_bottom_sheet.dart';
 
 class NoTaskView extends StatelessWidget {
-   NoTaskView({super.key, this.project});
+   const NoTaskView({super.key, this.project});
 
   final Project? project;
 

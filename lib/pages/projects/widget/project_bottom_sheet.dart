@@ -2,11 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/project/project_bloc.dart';
-import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/constants/text.dart';
-import 'package:pomo/pages/projects/project_page.dart';
-import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/destruction_bottomsheet.dart';
 import '../../../models/project/project.dart';

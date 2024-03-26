@@ -1,6 +1,5 @@
 
 import 'package:pine/utils/dto_mapper.dart';
-import 'package:pomo/repositories/mappers/project_mapper.dart';
 
 import '../constants/constants.dart';
 import '../models/project/project.dart';
@@ -8,7 +7,6 @@ import '../models/task/task.dart';
 import '../services/network/jto/project/project_jto.dart';
 import '../services/network/jto/task/task_jto.dart';
 import '../services/network/task/task_service.dart';
-import 'mappers/task_mapper.dart';
 
 /// Abstract class of TaskRepository
 abstract class TaskRepository {

@@ -13,9 +13,10 @@ import 'views/task_view.dart';
 
 @RoutePage()
 class ProjectDetailsPage extends StatefulWidget {
-   ProjectDetailsPage({super.key, required this.project});
+   ProjectDetailsPage({super.key, required this.project, this.isCreatedProject = false});
 
    Project project;
+   final bool isCreatedProject;
 
   @override
   State<ProjectDetailsPage> createState() => _ProjectDetailsPageState();
@@ -78,7 +79,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      HeaderProjectDetails(project: widget.project),
+                      HeaderProjectDetails(project: widget.project, isProjectCreated: widget.isCreatedProject),
                       state.maybeWhen(
                           fetching: () => const MyProgressIndicator(),
                           creating: () => const MyProgressIndicator(),

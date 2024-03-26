@@ -3,13 +3,13 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-
 import '../../../blocs/user/user_bloc.dart';
 
 @RoutePage()
@@ -25,10 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool _obscureText = false;
-  bool _checkedValue = false;
-
-
+  bool _obscureText = true;
 
   @override
   void dispose() {
@@ -42,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     AutoRouter.of(context);
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
-        errorSignIn: () => _onErrorSignIn(context),
+        errorSignIn: () => onErrorState(context, "signing in"),
         signedIn: (user) {
           context.read<UserBloc>().authenticated(user: user);
           context.router.replace(const RootRoute());
@@ -53,48 +50,44 @@ class _LoginPageState extends State<LoginPage> {
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Stack(
                   alignment: Alignment.bottomLeft,
                   children: [
                     Container(
-                      height: MediaQuery.sizeOf(context).height * 1 / 4,
-                      decoration: BoxDecoration(
-                          color: kPastelPurple,
-                          borderRadius: const BorderRadius.only(
+                      height: MediaQuery.sizeOf(context).height * 1 / 3.5,
+                      decoration: const BoxDecoration(
+                          gradient: kGradientPurple2,
+                          borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Welcome back!",
-                              style: Theme.of(context).textTheme.headlineMedium),
+                          Text("Welcome back! 🍅",
+                              style: kSerzif(context)),
                           const SizedBox(
                             height: 4,
                           ),
                           Text("Enter your email & password for logging in ",
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor)),
                         ],
                       ),
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Form(
-                        key: _formKey,
-                        child: Column(
+                Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
+                    child: Column(
+                      children: [
+                        Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -170,182 +163,85 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        splashRadius: 3,
-                                        value: _checkedValue,
-                                        onChanged: (newValue) {
-                                          setState(() {
-                                            _checkedValue = newValue!;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        "Remember me",
-                                        style:
-                                        Theme.of(context).textTheme.titleSmall,
-                                      ),
-                                    ],
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    context
+                                        .pushRoute(const ForgotPasswordRoute());
+                                  },
+                                  child: Text(
+                                    "Forgot password?",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                        color: kPrimary400),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      context
-                                          .pushRoute(const ForgotPasswordRoute());
-                                    },
-                                    child: Text(
-                                      "Forgot password?",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                          color: kPrimary400),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
-
-                              RoundedButton(
-                                  borderColor: Colors.transparent,
-                                  color: kPrimary500,
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      context.read<SignInBloc>().perform(
-                                          email: _emailTextController.text,
-                                          password: _passwordTextController.text);
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                                            content: Text('Please enter valid information')),
-                                      );
-                                    }
-                                  } ,
-                                  child: Text(
-                                    "Log in",
-                                    style: GoogleFonts.inter(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: kNeutral50),
-                                  ))
                             ]),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width / 2.6,
-                            child: const Divider(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Text(
-                              "or",
-                              style: Theme.of(context).textTheme.titleSmall,
+                        Column(
+                          children: [
+                            RoundedButton(
+                                borderColor: Colors.transparent,
+                                color: kPrimary500,
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<SignInBloc>().perform(
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                          content: Text('Please enter valid information')),
+                                    );
+                                  }
+                                } ,
+                                child: Text(
+                                  "Log in",
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: kNeutral50),
+                                )),
+                            const SizedBox(
+                              height: 20,
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width / 2.6,
-                            child: const Divider(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      RoundedButton(
-                          borderColor: kNeutral200,
-                          width: MediaQuery.sizeOf(context).width,
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset("assets/icons/google-logo.svg"),
-                                const SizedBox(
-                                  width: 10,
-                                ),
                                 Text(
-                                  "Continue with Google",
-                                  style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: kNeutral900),
-                                )
-                              ],
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      RoundedButton(
-                          borderColor: kNeutral200,
-                          width: MediaQuery.sizeOf(context).width,
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/icons/apple-logo.png",
-                                  width: 20,
+                                  "Don't have an account?",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall,
                                 ),
                                 const SizedBox(
-                                  width: 10,
+                                  width: 5,
                                 ),
-                                Text(
-                                  "Continue with Apple",
-                                  style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: kNeutral900),
-                                )
+                                GestureDetector(
+                                  onTap: () {
+                                    context.pushRoute(const SignUpRoute());
+                                  },
+                                  child: Text(
+                                    "Sign up",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(color: kPrimary400),
+                                  ),
+                                ),
                               ],
                             ),
-                          )),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account?",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              context.pushRoute(const SignUpRoute());
-                            },
-                            child: Text(
-                              "Sign up",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(color: kPrimary400),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -358,10 +254,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-_onErrorSignIn(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        content: Text('Something went wrong with login, please try again')),
-  );
-}

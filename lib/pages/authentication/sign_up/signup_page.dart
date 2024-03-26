@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
+import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/rounded_button.dart';
@@ -41,7 +42,10 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocConsumer<SignUpBloc, SignUpState>(
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignUp: () => onErrorState(context, "signing up"),
-        signedUp: (_) => context.router.replace(const RootRoute()),
+        signedUp: (_) => {
+          context.router.replace(const RootRoute()),
+          onSuccessState(context, "created your account")
+        },
       ),
       builder: (BuildContext context, SignUpState state) {
         return Scaffold(
@@ -54,29 +58,28 @@ class _SignUpPageState extends State<SignUpPage> {
                   alignment: Alignment.bottomLeft,
                   children: [
                     Container(
-                      height: MediaQuery.sizeOf(context).height * 1 / 4,
-                      decoration: BoxDecoration(
-                          color: kPastelYellow.withOpacity(0.50),
-                          borderRadius: const BorderRadius.only(
+                      height: MediaQuery.sizeOf(context).height * 1 / 3.5,
+                      decoration:const  BoxDecoration(
+                          gradient: kGradientPurple2,
+                          borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Welcome",
-                              style:
-                                  Theme.of(context).textTheme.headlineMedium),
+                          Text("Welcome! 👋",
+                              style: kSerzif(context),),
                           const SizedBox(
                             height: 4,
                           ),
                           Text("Create your account.",
-                              style: Theme.of(context).textTheme.bodyMedium),
-                        ],
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor)),
+                        ]
                       ),
                     )
                   ],

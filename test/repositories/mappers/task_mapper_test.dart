@@ -12,7 +12,7 @@ void main() {
   setUp(() {
     dto = TaskJTOFixture.factory().makeSingle();
 
-    model = Task();
+    model = const Task();
     mapper = const TaskMapper();
   });
 

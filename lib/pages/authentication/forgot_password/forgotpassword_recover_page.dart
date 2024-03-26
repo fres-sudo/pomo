@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../components/fields/password_text_field.dart';
 import '../../../components/widgets/rounded_button.dart';
 import '../../../constants/colors.dart';
-import '../../../constants/text.dart';
 import '../login_in/login_page.dart';
 
 @RoutePage()

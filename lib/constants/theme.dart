@@ -9,12 +9,11 @@ class LightTheme {
         scaffoldBackgroundColor: kNeutral50,
         cardColor: Colors.white,
         indicatorColor: kPrimary500,
-        dividerColor: kNeutral100,
+        dividerColor: kNeutral200,
         textTheme: textTheme,
         colorScheme: const ColorScheme.light(onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600,),
         radioTheme: RadioThemeData(
           overlayColor: MaterialStateProperty.resolveWith((states) {
-            // If the button is pressed, return green, otherwise blue
             if (states.contains(MaterialState.selected)) {
               return kPrimary500;
             }
@@ -55,7 +54,7 @@ class LightTheme {
           suffixIconColor: kNeutral900
         ),
         bottomSheetTheme:
-            const BottomSheetThemeData(backgroundColor: kNeutral900),
+            const BottomSheetThemeData(backgroundColor: kNeutral100),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 5,
           side: const BorderSide(
@@ -72,6 +71,7 @@ class LightTheme {
             if (states.contains(MaterialState.selected)) {
               return kPrimary500;
             }
+            return null;
           }),
         ),
         appBarTheme: const AppBarTheme(
@@ -98,14 +98,23 @@ class LightTheme {
             selectedItemColor: kPrimary500,
             unselectedItemColor: Colors.black,
             backgroundColor: Colors.white),
-        cardTheme: CardTheme(color: kNeutral100, surfaceTintColor: kNeutral900),
+        cardTheme: const CardTheme(color: kNeutral100, surfaceTintColor: kNeutral900),
         iconTheme: const IconThemeData(color: kNeutral900),
-        dividerTheme: DividerThemeData(
+        dividerTheme: const DividerThemeData(
             color: kNeutral200
         ),
       snackBarTheme: SnackBarThemeData(
-          backgroundColor: kNeutral50
-      )
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: kNeutral50,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        contentTextStyle: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: Colors.white
+        ),
+      ),
       );
 }
 
@@ -114,6 +123,7 @@ class DarkTheme {
         scaffoldBackgroundColor: const Color(0xFF000000),
         cardColor: kNeutral900,
         primaryColor: kPrimary500,
+        dividerColor: kNeutral800,
         indicatorColor: kPrimary500,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
@@ -122,7 +132,7 @@ class DarkTheme {
           color: kNeutral800
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        cardTheme: CardTheme(color: kNeutral900, surfaceTintColor: kNeutral100),
+        cardTheme: const CardTheme(color: kNeutral900, surfaceTintColor: kNeutral100),
         inputDecorationTheme: InputDecorationTheme(
           prefixIconColor: kNeutral100,
           fillColor: kNeutral900,
@@ -165,12 +175,14 @@ class DarkTheme {
             if (states.contains(MaterialState.selected)) {
               return kNeutral900;
             }
+            return null;
           }),
           fillColor: MaterialStateProperty.resolveWith((states) {
             // If the button is pressed, return green, otherwise blue
             if (states.contains(MaterialState.selected)) {
               return kPrimary500;
             }
+            return null;
           }),
         ),
         textTheme: textTheme,
@@ -183,13 +195,13 @@ class DarkTheme {
           enableFeedback: false,
           elevation: 0.0,
           selectedLabelStyle: GoogleFonts.inter(
-              fontSize: 10, fontWeight: FontWeight.normal, color: kPrimary500),
+              fontSize: 10, fontWeight: FontWeight.normal, color: kPrimary400),
           unselectedLabelStyle: GoogleFonts.inter(
               fontSize: 10, fontWeight: FontWeight.normal, color: Colors.white),
           showUnselectedLabels: true,
           showSelectedLabels: true,
           unselectedItemColor: Colors.white,
-          selectedItemColor: kPrimary500,
+          selectedItemColor: kPrimary400,
           backgroundColor: kNeutral900,
         ),
         snackBarTheme: SnackBarThemeData(
