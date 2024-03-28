@@ -2,13 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
 import 'package:pomo/pages/quick_session/views/quick_break_view.dart';
 import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/text.dart';
+import '../../main.dart';
 
 @RoutePage()
 class QuickSessionPage extends StatefulWidget {
@@ -80,8 +83,8 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                 ),
 
                 selectedMode[0]
-                    ? QuickTimerView(onComplete: () {
-                 String id = context.read<UserBloc>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                    ? QuickTimerView(onComplete: () async {
+                 String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
                   context.read<TaskBloc>().createTask(task: Task(name: "user-$id-${DateTime.now()}",
                       pomodoro: 1,
                       completed: true,
@@ -92,6 +95,10 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                   setState(() {
                     selectedMode = [false, true];
                   });
+                 const NotificationDetails notificationDetails = NotificationDetails();
+                 await flutterLocalNotificationsPlugin.show(
+                     0, 'Great! 🎉', 'You successfully completed your focus session, let\'s take a quick brake ☕️', notificationDetails,
+                     payload: 'item x');
                 }, timerController: _timerController)
                     : QuickBreakView(
                     onComplete: () {

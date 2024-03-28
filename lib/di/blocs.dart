@@ -11,7 +11,15 @@ final List<BlocProvider> _blocs = [
     create: (context) => SignUpBloc(authenticationRepository: context.read()),
   ),
   BlocProvider<UserBloc>(
-    create: (context) => UserBloc(userRepository: context.read(), authenticationRepository: context.read())..checkAuthentication(),
+    create: (context) => UserBloc(userRepository: context.read(), authenticationRepository: context.read()),
+  ),
+  BlocProvider<AuthCubit>(
+    create: (context) => AuthCubit(
+      authenticationRepository: context.read(),
+    )..checkAuthentication(),
+  ),
+  BlocProvider<TimerCubit>(
+    create: (context) => TimerCubit(),
   ),
   BlocProvider<ProjectBloc>(
     create: (context) => ProjectBloc(projectRepository: context.read()),

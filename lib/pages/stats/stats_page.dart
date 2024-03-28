@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/task/task_bloc.dart';
 import 'package:pomo/components/utils/my_progress_indicator.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/stats/charts/bar_chart.dart';
 import 'package:pomo/pages/stats/charts/line_chart.dart';
@@ -123,7 +124,7 @@ class _StatsPageState extends State<StatsPage> {
                                 IconButton(
                                     onPressed: () {
                                       //onAvailableSoon(context);
-                                      final photo = context.read<UserBloc>().state.maybeWhen(
+                                      final photo = context.read<AuthCubit>().state.maybeWhen(
                                           authenticated: (user) => user.photo,
                                           orElse: () => "nullaa");
                                       //print(photo);
@@ -141,7 +142,7 @@ class _StatsPageState extends State<StatsPage> {
                               children: [
                                 CircleAvatar(
                                   radius: 83 / 2,
-                                  backgroundImage: context.read<UserBloc>().state.maybeWhen(
+                                  backgroundImage: context.read<AuthCubit>().state.maybeWhen(
                                     authenticated: (user) {
                                       if (user.photo == null) {
                                         return const AssetImage("assets/images/propic-placeholder.jpg");

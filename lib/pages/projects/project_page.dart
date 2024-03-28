@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
@@ -58,8 +59,8 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   void initState() {
-    context.read<UserBloc>().checkAuthentication();
-    final String userId = context.read<UserBloc>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
+    //context.read<AuthCubit>().checkAuthentication();
+    final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
     if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
 
     super.initState();
@@ -113,7 +114,7 @@ class _ProjectPageState extends State<ProjectPage> {
                       children: [
                         Text("Let's work", style: kSerzif(context)),
                         CircleAvatar(
-                            backgroundImage: context.read<UserBloc>().state.maybeWhen(
+                            backgroundImage: context.read<AuthCubit>().state.maybeWhen(
                               authenticated: (user) {
                                 if (user.photo == null) {
                                   return const AssetImage("assets/images/propic-placeholder.jpg");

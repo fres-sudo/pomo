@@ -9,6 +9,7 @@ import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../../blocs/user/user_bloc.dart';
 
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignIn: () => onErrorState(context, "signing in"),
         signedIn: (user) {
-          context.read<UserBloc>().authenticated(user: user);
+          context.read<AuthCubit>().authenticated(user);
           context.router.replace(const RootRoute());
           return null;
         }

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import '../blocs/user/user_bloc.dart';
 import '../routes/app_router.gr.dart';
 
@@ -77,7 +78,7 @@ class RootPage extends StatelessWidget {
                    BottomNavigationBarItem(
                       icon: CircleAvatar(
                         radius: 13,
-                          backgroundImage: context.read<UserBloc>().state.maybeWhen(
+                          backgroundImage: context.read<AuthCubit>().state.maybeWhen(
                             authenticated: (user) {
                               if (user.photo == null) {
                                 return const AssetImage("assets/images/propic-placeholder.jpg");

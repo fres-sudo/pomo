@@ -1,8 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 
 import '../../../constants/colors.dart';
+import '../../../cubits/timer/timer_cubit.dart';
 
 class QuickTimerView extends StatefulWidget {
   QuickTimerView({super.key, required this.onComplete, required this.timerController});
@@ -54,7 +59,7 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                 color: kPrimary900,
               ),
               child: CircularCountDownTimer(
-                duration: 5,
+                duration: context.read<TimerCubit>().focusTime * 60,
                 initialDuration: 0,
                 controller: widget.timerController,
                 width: MediaQuery.of(context).size.width / 2,
@@ -110,6 +115,12 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                   }
                   setState(() {}); // Update UI after modifying timer state
                 },
+                onLongPress: () => showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
+                          description: "Are you sure you want to reset the timer",
+                          function: () {widget.timerController.restart(duration: 25*60); context.router.pop();} )),
                 child: widget.timerController.isStarted && !widget.timerController.isPaused
                     ? Icon(Icons.pause_circle_filled_rounded,
                     color: Theme.of(context).iconTheme.color, size: 70)
