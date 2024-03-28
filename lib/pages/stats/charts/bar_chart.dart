@@ -45,7 +45,7 @@ class CustomBarChartState extends State<CustomBarChart> {
                 height: 4,
               ),
               Text(
-                "${widget.brain.getCompletionPercentageOfWeek(widget.tasks)}%",
+                "${widget.brain.getCompletionPercentageOfWeek(widget.tasks).round()}%",
                 style: Theme.of(context).textTheme.displayMedium
               ),
               const SizedBox(

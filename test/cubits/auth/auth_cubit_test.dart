@@ -10,16 +10,16 @@ void main() {
   });
 
   
-  /// Testing the method [checkAutenticationState]
-  group('when the method checkAutenticationState is called', () {
+  /// Testing the method [checkAuthentication]
+  group('when the method checkAuthentication is called', () {
     blocTest<AuthCubit, AuthState>(
-      'test that AuthCubit emits AuthState.authenticated when checkAutenticationState is called',
+      'test that AuthCubit emits AuthState.authenticated when checkAuthentication is called',
       setUp: () {
         //TODO: setup the environment
       },
       build: () => cubit,
       act: (cubit) {
-        cubit.checkAutenticationState();
+        cubit.checkAuthentication();
       },
       expect: () => <AuthState>[
         //TODO: define the emitted AuthState states

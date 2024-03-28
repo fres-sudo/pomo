@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/user/user.dart';
 import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
@@ -45,8 +46,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
-    context.read<UserBloc>().checkAuthentication();
-    user = context.read<UserBloc>().state.whenOrNull(
+    //context.read<AuthCubit>().checkAuthenticationState();
+    user = context.read<AuthCubit>().state.whenOrNull(
         authenticated: (user) => user,)!;
     _nameTextController.text = user.name ?? "";
     _surnameTextController.text = user.surname ?? "";
@@ -140,7 +141,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       children: [
                          CircleAvatar(
                           backgroundImage: image != null ? FileImage(File(image!.path)) : (
-                          state.maybeWhen(
+                          context.read<AuthCubit>().state.maybeWhen(
                             authenticated: (user) {
                               if (user.photo == null) {
                                 return const AssetImage("assets/images/propic-placeholder.jpg");

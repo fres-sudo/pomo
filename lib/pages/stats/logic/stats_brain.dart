@@ -169,12 +169,12 @@ class StatsBrain {
     return (getTaskOfMonday() + getTaskOfTuesday() + getTaskOfWednesday() + getTaskOfThursday() + getTaskOfFriday() + getTaskOfSaturday() + getTaskOfSunday()).toInt();
   }
 
-  int getCompletionPercentageOfWeek(List<Task> tasks) {
+  double  getCompletionPercentageOfWeek(List<Task> tasks) {
     int completedTasksCount = completedTasks.where((task) => task.completed).length;
     int totalTasksCount = tasks.length;
 
     double completionPercentage = (completedTasksCount / totalTasksCount) * 100;
-    return completionPercentage.toInt();
+    return completionPercentage;
   }
 
 }

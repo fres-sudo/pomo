@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
+import 'package:pomo/pages/profile/widget/set_timer.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 import '../../blocs/user/user_bloc.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
+import '../../cubits/auth/auth_cubit.dart';
 import '../../routes/app_router.gr.dart';
 
 @RoutePage()
@@ -22,15 +25,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    context.read<UserBloc>().checkAuthentication();
+    context.read<AuthCubit>().checkAuthentication();
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserBloc, UserState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) => state.whenOrNull(
-          signedOut: () => context.router.replace(const RootRoute()),
+          //signOut: () => context.router.replace(const RootRoute()),
           notAuthenticated: () => context.router.replace(const RootRoute())),
       builder: (context, state) {
         return Scaffold(
@@ -63,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         child: Row(children: [
                           CircleAvatar(
-                              backgroundImage: state.maybeWhen(
+                              backgroundImage: context.read<AuthCubit>().state.maybeWhen(
                                 authenticated: (user) {
                                   if (user.photo == null) {
                                     return const AssetImage("assets/images/propic-placeholder.jpg");
@@ -80,12 +85,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  state.maybeWhen(
+                                  context.read<AuthCubit>().state.maybeWhen(
                                       authenticated: (user) => "${user.name ?? 'Name'} ${user.surname ?? "Surname"}",
                                       orElse: () => "??"),
                                   style: Theme.of(context).textTheme.titleMedium),
                               Text(
-                                state.maybeWhen(
+                                context.read<AuthCubit>().state.maybeWhen(
                                     authenticated: (user) => "@${user.username}",
                                     orElse: () => "??"),
                                 style: GoogleFonts.inter(
@@ -121,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Notification",
+                              "Notification & Sound",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             SvgPicture.asset(
@@ -134,13 +139,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 20,
                     ),
                     InkWell(
-                        onTap: () {},
+                        onTap: () {
+                            showModalBottomSheet(context: context, builder: (context) => const SetTimer());
+                        },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Languages",
+                              "Timer Option",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             SvgPicture.asset(
@@ -240,7 +247,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   description:
                                       "Are you sure you want to log out this account?",
                                   function: () {
-                                    context.read<UserBloc>().signOut();
+                                    context.read<AuthCubit>().signOut();
+                                    context.router.replace(const RootRoute());
                                   },
                                 );
                               },

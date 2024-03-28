@@ -1,8 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../components/widgets/destruction_bottomsheet.dart';
 import '../../../constants/colors.dart';
+import '../../../cubits/timer/timer_cubit.dart';
 
 class QuickBreakView extends StatefulWidget {
   QuickBreakView({super.key, required this.onComplete, required this.breakController});
@@ -54,7 +58,7 @@ class _QuickBreakViewState extends State<QuickBreakView> {
                 color: kGreen600,
               ),
               child: CircularCountDownTimer(
-                duration: 5 ,
+                duration: context.read<TimerCubit>().breakTime * 60,
                 initialDuration: 0,
                 controller: widget.breakController,
                 width: MediaQuery.of(context).size.width / 2,
@@ -113,6 +117,12 @@ class _QuickBreakViewState extends State<QuickBreakView> {
                   }
                   setState(() {}); // Update UI after modifying timer state
                 },
+                onLongPress: () => showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
+                            description: "Are you sure you want to reset the timer",
+                            function: () {widget.breakController.restart(duration: 25*60); context.router.pop();} )),
                 child: widget.breakController.isStarted && !widget.breakController.isPaused
                     ? Icon(Icons.pause_circle_filled_rounded,
                     color: Theme.of(context).iconTheme.color, size: 70)
