@@ -20,6 +20,21 @@ class QuickBreakView extends StatefulWidget {
 }
 
 class _QuickBreakViewState extends State<QuickBreakView> {
+
+
+  int _breakTime = 25;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _breakTime = context.read<TimerCubit>().breakTime * 60;
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

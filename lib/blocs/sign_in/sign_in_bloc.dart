@@ -39,6 +39,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) async {
     emit(const SignInState.signingIn());
     try {
+      await Future.delayed(const Duration(seconds: 5));
       final user = await authenticationRepository.signIn(
         email: event.email,
         password: event.password,

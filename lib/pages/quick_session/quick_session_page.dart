@@ -3,7 +3,6 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';

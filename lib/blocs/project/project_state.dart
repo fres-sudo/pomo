@@ -22,7 +22,13 @@ class ProjectState with _$ProjectState {
   const factory ProjectState.created(Project project) = CreatedProjectState;
   
   const factory ProjectState.errorCreating() = ErrorCreatingProjectState;
-  
+
+  const factory ProjectState.uploadingImageCover() = UploadingImageCoverProjectState;
+
+  const factory ProjectState.uploadedImageCover(Project project) = UploadedImageCoverProjectState;
+
+  const factory ProjectState.errorUploadingImageCover() = ErrorUploadingImageCoverProjectState;
+
   const factory ProjectState.updating() = UpdatingProjectState;
   
   const factory ProjectState.updated(Project project) = UpdatedProjectState;

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 onInvalidInput(BuildContext context){
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+       const SnackBar(
           duration:  Duration(seconds: 2),
           padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('Please enter valid information 📝')),
+          content: Text('Please enter valid information 📝',)),
     );
   });
 }
@@ -17,8 +17,7 @@ onErrorState(BuildContext context, String text) {
       SnackBar(
           duration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
-              'Something went wrong while $text, please try again 🚨')),
+          content: Text('Something went wrong while $text, please try again 🚨')),
     );
   });
 }
@@ -44,5 +43,16 @@ onAvailableSoon(BuildContext context) {
           content: Text(
               'Sorry! 😣 This feature will be available soon 👀')),
     );
+  });
+}
+
+onFirstProfileSeen(BuildContext context) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+  ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          duration:  Duration(seconds: 3),
+          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text(
+              'If you want you can update your name and surname up here! ℹ️')));
   });
 }

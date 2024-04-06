@@ -54,9 +54,18 @@ class _SetTimerState extends State<SetTimer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(
-                  width: 36,
-                ),
+                TextButton(
+                    onPressed: () => {
+                      context.read<TimerCubit>().resetAll(),
+                      context.router.pop(),
+                    },
+                    child: Text(
+                      "Reset",
+                      style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: kNeutral500),
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -71,26 +80,19 @@ class _SetTimerState extends State<SetTimer> {
                         style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      onPressed: () => {
-                            context
-                                .read<TimerCubit>()
-                                .setBreak(_currentBreakMinutes),
-                        context
-                            .read<TimerCubit>()
-                            .setFocus(_currentFocusMinutes),
-                        context.router.pop(),
-                          },
-                      child: Text(
-                        "Update",
-                        style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: kPrimary500),
-                      )),
-                )
+                TextButton(
+                    onPressed: () => {
+                          context.read<TimerCubit>().setBreak(_currentBreakMinutes),
+                      context.read<TimerCubit>().setFocus(_currentFocusMinutes),
+                      context.router.pop(),
+                        },
+                    child: Text(
+                      "Update",
+                      style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: kPrimary500),
+                    ))
               ],
             ),
             const Padding(

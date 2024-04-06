@@ -1,21 +1,59 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/routes/app_router.gr.dart';
+import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/rounded_button.dart';
 import '../../../constants/colors.dart';
-import 'forgotpassword_recover_page.dart';
 
 @RoutePage()
 class ForgotPasswordOTPPage extends StatefulWidget {
-  const ForgotPasswordOTPPage({required this.email ,super.key});
+  const ForgotPasswordOTPPage({required this.email ,super.key, required this.otp});
 
   final String email;
+  final String otp;
 
   @override
   State<ForgotPasswordOTPPage> createState() => _ForgotPasswordOTPPageState();
 }
 
 class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
+
+  int _seconds = 120;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_seconds > 0) {
+          _seconds--;
+        } else {
+          _timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  String _formatTime(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+    String minutesStr = minutes.toString().padLeft(2, '0');
+    String secondsStr = remainingSeconds.toString().padLeft(2, '0');
+    return '$minutesStr:$secondsStr';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +70,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                     "Secure Access in a Snap!",
                     maxLines: 1,
                     overflow: TextOverflow.clip,
-                    style: Theme.of(context).textTheme.headlineMedium
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)
                   ),
                   const SizedBox(
                     height: 4,
@@ -44,17 +82,89 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  //TODO: add the otp text field
+                  OtpTextField(
+                    numberOfFields: 6,
+                    showFieldAsBox: true,
+                    fillColor: Theme.of(context).cardColor,
+                    filled: true,
+                    onCodeChanged: (String code) {},
+                    borderColor: Colors.transparent,
+                    disabledBorderColor: Colors.transparent,
+                    enabledBorderColor: Theme.of(context).primaryColor,
+                    //inputFormatters: [
+                    //  FilteringTextInputFormatter.allow(digitsOnlyRegex),
+                    //],
+                    borderWidth: 1,
+                    borderRadius: BorderRadius.circular(16),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 50),
+
+                    onSubmit: (String verificationCode){
+                      showDialog(
+                          context: context,
+                          builder: (context){
+                            return AlertDialog(
+                              title: const Text("Verification Code"),
+                              content: Text('Code entered is $verificationCode'),
+                            );
+                          }
+                      );
+                    }, // end onSubmit
+                  ),
                   const SizedBox(
                     height: 40,
                   ),
-                   Column(
-                    children: [
-                      Text("Don't recive an email yet?", style: Theme.of(context).textTheme.bodyMedium),
-                      // TODO: add counter and if the counter is over highlight in primary color the text below and make it clickable
-                      const Text("You can resend code in ... seconds"),
-                    ],
-                  )
+                   Center(
+                     child: Column(
+                      children: [
+                        Text("Don't recive an email yet?", style: Theme.of(context).textTheme.bodyMedium),
+                        RichText(
+                          text: TextSpan(
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: "You can ",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              WidgetSpan(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.read<UserBloc>().forgotPassword(email: widget.email);
+                                  },
+                                  child: Text(
+                                    "resend code",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: _seconds == 0
+                                          ? Theme.of(context).primaryColor
+                                          : Theme.of(context).dividerColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              TextSpan(
+                                text: " in ",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              TextSpan(
+                                text: _formatTime(_seconds),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              TextSpan(
+                                text: " seconds.",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                     ),
+                   )
                 ],
               ),
 
@@ -76,19 +186,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true).push(
-                    PageRouteBuilder(
-                      pageBuilder: (c, a1, a2) =>
-                      const ForgotPasswordRecoverPage(),
-                      transitionsBuilder:
-                          (c, anim, a2, child) =>
-                          FadeTransition(
-                              opacity: anim,
-                              child: child),
-                      transitionDuration:
-                      const Duration(milliseconds: 300),
-                    ),
-                  );
+                  context.router.push(const ForgotPasswordRecoverRoute());
                 },
               ),
             ),

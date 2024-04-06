@@ -77,7 +77,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       minX: 0,
       maxX: 6.3,
       minY: 0,
-      maxY: widget.brain.getAllTasksAll().toDouble(),
+      maxY: widget.brain.getAllTasksAll().toDouble() / 2,
       lineBarsData: [
         LineChartBarData(
           spots: [

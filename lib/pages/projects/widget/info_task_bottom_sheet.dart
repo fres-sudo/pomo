@@ -70,7 +70,8 @@ class InfoTaskBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Description:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
-                Text(task.description ?? "No description", style: Theme.of(context).textTheme.titleMedium,)
+                Expanded(
+                    child: Text(task.description ?? "No description", style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.end, maxLines: 2, overflow: TextOverflow.ellipsis,))
             ],),
             const SizedBox(
               height: 8,

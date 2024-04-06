@@ -14,6 +14,9 @@ class NoStatsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 7,
+        ),
         Image.asset(
           "assets/images/statistics.png",
           scale: 0.85,
@@ -33,9 +36,7 @@ class NoStatsPage extends StatelessWidget {
           borderColor: Colors.transparent,
           color: kPrimary500,
           width: MediaQuery.sizeOf(context).width / 2,
-          onPressed: () {
-            AutoRouter.of(context).push(const CreateProjectRoute());
-          },
+          onPressed: () => context.router.push(const QuickSessionRoute()),
           child: Text(
             "Start Quick Session",
             style: GoogleFonts.inter(

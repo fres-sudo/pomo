@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:pomo/services/network/jto/project/project_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
@@ -16,6 +18,9 @@ abstract class ProjectService {
 
   @POST('/projects/')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
+  @PUT('/projects/uploadImageCover/{id}')
+  @MultiPart()
+  Future<ProjectJTO> uploadProjectImageCover(@Path('id') String id, @Part() File photo,);
 
   @GET('/projects/{id}')
   Future<ProjectJTO> getProjectById(@Path('id') String id);

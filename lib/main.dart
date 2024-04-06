@@ -84,9 +84,6 @@ void main() async {
   // Preserving splash screen.
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // Delay for splash screen.
-  await Future.delayed(const Duration(seconds: 2));
-
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

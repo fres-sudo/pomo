@@ -58,7 +58,7 @@ class _BreakViewState extends State<BreakView> {
                 color: kGreen600,
               ),
               child: CircularCountDownTimer(
-                duration: context.read<TimerCubit>().breakTime * 60 ,
+                duration: context.read<TimerCubit>().breakTime * 60,
                 initialDuration: 0,
                 controller: widget.breakController,
                 width: MediaQuery.of(context).size.width / 2,
