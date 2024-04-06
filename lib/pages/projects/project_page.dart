@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/cubits/timer/timer_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
@@ -61,8 +62,9 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     //context.read<AuthCubit>().checkAuthentication();
     final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
+    print("userid : $userId");
     if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
-
+    context.read<TimerCubit>().getStoredValues();
     super.initState();
   }
 

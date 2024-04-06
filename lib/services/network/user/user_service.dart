@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:pomo/services/network/response/forgot_pass/forgot_pass_response.dart';
+import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../jto/user/user_jto.dart';
+import '../requests/recover_pass/recover_pass_request.dart';
 
 part 'user_service.g.dart';
 
@@ -13,10 +16,15 @@ abstract class UserService {
 
 
   @PUT('/users/{id}')
-  @MultiPart()
-  Future<UserJTO> updateUser(@Path('id') String id ,@Body() UserJTO user, @Part() FormData? photo,);
+  Future<UserJTO> updateUser(@Path('id') String id ,@Body() UserJTO user);
 
-  @PUT('/users/{id}')
+  @PUT('/users/uploadPhoto/{id}')
   @MultiPart()
-  Future<UserJTO> updateUser2(@Path('id') String id ,@Body() UserJTO user, @Part() File? photo,);
+  Future<UserJTO> updateUserPhoto(@Path('id') String id, @Part() File photo);
+
+  @POST('/users/forgotPassword')
+  Future<ForgotPassResponse> forgotPassword(@Body() String email);
+
+  @PATCH('/users/recoverPassword/{token}')
+  Future<void> recoverPassword(@Path('token') String token, @Body() RecoverPassRequest request);
 }

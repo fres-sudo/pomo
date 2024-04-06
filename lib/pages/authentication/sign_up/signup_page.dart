@@ -3,12 +3,13 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
+import 'package:pomo/components/fields/email_field.dart';
+import 'package:pomo/components/fields/name_field.dart';
+import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../components/widgets/rounded_button.dart';
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 
@@ -78,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             height: 4,
                           ),
                           Text("Create your account.",
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor)),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
                         ]
                       ),
                     )
@@ -102,28 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            TextFormField(
-                              keyboardType: TextInputType.name,
-                              controller: _usernameTextController,
-                              cursorColor: kPrimary600,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              decoration: const InputDecoration(
-                                hintText: "Username",
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                              ],
-                              style: Theme.of(context).textTheme.titleMedium,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    value.length < 3) {
-                                  return 'Please enter a valid username';
-                                }
-                                return null;
-                              },
-                            ),
+                            NameField(controller: _usernameTextController, text: "username"),
                             const SizedBox(
                               height: 18,
                             ),
@@ -132,28 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _emailTextController,
-                              cursorColor: kPrimary600,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              decoration: const InputDecoration(
-                                hintText: "Email",
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                              ],
-                              style: Theme.of(context).textTheme.titleMedium,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    !EmailValidator.validate(value)) {
-                                  return 'Please enter a valid email';
-                                }
-                                return null;
-                              },
-                            ),
+                            EmailField(controller: _emailTextController),
                             const SizedBox(
                               height: 18,
                             ),
@@ -162,40 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            TextFormField(
-                              obscureText: _obscureText,
-                              controller: _passwordTextController,
-                              cursorColor: kPrimary600,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              decoration: InputDecoration(
-                                  hintText: "Password",
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _obscureText = !_obscureText;
-                                      });
-                                    },
-                                    child: _obscureText
-                                        ? const Icon(
-                                            Icons.visibility_outlined,
-                                          )
-                                        : const Icon(
-                                            Icons.visibility_off_outlined),
-                                  )),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                              ],
-                              style: Theme.of(context).textTheme.titleMedium,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    value.length < 7) {
-                                  return 'Please enter a valid password';
-                                }
-                                return null;
-                              },
-                            ),
+                            PasswordField(controller: _passwordTextController),
                             const SizedBox(
                               height: 24,
                             ),
@@ -230,33 +156,36 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 20,
                             ),
-                            RoundedButton(
-                                borderColor: Colors.transparent,
-                                color: kPrimary500,
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<SignUpBloc>().perform(
-                                        username: _usernameTextController.text,
-                                        email: _emailTextController.text,
-                                        password: _passwordTextController.text,
-                                        confirmPassword: _passwordTextController.text);
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 20, horizontal: 20),
-                                          content: Text(
-                                              'Please enter valid information')),
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  "Sign up",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: kNeutral50),
-                                )),
+                            Container(
+                                decoration: BoxDecoration(
+                                    color: kPrimary500,
+                                    borderRadius: BorderRadius.circular(16)
+                                ),
+                                width: MediaQuery.sizeOf(context).width,
+                                height: 50,
+                                child: state.maybeWhen(
+                                  signingUp: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
+                                  orElse: () => TextButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        context.read<SignUpBloc>().perform(
+                                            username: _usernameTextController.text,
+                                            email: _emailTextController.text,
+                                            password: _passwordTextController.text,
+                                            confirmPassword: _passwordTextController.text);
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 20, horizontal: 20),
+                                              content: Text(
+                                                  'Please enter valid information')),
+                                        );
+                                      }
+                                    },
+                                    child: Text("Sign up", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
+                                  ),)
+                            ),
                           ],
                         ),
                       ),
@@ -279,7 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall
-                                    ?.copyWith(color: kPrimary400)),
+                                    ?.copyWith(color: Theme.of(context).primaryColor)),
                           )
                         ],
                       ),

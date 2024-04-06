@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
-import 'package:pomo/pages/profile/widget/set_timer.dart';
+import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
-import '../../blocs/user/user_bloc.dart';
+import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
@@ -25,11 +24,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    context.read<AuthCubit>().checkAuthentication();
+
+        context.read<AuthCubit>().state.whenOrNull(
+          authenticated: (user) => user.name == null && user.surname == null
+              ? onFirstProfileSeen(context)
+              : null
+    );
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,25 +121,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 8,
                     ),
-                    InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Notification & Sound",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            SvgPicture.asset(
-                              "assets/icons/arrow-right.svg",
-                              height: 18,
-                            )
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    //InkWell(
+                    //    onTap: () {},
+                    //    borderRadius: BorderRadius.circular(20),
+                    //    child: Row(
+                    //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //      children: [
+                    //        Text(
+                    //          "Notification & Sound",
+                    //          style: Theme.of(context).textTheme.titleMedium,
+                    //        ),
+                    //        SvgPicture.asset(
+                    //          "assets/icons/arrow-right.svg",
+                    //          height: 18,
+                    //        )
+                    //      ],
+                    //    )),
+                    //const SizedBox(
+                    //  height: 20,
+                    //),
                     InkWell(
                         onTap: () {
                             showModalBottomSheet(context: context, builder: (context) => const SetTimer());

@@ -3,15 +3,14 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
-import 'package:pomo/components/widgets/rounded_button.dart';
+import 'package:pomo/components/fields/email_field.dart';
+import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-import '../../../blocs/user/user_bloc.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -44,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
         signedIn: (user) {
           context.read<AuthCubit>().authenticated(user);
           context.router.replace(const RootRoute());
-          return null;
         }
       ),
       builder: (BuildContext context, SignInState state) {
@@ -76,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 4,
                           ),
                           Text("Enter your email & password for logging in ",
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor)),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
                         ],
                       ),
                     )
@@ -97,28 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 6,
                               ),
-                              TextFormField(
-                                keyboardType: TextInputType.emailAddress,
-                                controller: _emailTextController,
-                                cursorColor: kPrimary600,
-                                autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                                decoration: const InputDecoration(
-                                  hintText: "Email",
-                                ),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                                ],
-                                style: Theme.of(context).textTheme.titleMedium,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      !EmailValidator.validate(value)) {
-                                    return 'Please enter a valid email';
-                                  }
-                                  return null;
-                                },
-                              ),
+                              EmailField(controller: _emailTextController),
                               const SizedBox(
                                 height: 18,
                               ),
@@ -127,40 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 6,
                               ),
-                              TextFormField(
-                                obscureText: _obscureText,
-                                controller: _passwordTextController,
-                                cursorColor: kPrimary600,
-                                autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                    hintText: "Password",
-                                    suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _obscureText = !_obscureText;
-                                        });
-                                      },
-                                      child: _obscureText
-                                          ? const Icon(
-                                        Icons.visibility_outlined,
-                                      )
-                                          : const Icon(
-                                          Icons.visibility_off_outlined),
-                                    )),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                                ],
-                                style: Theme.of(context).textTheme.titleMedium,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.length < 7) {
-                                    return 'Please enter a valid password';
-                                  }
-                                  return null;
-                                },
-                              ),
+                              PasswordField(controller: _passwordTextController),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -187,29 +131,33 @@ class _LoginPageState extends State<LoginPage> {
                             ]),
                         Column(
                           children: [
-                            RoundedButton(
-                                borderColor: Colors.transparent,
+                            Container(
+                              decoration: BoxDecoration(
                                 color: kPrimary500,
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<SignInBloc>().perform(
-                                        email: _emailTextController.text,
-                                        password: _passwordTextController.text);
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                                          content: Text('Please enter valid information')),
-                                    );
-                                  }
-                                } ,
-                                child: Text(
-                                  "Log in",
-                                  style: GoogleFonts.inter(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: kNeutral50),
-                                )),
+                                borderRadius: BorderRadius.circular(16)
+                              ),
+                              width: MediaQuery.sizeOf(context).width,
+                              height: 50,
+                              child: state.maybeWhen(
+                                  signingIn: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
+                                  orElse: () => TextButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+
+                                        context.read<SignInBloc>().perform(
+                                            email: _emailTextController.text,
+                                            password: _passwordTextController.text);
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                                              content: Text('Please enter valid information')),
+                                        );
+                                      }
+                                    },
+                                    child: Text("Login", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
+                                  ),)
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -234,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall
-                                        ?.copyWith(color: kPrimary400),
+                                        ?.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],

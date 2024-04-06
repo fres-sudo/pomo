@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:async';
@@ -21,6 +23,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 }) : super(const ProjectState.fetching()) {
     on<GetProjectsByUserProjectEvent>(_onGetProjectsByUser);
     on<CreateProjectProjectEvent>(_onCreateProject);
+    on<UploadImageCoverProjectEvent>(_onUploadProjectImageCover);
     on<GetProjectByIdProjectEvent>(_onGetProjectById);
     on<UpdateProjectByIdProjectEvent>(_onUpdateProjectById);
     on<DeleteProjectByIdProjectEvent>(_onDeleteProjectById);
@@ -31,7 +34,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   
   /// Method used to add the [CreateProjectProjectEvent] event
   void createProject({required Project project}) => add(ProjectEvent.createProject(project: project));
-  
+
+  /// Method used to add the [UploadImageCoverProjectEvent] event
+  void uploadProjectImageCover({required String id, required File imageCover}) => add(ProjectEvent.uploadProjectImageCover(id: id, imageCover: imageCover));
+
   /// Method used to add the [GetProjectByIdProjectEvent] event
   void getProjectById({required String id}) => add(ProjectEvent.getProjectById(id: id));
   
@@ -71,6 +77,20 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     }catch(_){
       emit(const ProjectState.errorCreating());
+    }
+  }
+
+  FutureOr<void> _onUploadProjectImageCover(
+      UploadImageCoverProjectEvent event,
+    Emitter<ProjectState> emit,
+  ) async {
+    emit(const ProjectState.uploadingImageCover());
+    try{
+      final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
+      emit(ProjectState.uploadedImageCover(project));
+
+    }catch(_){
+      emit(const ProjectState.errorUploadingImageCover());
     }
   }
   

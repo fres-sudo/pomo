@@ -6,8 +6,8 @@ class LightTheme {
   static get make => ThemeData(
         useMaterial3: true,
         primaryColor: kPrimary500,
-        scaffoldBackgroundColor: kNeutral50,
-        cardColor: Colors.white,
+        scaffoldBackgroundColor: kNeutralWhite,
+        cardColor: kNeutral100,
         indicatorColor: kPrimary500,
         dividerColor: kNeutral200,
         textTheme: textTheme,
@@ -112,9 +112,9 @@ class LightTheme {
         contentTextStyle: GoogleFonts.inter(
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: Colors.white
+            color: Colors.black
+         ),
         ),
-      ),
       );
 }
 

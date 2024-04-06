@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:pine/utils/dto_mapper.dart';
 
 import '../constants/constants.dart';
@@ -17,6 +19,10 @@ abstract class ProjectRepository {
 
   Future<Project> createProject({
     required Project project,
+  });
+  Future<Project> uploadProjectImageCover({
+    required String id,
+    required File imageCover,
   });
 
   Future<Project> getProjectsById({
@@ -80,6 +86,19 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       final newProject =
       await projectService.createProject(projectMapper.toDTO(project));
+
+      return projectMapper.fromDTO(newProject);
+    } catch (error, stack) {
+      logger.e('Error creating new project in: $error. The stack is: \n $stack ');
+      throw Exception('Creation failed');
+    }
+  }
+
+  @override
+  Future<Project> uploadProjectImageCover({required String id, required File imageCover}) async {
+    try {
+      final newProject =
+      await projectService.uploadProjectImageCover(id, imageCover);
 
       return projectMapper.fromDTO(newProject);
     } catch (error, stack) {

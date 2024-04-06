@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:pomo/components/utils/my_progress_indicator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -67,7 +68,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
     return BlocConsumer<ProjectBloc, ProjectState>(
         listener: (context, state) {
           state.whenOrNull(
-            created: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
+            created: (project) {
+                  image != null
+                      ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id!, imageCover: File(image!.path))
+                      : context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true));
+            },
+            uploadedImageCover: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
+            errorUploadingImageCover: () => onErrorState(context, "uploading image cover project"),
             errorCreating: () => onErrorState(context, "creating project"),
           );
         },
@@ -102,14 +109,17 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                               style: kSerzif(context),
                             ),
                           ]),
-                          TextButton(
+                          state.maybeWhen(
+                              creating: () => const CircularProgressIndicator(color: kPrimary500),
+                              uploadingImageCover: () => const CircularProgressIndicator(color: kPrimary500),
+                              orElse: () => TextButton(
                               onPressed: () {
                                 String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
                                 _formKey.currentState!.validate() ?
                                 context.read<ProjectBloc>().createProject(
-                                        project: Project(
+                                    project: Project(
                                       name: _nameTextController.text,
-                                      description: _descriptionTextController.text.isNotEmpty ? _descriptionTextController.text : null,
+                                      description: _descriptionTextController.text == "" ? _descriptionTextController.text : null,
                                       dueDate: _selectedDate,
                                       owner: id,
                                     )) : onInvalidInput(context);
@@ -120,7 +130,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
                                     color: _formKey.currentState?.validate() != null ? _formKey.currentState!.validate() ? kPrimary500 : kNeutral400 : kNeutral400),
-                              ))
+                              )))
                         ],
                       ),
                       const SizedBox(
@@ -138,7 +148,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           onTap: () async {
                             final ImagePicker picker = ImagePicker();
                             final img = await picker.pickImage(
-                                source: ImageSource.gallery);
+                                source: ImageSource.gallery,
+                                imageQuality: 50,
+                            );
                             setState(() {
                               image = img;
                             });
