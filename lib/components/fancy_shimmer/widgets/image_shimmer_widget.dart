@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart';
 ///Widget that shows image shimmer
 class ImageShimmerWidget extends StatelessWidget {
   const ImageShimmerWidget({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     required this.shimmerDirection,
@@ -13,7 +13,7 @@ class ImageShimmerWidget extends StatelessWidget {
     required this.baseColor,
     required this.highlightColor,
     required this.backColor,
-  }) : super(key: key);
+  });
 
   final double? width;
   final double? height;

@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
@@ -26,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _usernameTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _obscureText = false;
+  final bool _obscureText = false;
 
   bool _checkedValue = false;
 

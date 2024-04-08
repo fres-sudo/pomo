@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
@@ -9,7 +8,6 @@ import 'dart:async';
 
 import '../../models/user/user.dart';
 import '../../repositories/user_repository.dart';
-import '../../services/network/jto/user/user_jto.dart';
 
 part 'user_event.dart';
 

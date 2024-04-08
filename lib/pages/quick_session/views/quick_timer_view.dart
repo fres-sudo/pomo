@@ -20,7 +20,7 @@ class QuickTimerView extends StatefulWidget {
 
 class _QuickTimerViewState extends State<QuickTimerView> {
 
-  int _focusTime = 25;
+  final int _focusTime = 25;
 
   @override
   Widget build(BuildContext context) {

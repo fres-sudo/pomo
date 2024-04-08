@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
-import '../blocs/user/user_bloc.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
