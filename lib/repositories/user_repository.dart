@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:pine/utils/dto_mapper.dart';
+import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
+import 'package:pomo/services/network/requests/recover_pass/recover_pass_request.dart';
 import 'package:pomo/services/network/response/forgot_pass/forgot_pass_response.dart';
 import 'package:pomo/services/network/user/user_service.dart';
 
@@ -20,6 +23,11 @@ abstract class UserRepository {
  });
   Future<ForgotPassResponse> forgotPassword({
       required String email,
+ });
+  Future<void> recoverPassword({
+      required String token,
+      required String password,
+      required String passwordConfirm,
  });
 
 }
@@ -61,8 +69,18 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<ForgotPassResponse> forgotPassword({required String email}) async {
     try {
-      final otp = await userService.forgotPassword(email);
-      return otp;
+      final response = await userService.forgotPassword(ForgotPassRequest(email: email));
+      return response;
+    } catch (error,stack) {
+      logger.e('Error forgot password: $error, in the stack : \n $stack');
+      throw Exception('Update failed');
+    }
+  }
+
+  @override
+  Future<void> recoverPassword({required String token, required String password, required String passwordConfirm}) async {
+    try {
+       await userService.recoverPassword(token, RecoverPassRequest(password: password, confirmPassword: passwordConfirm));
     } catch (error,stack) {
       logger.e('Error forgot password: $error, in the stack : \n $stack');
       throw Exception('Update failed');

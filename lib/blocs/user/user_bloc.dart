@@ -34,13 +34,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUserUserEvent>(_onUpdateUser);
     on<UpdateUserPhotoUserEvent>(_onUpdateUserPhoto);
     on<ForgotPasswordUserEvent>(_onForgotPassword);
+    on<RecoverPasswordUserEvent>(_onRecoverPassword);
   }
   
   /// Method used to add the [UpdateUserUserEvent] event
   void updateUser({required String id, required User user}) => add(UserEvent.updateUser(user: user, id: id));
   void updateUserPhoto({required String id, required File photo}) => add(UserEvent.updateUserPhoto(id: id, photo: photo));
   void forgotPassword({required String email}) => add(UserEvent.forgotPassword(email: email));
-  
+  void recoverPassword({required String token, required String password, required String passwordConfirm}) => add(UserEvent.recoverPassword(token: token, password: password, passwordConfirm: passwordConfirm));
+
   FutureOr<void> _onUpdateUser(
     UpdateUserUserEvent event,
     Emitter<UserState> emit,
@@ -74,11 +76,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const UserState.fetchingOTP());
     try{
       final response = await userRepository.forgotPassword(email : event.email);
-      _otp = response.otp;
-      _resetToken = response.token;
+      _otp = response.resetOTP;
+      _resetToken = response.resetToken;
       emit(UserState.fetchedOTP(response));
     }catch(_){
       emit(const UserState.errorUpdatingPhoto());
+    }
+  }
+
+  FutureOr<void> _onRecoverPassword(
+    RecoverPasswordUserEvent event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(const UserState.recovering());
+    try{
+      await userRepository.recoverPassword(token : event.token, password: event.password, passwordConfirm: event.passwordConfirm);
+      emit(const UserState.recovered());
+    }catch(_){
+      emit(const UserState.errorRecovering());
     }
   }
 

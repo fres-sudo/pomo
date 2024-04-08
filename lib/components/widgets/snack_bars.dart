@@ -11,6 +11,28 @@ onInvalidInput(BuildContext context){
   });
 }
 
+onEmailSent(BuildContext context){
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       const SnackBar(
+          duration:  Duration(seconds: 3),
+          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text('Your email has been sent 📩, please check your inbox or your SPAM 📬️',)),
+    );
+  });
+}
+
+onDoesntMatch(BuildContext context){
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       const SnackBar(
+          duration:  Duration(seconds: 2),
+          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text('The password aren\'t the same ❌',)),
+    );
+  });
+}
+
 onErrorState(BuildContext context, String text) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(

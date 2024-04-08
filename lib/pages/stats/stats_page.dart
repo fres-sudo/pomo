@@ -58,7 +58,10 @@ class _StatsPageState extends State<StatsPage> {
             errorFetchingByUser: () => onErrorState(context, "fetching tasks"));
       },
       builder: (BuildContext context, state) => Scaffold(
-                backgroundColor: Theme.of(context).cardColor,
+                backgroundColor: state.maybeWhen(
+                  noneUsers: () => Theme.of(context).scaffoldBackgroundColor,
+                  orElse: () => Theme.of(context).cardColor,
+                ),
                 body: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
