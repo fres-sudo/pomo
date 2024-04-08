@@ -31,15 +31,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/fres-sudo/pomo">
-    <img src="assets/logo-white.png" alt="Logo" width="230" height="200">
+    <img src="assets/logo-white.png" alt="Logo" width="251" height="208">
   </a>
 
-<h3 align="center">Pomo</h3>
 
   <p align="center">
-    Task management made easay.
     <br />
-    <a href="https://github.com/fres-sudo/pomo"><strong>Explore the docs »</strong></a>
+    Your Pomodoro Buddy 🫂
     <br />
     <br />
     <a href="https://github.com/fres-sudo/pomo">View Demo</a>
@@ -105,7 +103,9 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
  <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a>
  <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a>
-
+  <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/nodejs/nodejs-horizontal.svg" alt="nodejs" width="120" height="60"/> </a>
+  <a href="https://mongodb.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/expressjs/expressjs-ar21.svg" alt="expressjs" width="120" height="60"/> </a>
+  <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-ar21.svg" alt="mongo" width="120" height="60"/> </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,7 +144,7 @@ For a correct installation of the project you need to install first Flutter, [he
 
 ## Architecture 
 
-This project uses the Pine Architecture:
+This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
 
 <table>
   <tr>
@@ -162,13 +162,33 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ROADMAP -->
+<!-- ROADMAP -->😣
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Projects 📋
+  -  [Create](lib/pages/projects/create_project_page.dart)
+  -  [Update](lib/pages/projects/create_project_page.dart)
+  -  [Delete](lib/pages/projects/widgets/project_bottom_sheet.dart)
+  - [ ] Tasks 🎯
+    -  [Create](lib/pages/projects/widgets/task_bottom_sheet.dart) 
+    -  [Update](lib/components/cards/task_card.dart)
+    -  [Delete](lib/components/cards/task_card.dart)
+    - [ ] Pomodoro 🍅
+      - Start ▶️
+      - Stop ⏸️
+      - Resume ⏯️
+      - Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
+- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
+- [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
+     - Detailed Focus / Break time
+     - Weekly Improvment
+     - Pomodoros per day
+     - Line and Bar Charts
+- [ ] [Authentication 🔐](lib/pages/authentication/)
+  - [Login](lib/pages/authentication/login_in/login_page.dart)
+  - [Register](lib/pages/authentication/sign_up/signup_page.dart)
+  - [Forgot Password](lib/pages/authentication/forgot_password/forgotpassword_page.dart)
+- [ ] Theming ☯️
 
 See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
 
@@ -206,23 +226,12 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - francescocalicchio@hotmail.com@francescocalicchio@hotmail.com.com
-
+ - 📬 Email: francescocalicchio@hotmail.com
+ - 👤 Linkedin: [francesco-calicchio](https://www.linkedin.com/in/francesco-calicchio/)
+ 
 Project Link: [https://github.com/fres-sudo/pomo](https://github.com/fres-sudo/pomo)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
