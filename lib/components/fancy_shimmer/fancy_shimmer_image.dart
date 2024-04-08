@@ -14,7 +14,7 @@ import 'widgets/widgets.dart';
 ///beautiful widgets that are cached and have nice Shimmer effect
 class FancyShimmerImage extends StatelessWidget {
   FancyShimmerImage(
-      {Key? key,
+      {super.key,
       required this.imageUrl,
       this.boxFit = BoxFit.fill,
       this.width = 300,
@@ -30,8 +30,7 @@ class FancyShimmerImage extends StatelessWidget {
       this.color,
       this.alignment,
       this.imageBuilder,
-      this.textErrorVisible = true})
-      : super(key: key);
+      this.textErrorVisible = true});
 
   final String imageUrl;
   final double width;

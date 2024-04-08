@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
@@ -25,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool _obscureText = true;
+  final bool _obscureText = true;
 
   @override
   void dispose() {
@@ -43,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         signedIn: (user) {
           context.read<AuthCubit>().authenticated(user);
           context.router.replace(const RootRoute());
+          return null;
         }
       ),
       builder: (BuildContext context, SignInState state) {
