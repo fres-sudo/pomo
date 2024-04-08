@@ -45,6 +45,7 @@ class _TaskCardState extends State<TaskCard> {
             SlidableAction(
               onPressed: (context) {
                 showModalBottomSheet(
+                    useRootNavigator: true,
                     context: context,
                     builder: (context) {
                       return TaskBottomSheet(task: widget.task);
@@ -60,6 +61,7 @@ class _TaskCardState extends State<TaskCard> {
             SlidableAction(
               onPressed: (context) {
                 showModalBottomSheet(
+                    useRootNavigator: true,
                     context: context,
                     builder: (BuildContext context) {
                       return DestructionBottomSheet(
@@ -89,6 +91,7 @@ class _TaskCardState extends State<TaskCard> {
         child: InkWell(
           onTap: (){
             showModalBottomSheet(
+                useRootNavigator: true,
                 context: context,
                 builder: (context) {
                   return InfoTaskBottomSheet(task: widget.task);

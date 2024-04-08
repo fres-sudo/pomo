@@ -44,7 +44,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (userDataString != null) {
       Map<String, dynamic> userData = json.decode(userDataString);
 
-      // Update specific fields
       if (name != null && name.isNotEmpty) {
         userData['name'] = name;
       }
@@ -85,8 +84,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               this.user = user;
               if(_nameTextController.text.isNotEmpty && _surnameTextController.text.isNotEmpty) {
                 updateUserSecureStorage(
-                    name: user.name!.capitalize(), surname: user.surname!.capitalize());
+                    name: user.name!.capitalize(), surname: user.surname!.capitalize(), photo: image?.path);
                 onSuccessState(context, "update your information");
+                context.read<AuthCubit>().authenticated(user);
               }
             },
             updatedPhoto: (user) {
@@ -94,6 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               if(image != null) {
                 updateUserSecureStorage(photo: user.photo);
                 onSuccessState(context, "update your information");
+                context.read<AuthCubit>().authenticated(user);
               }
             },
             errorUpdating: () => onErrorState(context, "updating user"));
@@ -138,21 +139,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         _surnameTextController.text == "" && _surnameTextController.text.length < 4) {
                                       onInvalidInput(context);
                                     } else{
-                                      print(
-                                        user.copyWith(
-                                          name: _nameTextController.text,
-                                          surname: _surnameTextController.text,
-                                        ),
-                                      );
-                                      _nameTextController.text != user.name || _surnameTextController.text != user.surname ?
+                                      (_nameTextController.text != user.name || _surnameTextController.text != user.surname) || image != null?
                                       context.read<UserBloc>().updateUser(
                                         user: user.copyWith(
                                           name: _nameTextController.text,
                                           surname: _surnameTextController.text,
+                                          photo: image?.path ?? user.photo,
                                         ),
                                         id: user.id,) : null;
-                                      image != null ?
-                                      context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path)): null;
+                                      //image != null ? context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path)): null;
                                     }
                                   },
                                   child: Text(
@@ -160,9 +155,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       style: GoogleFonts.inter(
                                           fontWeight: FontWeight.normal,
                                           fontSize: 14,
-                                          color:  (_nameTextController.text == "" && _nameTextController.text.length < 4 &&
-                                              _surnameTextController.text == "" && _surnameTextController.text.length < 4) ?
-                                          kPrimary500
+                                          color:  (_nameTextController.text != "" && _nameTextController.text.length > 4 ||
+                                              _surnameTextController.text != "" && _surnameTextController.text.length > 4) ?
+                                          Theme.of(context).primaryColor
                                               : kNeutral400))
                               ),
                             ],
@@ -178,7 +173,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           if (user.photo == null) {
                                             return const AssetImage("assets/images/propic-placeholder.jpg");
                                           } else {
-                                            return NetworkImage(user.photo!);
+                                            //return NetworkImage(user.photo!);
+                                            return FileImage(File(user.photo!));
                                           }
                                         },
                                         orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)

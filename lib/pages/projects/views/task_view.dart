@@ -34,6 +34,7 @@ class TaskView extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               onTap: () {
                 showModalBottomSheet(
+                    useRootNavigator: true,
                     context: context,
                     builder: (context) {
                       return TaskBottomSheet(project: project);

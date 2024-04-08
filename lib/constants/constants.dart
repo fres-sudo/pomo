@@ -13,9 +13,9 @@ final digitsOnlyRegex = RegExp(r'[^\d]');
 const kProPicPlaceholderURL = "https://vercel.com/fres-sudos-projects/pomo/stores/blob/store_JJsFgFmzofTAUoN7/browser?file_url=https%253A%252F%252Fjjsfgfmzoftauon7.public.blob.vercel-storage.com%252Fpropic-placeholder-2icvPYX8oI6Q0VbnhmoiSBovWFWzRp.jpg";
 
 const kServerConnectionIP =
-    "http://127.0.0.1:3000/api/v1";
+    //"http://127.0.0.1:3000/api/v1";
     //"https://pomo-fres-sudos-projects.vercel.app/api/v1";
-    //"https://pomo.fres.space/api/v1";
+    "https://pomo.fres.space/api/v1";
 const maxTimeExceedRequest = 10;
 var logger = Logger(
   printer: PrettyPrinter(

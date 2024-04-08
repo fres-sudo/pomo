@@ -117,6 +117,7 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                     setState(() {}); // Update UI after modifying timer state
                   },
                   onLongPress: () => showModalBottomSheet(
+                      useRootNavigator: true,
                       context: context,
                       builder: (BuildContext context) =>
                           DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",

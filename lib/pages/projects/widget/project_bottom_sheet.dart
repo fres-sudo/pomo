@@ -90,6 +90,7 @@ class ProjectBottomSheet extends StatelessWidget {
                       onTap: (){
                         context.router.pop().then((value) => showModalBottomSheet(
                             context: context,
+                            useRootNavigator: true,
                             builder: (BuildContext context) {
                               return DestructionBottomSheet(
                                 title: "Project",
