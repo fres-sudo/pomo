@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/models/project/project.dart';
@@ -57,17 +58,24 @@ class ProjectCard extends StatelessWidget {
                     )
                   ),
                 ),
-              ) : SizedBox(
-                height: height * 1 / 2.8 * 1 / 2.5,
-                width: width,
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                    child: FancyShimmerImage(
+              ) : ClipRRect(
+                borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                child: Container(
+                  height: height * 1 / 2.8 * 1 / 2.5,
+                  width: width,
+                  decoration: BoxDecoration(
+                    image:  DecorationImage(
+                      image: FileImage(File(project.imageCover!)),
+                      fit: BoxFit.cover,
+                    )
+                ),
+                  /* FancyShimmerImage(
                       errorWidget: Image.asset("assets/images/project-placeholder.png", fit: BoxFit.cover),
                       boxFit: BoxFit.cover,
                       imageUrl: project.imageCover!
-                    )),
+                    )*/
+                ),
               ),
               Container(
                 decoration: BoxDecoration(

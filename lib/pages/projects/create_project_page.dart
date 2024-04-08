@@ -67,9 +67,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
         listener: (context, state) {
           state.whenOrNull(
             created: (project) {
-                  image != null
-                      ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id!, imageCover: File(image!.path))
-                      : context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true));
+                  //image != null ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id!, imageCover: File(image!.path)) :
+                  context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true));
             },
             uploadedImageCover: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
             errorUploadingImageCover: () => onErrorState(context, "uploading image cover project"),
@@ -119,6 +118,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                       name: _nameTextController.text,
                                       description: _descriptionTextController.text == "" ? _descriptionTextController.text : null,
                                       dueDate: _selectedDate,
+                                      imageCover: image?.path,
                                       owner: id,
                                     )) : onInvalidInput(context);
                               },
@@ -279,6 +279,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
+                            useRootNavigator: true,
                             backgroundColor: Theme.of(context)
                                 .bottomSheetTheme
                                 .backgroundColor,

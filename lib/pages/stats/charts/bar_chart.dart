@@ -203,7 +203,7 @@ class CustomBarChartState extends State<CustomBarChart> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    final style = Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer);
+    final style = Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: DateTime.now().day == value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSecondaryContainer);
     Widget text;
     switch (value.toInt()) {
       case 0:

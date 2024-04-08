@@ -39,6 +39,7 @@ class NoTaskView extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width / 2.5,
             onPressed: () {
               showModalBottomSheet(
+                  useRootNavigator: true,
                   context: context,
                   builder: (context) {
                     return TaskBottomSheet(project: project);

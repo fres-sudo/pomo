@@ -11,7 +11,8 @@ class LightTheme {
         indicatorColor: kPrimary500,
         dividerColor: kNeutral200,
         textTheme: textTheme,
-        colorScheme: const ColorScheme.light(onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600,),
+        colorScheme: const ColorScheme.light(
+          onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600, onSurfaceVariant: kNeutralWhite),
         radioTheme: RadioThemeData(
           overlayColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.selected)) {
@@ -165,6 +166,7 @@ class DarkTheme {
           onSurface: Colors.white,
           onPrimary: kPrimary400,
           onSecondaryContainer: kNeutral400,
+          onSurfaceVariant: kNeutral900
         ),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 5,

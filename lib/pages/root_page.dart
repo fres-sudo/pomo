@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,7 +85,8 @@ class RootPage extends StatelessWidget {
                               if (user.photo == null) {
                                 return const AssetImage("assets/images/propic-placeholder.jpg");
                               } else {
-                                return NetworkImage(user.photo!);
+                                //return NetworkImage(user.photo!);
+                                return FileImage(File(user.photo!));
                               }
                             },
                             orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)

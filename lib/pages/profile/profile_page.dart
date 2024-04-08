@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,7 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   if (user.photo == null) {
                                     return const AssetImage("assets/images/propic-placeholder.jpg");
                                   } else {
-                                    return NetworkImage(user.photo!);
+                                    //return NetworkImage(user.photo!);
+                                    return FileImage(File(user.photo!));
                                   }
                                 },
                                 orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
@@ -142,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     //),
                     InkWell(
                         onTap: () {
-                            showModalBottomSheet(context: context, builder: (context) => const SetTimer());
+                            showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const SetTimer());
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
@@ -164,6 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     InkWell(
                         onTap: () {
                           showModalBottomSheet(
+                            useRootNavigator: true,
                             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                             builder: (BuildContext context) {
                               return const ThemeModeSwitcher();
@@ -242,6 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () {
                           showModalBottomSheet(
                               context: context,
+                              useRootNavigator: true,
                               builder: (BuildContext context) {
                                 return DestructionBottomSheet(
                                   title: "Account",

@@ -119,6 +119,7 @@ class _BreakViewState extends State<BreakView> {
                 },
                 onLongPress: () => showModalBottomSheet(
                     context: context,
+                    useRootNavigator: true,
                     builder: (BuildContext context) =>
                         DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
                             description: "Are you sure you want to reset the timer",
