@@ -4,9 +4,10 @@ import 'package:flutter/services.dart';
 import '../../constants/colors.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({super.key, required this.controller});
+  const PasswordField({super.key, required this.controller, this.focusNode});
 
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -19,6 +20,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: widget.focusNode,
       obscureText: obscureText,
       controller: widget.controller,
       cursorColor: kPrimary600,

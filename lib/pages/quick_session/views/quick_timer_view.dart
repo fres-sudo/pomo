@@ -60,7 +60,7 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                   color: kPrimary900,
                 ),
                 child: CircularCountDownTimer(
-                  duration: 5,//context.read<TimerCubit>().focusTime * 60,
+                  duration: context.read<TimerCubit>().focusTime * 60,
                   initialDuration: 0,
                   controller: widget.timerController,
                   width: MediaQuery.of(context).size.width / 2,

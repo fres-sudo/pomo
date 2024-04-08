@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                         .textTheme
                                         .titleSmall
                                         ?.copyWith(
-                                        color: kPrimary400),
+                                        color: kPrimary500),
                                   ),
                                 ),
                               ),
@@ -143,7 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                                   orElse: () => TextButton(
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-
                                         context.read<SignInBloc>().perform(
                                             email: _emailTextController.text,
                                             password: _passwordTextController.text);

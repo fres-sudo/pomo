@@ -5,9 +5,10 @@ import 'package:flutter/services.dart';
 import '../../constants/colors.dart';
 
 class EmailField extends StatefulWidget {
-  const EmailField({super.key, required this.controller});
+  const EmailField({super.key, required this.controller, this.focusNode});
 
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   @override
   State<EmailField> createState() => _EmailFieldState();
@@ -17,6 +18,7 @@ class _EmailFieldState extends State<EmailField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: widget.focusNode,
       keyboardType: TextInputType.emailAddress,
       controller: widget.controller,
       cursorColor: kPrimary600,

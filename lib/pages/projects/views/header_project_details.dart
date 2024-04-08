@@ -43,7 +43,12 @@ class HeaderProjectDetails extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(project.name, style: kSerzif(context)),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: Text(project.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: kSerzif(context)),
+                ),
               ],
             ),
             InkWell(

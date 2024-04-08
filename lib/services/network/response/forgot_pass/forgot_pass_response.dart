@@ -8,8 +8,8 @@ part 'forgot_pass_response.freezed.dart';
 @freezed
 class ForgotPassResponse extends DTO with _$ForgotPassResponse {
   const factory ForgotPassResponse({
-    required String otp,
-    required String token,
+    required String resetOTP,
+    required String resetToken,
 }) = _ForgotPassResponse;
 
   factory ForgotPassResponse.fromJson(Map<String, dynamic> json) =>

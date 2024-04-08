@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:pomo/components/utils/my_progress_indicator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -15,7 +14,6 @@ import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../blocs/project/project_bloc.dart';
-import '../../blocs/user/user_bloc.dart';
 import '../../components/utils/utils.dart';
 import '../../routes/app_router.gr.dart';
 

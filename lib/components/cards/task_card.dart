@@ -87,7 +87,7 @@ class _TaskCardState extends State<TaskCard> {
           ],
         ),
         child: InkWell(
-          onTap: ( ){
+          onTap: (){
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
@@ -138,14 +138,17 @@ class _TaskCardState extends State<TaskCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.task.name.capitalize(),
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(fontSize: 14),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Text(
+                            widget.task.name.capitalize(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(fontSize: 14),
+                          ),
                         ),
                         const SizedBox(
                           height: 5,

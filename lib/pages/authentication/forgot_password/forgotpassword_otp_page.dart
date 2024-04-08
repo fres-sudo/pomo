@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/models/user/user.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/rounded_button.dart';
@@ -12,10 +13,9 @@ import '../../../constants/colors.dart';
 
 @RoutePage()
 class ForgotPasswordOTPPage extends StatefulWidget {
-  const ForgotPasswordOTPPage({required this.email ,super.key, required this.otp});
+  const ForgotPasswordOTPPage({required this.email ,super.key,});
 
   final String email;
-  final String otp;
 
   @override
   State<ForgotPasswordOTPPage> createState() => _ForgotPasswordOTPPageState();
@@ -25,6 +25,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
 
   int _seconds = 120;
   late Timer _timer;
+
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   Text(
                     "Secure Access in a Snap!",
                     maxLines: 1,
-                    overflow: TextOverflow.clip,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)
                   ),
                   const SizedBox(
@@ -85,29 +86,22 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   OtpTextField(
                     numberOfFields: 6,
                     showFieldAsBox: true,
-                    fillColor: Theme.of(context).cardColor,
-                    filled: true,
-                    onCodeChanged: (String code) {},
-                    borderColor: Colors.transparent,
-                    disabledBorderColor: Colors.transparent,
-                    enabledBorderColor: Theme.of(context).primaryColor,
+                    //fillColor: Theme.of(context).cardColor,
+                    //filled: false,
+                    onCodeChanged: (String code) {
+                      print(code);
+                    },
+                    //borderColor: Colors.transparent,
+                    //disabledBorderColor: Colors.transparent,
+                    //enabledBorderColor: Theme.of(context).primaryColor,
                     //inputFormatters: [
                     //  FilteringTextInputFormatter.allow(digitsOnlyRegex),
                     //],
                     borderWidth: 1,
                     borderRadius: BorderRadius.circular(16),
                     contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 50),
-
                     onSubmit: (String verificationCode){
-                      showDialog(
-                          context: context,
-                          builder: (context){
-                            return AlertDialog(
-                              title: const Text("Verification Code"),
-                              content: Text('Code entered is $verificationCode'),
-                            );
-                          }
-                      );
+                      verificationCode == context.read<UserBloc>().otp ? context.router.push(const ForgotPasswordRecoverRoute()) : null;
                     }, // end onSubmit
                   ),
                   const SizedBox(

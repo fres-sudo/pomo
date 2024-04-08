@@ -1,15 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pomo/components/fields/email_field.dart';
-import 'package:pomo/components/widgets/rounded_button.dart';
-import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../blocs/user/user_bloc.dart';
+import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 
 @RoutePage()
@@ -23,10 +20,20 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
     _emailTextController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -35,8 +42,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return BlocConsumer<UserBloc, UserState>(
       listener: (BuildContext context, UserState state) {
         state.whenOrNull(
-          fetchedOTP: (response) => context.router.push(ForgotPasswordOTPRoute(email: _emailTextController.text, otp: response.otp))
-        );
+          fetchedOTP: (response) => {
+                  onEmailSent(context),
+                  context.router.push(
+                      ForgotPasswordOTPRoute(email: _emailTextController.text)),
+                });
       },
       builder: (BuildContext context, UserState state) => Scaffold(
         body: SafeArea(
@@ -51,9 +61,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          context.router.pop();
                         },
-                        child: const Icon(Icons.chevron_left_rounded),
+                        child: SvgPicture.asset(
+                          'assets/icons/arrow-left.svg',
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).iconTheme.color!,
+                              BlendMode.srcIn),
+                        ),
                       ),
                       const SizedBox(
                         width: 5,
@@ -81,7 +96,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(
                     height: 6,
                   ),
-                  EmailField(controller: _emailTextController),
+                  EmailField(controller: _emailTextController, focusNode: _focusNode,),
                   const Spacer(),
                   Container(
                       decoration: BoxDecoration(
@@ -94,11 +109,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         fetchingOTP: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
                         orElse: () => TextButton(
                           onPressed: () {
-                            context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text, otp: "123456" ));
-                            //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
+                            //context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text, otp: "123456" ));
+                            _formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
                           },
                           child: Text("Send Email", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
                         ),)
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),

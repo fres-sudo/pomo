@@ -21,4 +21,10 @@ class UserState with _$UserState {
 
   const factory UserState.errorFetchingOTP() = ErrorFetchingOTPUserState;
 
+  const factory UserState.recovering() = RecoveringUserState;
+
+  const factory UserState.recovered() = RecoveredUserState;
+
+  const factory UserState.errorRecovering() = ErrorRecoveringUserState;
+
 }

@@ -58,7 +58,6 @@ abstract class $AppRouter extends _i19.RootStackRouter {
         child: _i3.ForgotPasswordOTPPage(
           email: args.email,
           key: args.key,
-          otp: args.otp,
         ),
       );
     },
@@ -199,14 +198,12 @@ class ForgotPasswordOTPRoute
   ForgotPasswordOTPRoute({
     required String email,
     _i20.Key? key,
-    required String otp,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           ForgotPasswordOTPRoute.name,
           args: ForgotPasswordOTPRouteArgs(
             email: email,
             key: key,
-            otp: otp,
           ),
           initialChildren: children,
         );
@@ -221,18 +218,15 @@ class ForgotPasswordOTPRouteArgs {
   const ForgotPasswordOTPRouteArgs({
     required this.email,
     this.key,
-    required this.otp,
   });
 
   final String email;
 
   final _i20.Key? key;
 
-  final String otp;
-
   @override
   String toString() {
-    return 'ForgotPasswordOTPRouteArgs{email: $email, key: $key, otp: $otp}';
+    return 'ForgotPasswordOTPRouteArgs{email: $email, key: $key}';
   }
 }
 

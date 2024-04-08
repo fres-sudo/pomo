@@ -10,7 +10,6 @@ import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../blocs/project/project_bloc.dart';
-import '../../blocs/user/user_bloc.dart';
 import '../../components/cards/project_card.dart';
 import '../../components/utils/my_progress_indicator.dart';
 import '../../components/widgets/snack_bars.dart';
