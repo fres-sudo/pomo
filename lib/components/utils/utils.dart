@@ -95,26 +95,7 @@ Future<bool?> showConfirmPopup(BuildContext context, String title, String descri
     );
   }
 }
-/*
-PhoneNumber seperatePhoneAndDialCode(String number) {
-  Map<String, dynamic> foundedCountry = {};
-  for (var country in Countries.allCountries) {
-    String dialCode = country["dial_code"].toString();
-    if (number.contains(dialCode)) {
-      foundedCountry = country;
-    }
-  }
 
-  if (foundedCountry.isNotEmpty) {
-    var newPhoneNumber = number.substring(
-      foundedCountry["dial_code"]!.length,
-    );
-    return PhoneNumber(isoCode: foundedCountry["code"], nsn: newPhoneNumber);
-  } else {
-    return PhoneNumber(isoCode: IsoCode.IT, nsn: number);
-  }
-}
-*/
 extension IterableExtensions<E> on Iterable<E> {
   E? firstWhereOrNull(bool Function(E element) test) {
     try {
@@ -134,62 +115,4 @@ extension ColorExtension on Color {
         (blue * value).round());
   }
 }
-/*
-String? statusToEnum({required String? status}) {
-  if (status?.toLowerCase() == "TO_CALL".toLowerCase()) {
-    return 'Da chiamare';
-  } else if (status?.toLowerCase() == "TO_RECALL".toLowerCase()) {
-    return 'Da richiamare';
-  } else if (status?.toLowerCase() == "APPOINTMENT".toLowerCase()) {
-    return 'Appuntamento';
-  } else if (status?.toLowerCase() == "NOT_INTERESTED".toLowerCase()) {
-    return 'Non Interessato';
-  } else if (status?.toLowerCase() == "COMPLETED".toLowerCase()) {
-    return 'Completato';
-  } else if (status?.toLowerCase() == "CLOSED".toLowerCase()) {
-    return 'Chiuso';
-  }
-  return null;
-}
-
-Color colorFromStatus({required String? status}) {
-
-  return  status != null &&
-      status == "TO_CALL" ? kBlue
-      : status == "TO_RECALL" ? kAlertsWaringDark
-      : status == "CALLING" ? kAlertsErrorBase
-      : status == "APPOINTMENT" ? kPortage
-      : status == "COMPLETED" ? kAlertSuccessBaseGreen
-      : status == "NOT_INTERESTED" ? kGreyScale900
-      : status == "CLOSED" ? kGreyScale900
-      : kGreyScale900;
-}
-
-Color backgroundColorFromStatus({required String? status}) {
-
-  return status != null &&
-      status == "TO_CALL" ? kLightBlue
-      : status == "TO_RECALL" ? kSecondary200
-      : status == "CALLING" ? kAlertsErrorLight
-      : status == "APPOINTMENT" ? kPortageLight
-      : status == "COMPLETED" ? kPrimaryTwo100
-      : status == "NOT_INTERESTED" ? kGreyScale100
-      : status == "CLOSED" ? kGreyScale100
-      : kWhite;
-
-}
-
-String textFromStatus({required String? status}) {
-
-  return status != null &&
-      status == "TO_CALL" ? 'DA CHIAMARE'
-      : status == "TO_RECALL" ? "DA RICHIAMARE "
-      : status == "CALLING" ? "IN CORSO..."
-      : status == "NOT_INTERESTED" ? "NON INTERESSATO"
-      : status == "APPOINTMENT" ? "APPUNTAMENTO"
-      : status == "COMPLETED" ? "COMPLETATA"
-      : status == "CLOSED" ? "CHIUSO"
-      : "Non disponibile";
-}
-*/
 

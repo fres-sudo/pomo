@@ -46,6 +46,7 @@ class _TaskCardState extends State<TaskCard> {
               onPressed: (context) {
                 showModalBottomSheet(
                     useRootNavigator: true,
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) {
                       return TaskBottomSheet(task: widget.task);
@@ -54,7 +55,7 @@ class _TaskCardState extends State<TaskCard> {
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20)),
-              backgroundColor: kYellow600,
+              backgroundColor: kYellow500,
               foregroundColor: Colors.white,
               icon: Icons.edit_note_rounded,
             ),

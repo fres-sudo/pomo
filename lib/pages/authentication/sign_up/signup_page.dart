@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
@@ -137,11 +138,24 @@ class _SignUpPageState extends State<SignUpPage> {
                                         });
                                       },
                                     ),
-                                    Text(
-                                      "I accept terms & conditions",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "I accept ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => context.router.push(const PrivacyPolicyRoute()),
+                                          child: Text(
+                                            "terms & conditions",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -165,20 +179,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                   signingUp: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
                                   orElse: () => TextButton(
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
+                                      if (_formKey.currentState!.validate() && _checkedValue) {
                                         context.read<SignUpBloc>().perform(
                                             username: _usernameTextController.text,
                                             email: _emailTextController.text,
                                             password: _passwordTextController.text,
                                             confirmPassword: _passwordTextController.text);
+                                      } else if (!_checkedValue) {
+                                          onAcceptTermsCondition(context);
                                       } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 20, horizontal: 20),
-                                              content: Text(
-                                                  'Please enter valid information')),
-                                        );
+                                        onInvalidInput(context);
                                       }
                                     },
                                     child: Text("Sign up", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),

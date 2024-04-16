@@ -34,5 +34,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: WorkSessionRoute.page),
     AutoRoute(page: CreateProjectRoute.page,),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SessionCompleteRoute.page),
+    CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: PrivacyPolicyRoute.page),
+
   ];
 }

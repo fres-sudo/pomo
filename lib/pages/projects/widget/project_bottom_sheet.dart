@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/project/project_bloc.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 
 import '../../../components/widgets/destruction_bottomsheet.dart';
@@ -15,7 +16,7 @@ class ProjectBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height / 3.5,
+      height: 230,
       decoration:  BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
@@ -64,8 +65,7 @@ class ProjectBottomSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: (){
-                      },
+                      onTap: () => onAvailableSoon(context),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width / 2 - 20,
                         decoration: BoxDecoration(
@@ -99,6 +99,7 @@ class ProjectBottomSheet extends StatelessWidget {
                                 "Are you sure you want to delete this project?",
                                 function: () {
                                   context.read<ProjectBloc>().deleteProjectById(id: project.id!);
+                                  context.router.pop();
                                 },
                               );
                             },

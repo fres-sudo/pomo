@@ -73,7 +73,7 @@ class HeaderProjectDetails extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        Text(project.description ?? "No description",
+        Text(project.description == null || project.description!.isEmpty ? "No description" : project.description!,
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium

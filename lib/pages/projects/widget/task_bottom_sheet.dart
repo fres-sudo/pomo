@@ -55,8 +55,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.sizeOf(context).height / 3,
-        decoration: BoxDecoration(
+      height: MediaQuery.sizeOf(context).height / 2 + 150,
+      decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(20),
             topLeft: Radius.circular(20),
@@ -67,184 +67,178 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
           ],
           color: Theme.of(context).bottomSheetTheme.backgroundColor,
         ),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
         padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  height: 4,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 12,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 36,
-                      ),
-                      Text(widget.task == null ? 'New Task' : 'Edit Task',
-                          style: Theme.of(context).textTheme.titleMedium),
-                      InkWell(
-                        onTap: () async {
-                          final String userId = context
-                              .read<AuthCubit>()
-                              .state
-                              .maybeWhen(
-                                  authenticated: (user) => user.id,
-                                  orElse: () => "");
-                          if (_nameTextEditingController.text.isEmpty) {
-                            onInvalidInput(context);
-                          } else {
-                            widget.task == null
-                                ? context.read<TaskBloc>().createTask(
-                                        task: Task(
-                                      name: _nameTextEditingController.text,
-                                      description:
-                                          _descriptionTextEditingController
-                                                      .text ==
-                                                  ""
-                                              ? null
-                                              : _descriptionTextEditingController
-                                                  .text,
-                                      pomodoro: _currentPomodoroValue,
-                                      pomodoroCompleted: 0,
-                                      completed: false,
-                                      referenceProject: widget.project!.id,
-                                      user: userId,
-                                      createdAt: DateTime.now(),
-                                    ))
-                                : context.read<TaskBloc>().updateTaskById(
-                                    id: widget.task!.id!,
-                                    task: Task(
-                                        id: widget.task!.id!,
+                  Container(
+                    height: 4,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(
+                          width: 36,
+                        ),
+                        Text(widget.task == null ? 'New Task' : 'Edit Task',
+                            style: Theme.of(context).textTheme.titleMedium),
+                        InkWell(
+                          onTap: () async {
+                            final String userId = context.read<AuthCubit>().state.maybeWhen(
+                                    authenticated: (user) => user.id,
+                                    orElse: () => "");
+                            if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0) {
+                              onInvalidInput(context);
+                            } else {
+                              widget.task == null
+                                  ? context.read<TaskBloc>().createTask(
+                                          task: Task(
                                         name: _nameTextEditingController.text,
+                                        description:
+                                            _descriptionTextEditingController.text == "" ? null : _descriptionTextEditingController.text,
                                         pomodoro: _currentPomodoroValue,
-                                        pomodoroCompleted:
-                                            widget.task?.pomodoroCompleted,
-                                        completed: widget.task!.completed,
-                                        referenceProject:
-                                            widget.task?.referenceProject,
+                                        pomodoroCompleted: 0,
+                                        completed: false,
+                                        referenceProject: widget.project!.id,
                                         user: userId,
-                                        createdAt: widget.task!.createdAt,
-                                        completedAt: widget.task?.completedAt));
-                            context.router.pop();
-                          }
-                        },
-                        child: Text(
-                          widget.task == null ? 'Create' : 'Edit',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: _formKey.currentState?.validate() != null
-                                ? (_formKey.currentState!.validate()
-                                    ? kPrimary500
-                                    : Theme.of(context).dividerColor)
-                                : Theme.of(context).dividerColor,
+                                        createdAt: DateTime.now(),
+                                      ))
+                                  : context.read<TaskBloc>().updateTaskById(
+                                      id: widget.task!.id!,
+                                      task: Task(
+                                          id: widget.task!.id!,
+                                          name: _nameTextEditingController.text,
+                                          pomodoro: _currentPomodoroValue,
+                                          pomodoroCompleted: widget.task?.pomodoroCompleted,
+                                          completed: widget.task!.completed,
+                                          referenceProject: widget.task?.referenceProject,
+                                          user: userId,
+                                          createdAt: widget.task!.createdAt,
+                                          completedAt: widget.task?.completedAt));
+                              context.router.pop();
+                            }
+                          },
+                          child: Text(
+                            widget.task == null ? 'Create' : 'Edit',
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: _formKey.currentState?.validate() != null
+                                  ? (_formKey.currentState!.validate() && _currentPomodoroValue > 0 ? kPrimary500
+                                      : Theme.of(context).dividerColor)
+                                  : Theme.of(context).dividerColor,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Divider(),
-                  ),
-                  Column(
-                    children: [
-                      TextFormField(
-                        controller: _nameTextEditingController,
-                        focusNode: _focusNode,
-                        cursorColor: kPrimary500,
-                        style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).textTheme.titleSmall?.color,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "I'm working on...",
-                          hintStyle: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSecondaryContainer),
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: _descriptionTextEditingController,
-                        cursorColor: kPrimary500,
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(context).textTheme.titleSmall?.color,
-                        ),
-                        decoration: InputDecoration(
-                            hintText: "Write a description of your task...",
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Divider(),
+                    ),
+                    Column(
+                      children: [
+                        TextFormField(
+                          controller: _nameTextEditingController,
+                          focusNode: _focusNode,
+                          cursorColor: kPrimary500,
+                          style: GoogleFonts.inter(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).textTheme.titleSmall?.color,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "I'm working on...",
                             hintStyle: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onSecondaryContainer),
+                            border: InputBorder.none,
                             errorBorder: InputBorder.none,
-                            border: InputBorder.none),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Pomodoros | ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer),
                           ),
-                          NumberPicker(
-                            value: _currentPomodoroValue,
-                            minValue: 1,
-                            maxValue: 30,
-                            step: 1,
-                            itemHeight: 25,
-                            itemWidth: 37,
-                            haptics: true,
-                            selectedTextStyle:
-                                Theme.of(context).textTheme.titleSmall,
-                            textStyle: Theme.of(context).textTheme.titleSmall,
-                            axis: Axis.horizontal,
-                            onChanged: (value) =>
-                                setState(() => _currentPomodoroValue = value),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.transparent,
-                              //backgroundBlendMode: BlendMode.screen,
-                              border: Border.all(color: Colors.black26),
+                        ),
+                        TextFormField(
+                          controller: _descriptionTextEditingController,
+                          cursorColor: kPrimary500,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).textTheme.titleSmall?.color,
+                          ),
+                          decoration: InputDecoration(
+                              hintText: "Write a description of your task...",
+                              hintStyle: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer),
+                              errorBorder: InputBorder.none,
+                              border: InputBorder.none),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Pomodoros | ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ]),
-              ],
+                            NumberPicker(
+                              value: _currentPomodoroValue,
+                              minValue: 0,
+                              maxValue: 30,
+                              step: 1,
+                              itemHeight: 25,
+                              itemWidth: 37,
+                              haptics: true,
+                              selectedTextStyle:
+                                  Theme.of(context).textTheme.titleSmall,
+                              textStyle: Theme.of(context).textTheme.titleSmall,
+                              axis: Axis.horizontal,
+                              onChanged: (value) =>
+                                  setState(() => _currentPomodoroValue = value),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.transparent,
+                                //backgroundBlendMode: BlendMode.screen,
+                                border: Border.all(color: Colors.black26),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ]),
+                ],
+              ),
             ),
           ),
-        ));
+      ),
+    );
   }
 }

@@ -11,6 +11,17 @@ onInvalidInput(BuildContext context){
   });
 }
 
+onAcceptTermsCondition(BuildContext context){
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       const SnackBar(
+          duration:  Duration(seconds: 2),
+          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text('You have to accept Terms & Conditions to create an account 📍',)),
+    );
+  });
+}
+
 onEmailSent(BuildContext context){
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(

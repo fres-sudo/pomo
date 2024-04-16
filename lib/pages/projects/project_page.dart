@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:io' show Platform;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ import 'package:pomo/pages/projects/views/no_proj_view.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../blocs/project/project_bloc.dart';
 import '../../components/cards/project_card.dart';
+import '../../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../../components/utils/my_progress_indicator.dart';
 import '../../components/widgets/snack_bars.dart';
 
@@ -82,7 +82,10 @@ class _ProjectPageState extends State<ProjectPage> {
         fetched: (List<Project> projects) => updateProjectsView(state),
         created: (project) => updateProjectsView(state),
         deleted: (project) => updateProjectsView(state),
-        errorFetching: () => onErrorState(context, "loading projects"),
+        errorFetching: () => onErrorState(context, "loading project"),
+        errorDeleting: () => onErrorState(context, "deleting project"),
+        errorGetting: () => onErrorState(context, "getting project details"),
+        errorUpdating: () => onErrorState(context, "updating project"),
       );
     }, builder: (context, state) {
       return Scaffold(
@@ -104,6 +107,7 @@ class _ProjectPageState extends State<ProjectPage> {
             child: Padding(
           padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
           child: SingleChildScrollView(
+            physics: const  NeverScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -115,18 +119,24 @@ class _ProjectPageState extends State<ProjectPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Let's work", style: kSerzif(context)),
-                        CircleAvatar(
-                            backgroundImage: context.read<AuthCubit>().state.maybeWhen(
-                              authenticated: (user) {
-                                if (user.photo == null) {
-                                  return const AssetImage("assets/images/propic-placeholder.jpg");
-                                } else {
-                                  //return NetworkImage(user.photo!);
-                                  return FileImage(File(user.photo!));
-                                }
-                              },
-                              orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
-                        ),
+                        context.read<AuthCubit>().state.maybeWhen(
+                            authenticated: (user) {
+                              if (user.photo == null) {
+                                return const CircleAvatar(
+                                  backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                );
+                              } else {
+                                return ClipOval(
+                                    child: SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: FancyShimmerImage(imageUrl: user.photo!)));
+                              }
+                            },
+                            orElse: () => const CircleAvatar(
+                              backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                            ))
+                        
                       ],
                     ),
                     const SizedBox(
@@ -164,9 +174,9 @@ class _ProjectPageState extends State<ProjectPage> {
       return const NoProjectView();
     }
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.6,
+      height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300 ,
       child: ListView.builder(
-        shrinkWrap: true,
+        shrinkWrap: false,
         itemCount: projects.length,
         itemBuilder: (context, index) =>
             ProjectCard(project: projects[index]),

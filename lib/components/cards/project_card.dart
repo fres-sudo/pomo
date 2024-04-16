@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/models/project/project.dart';
@@ -26,14 +27,14 @@ class ProjectCard extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(top : 16.0, bottom: 16),
       child: InkWell(
         onTap: (){
           context.router.push(ProjectDetailsRoute(project: project));
         },
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          //height: height * 1 / 2.8,
+          //height: //height * 1 / 2.8,
           width: width,
 
           decoration: BoxDecoration(
@@ -61,20 +62,14 @@ class ProjectCard extends StatelessWidget {
               ) : ClipRRect(
                 borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                child: Container(
+                child: SizedBox(
                   height: height * 1 / 2.8 * 1 / 2.5,
                   width: width,
-                  decoration: BoxDecoration(
-                    image:  DecorationImage(
-                      image: FileImage(File(project.imageCover!)),
-                      fit: BoxFit.cover,
-                    )
-                ),
-                  /* FancyShimmerImage(
-                      errorWidget: Image.asset("assets/images/project-placeholder.png", fit: BoxFit.cover),
-                      boxFit: BoxFit.cover,
-                      imageUrl: project.imageCover!
-                    )*/
+                  child: FancyShimmerImage(
+                    imageUrl: project.imageCover!,
+                    errorWidget: Image.asset("assets/images/project-placeholder.png", fit: BoxFit.cover),
+                    boxFit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
@@ -101,6 +96,7 @@ class ProjectCard extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
+                        /*
                         Text(
                           "$taskLength tasks",
                           style: GoogleFonts.inter(
@@ -109,6 +105,8 @@ class ProjectCard extends StatelessWidget {
                               color: kPrimary500
                           ),
                         ),
+                        */
+
                       ],
                     ),
                     Text(
@@ -119,7 +117,7 @@ class ProjectCard extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      project.description ?? "No description",
+                      project.description == null || project.description!.isEmpty ? "No description" : project.description!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall

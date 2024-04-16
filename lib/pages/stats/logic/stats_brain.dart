@@ -21,7 +21,7 @@ class StatsBrain {
 
     // Calculate the total focus time
     double totalFocusTime = completedToday.length * 25 / 60; // Convert from minutes to hours
-    return totalFocusTime.roundToDouble();
+    return double.tryParse(totalFocusTime.toStringAsFixed(1)) ?? 0;
   }
 
   double getBreakTimeToday() {
@@ -35,7 +35,7 @@ class StatsBrain {
 
     // Calculate the total break time
     double totalBreakTime = completedToday.length * 5 / 60; // Convert from minutes to hours
-    return totalBreakTime.roundToDouble();
+    return double.tryParse(totalBreakTime.toStringAsFixed(1)) ?? 0;
   }
 
   int getAllTasksToday() {
@@ -64,7 +64,7 @@ class StatsBrain {
 
     // Calculate the total focus time
     double totalFocusTime = completedYesterday.length * 25 / 60; // Convert from minutes to hours
-    return totalFocusTime.roundToDouble();
+    return double.tryParse(totalFocusTime.toStringAsFixed(1)) ?? 0;
   }
 
   double getBreakTimeYesterday() {
@@ -79,7 +79,7 @@ class StatsBrain {
 
     // Calculate the total break time
     double totalBreakTime = completedYesterday.length * 5 / 60; // Convert from minutes to hours
-    return totalBreakTime.roundToDouble();
+    return double.tryParse(totalBreakTime.toStringAsFixed(1)) ?? 0;
   }
 
   int getAllTasksYesterday() {
@@ -100,13 +100,13 @@ class StatsBrain {
   double getFocusTimeAll() {
     // Calculate the total focus time for all completed tasks
     double totalFocusTime = completedTasks.length * 25 / 60; // Convert from minutes to hours
-    return totalFocusTime.roundToDouble();
+    return double.tryParse(totalFocusTime.toStringAsFixed(1)) ?? 0;
   }
 
   double getBreakTimeAll() {
     // Calculate the total break time for all completed tasks
     double totalBreakTime = completedTasks.length * 5 / 60; // Convert from minutes to hours
-    return totalBreakTime.roundToDouble();
+    return double.tryParse(totalBreakTime.toStringAsFixed(1)) ?? 0;
   }
 
   int getAllTasksAll() {

@@ -13,6 +13,7 @@ import 'package:pomo/pages/stats/charts/line_chart.dart';
 import 'package:pomo/pages/stats/logic/stats_brain.dart';
 import 'package:pomo/pages/stats/widgets/time_selector.dart';
 
+import '../../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../../components/widgets/snack_bars.dart';
 import '../../constants/text.dart';
 import '../../models/task/task.dart';
@@ -82,8 +83,6 @@ class _StatsPageState extends State<StatsPage> {
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height / 4.3,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
                                         color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -142,19 +141,23 @@ class _StatsPageState extends State<StatsPage> {
                                           ),
                                           Row(
                                             children: [
-                                              CircleAvatar(
-                                                  radius: 83 / 2,
-                                                  backgroundImage: context.read<AuthCubit>().state.maybeWhen(
-                                                    authenticated: (user) {
-                                                      if (user.photo == null) {
-                                                        return const AssetImage("assets/images/propic-placeholder.jpg");
-                                                      } else {
-                                                        //return NetworkImage(user.photo!);
-                                                        return FileImage(File(user.photo!));
-                                                      }
-                                                    },
-                                                    orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
-                                              ),
+                                              context.read<AuthCubit>().state.maybeWhen(
+                                                  authenticated: (user) {
+                                                    if (user.photo == null) {
+                                                      return const CircleAvatar(
+                                                        backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                                      );
+                                                    } else {
+                                                      return ClipOval(
+                                                          child: SizedBox(
+                                                              height: 83,
+                                                              width: 83,
+                                                              child: FancyShimmerImage(imageUrl: user.photo!)));
+                                                    }
+                                                  },
+                                                  orElse: () => const CircleAvatar(
+                                                    backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                                  )),
                                               const SizedBox(
                                                 width: 20,
                                               ),
@@ -265,7 +268,6 @@ class _StatsPageState extends State<StatsPage> {
                                     ),
                                     Container(
                                       padding: const EdgeInsets.all(16),
-                                      width: MediaQuery.sizeOf(context).width,
                                       height: MediaQuery.sizeOf(context).height / 4.5,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),

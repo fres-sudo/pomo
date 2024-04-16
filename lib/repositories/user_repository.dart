@@ -28,6 +28,9 @@ abstract class UserRepository {
       required String password,
       required String passwordConfirm,
  });
+  Future<void> deleteUser({
+    required String id
+  });
 
 }
 
@@ -82,6 +85,16 @@ class UserRepositoryImpl implements UserRepository {
        await userService.recoverPassword(token, RecoverPassRequest(password: password, confirmPassword: passwordConfirm));
     } catch (error,stack) {
       logger.e('Error forgot password: $error, in the stack : \n $stack');
+      throw Exception('Update failed');
+    }
+  }
+
+  @override
+  Future<void> deleteUser({required String id}) async {
+    try {
+      await userService.deleteUser(id);
+    } catch (error,stack) {
+      logger.e('Error deleting user: $error, in the stack : \n $stack');
       throw Exception('Update failed');
     }
   }

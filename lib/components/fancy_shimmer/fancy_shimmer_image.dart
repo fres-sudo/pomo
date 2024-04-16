@@ -123,19 +123,7 @@ class FancyShimmerImage extends StatelessWidget {
                         width: width,
                         height: height,
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.error, color: Colors.red),
-                            Visibility(
-                                visible: textErrorVisible,
-                                child: Text(
-                                  "Clicca per riprovare",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                  textAlign: TextAlign.center,
-                                )),
-                          ],
-                        ),
+                        child: const Icon(Icons.error, color: Colors.red),
                       ),
                     );
                   },
