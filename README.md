@@ -121,7 +121,7 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
     -  
     -  
     - [ ] Pomodoro 🍅
-      - Start ▶️ - Stop ⏸️  - Resume ⏯️ - Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
+      - Start ▶️ - Stop ⏸️  - Resume ⏯️ - [Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
     
 - [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
 - [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
