@@ -115,25 +115,30 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
 - [ ] Projects 📋
   -  [Create](lib/pages/projects/create_project_page.dart) - [Update](lib/pages/projects/create_project_page.dart) - [Delete](lib/pages/projects/widgets/project_bottom_sheet.dart)
-     
+  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
   - [ ] Tasks 🎯
     -  [Create](lib/pages/projects/widgets/task_bottom_sheet.dart) - [Update](lib/components/cards/task_card.dart) - [Delete](lib/components/cards/task_card.dart)
-    -  
-    -  
+    - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
+       
     - [ ] Pomodoro 🍅
       - Start ▶️ - Stop ⏸️  - Resume ⏯️ - [Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
+      - <img src="https://github.com/fres-sudo/pomo/assets/65305708/35d6d050-1a1f-4931-a658-bf7628ae82f2" width="300" height="650"/>
     
 - [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
+
+     - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
+      
 - [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
-     - Detailed Focus / Break time  - Weekly Improvment - Pomodoros per day - Line and Bar Charts
-    
+    - Detailed Focus / Break time  - Weekly Improvment - Pomodoros per day - Line and Bar Charts
+    - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
     
     
 - [ ] [Authentication 🔐](lib/pages/authentication/)
   - [Login](lib/pages/authentication/login_in/login_page.dart) - [Register](lib/pages/authentication/sign_up/signup_page.dart) - [Forgot Password](lib/pages/authentication/forgot_password/forgotpassword_page.dart)
-  
-  
+  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/e09b0eb7-7ec0-49eb-b4c5-ebbacfe2d1e9" width="300" height="650"/>
+
 - [ ] Theming ☯️
+  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
       
 
 See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
