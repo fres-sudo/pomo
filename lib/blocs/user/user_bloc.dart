@@ -28,15 +28,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   String get otp => _otp;
 
   /// Create a new instance of [UserBloc].
-  UserBloc({required this.userRepository, required this.authenticationRepository}) : super(const UserState.updating()) {
+  UserBloc({required this.userRepository, required this.authenticationRepository}) : super(const UserState.none()) {
     on<UpdateUserUserEvent>(_onUpdateUser);
     on<UpdateUserPhotoUserEvent>(_onUpdateUserPhoto);
+    on<DeleteUserUserEvent>(_onDeleteUser);
     on<ForgotPasswordUserEvent>(_onForgotPassword);
     on<RecoverPasswordUserEvent>(_onRecoverPassword);
   }
   
   /// Method used to add the [UpdateUserUserEvent] event
   void updateUser({required String id, required User user}) => add(UserEvent.updateUser(user: user, id: id));
+  void deleteUser({required String id}) => add(UserEvent.deleteUser(id: id));
   void updateUserPhoto({required String id, required File photo}) => add(UserEvent.updateUserPhoto(id: id, photo: photo));
   void forgotPassword({required String email}) => add(UserEvent.forgotPassword(email: email));
   void recoverPassword({required String token, required String password, required String passwordConfirm}) => add(UserEvent.recoverPassword(token: token, password: password, passwordConfirm: passwordConfirm));
@@ -49,6 +51,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try{
       final user = await userRepository.updateUser(user: event.user, id: event.id,);
       emit(UserState.updated(user));
+    }catch(_){
+      emit(const UserState.errorUpdating());
+    }
+  }
+
+  FutureOr<void> _onDeleteUser(
+    DeleteUserUserEvent event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(const UserState.updating());
+    try{
+      await userRepository.deleteUser(id: event.id,);
+      emit(UserState.deleted());
     }catch(_){
       emit(const UserState.errorUpdating());
     }
@@ -94,8 +109,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(const UserState.errorRecovering());
     }
   }
-
-
-
   
 }

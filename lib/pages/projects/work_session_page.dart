@@ -140,7 +140,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                           height: 5,
                         ),
                         Text(
-                          "${widget.task.pomodoro * 30} min",
+                          widget.task.pomodoro > 1 ? "${durationToString(widget.task.pomodoro * 30)} hours " : "${widget.task.pomodoro * 30} mins",
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
@@ -152,7 +152,6 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       "${context.read<TaskBloc>().state.maybeWhen(
                           updated: (task) => {
                             task.pomodoroCompleted,
-                            print("task completed: ${task.pomodoroCompleted}"),
                           },
                           orElse: ()=> widget.task.pomodoroCompleted)}/${widget.task.pomodoro}",
                       style: Theme.of(context)

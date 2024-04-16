@@ -14,9 +14,6 @@ class InfoTaskBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery
-            .sizeOf(context)
-            .height / 2.5,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(20),

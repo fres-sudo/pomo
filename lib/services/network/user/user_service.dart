@@ -19,6 +19,9 @@ abstract class UserService {
   @PUT('/users/{id}')
   Future<UserJTO> updateUser(@Path('id') String id ,@Body() UserJTO user);
 
+ @DELETE('/users/{id}')
+  Future<UserJTO> deleteUser(@Path('id') String id);
+
   @PUT('/users/uploadPhoto/{id}')
   @MultiPart()
   Future<UserJTO> updateUserPhoto(@Path('id') String id, @Part() File photo);

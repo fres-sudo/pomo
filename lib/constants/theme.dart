@@ -187,6 +187,21 @@ class DarkTheme {
             return null;
           }),
         ),
+        radioTheme: RadioThemeData(
+          overlayColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return kPrimary500;
+            }
+            return kPrimary500;
+          }),
+          fillColor: MaterialStateProperty.resolveWith((states) {
+            // If the button is pressed, return green, otherwise blue
+            if (states.contains(MaterialState.selected)) {
+              return kPrimary500;
+            }
+            return kPrimary500;
+          }),
+        ),
         textTheme: textTheme,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedIconTheme: const IconThemeData(color: kPrimary500),

@@ -35,6 +35,7 @@ class TaskView extends StatelessWidget {
               onTap: () {
                 showModalBottomSheet(
                     useRootNavigator: true,
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) {
                       return TaskBottomSheet(project: project);

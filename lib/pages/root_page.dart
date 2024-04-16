@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import '../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
@@ -77,19 +78,23 @@ class RootPage extends StatelessWidget {
                       ),
                       label: "QuickSession"),
                    BottomNavigationBarItem(
-                      icon: CircleAvatar(
-                        radius: 13,
-                          backgroundImage: context.read<AuthCubit>().state.maybeWhen(
-                            authenticated: (user) {
-                              if (user.photo == null) {
-                                return const AssetImage("assets/images/propic-placeholder.jpg");
-                              } else {
-                                //return NetworkImage(user.photo!);
-                                return FileImage(File(user.photo!));
-                              }
-                            },
-                            orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
-                      ),
+                      icon: context.read<AuthCubit>().state.maybeWhen(
+                          authenticated: (user) {
+                            if (user.photo == null) {
+                              return const CircleAvatar(
+                                backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                              );
+                            } else {
+                              return ClipOval(
+                                  child: SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: FancyShimmerImage(imageUrl: user.photo!)));
+                            }
+                          },
+                          orElse: () => const CircleAvatar(
+                            backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                          )),
                       label: "Profile"),
                 ],
               ),

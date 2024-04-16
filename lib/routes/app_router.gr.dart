@@ -8,10 +8,10 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i19;
-import 'package:flutter/material.dart' as _i20;
-import 'package:pomo/models/project/project.dart' as _i21;
-import 'package:pomo/models/task/task.dart' as _i22;
+import 'package:auto_route/auto_route.dart' as _i20;
+import 'package:flutter/material.dart' as _i21;
+import 'package:pomo/models/project/project.dart' as _i22;
+import 'package:pomo/models/task/task.dart' as _i23;
 import 'package:pomo/pages/authentication/forgot_password/forgotpassword_otp_page.dart'
     as _i3;
 import 'package:pomo/pages/authentication/forgot_password/forgotpassword_page.dart'
@@ -19,41 +19,42 @@ import 'package:pomo/pages/authentication/forgot_password/forgotpassword_page.da
 import 'package:pomo/pages/authentication/forgot_password/forgotpassword_recover_page.dart'
     as _i5;
 import 'package:pomo/pages/authentication/login_in/login_page.dart' as _i6;
-import 'package:pomo/pages/authentication/sign_up/signup_page.dart' as _i16;
+import 'package:pomo/pages/authentication/sign_up/signup_page.dart' as _i17;
 import 'package:pomo/pages/profile/edit_profile_page.dart' as _i2;
-import 'package:pomo/pages/profile/profile_navigation.dart' as _i8;
-import 'package:pomo/pages/profile/profile_page.dart' as _i9;
+import 'package:pomo/pages/profile/profile_navigation.dart' as _i9;
+import 'package:pomo/pages/profile/profile_page.dart' as _i10;
+import 'package:pomo/pages/profile/widget/privacy_policy_page.dart' as _i8;
 import 'package:pomo/pages/projects/create_project_page.dart' as _i1;
-import 'package:pomo/pages/projects/project_details_page.dart' as _i10;
-import 'package:pomo/pages/projects/project_navigation.dart' as _i11;
-import 'package:pomo/pages/projects/project_page.dart' as _i12;
-import 'package:pomo/pages/projects/widget/session_complete.dart' as _i15;
-import 'package:pomo/pages/projects/work_session_page.dart' as _i18;
-import 'package:pomo/pages/quick_session/quick_session_page.dart' as _i13;
-import 'package:pomo/pages/root_page.dart' as _i14;
+import 'package:pomo/pages/projects/project_details_page.dart' as _i11;
+import 'package:pomo/pages/projects/project_navigation.dart' as _i12;
+import 'package:pomo/pages/projects/project_page.dart' as _i13;
+import 'package:pomo/pages/projects/widget/session_complete.dart' as _i16;
+import 'package:pomo/pages/projects/work_session_page.dart' as _i19;
+import 'package:pomo/pages/quick_session/quick_session_page.dart' as _i14;
+import 'package:pomo/pages/root_page.dart' as _i15;
 import 'package:pomo/pages/splash/onBoarding_page.dart' as _i7;
-import 'package:pomo/pages/stats/stats_page.dart' as _i17;
+import 'package:pomo/pages/stats/stats_page.dart' as _i18;
 
-abstract class $AppRouter extends _i19.RootStackRouter {
+abstract class $AppRouter extends _i20.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i19.PageFactory> pagesMap = {
+  final Map<String, _i20.PageFactory> pagesMap = {
     CreateProjectRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.CreateProjectPage(),
       );
     },
     EditProfileRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i2.EditProfilePage(),
       );
     },
     ForgotPasswordOTPRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordOTPRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.ForgotPasswordOTPPage(
           email: args.email,
@@ -62,46 +63,52 @@ abstract class $AppRouter extends _i19.RootStackRouter {
       );
     },
     ForgotPasswordRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i4.ForgotPasswordPage(),
       );
     },
     ForgotPasswordRecoverRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i5.ForgotPasswordRecoverPage(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i6.LoginPage(),
       );
     },
     OnBoardingRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i7.OnBoardingPage(),
       );
     },
-    ProfileNavigation.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+    PrivacyPolicyRoute.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ProfileNavigation(),
+        child: const _i8.PrivacyPolicyPage(),
+      );
+    },
+    ProfileNavigation.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i9.ProfileNavigation(),
       );
     },
     ProfileRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.ProfilePage(),
+        child: const _i10.ProfilePage(),
       );
     },
     ProjectDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<ProjectDetailsRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i10.ProjectDetailsPage(
+        child: _i11.ProjectDetailsPage(
           key: args.key,
           project: args.project,
           isCreatedProject: args.isCreatedProject,
@@ -109,52 +116,52 @@ abstract class $AppRouter extends _i19.RootStackRouter {
       );
     },
     ProjectNavigation.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.ProjectNavigation(),
+        child: const _i12.ProjectNavigation(),
       );
     },
     ProjectRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.ProjectPage(),
+        child: const _i13.ProjectPage(),
       );
     },
     QuickSessionRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.QuickSessionPage(),
+        child: const _i14.QuickSessionPage(),
       );
     },
     RootRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.RootPage(),
+        child: const _i15.RootPage(),
       );
     },
     SessionCompleteRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i15.SessionCompletePage(),
+        child: const _i16.SessionCompletePage(),
       );
     },
     SignUpRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i16.SignUpPage(),
+        child: const _i17.SignUpPage(),
       );
     },
     StatsRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i17.StatsPage(),
+        child: const _i18.StatsPage(),
       );
     },
     WorkSessionRoute.name: (routeData) {
       final args = routeData.argsAs<WorkSessionRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i18.WorkSessionPage(
+        child: _i19.WorkSessionPage(
           key: args.key,
           task: args.task,
         ),
@@ -165,8 +172,8 @@ abstract class $AppRouter extends _i19.RootStackRouter {
 
 /// generated route for
 /// [_i1.CreateProjectPage]
-class CreateProjectRoute extends _i19.PageRouteInfo<void> {
-  const CreateProjectRoute({List<_i19.PageRouteInfo>? children})
+class CreateProjectRoute extends _i20.PageRouteInfo<void> {
+  const CreateProjectRoute({List<_i20.PageRouteInfo>? children})
       : super(
           CreateProjectRoute.name,
           initialChildren: children,
@@ -174,13 +181,13 @@ class CreateProjectRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'CreateProjectRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.EditProfilePage]
-class EditProfileRoute extends _i19.PageRouteInfo<void> {
-  const EditProfileRoute({List<_i19.PageRouteInfo>? children})
+class EditProfileRoute extends _i20.PageRouteInfo<void> {
+  const EditProfileRoute({List<_i20.PageRouteInfo>? children})
       : super(
           EditProfileRoute.name,
           initialChildren: children,
@@ -188,17 +195,17 @@ class EditProfileRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'EditProfileRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.ForgotPasswordOTPPage]
 class ForgotPasswordOTPRoute
-    extends _i19.PageRouteInfo<ForgotPasswordOTPRouteArgs> {
+    extends _i20.PageRouteInfo<ForgotPasswordOTPRouteArgs> {
   ForgotPasswordOTPRoute({
     required String email,
-    _i20.Key? key,
-    List<_i19.PageRouteInfo>? children,
+    _i21.Key? key,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           ForgotPasswordOTPRoute.name,
           args: ForgotPasswordOTPRouteArgs(
@@ -210,8 +217,8 @@ class ForgotPasswordOTPRoute
 
   static const String name = 'ForgotPasswordOTPRoute';
 
-  static const _i19.PageInfo<ForgotPasswordOTPRouteArgs> page =
-      _i19.PageInfo<ForgotPasswordOTPRouteArgs>(name);
+  static const _i20.PageInfo<ForgotPasswordOTPRouteArgs> page =
+      _i20.PageInfo<ForgotPasswordOTPRouteArgs>(name);
 }
 
 class ForgotPasswordOTPRouteArgs {
@@ -222,7 +229,7 @@ class ForgotPasswordOTPRouteArgs {
 
   final String email;
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -232,8 +239,8 @@ class ForgotPasswordOTPRouteArgs {
 
 /// generated route for
 /// [_i4.ForgotPasswordPage]
-class ForgotPasswordRoute extends _i19.PageRouteInfo<void> {
-  const ForgotPasswordRoute({List<_i19.PageRouteInfo>? children})
+class ForgotPasswordRoute extends _i20.PageRouteInfo<void> {
+  const ForgotPasswordRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ForgotPasswordRoute.name,
           initialChildren: children,
@@ -241,13 +248,13 @@ class ForgotPasswordRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i5.ForgotPasswordRecoverPage]
-class ForgotPasswordRecoverRoute extends _i19.PageRouteInfo<void> {
-  const ForgotPasswordRecoverRoute({List<_i19.PageRouteInfo>? children})
+class ForgotPasswordRecoverRoute extends _i20.PageRouteInfo<void> {
+  const ForgotPasswordRecoverRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ForgotPasswordRecoverRoute.name,
           initialChildren: children,
@@ -255,13 +262,13 @@ class ForgotPasswordRecoverRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRecoverRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i6.LoginPage]
-class LoginRoute extends _i19.PageRouteInfo<void> {
-  const LoginRoute({List<_i19.PageRouteInfo>? children})
+class LoginRoute extends _i20.PageRouteInfo<void> {
+  const LoginRoute({List<_i20.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -269,13 +276,13 @@ class LoginRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i7.OnBoardingPage]
-class OnBoardingRoute extends _i19.PageRouteInfo<void> {
-  const OnBoardingRoute({List<_i19.PageRouteInfo>? children})
+class OnBoardingRoute extends _i20.PageRouteInfo<void> {
+  const OnBoardingRoute({List<_i20.PageRouteInfo>? children})
       : super(
           OnBoardingRoute.name,
           initialChildren: children,
@@ -283,13 +290,27 @@ class OnBoardingRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'OnBoardingRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.ProfileNavigation]
-class ProfileNavigation extends _i19.PageRouteInfo<void> {
-  const ProfileNavigation({List<_i19.PageRouteInfo>? children})
+/// [_i8.PrivacyPolicyPage]
+class PrivacyPolicyRoute extends _i20.PageRouteInfo<void> {
+  const PrivacyPolicyRoute({List<_i20.PageRouteInfo>? children})
+      : super(
+          PrivacyPolicyRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PrivacyPolicyRoute';
+
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i9.ProfileNavigation]
+class ProfileNavigation extends _i20.PageRouteInfo<void> {
+  const ProfileNavigation({List<_i20.PageRouteInfo>? children})
       : super(
           ProfileNavigation.name,
           initialChildren: children,
@@ -297,13 +318,13 @@ class ProfileNavigation extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ProfileNavigation';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.ProfilePage]
-class ProfileRoute extends _i19.PageRouteInfo<void> {
-  const ProfileRoute({List<_i19.PageRouteInfo>? children})
+/// [_i10.ProfilePage]
+class ProfileRoute extends _i20.PageRouteInfo<void> {
+  const ProfileRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ProfileRoute.name,
           initialChildren: children,
@@ -311,17 +332,17 @@ class ProfileRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.ProjectDetailsPage]
-class ProjectDetailsRoute extends _i19.PageRouteInfo<ProjectDetailsRouteArgs> {
+/// [_i11.ProjectDetailsPage]
+class ProjectDetailsRoute extends _i20.PageRouteInfo<ProjectDetailsRouteArgs> {
   ProjectDetailsRoute({
-    _i20.Key? key,
-    required _i21.Project project,
+    _i21.Key? key,
+    required _i22.Project project,
     bool isCreatedProject = false,
-    List<_i19.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           ProjectDetailsRoute.name,
           args: ProjectDetailsRouteArgs(
@@ -334,8 +355,8 @@ class ProjectDetailsRoute extends _i19.PageRouteInfo<ProjectDetailsRouteArgs> {
 
   static const String name = 'ProjectDetailsRoute';
 
-  static const _i19.PageInfo<ProjectDetailsRouteArgs> page =
-      _i19.PageInfo<ProjectDetailsRouteArgs>(name);
+  static const _i20.PageInfo<ProjectDetailsRouteArgs> page =
+      _i20.PageInfo<ProjectDetailsRouteArgs>(name);
 }
 
 class ProjectDetailsRouteArgs {
@@ -345,9 +366,9 @@ class ProjectDetailsRouteArgs {
     this.isCreatedProject = false,
   });
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
-  final _i21.Project project;
+  final _i22.Project project;
 
   final bool isCreatedProject;
 
@@ -358,9 +379,9 @@ class ProjectDetailsRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ProjectNavigation]
-class ProjectNavigation extends _i19.PageRouteInfo<void> {
-  const ProjectNavigation({List<_i19.PageRouteInfo>? children})
+/// [_i12.ProjectNavigation]
+class ProjectNavigation extends _i20.PageRouteInfo<void> {
+  const ProjectNavigation({List<_i20.PageRouteInfo>? children})
       : super(
           ProjectNavigation.name,
           initialChildren: children,
@@ -368,13 +389,13 @@ class ProjectNavigation extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ProjectNavigation';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i12.ProjectPage]
-class ProjectRoute extends _i19.PageRouteInfo<void> {
-  const ProjectRoute({List<_i19.PageRouteInfo>? children})
+/// [_i13.ProjectPage]
+class ProjectRoute extends _i20.PageRouteInfo<void> {
+  const ProjectRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ProjectRoute.name,
           initialChildren: children,
@@ -382,13 +403,13 @@ class ProjectRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'ProjectRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.QuickSessionPage]
-class QuickSessionRoute extends _i19.PageRouteInfo<void> {
-  const QuickSessionRoute({List<_i19.PageRouteInfo>? children})
+/// [_i14.QuickSessionPage]
+class QuickSessionRoute extends _i20.PageRouteInfo<void> {
+  const QuickSessionRoute({List<_i20.PageRouteInfo>? children})
       : super(
           QuickSessionRoute.name,
           initialChildren: children,
@@ -396,13 +417,13 @@ class QuickSessionRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'QuickSessionRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.RootPage]
-class RootRoute extends _i19.PageRouteInfo<void> {
-  const RootRoute({List<_i19.PageRouteInfo>? children})
+/// [_i15.RootPage]
+class RootRoute extends _i20.PageRouteInfo<void> {
+  const RootRoute({List<_i20.PageRouteInfo>? children})
       : super(
           RootRoute.name,
           initialChildren: children,
@@ -410,13 +431,13 @@ class RootRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'RootRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i15.SessionCompletePage]
-class SessionCompleteRoute extends _i19.PageRouteInfo<void> {
-  const SessionCompleteRoute({List<_i19.PageRouteInfo>? children})
+/// [_i16.SessionCompletePage]
+class SessionCompleteRoute extends _i20.PageRouteInfo<void> {
+  const SessionCompleteRoute({List<_i20.PageRouteInfo>? children})
       : super(
           SessionCompleteRoute.name,
           initialChildren: children,
@@ -424,13 +445,13 @@ class SessionCompleteRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'SessionCompleteRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i16.SignUpPage]
-class SignUpRoute extends _i19.PageRouteInfo<void> {
-  const SignUpRoute({List<_i19.PageRouteInfo>? children})
+/// [_i17.SignUpPage]
+class SignUpRoute extends _i20.PageRouteInfo<void> {
+  const SignUpRoute({List<_i20.PageRouteInfo>? children})
       : super(
           SignUpRoute.name,
           initialChildren: children,
@@ -438,13 +459,13 @@ class SignUpRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i17.StatsPage]
-class StatsRoute extends _i19.PageRouteInfo<void> {
-  const StatsRoute({List<_i19.PageRouteInfo>? children})
+/// [_i18.StatsPage]
+class StatsRoute extends _i20.PageRouteInfo<void> {
+  const StatsRoute({List<_i20.PageRouteInfo>? children})
       : super(
           StatsRoute.name,
           initialChildren: children,
@@ -452,16 +473,16 @@ class StatsRoute extends _i19.PageRouteInfo<void> {
 
   static const String name = 'StatsRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i18.WorkSessionPage]
-class WorkSessionRoute extends _i19.PageRouteInfo<WorkSessionRouteArgs> {
+/// [_i19.WorkSessionPage]
+class WorkSessionRoute extends _i20.PageRouteInfo<WorkSessionRouteArgs> {
   WorkSessionRoute({
-    _i20.Key? key,
-    required _i22.Task task,
-    List<_i19.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i23.Task task,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           WorkSessionRoute.name,
           args: WorkSessionRouteArgs(
@@ -473,8 +494,8 @@ class WorkSessionRoute extends _i19.PageRouteInfo<WorkSessionRouteArgs> {
 
   static const String name = 'WorkSessionRoute';
 
-  static const _i19.PageInfo<WorkSessionRouteArgs> page =
-      _i19.PageInfo<WorkSessionRouteArgs>(name);
+  static const _i20.PageInfo<WorkSessionRouteArgs> page =
+      _i20.PageInfo<WorkSessionRouteArgs>(name);
 }
 
 class WorkSessionRouteArgs {
@@ -483,9 +504,9 @@ class WorkSessionRouteArgs {
     required this.task,
   });
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
-  final _i22.Task task;
+  final _i23.Task task;
 
   @override
   String toString() {

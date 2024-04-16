@@ -32,7 +32,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  XFile? image; //this is the state variable
+  XFile? image;
 
   DateTime _selectedDate = DateTime.now();
 
@@ -67,13 +67,20 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
         listener: (context, state) {
           state.whenOrNull(
             created: (project) {
-                  //image != null ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id!, imageCover: File(image!.path)) :
+                  image != null ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id!, imageCover: File(image!.path)) :
                   context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true));
             },
             uploadedImageCover: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
-            errorUploadingImageCover: () => onErrorState(context, "uploading image cover project"),
-            errorCreating: () => onErrorState(context, "creating project"),
-          );
+            errorUploadingImageCover: () =>
+            {
+              onErrorState(context, "uploading image cover project"),
+              context.router.push(const ProjectRoute())
+              },
+            errorCreating: () => {
+                onErrorState(context, "creating project"),
+                context.router.push(const ProjectRoute())
+
+            });
         },
         builder: (context, state) {
           return Scaffold(
@@ -116,9 +123,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                 context.read<ProjectBloc>().createProject(
                                     project: Project(
                                       name: _nameTextController.text,
-                                      description: _descriptionTextController.text == "" ? _descriptionTextController.text : null,
+                                      description: _descriptionTextController.text,
                                       dueDate: _selectedDate,
-                                      imageCover: image?.path,
                                       owner: id,
                                     )) : onInvalidInput(context);
                               },
@@ -168,11 +174,33 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .onSecondaryContainer))
-                                : Image.file(
-                                    File(
-                                      image!.path,
+                                : Stack(
+                                  children: [
+                                    Image.file(
+                                        File(
+                                          image!.path,
+                                        ),
+                                        fit: BoxFit.cover),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          color: kNeutral100,
+                                          borderRadius: BorderRadius.circular(200),
+                                        ),
+                                        child: IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                image = null;
+                                              });
+                                            },
+                                            icon: const Icon(Icons.delete_forever, color: kRed500,)),
+                                      ),
                                     ),
-                                    fit: BoxFit.cover),
+                                  ],
+                                ),
                           ),
                         ),
                       ),
@@ -191,7 +219,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                 height: 6,
                               ),
                               TextFormField(
-                                keyboardType: TextInputType.name,
                                 controller: _nameTextController,
                                 cursorColor: kPrimary600,
                                 autovalidateMode:
@@ -219,7 +246,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                 height: 6,
                               ),
                               TextFormField(
-                                keyboardType: TextInputType.name,
                                 controller: _descriptionTextController,
                                 cursorColor: kPrimary600,
                                 maxLines: 5,

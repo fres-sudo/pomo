@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
+import 'package:pomo/pages/profile/widget/privacy_policy_page.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 import '../../components/widgets/snack_bars.dart';
@@ -71,18 +73,23 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         child: Row(children: [
-                          CircleAvatar(
-                              backgroundImage: context.read<AuthCubit>().state.maybeWhen(
+                          context.read<AuthCubit>().state.maybeWhen(
                                 authenticated: (user) {
                                   if (user.photo == null) {
-                                    return const AssetImage("assets/images/propic-placeholder.jpg");
+                                    return const CircleAvatar(
+                                      backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                    );
                                   } else {
-                                    //return NetworkImage(user.photo!);
-                                    return FileImage(File(user.photo!));
+                                    return ClipOval(
+                                        child: SizedBox(
+                                            height: 56,
+                                            width: 56,
+                                            child: FancyShimmerImage(imageUrl: user.photo!)));
                                   }
                                 },
-                                orElse: () => const AssetImage("assets/images/propic-placeholder.jpg"),)
-                          ),
+                                orElse: () => const CircleAvatar(
+                                  backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                )),
                           const SizedBox(
                             width: 12,
                           ),
@@ -200,9 +207,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: kNeutral600,
                       ),
                     ),
+
                     const SizedBox(
                       height: 8,
                     ),
+                    /*
                     InkWell(
                         onTap: () {},
                         borderRadius: BorderRadius.circular(20),
@@ -219,11 +228,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             )
                           ],
                         )),
+
                     const SizedBox(
                       height: 20,
                     ),
+                    */
                     InkWell(
-                        onTap: () {},
+                        onTap: () => context.router.push(const PrivacyPolicyRoute()),
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

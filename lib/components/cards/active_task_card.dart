@@ -60,7 +60,7 @@ class _ActiveTaskCardState extends State<ActiveTaskCard> {
                           context.isDarkMode ? kNeutral100 : kNeutral900),
                     ),
                     Text(
-                      "${(widget.task.pomodoro * 30).toString()}mins • ${widget.task.pomodoro} pomodoro",
+                      "${widget.task.pomodoro > 1 ? "${durationToString(widget.task.pomodoro * 30)} hours " : "${widget.task.pomodoro * 30} mins"} • ${widget.task.pomodoro} pomodoro",
                       style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 11,
