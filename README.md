@@ -110,6 +110,46 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- ROADMAP -->
+## Roadmap & Usage
+
+- [ ] Projects 📋
+  -  [Create](lib/pages/projects/create_project_page.dart) - [Update](lib/pages/projects/create_project_page.dart) - [Delete](lib/pages/projects/widgets/project_bottom_sheet.dart)
+     
+  - [ ] Tasks 🎯
+    -  [Create](lib/pages/projects/widgets/task_bottom_sheet.dart) - [Update](lib/components/cards/task_card.dart) - [Delete](lib/components/cards/task_card.dart)
+    -  
+    -  
+    - [ ] Pomodoro 🍅
+      - Start ▶️ - Stop ⏸️  - Resume ⏯️ - Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
+    
+- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
+- [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
+     - Detailed Focus / Break time  - Weekly Improvment - Pomodoros per day - Line and Bar Charts
+    
+    
+    
+- [ ] [Authentication 🔐](lib/pages/authentication/)
+  - [Login](lib/pages/authentication/login_in/login_page.dart) - [Register](lib/pages/authentication/sign_up/signup_page.dart) - [Forgot Password](lib/pages/authentication/forgot_password/forgotpassword_page.dart)
+  
+  
+- [ ] Theming ☯️
+      
+
+See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Architecture 
+
+This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
+
+<table>
+  <tr>
+    <td valign="top"><img src="assets/pine-architecture.jpg"/></td>
+    <td valign="top"><img src="assets/pine-di.jpeg"/></td>
+  </tr>
+</table>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -141,58 +181,6 @@ For a correct installation of the project you need to install first Flutter, [he
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-## Architecture 
-
-This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
-
-<table>
-  <tr>
-    <td valign="top"><img src="assets/pine-architecture.jpg"/></td>
-    <td valign="top"><img src="assets/pine-di.jpeg"/></td>
-  </tr>
-</table>
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Projects 📋
-  -  [Create](lib/pages/projects/create_project_page.dart)
-  -  [Update](lib/pages/projects/create_project_page.dart)
-  -  [Delete](lib/pages/projects/widgets/project_bottom_sheet.dart)
-  - [ ] Tasks 🎯
-    -  [Create](lib/pages/projects/widgets/task_bottom_sheet.dart) 
-    -  [Update](lib/components/cards/task_card.dart)
-    -  [Delete](lib/components/cards/task_card.dart)
-    - [ ] Pomodoro 🍅
-      - Start ▶️
-      - Stop ⏸️
-      - Resume ⏯️
-      - Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
-- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
-- [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
-     - Detailed Focus / Break time
-     - Weekly Improvment
-     - Pomodoros per day
-     - Line and Bar Charts
-- [ ] [Authentication 🔐](lib/pages/authentication/)
-  - [Login](lib/pages/authentication/login_in/login_page.dart)
-  - [Register](lib/pages/authentication/sign_up/signup_page.dart)
-  - [Forgot Password](lib/pages/authentication/forgot_password/forgotpassword_page.dart)
-- [ ] Theming ☯️
-
-See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
