@@ -40,7 +40,7 @@
     Your Pomodoro Buddy 🫂
     <br />
     <br />
-    <a href="#roadmap--demo">View Demo</a>
+    <a href="#roadmap--usage">View Demo</a>
     ·
     <a href="https://github.com/fres-sudo/pomo/issues">Report Bug</a>
     ·
