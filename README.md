@@ -60,19 +60,11 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#roadmap--usage">Roadmap & Usage</a></li>
+     <li><a href="#architecture">Architecture</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -111,7 +103,7 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
 
 <!-- ROADMAP -->
-## Roadmap & Usage
+## Roadmap & Usage <a name="roadmap--usage"></a>
 
 - [ ] [Projects 📋](lib/pages/projects) - [Tasks 🎯](lib/pages/projects/project_details_page.dart) - [Pomodoro 🍅](lib/pages/projects/views/timer_view.dart)
    - <img src="assets/gif/createproj.gif" width="300" height="650"/>  <img src="assets/gif/project.gif" width="300" height="650"/> <img src="assets/gif/task.gif" width="300" height="650"/>
@@ -125,7 +117,7 @@ See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Architecture 
+## Architecture  <a name="architecture"></a>
 
 This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
 
