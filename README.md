@@ -40,7 +40,7 @@
     Your Pomodoro Buddy 🫂
     <br />
     <br />
-    <a href="https://github.com/fres-sudo/pomo">View Demo</a>
+    <a href="#roadmap--usage">View Demo</a>
     ·
     <a href="https://github.com/fres-sudo/pomo/issues">Report Bug</a>
     ·
@@ -60,19 +60,11 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#roadmap--usage">Roadmap & Usage</a></li>
+     <li><a href="#architecture">Architecture</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -111,41 +103,21 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
 
 <!-- ROADMAP -->
-## Roadmap & Usage
+## Roadmap & Usage <a name="roadmap--usage"></a>
 
-- [ ] Projects 📋
-  -  [Create](lib/pages/projects/create_project_page.dart) - [Update](lib/pages/projects/create_project_page.dart) - [Delete](lib/pages/projects/widgets/project_bottom_sheet.dart)
-  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
-  - [ ] Tasks 🎯
-    -  [Create](lib/pages/projects/widgets/task_bottom_sheet.dart) - [Update](lib/components/cards/task_card.dart) - [Delete](lib/components/cards/task_card.dart)
-    - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
-       
-    - [ ] Pomodoro 🍅
-      - Start ▶️ - Stop ⏸️  - Resume ⏯️ - [Timer Options ⏳](lib/profile/widgets/set_timer_bottom_sheet.dart)
-      - <img src="https://github.com/fres-sudo/pomo/assets/65305708/35d6d050-1a1f-4931-a658-bf7628ae82f2" width="300" height="650"/>
+- [ ] [Projects 📋](lib/pages/projects) - [Tasks 🎯](lib/pages/projects/project_details_page.dart) - [Pomodoro 🍅](lib/pages/projects/views/timer_view.dart)
+   - <img src="assets/gif/createproj.gif" width="300" height="650"/>  <img src="assets/gif/project.gif" width="300" height="650"/> <img src="assets/gif/task.gif" width="300" height="650"/>
+- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart) -  [Statistics 📈](lib/pages/stats/stats_page.dart)
+   - <img src="assets/gif/quicksession.gif" width="300" height="650"/>  <img src="assets/gif/stats.gif" width="300" height="650"/>
     
-- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart)
-
-     - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
-      
-- [ ] [Statistics 📈](lib/pages/stats/stats_page.dart)
-    - Detailed Focus / Break time  - Weekly Improvment - Pomodoros per day - Line and Bar Charts
-    - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
-    
-    
-- [ ] [Authentication 🔐](lib/pages/authentication/)
-  - [Login](lib/pages/authentication/login_in/login_page.dart) - [Register](lib/pages/authentication/sign_up/signup_page.dart) - [Forgot Password](lib/pages/authentication/forgot_password/forgotpassword_page.dart)
-  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/e09b0eb7-7ec0-49eb-b4c5-ebbacfe2d1e9" width="300" height="650"/>
-
-- [ ] Theming ☯️
-  - <img src="https://github.com/fres-sudo/pomo/assets/65305708/0b06711d-afd3-44dd-b5e7-1b78436ac488" width="300" height="650"/>
-      
+- [ ] [Authentication 🔐](lib/pages/authentication/) - [Theming ☯️](lib/cubits/theme/)
+  - <img src="assets/gif/login.gif" width="300" height="650"/> <img src="assets/gif/theme.gif" width="300" height="650"/>
 
 See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Architecture 
+## Architecture  <a name="architecture"></a>
 
 This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
 
