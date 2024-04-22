@@ -183,6 +183,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         if(image == null) {
                                           if (user.photo == null) {
                                             return const CircleAvatar(
+                                            maxRadius: 75,
                                               backgroundImage: AssetImage(
                                                   "assets/images/propic-placeholder.jpg"),
                                             );

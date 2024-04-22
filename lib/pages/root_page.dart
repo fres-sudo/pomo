@@ -82,6 +82,7 @@ class RootPage extends StatelessWidget {
                           authenticated: (user) {
                             if (user.photo == null) {
                               return const CircleAvatar(
+                                maxRadius: 12,
                                 backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
                               );
                             } else {
