@@ -41,7 +41,7 @@ class LightTheme {
               borderSide: BorderSide.none),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: kRed500, width: 1),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(16.0),
           ),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
@@ -147,7 +147,7 @@ class DarkTheme {
               borderSide: BorderSide.none),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: kRed500, width: 1),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(16.0),
           ),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
