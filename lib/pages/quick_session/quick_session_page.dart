@@ -80,7 +80,6 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                     ),
                   ],
                 ),
-
                 selectedMode[0]
                     ? QuickTimerView(onComplete: () async {
                  String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
