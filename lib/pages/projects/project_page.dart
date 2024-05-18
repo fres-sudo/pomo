@@ -107,7 +107,7 @@ class _ProjectPageState extends State<ProjectPage> {
             child: Padding(
           padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
           child: SingleChildScrollView(
-            physics: const  NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
