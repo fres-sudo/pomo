@@ -19,8 +19,8 @@ class _SetTimerState extends State<SetTimer> {
 
   @override
   void initState() {
-    _currentFocusMinutes = context.read<TimerCubit>().focusTime;
-    _currentBreakMinutes = context.read<TimerCubit>().breakTime;
+    _currentFocusMinutes = context.read<TimerCubit>().state.focusTime;
+    _currentBreakMinutes = context.read<TimerCubit>().state.breakTime;
     super.initState();
   }
 
@@ -82,9 +82,8 @@ class _SetTimerState extends State<SetTimer> {
                 ),
                 TextButton(
                     onPressed: () => {
-                          context.read<TimerCubit>().setBreak(_currentBreakMinutes),
-                      context.read<TimerCubit>().setFocus(_currentFocusMinutes),
-                      context.router.pop(),
+                          context.read<TimerCubit>().setTimer(_currentFocusMinutes, _currentBreakMinutes),
+                          context.router.pop(),
                         },
                     child: Text(
                       "Update",

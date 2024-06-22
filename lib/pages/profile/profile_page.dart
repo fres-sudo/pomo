@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
+import 'package:pomo/cubits/theme/theme_cubit.dart';
+import 'package:pomo/cubits/timer/timer_cubit.dart';
 import 'package:pomo/pages/profile/widget/privacy_policy_page.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
@@ -73,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         child: Row(children: [
-                          context.read<AuthCubit>().state.maybeWhen(
+                          context.watch<AuthCubit>().state.maybeWhen(
                                 authenticated: (user) {
                                   if (user.photo == null) {
                                     return const CircleAvatar(
@@ -84,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: SizedBox(
                                             height: 56,
                                             width: 56,
-                                            child: FancyShimmerImage(imageUrl: user.photo!)));
+                                            child: FancyShimmerImage(imageUrl: user.photo!, boxFit: BoxFit.cover,)));
                                   }
                                 },
                                 orElse: () => const CircleAvatar(
@@ -169,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         )),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     InkWell(
                         onTap: () {
@@ -186,13 +188,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Theme Mode",
+                              "Dark Mode",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            SvgPicture.asset(
-                              "assets/icons/arrow-right.svg",
-                              height: 18,
-                            )
+                            BlocBuilder<ThemeCubit, ThemeState>(
+                                builder: (context, state){
+                                  return Transform.scale(
+                                    scale: 0.8,
+                                    child: Switch.adaptive(
+                                      activeColor: Theme.of(context).primaryColor,
+                                      value: state.mode == ThemeMode.dark, onChanged: (bool value) {
+                                      context.read<ThemeCubit>().changeMode(
+                                          value ? ThemeMode.dark : ThemeMode.light);
+                                    },),
+                                  );
+                                })
                           ],
                         )),
                     const Padding(
@@ -262,10 +272,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return DestructionBottomSheet(
                                   title: "Account",
                                   buttonText: 'Log Out',
-                                  description:
-                                      "Are you sure you want to log out this account?",
+                                  description: "Are you sure you want to log out this account?",
                                   function: () {
                                     context.read<AuthCubit>().signOut();
+                                    Navigator.of(context).pop();
                                     context.router.replace(const RootRoute());
                                   },
                                 );

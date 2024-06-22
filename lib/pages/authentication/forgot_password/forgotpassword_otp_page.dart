@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/rounded_button.dart';
@@ -24,6 +25,9 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
 
   int _seconds = 120;
   late Timer _timer;
+
+  final TextEditingController _otpEditingController = TextEditingController();
+  StreamController<ErrorAnimationType>? errorController;
 
 
   @override
@@ -82,27 +86,9 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  OtpTextField(
-                    numberOfFields: 6,
-                    showFieldAsBox: true,
-                    //fillColor: Theme.of(context).cardColor,
-                    //filled: false,
-                    onCodeChanged: (String code) {
-                      print(code);
-                    },
-                    //borderColor: Colors.transparent,
-                    //disabledBorderColor: Colors.transparent,
-                    //enabledBorderColor: Theme.of(context).primaryColor,
-                    //inputFormatters: [
-                    //  FilteringTextInputFormatter.allow(digitsOnlyRegex),
-                    //],
-                    borderWidth: 1,
-                    borderRadius: BorderRadius.circular(16),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 50),
-                    onSubmit: (String verificationCode){
-                      verificationCode == context.read<UserBloc>().otp ? context.router.push(const ForgotPasswordRecoverRoute()) : null;
-                    }, // end onSubmit
-                  ),
+
+                  //onCompleted: (pin) => pin == context.read<UserBloc>().otp ? context.router.push(const ForgotPasswordRecoverRoute()) : onOTPInvalid(context)
+
                   const SizedBox(
                     height: 40,
                   ),
@@ -110,51 +96,48 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                      child: Column(
                       children: [
                         Text("Don't recive an email yet?", style: Theme.of(context).textTheme.bodyMedium),
-                        RichText(
-                          text: TextSpan(
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: "You can ",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "You can ",
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).dividerColor,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => _seconds == 0 ? context.read<UserBloc>().forgotPassword(email: widget.email) : null,
+                              child: Text(
+                                "resend code",
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).dividerColor,
+                                  color: _seconds == 0
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).dividerColor,
                                 ),
+
                               ),
-                              WidgetSpan(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    context.read<UserBloc>().forgotPassword(email: widget.email);
-                                  },
-                                  child: Text(
-                                    "resend code",
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: _seconds == 0
-                                          ? Theme.of(context).primaryColor
-                                          : Theme.of(context).dividerColor,
-                                    ),
-                                  ),
-                                ),
+
+                            ),
+                            Text(
+                              " in ",
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).dividerColor,
                               ),
-                              TextSpan(
-                                text: " in ",
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).dividerColor,
-                                ),
+                            ),
+                            Text(
+                               _formatTime(_seconds),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).dividerColor,
                               ),
-                              TextSpan(
-                                text: _formatTime(_seconds),
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).dividerColor,
-                                ),
+                            ),
+                            Text(
+                              " seconds.",
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).dividerColor,
                               ),
-                              TextSpan(
-                                text: " seconds.",
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).dividerColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          ],
+                        )
                       ],
                      ),
                    )

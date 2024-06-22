@@ -44,6 +44,17 @@ onDoesntMatch(BuildContext context){
   });
 }
 
+onOTPInvalid(BuildContext context){
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+       const SnackBar(
+          duration:  Duration(seconds: 2),
+          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text('The OTP you insert may not valid or expired ❌',)),
+    );
+  });
+}
+
 onErrorState(BuildContext context, String text) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(

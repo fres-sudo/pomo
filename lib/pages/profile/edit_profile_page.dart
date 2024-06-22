@@ -193,8 +193,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     height: 150,
                                                     width: 150,
                                                     child: FancyShimmerImage(
-                                                        imageUrl:
-                                                            user.photo!)));
+                                                        imageUrl: user.photo!,
+                                                        boxFit: BoxFit.cover,
+                                                    )));
                                           }
                                         } else {
                                           return CircleAvatar(

@@ -152,7 +152,7 @@ class _StatsPageState extends State<StatsPage> {
                                                           child: SizedBox(
                                                               height: 83,
                                                               width: 83,
-                                                              child: FancyShimmerImage(imageUrl: user.photo!)));
+                                                              child: FancyShimmerImage(imageUrl: user.photo!, boxFit: BoxFit.cover,)));
                                                     }
                                                   },
                                                   orElse: () => const CircleAvatar(

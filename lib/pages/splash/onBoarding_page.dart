@@ -12,7 +12,6 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AutoRouter.of(context);
     return OnBoardingSlider(
       finishButtonText: "I'm ready",
         finishButtonTextStyle: GoogleFonts.inter(
@@ -24,19 +23,16 @@ class OnBoardingPage extends StatelessWidget {
           //pageBackgroundColor: kNeutralBackground,
           headerBackgroundColor: kNeutral900,
           finishButtonStyle:  FinishButtonStyle(
-            backgroundColor: kPrimary600,
+            backgroundColor: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))
           ),
           indicatorAbove: true,
           controllerColor: kNeutral900,
           background: [
             Container(
-              color: Colors.white,
-              height: MediaQuery.sizeOf(context).height/3.5,
-              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height,
             ),
             Container(
-              color: Colors.white,
               height: MediaQuery.sizeOf(context).height,
             ),
 
