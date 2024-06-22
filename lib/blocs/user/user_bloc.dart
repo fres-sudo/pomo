@@ -63,7 +63,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(const UserState.updating());
     try{
       await userRepository.deleteUser(id: event.id,);
-      emit(UserState.deleted());
+      emit(const UserState.deleted());
     }catch(_){
       emit(const UserState.errorUpdating());
     }
@@ -93,7 +93,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       _resetToken = response.resetToken;
       emit(UserState.fetchedOTP(response));
     }catch(_){
-      emit(const UserState.errorUpdatingPhoto());
+      emit(const UserState.errorFetchingOTP());
     }
   }
 

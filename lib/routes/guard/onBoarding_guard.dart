@@ -9,7 +9,7 @@ class OnBoardingGuard extends AutoRouteGuard {
     var prefs = await SharedPreferences.getInstance();
     var inNotFirsLog = prefs.getBool("is_not_first_log");
 
-    if(true){ //user already seen the onboarding
+    if(inNotFirsLog != null){ //user already seen the onboarding
       resolver.next(true);
     }else {
       // redirect the user to login page

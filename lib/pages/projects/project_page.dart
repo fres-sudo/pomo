@@ -64,7 +64,6 @@ class _ProjectPageState extends State<ProjectPage> {
     //context.read<AuthCubit>().checkAuthentication();
     final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
     if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
-    context.read<TimerCubit>().getStoredValues();
     super.initState();
   }
 
@@ -130,7 +129,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                     child: SizedBox(
                                         height: 40,
                                         width: 40,
-                                        child: FancyShimmerImage(imageUrl: user.photo!)));
+                                        child: FancyShimmerImage(imageUrl: user.photo!,boxFit: BoxFit.cover,)));
                               }
                             },
                             orElse: () => const CircleAvatar(

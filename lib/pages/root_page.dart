@@ -90,7 +90,7 @@ class RootPage extends StatelessWidget {
                                   child: SizedBox(
                                       height: 24,
                                       width: 24,
-                                      child: FancyShimmerImage(imageUrl: user.photo!)));
+                                      child: FancyShimmerImage(imageUrl: user.photo!, boxFit: BoxFit.cover,)));
                             }
                           },
                           orElse: () => const CircleAvatar(
