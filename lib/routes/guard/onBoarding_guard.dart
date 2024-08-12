@@ -10,6 +10,7 @@ class OnBoardingGuard extends AutoRouteGuard {
     var inNotFirsLog = prefs.getBool("is_not_first_log");
 
     if(inNotFirsLog != null){ //user already seen the onboarding
+      //router.push(const OnBoardingRoute());
       resolver.next(true);
     }else {
       // redirect the user to login page

@@ -48,7 +48,7 @@ class _PasswordFieldState extends State<PasswordField> {
       validator: (value) {
         if (value == null ||
             value.isEmpty ||
-            value.length < 7) {
+            value.length < 8) {
           return 'Please enter a valid password';
         }
         return null;
