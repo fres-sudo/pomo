@@ -95,7 +95,7 @@ class HeaderProjectDetails extends StatelessWidget {
                 ),
               ),
             ),
-            Text("Due date: ${DateFormat('MMM dd, yyyy').format(project.dueDate)}",
+            Text("Due date: ${DateFormat('MMM dd, yyyy').format(project.endDate)}",
               style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500),
             )
           ],

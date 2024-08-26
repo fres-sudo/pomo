@@ -11,12 +11,14 @@ part 'project_jto.freezed.dart';
 @freezed
 class ProjectJTO extends DTO with _$ProjectJTO {
   const factory ProjectJTO({
-    // ignore: invalid_annotation_target
-    @JsonKey(name: '_id')String? id,
+    String? id,
     required String name,
     String? description,
-    required DateTime dueDate,
-    required String owner,
+    DateTime? createdAt,
+    required DateTime startDate,
+    required DateTime endDate,
+    DateTime? completedAt,
+    required UserJTO owner,
     String? imageCover,
     List<TaskJTO>? tasks,
     List<UserJTO>? contributors,

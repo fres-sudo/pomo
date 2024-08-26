@@ -12,6 +12,7 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/project/project.dart';
+import 'package:pomo/models/user/user.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../blocs/project/project_bloc.dart';
 import '../../components/utils/utils.dart';
@@ -118,14 +119,15 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                               uploadingImageCover: () => const CircularProgressIndicator(color: kPrimary500),
                               orElse: () => TextButton(
                               onPressed: () {
-                                String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                                final user = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
                                 _formKey.currentState!.validate() ?
                                 context.read<ProjectBloc>().createProject(
                                     project: Project(
                                       name: _nameTextController.text,
                                       description: _descriptionTextController.text,
-                                      dueDate: _selectedDate,
-                                      owner: id,
+                                      startDate: _selectedDate,
+                                      endDate: _selectedDate,
+                                      owner: user,
                                     )) : onInvalidInput(context);
                               },
                               child: Text(

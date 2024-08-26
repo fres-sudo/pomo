@@ -4,119 +4,111 @@ import 'package:pomo/constants/colors.dart';
 
 class LightTheme {
   static get make => ThemeData(
-        useMaterial3: true,
-        primaryColor: kPrimary500,
-        scaffoldBackgroundColor: kNeutralWhite,
-        cardColor: kNeutral100,
-        indicatorColor: kPrimary500,
-        dividerColor: kNeutral200,
-        textTheme: textTheme,
-        colorScheme: const ColorScheme.light(
-          onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600, onSurfaceVariant: kNeutralWhite),
-        radioTheme: RadioThemeData(
-          overlayColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return kPrimary500;
-            }
+      useMaterial3: true,
+      primaryColor: kPrimary500,
+      scaffoldBackgroundColor: kNeutralWhite,
+      cardColor: kNeutral100,
+      indicatorColor: kPrimary500,
+      dividerColor: kNeutral200,
+      textTheme: textTheme,
+      colorScheme:
+          const ColorScheme.light(onSurface: kNeutral900, primary: kPrimary500, onSecondaryContainer: kNeutral600, onSurfaceVariant: kNeutralWhite),
+      radioTheme: RadioThemeData(
+        overlayColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return kPrimary500;
-          }),
-          fillColor: MaterialStateProperty.resolveWith((states) {
-            // If the button is pressed, return green, otherwise blue
-            if (states.contains(MaterialState.selected)) {
-              return kPrimary500;
-            }
+          }
+          return kPrimary500;
+        }),
+        fillColor: MaterialStateProperty.resolveWith((states) {
+          // If the button is pressed, return green, otherwise blue
+          if (states.contains(MaterialState.selected)) {
             return kPrimary500;
-          }),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
+          }
+          return kPrimary500;
+        }),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
           prefixIconColor: kNeutral900,
           fillColor: kNeutral100,
-          hintStyle: GoogleFonts.inter(
-              fontSize: 16, fontWeight: FontWeight.w500, color: kNeutral600),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
+          hintStyle: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500, color: kNeutral600),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: kRed500, width: 1),
             borderRadius: BorderRadius.circular(16.0),
           ),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
+          disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           filled: true,
-          contentPadding:
-              const EdgeInsets.only(bottom: 40 / 2, left: 16, top: 12),
-          suffixIconColor: kNeutral900
-        ),
-        bottomSheetTheme:
-            const BottomSheetThemeData(backgroundColor: kNeutral100),
-        checkboxTheme: CheckboxThemeData(
-          splashRadius: 5,
-          side: const BorderSide(
-            color: kNeutral400,
+          contentPadding: const EdgeInsets.only(
+            bottom: 20 / 2,
+            left: 16,
           ),
-          checkColor: MaterialStateProperty.resolveWith((states) {
-            // If the button is pressed, return green, otherwise blue
-            if (states.contains(MaterialState.selected)) {
-              return kNeutral100;
-            }
+          suffixIconColor: kNeutral900),
+      bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral100),
+      checkboxTheme: CheckboxThemeData(
+        splashRadius: 5,
+        side: const BorderSide(
+          color: kNeutral400,
+        ),
+        checkColor: WidgetStateProperty.resolveWith((states) {
+          // If the button is pressed, return green, otherwise blue
+          if (states.contains(WidgetState.selected)) {
             return kNeutral100;
-          }),
-          fillColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return kPrimary500;
-            }
-            return null;
-          }),
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            selectedIconTheme: const IconThemeData(color: kPrimary500),
-            unselectedIconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
-            type: BottomNavigationBarType.fixed,
-            enableFeedback: false,
-            elevation: 0.0,
-            selectedLabelStyle: GoogleFonts.inter(
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-                color: kPrimary500),
-            unselectedLabelStyle: GoogleFonts.inter(
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-                color: kNeutral900),
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-            selectedItemColor: kPrimary500,
-            unselectedItemColor: Colors.black,
-            backgroundColor: Colors.white),
-        cardTheme: const CardTheme(color: kNeutral100, surfaceTintColor: kNeutral900),
-        iconTheme: const IconThemeData(color: kNeutral900),
-        dividerTheme: const DividerThemeData(
-            color: kNeutral200
-        ),
+          }
+          return kNeutral100;
+        }),
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return kPrimary500;
+          }
+          return null;
+        }),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedIconTheme: const IconThemeData(color: kPrimary500),
+          unselectedIconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
+          type: BottomNavigationBarType.fixed,
+          enableFeedback: false,
+          elevation: 0.0,
+          selectedLabelStyle: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.normal, color: kPrimary500),
+          unselectedLabelStyle: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.normal, color: kNeutral900),
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+          selectedItemColor: kPrimary500,
+          unselectedItemColor: Colors.black,
+          backgroundColor: Colors.white),
+      cardTheme: const CardTheme(color: kNeutral100, surfaceTintColor: kNeutral900),
+      iconTheme: const IconThemeData(color: kNeutral900),
+      dividerTheme: const DividerThemeData(color: kNeutral200),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: kNeutral50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        contentTextStyle: GoogleFonts.inter(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: Colors.black
-         ),
-        ),
-      );
+        contentTextStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
+      ),
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            backgroundColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ))),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            backgroundColor: kPrimary500,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ))),);
 }
 
 class DarkTheme {
@@ -129,74 +121,59 @@ class DarkTheme {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
         ),
-        dividerTheme: const DividerThemeData(
-          color: kNeutral800
-        ),
+        dividerTheme: const DividerThemeData(color: kNeutral800),
         iconTheme: const IconThemeData(color: Colors.white),
         cardTheme: const CardTheme(color: kNeutral900, surfaceTintColor: kNeutral100),
         inputDecorationTheme: InputDecorationTheme(
-          prefixIconColor: kNeutral100,
-          fillColor: kNeutral900,
-          hintStyle: GoogleFonts.inter(
-              fontSize: 16, fontWeight: FontWeight.w500, color: kNeutral400),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kRed500, width: 1),
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          filled: true,
-          contentPadding:
-              const EdgeInsets.only(bottom: 40 / 2, left: 16, top: 12),
-            suffixIconColor: kNeutral100
-        ),
-        bottomSheetTheme:
-            const BottomSheetThemeData(backgroundColor: kNeutral900),
-        colorScheme: const ColorScheme.dark(
-          onSurface: Colors.white,
-          onPrimary: kPrimary400,
-          onSecondaryContainer: kNeutral400,
-          onSurfaceVariant: kNeutral900
-        ),
+            prefixIconColor: kNeutral100,
+            fillColor: kNeutral900,
+            hintStyle: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500, color: kNeutral400),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: kRed500, width: 1),
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+            filled: true,
+            contentPadding: const EdgeInsets.only(
+              bottom: 20 / 2,
+              left: 16,
+            ),
+            suffixIconColor: kNeutral100),
+        bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral900),
+        colorScheme:
+            const ColorScheme.dark(surface: Colors.black, onSurface: kNeutral400, onPrimary: kPrimary400, onPrimaryContainer: Colors.blue, onSecondaryContainer: kNeutral400, onSurfaceVariant: kNeutral900),
         checkboxTheme: CheckboxThemeData(
           splashRadius: 5,
           side: const BorderSide(
             color: kNeutral50,
           ),
-          checkColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
+          checkColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
               return kNeutral900;
             }
             return null;
           }),
-          fillColor: MaterialStateProperty.resolveWith((states) {
+          fillColor: WidgetStateProperty.resolveWith((states) {
             // If the button is pressed, return green, otherwise blue
-            if (states.contains(MaterialState.selected)) {
+            if (states.contains(WidgetState.selected)) {
               return kPrimary500;
             }
             return null;
           }),
         ),
         radioTheme: RadioThemeData(
-          overlayColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
               return kPrimary500;
             }
             return kPrimary500;
           }),
-          fillColor: MaterialStateProperty.resolveWith((states) {
+          fillColor: WidgetStateProperty.resolveWith((states) {
             // If the button is pressed, return green, otherwise blue
-            if (states.contains(MaterialState.selected)) {
+            if (states.contains(WidgetState.selected)) {
               return kPrimary500;
             }
             return kPrimary500;
@@ -211,10 +188,8 @@ class DarkTheme {
           type: BottomNavigationBarType.fixed,
           enableFeedback: false,
           elevation: 0.0,
-          selectedLabelStyle: GoogleFonts.inter(
-              fontSize: 10, fontWeight: FontWeight.normal, color: kPrimary400),
-          unselectedLabelStyle: GoogleFonts.inter(
-              fontSize: 10, fontWeight: FontWeight.normal, color: Colors.white),
+          selectedLabelStyle: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.normal, color: kPrimary400),
+          unselectedLabelStyle: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.normal, color: Colors.white),
           showUnselectedLabels: true,
           showSelectedLabels: true,
           unselectedItemColor: Colors.white,
@@ -227,55 +202,23 @@ class DarkTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          contentTextStyle: GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Colors.white
-          ),
+          contentTextStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),
         ),
-  );
+      textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ))),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            backgroundColor: kPrimary500,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ))),
+      );
 }
 
-TextTheme textTheme = TextTheme(
-  displayLarge: GoogleFonts.inter(
-    fontSize: 32,
-    fontWeight: FontWeight.w600,
-  ),
-  displayMedium: GoogleFonts.inter(
-    fontSize: 28,
-    fontWeight: FontWeight.w600,
-  ),
-  displaySmall: GoogleFonts.inter(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-  ),
-  titleLarge: GoogleFonts.inter(
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-  ),
-  titleMedium: GoogleFonts.inter(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-  ),
-  titleSmall: GoogleFonts.inter(
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-  ),
-  bodyLarge: GoogleFonts.inter(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  ),
-  bodyMedium: GoogleFonts.inter(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-  ),
-  bodySmall: GoogleFonts.inter(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-  ),
-  labelLarge: GoogleFonts.inter(
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    color: kNeutral50,
-  ),
-);
+TextTheme textTheme = GoogleFonts.interTextTheme();

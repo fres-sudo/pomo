@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
 import 'package:pomo/components/fields/password_field.dart';
+import 'package:pomo/components/widgets/custom_circular_progress_indicator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -23,8 +24,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final bool _obscureText = true;
-
   @override
   void dispose() {
     _emailTextController.dispose();
@@ -34,16 +33,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    AutoRouter.of(context);
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
-        errorSignIn: () => onErrorState(context, "signing in"),
-        signedIn: (user) {
-          context.read<AuthCubit>().authenticated(user);
-          context.router.replace(const RootRoute());
-          return null;
-        }
-      ),
+          errorSignIn: () => onErrorState(context, "signing in"),
+          signedIn: (user) {
+            context.read<AuthCubit>().authenticated(user);
+            context.router.replace(const RootRoute());
+            return null;
+          }),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -53,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.bottomLeft,
                   children: [
                     Container(
-                      height: MediaQuery.sizeOf(context).height * 1 / 3.5,
+                      height: MediaQuery.sizeOf(context).height / 3.5,
                       decoration: const BoxDecoration(
                           gradient: kGradientPurple2,
                           borderRadius: BorderRadius.only(
@@ -67,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Welcome back! 🍅",
-                              style: kSerzif(context)),
+                          Text("Welcome back! 🍅", style: kSerzif(context)),
                           const SizedBox(
                             height: 4,
                           ),
@@ -85,76 +81,59 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
                     child: Column(
                       children: [
+                        Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text("Email", style: Theme.of(context).textTheme.titleMedium),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          EmailField(controller: _emailTextController),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          Text("Password", style: Theme.of(context).textTheme.titleMedium),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          PasswordField(controller: _passwordTextController),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 0),
+                              ),
+                              onPressed: () {
+                                context.pushRoute(const ForgotPasswordRoute());
+                              },
+                              child: Text(
+                                "Forgot password?",
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ]),
                         Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Email",
-                                  style: Theme.of(context).textTheme.titleMedium),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              EmailField(controller: _emailTextController),
-                              const SizedBox(
-                                height: 18,
-                              ),
-                              Text("Password",
-                                  style: Theme.of(context).textTheme.titleMedium),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              PasswordField(controller: _passwordTextController),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {
-                                    context
-                                        .pushRoute(const ForgotPasswordRoute());
-                                  },
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                _formKey.currentState!.validate()
+                                    ? context.read<SignInBloc>().perform(email: _emailTextController.text, password: _passwordTextController.text)
+                                    : onInvalidInput(context);
+                              },
+                              child: state.maybeWhen(
+                                signingIn: () => const CustomCircularProgressIndicator(),
+                                orElse: () => Center(
                                   child: Text(
-                                    "Forgot password?",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(
-                                        color: kPrimary500),
+                                    "Login",
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14, color: kNeutral100),
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ]),
-                        Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: kPrimary500,
-                                borderRadius: BorderRadius.circular(16)
-                              ),
-                              width: MediaQuery.sizeOf(context).width,
-                              height: 50,
-                              child: state.maybeWhen(
-                                  signingIn: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
-                                  orElse: () => TextButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        context.read<SignInBloc>().perform(
-                                            email: _emailTextController.text,
-                                            password: _passwordTextController.text);
-                                      } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                                              content: Text('Please enter valid information')),
-                                        );
-                                      }
-                                    },
-                                    child: Text("Login", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                                  ),)
                             ),
                             const SizedBox(
                               height: 20,
@@ -164,9 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Text(
                                   "Don't have an account?",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall,
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                                 const SizedBox(
                                   width: 5,
@@ -177,10 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   child: Text(
                                     "Sign up",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(color: Theme.of(context).primaryColor),
+                                    style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],
@@ -196,8 +170,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       },
-
     );
   }
 }
-

@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../user/user.dart';
+
 
 part 'task.freezed.dart';
 
@@ -13,9 +15,7 @@ class Task with _$Task {
     String? description,
     required int pomodoro,
     int? pomodoroCompleted,
-    required bool completed,
-    required String user,
-    String? referenceProject,
+    required User user,
     required DateTime createdAt,
     DateTime? completedAt,
 }) = _Task;

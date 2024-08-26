@@ -28,7 +28,7 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   void initState() {
-    checkBox = widget.task.completed;
+    checkBox = widget.task.pomodoro == widget.task.pomodoroCompleted ;
     super.initState();
   }
 
@@ -132,8 +132,6 @@ class _TaskCardState extends State<TaskCard> {
                                   description: widget.task.description,
                                   pomodoro: widget.task.pomodoro,
                                   pomodoroCompleted: value! ? widget.task.pomodoro : 0,
-                                  referenceProject: widget.task.referenceProject,
-                                  completed: value,
                                   user: widget.task.user,
                                   createdAt: widget.task.createdAt,
                                   completedAt: value ? DateTime.now() : null
@@ -170,7 +168,7 @@ class _TaskCardState extends State<TaskCard> {
                     ),
                   ],
                 ),
-                !widget.task.completed ?
+                widget.task.pomodoro != widget.task.pomodoroCompleted  ?
                 IconButton(
                   onPressed: () {
                     AutoRouter.of(context)

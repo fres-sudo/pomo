@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
-import 'package:pomo/cubits/timer/timer_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/pages/error_page.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
@@ -17,7 +16,7 @@ import '../../components/utils/my_progress_indicator.dart';
 import '../../components/widgets/snack_bars.dart';
 
 @RoutePage()
-class ProjectPage extends StatefulWidget{
+class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
 
   @override
@@ -33,8 +32,8 @@ class _ProjectPageState extends State<ProjectPage> {
   void filterSearchResults(String query) {
     setState(() {
       searchedProjects = projects
-          .where((item) =>
-          item.name.toLowerCase().contains(query.toLowerCase()))
+          .where(
+              (item) => item.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -47,9 +46,9 @@ class _ProjectPageState extends State<ProjectPage> {
       }),
       deleted: (project) => {
         setState(() {
-        projects = List<Project>.from(projects);
-        projects.remove(project);
-      }),
+          projects = List<Project>.from(projects);
+          projects.remove(project);
+        }),
         context.router.replace(const ProjectRoute())
       },
       fetched: (projects) => setState(() {
@@ -62,8 +61,11 @@ class _ProjectPageState extends State<ProjectPage> {
   @override
   void initState() {
     //context.read<AuthCubit>().checkAuthentication();
-    final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "65e31000c48a3a97e1a5147a");
-    if(projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(id: userId);
+    final String userId = context.read<AuthCubit>().state.maybeWhen(
+        authenticated: (user) => user.id,
+        orElse: () => "65e31000c48a3a97e1a5147a");
+    if (projects.isEmpty)
+      context.read<ProjectBloc>().getProjectsByUser(id: userId);
     super.initState();
   }
 
@@ -120,22 +122,26 @@ class _ProjectPageState extends State<ProjectPage> {
                         Text("Let's work", style: kSerzif(context)),
                         context.read<AuthCubit>().state.maybeWhen(
                             authenticated: (user) {
-                              if (user.photo == null) {
+                              if (user.avatar == null) {
                                 return const CircleAvatar(
-                                  backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                  backgroundImage: AssetImage(
+                                      "assets/images/propic-placeholder.jpg"),
                                 );
                               } else {
                                 return ClipOval(
                                     child: SizedBox(
                                         height: 40,
                                         width: 40,
-                                        child: FancyShimmerImage(imageUrl: user.photo!,boxFit: BoxFit.cover,)));
+                                        child: FancyShimmerImage(
+                                          imageUrl: user.avatar!,
+                                          boxFit: BoxFit.cover,
+                                        )));
                               }
                             },
                             orElse: () => const CircleAvatar(
-                              backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
-                            ))
-                        
+                                  backgroundImage: AssetImage(
+                                      "assets/images/propic-placeholder.jpg"),
+                                ))
                       ],
                     ),
                     const SizedBox(
@@ -157,9 +163,13 @@ class _ProjectPageState extends State<ProjectPage> {
                 state.maybeWhen(
                     none: () => const NoProjectView(),
                     fetching: () => const MyProgressIndicator(),
-                    errorFetching: () => const ErrorPage(text: "fetch projects",),
+                    errorFetching: () => const ErrorPage(
+                          text: "fetch projects",
+                        ),
                     //fetched: (List<Project> projects) => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects),
-                    orElse: () => searchController.text.isEmpty ? _buildProjectsListView(projects) : _buildProjectsListView(searchedProjects)),
+                    orElse: () => searchController.text.isEmpty
+                        ? _buildProjectsListView(projects)
+                        : _buildProjectsListView(searchedProjects)),
               ],
             ),
           ),
@@ -173,12 +183,13 @@ class _ProjectPageState extends State<ProjectPage> {
       return const NoProjectView();
     }
     return SizedBox(
-      height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300 ,
+      height: Platform.isAndroid
+          ? MediaQuery.of(context).size.height - 210
+          : MediaQuery.of(context).size.height - 300,
       child: ListView.builder(
         shrinkWrap: false,
         itemCount: projects.length,
-        itemBuilder: (context, index) =>
-            ProjectCard(project: projects[index]),
+        itemBuilder: (context, index) => ProjectCard(project: projects[index]),
       ),
     );
   }

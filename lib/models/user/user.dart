@@ -8,11 +8,17 @@ class User with _$User {
 
   const factory User({
     required String id,
-    String? name,
-    String? surname,
     required String username,
     required String email,
-    String? photo,
-    String? token,
-}) = _User;
+    required DateTime createdAt,
+    String? avatar,
+  }) = _User;
+
+  static User generateFakeData() {
+    return User(
+        id: "",
+        username: "username",
+        email: "email@email.com",
+        createdAt: DateTime.now());
+  }
 }

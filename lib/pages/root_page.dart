@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +50,11 @@ class RootPage extends StatelessWidget {
                     icon: SvgPicture.asset(
                       'assets/icons/nav-bar/Light/Document.svg',
                       colorFilter: ColorFilter.mode(
-                          Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                          Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .unselectedIconTheme
+                                  ?.color ??
+                              Colors.white,
                           BlendMode.srcIn),
                     ),
                     label: "Project",
@@ -63,7 +65,11 @@ class RootPage extends StatelessWidget {
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Graph.svg',
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                            Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .unselectedIconTheme
+                                    ?.color ??
+                                Colors.white,
                             BlendMode.srcIn),
                       ),
                       label: "Stats"),
@@ -73,29 +79,38 @@ class RootPage extends StatelessWidget {
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Play.svg',
                         colorFilter: ColorFilter.mode(
-                            Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                            Theme.of(context)
+                                    .bottomNavigationBarTheme
+                                    .unselectedIconTheme
+                                    ?.color ??
+                                Colors.white,
                             BlendMode.srcIn),
                       ),
                       label: "QuickSession"),
-                   BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                       icon: context.read<AuthCubit>().state.maybeWhen(
                           authenticated: (user) {
-                            if (user.photo == null) {
+                            if (user.avatar == null) {
                               return const CircleAvatar(
                                 maxRadius: 12,
-                                backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
+                                backgroundImage: AssetImage(
+                                    "assets/images/propic-placeholder.jpg"),
                               );
                             } else {
                               return ClipOval(
                                   child: SizedBox(
                                       height: 24,
                                       width: 24,
-                                      child: FancyShimmerImage(imageUrl: user.photo!, boxFit: BoxFit.cover,)));
+                                      child: FancyShimmerImage(
+                                        imageUrl: user.avatar!,
+                                        boxFit: BoxFit.cover,
+                                      )));
                             }
                           },
                           orElse: () => const CircleAvatar(
-                            backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
-                          )),
+                                backgroundImage: AssetImage(
+                                    "assets/images/propic-placeholder.jpg"),
+                              )),
                       label: "Profile"),
                 ],
               ),

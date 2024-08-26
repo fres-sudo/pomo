@@ -18,25 +18,31 @@ class ProjectMapper extends DTOMapper<ProjectJTO, Project> {
 
   @override
   Project fromDTO(ProjectJTO dto) => Project(
-        id: dto.id ?? "",
+        id: dto.id ,
         name: dto.name,
         description: dto.description,
-        dueDate: dto.dueDate,
-        owner: dto.owner,
-        tasks: dto.tasks != null ? dto.tasks?.map((taskDto) => taskMapper.fromDTO(taskDto)).toList() : [],
-        contributors: dto.contributors != null ? dto.contributors?.map((userDto) => userMapper.fromDTO(userDto)).toList() : [],
-        imageCover: dto.imageCover ?? "",
+        startDate: dto.startDate,
+        endDate: dto.endDate,
+        owner: userMapper.fromDTO(dto.owner),
+        tasks: dto.tasks?.map((taskDto) => taskMapper.fromDTO(taskDto)).toList() ?? [],
+        contributors: dto.contributors?.map((userDto) => userMapper.fromDTO(userDto)).toList() ?? [],
+        imageCover: dto.imageCover,
+        completedAt: dto.completedAt,
+        createdAt: dto.createdAt
       );
 
   @override
   ProjectJTO toDTO(Project model) => ProjectJTO(
-        id: model.id ?? "",
+        id: model.id,
         name: model.name,
         description: model.description,
-        dueDate: model.dueDate,
-        owner: model.owner,
-        tasks: model.tasks != null ? model.tasks?.map((taskDto) => taskMapper.toDTO(taskDto)).toList() : [],
-        contributors: model.contributors != null ? model.contributors?.map((userDto) => userMapper.toDTO(userDto)).toList() : [],
-        imageCover: model.imageCover ?? "",
+        startDate: model.startDate,
+        endDate: model.endDate,
+        owner: userMapper.toDTO(model.owner),
+        tasks: model.tasks?.map((taskDto) => taskMapper.toDTO(taskDto)).toList() ?? [],
+        contributors: model.contributors?.map((userDto) => userMapper.toDTO(userDto)).toList() ?? [],
+        imageCover: model.imageCover,
+        completedAt: model.completedAt,
+        createdAt: model.createdAt
       );
 }

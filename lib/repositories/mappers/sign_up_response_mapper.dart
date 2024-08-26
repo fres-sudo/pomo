@@ -7,13 +7,11 @@ class SignUpResponseMapper extends DTOMapper<SignUpResponse, User> {
 
   @override
   User fromDTO(SignUpResponse dto) => User(
-    id: dto.user.id,
-    username: dto.user.username,
-    email: dto.user.email,
-    token: dto.token
-  );
+      id: dto.user.id,
+      username: dto.user.username,
+      email: dto.user.email,
+      createdAt: dto.user.createdAt);
 
   @override
   SignUpResponse toDTO(User model) => throw UnimplementedError();
-
 }

@@ -15,8 +15,8 @@ class TaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List<Task> completedTasks = tasks.where((task) => task.completed).toList();
-    List<Task> inProgressTasks = tasks.where((task) => !task.completed).toList();
+    List<Task> completedTasks = tasks.where((task) => task.pomodoro == task.pomodoroCompleted ).toList();
+    List<Task> inProgressTasks = tasks.where((task) => task.pomodoro != task.pomodoroCompleted ).toList();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

@@ -12,7 +12,7 @@ final digitsOnlyRegex = RegExp(r'[^\d]');
 
 
 const kServerConnectionIP =
-    "http://127.0.0.1:3000/api/v1";
+    "http://localhost:9000/api";
     //"https://pomo-fres-sudos-projects.vercel.app/api/v1";
     //"https://pomo.fres.space/api/v1";
 const maxTimeExceedRequest = 10;

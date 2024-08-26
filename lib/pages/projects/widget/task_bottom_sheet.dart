@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/models/task/task.dart';
+import 'package:pomo/models/user/user.dart';
 
 import '../../../blocs/task/task_bloc.dart';
 import '../../../constants/colors.dart';
@@ -102,9 +103,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             style: Theme.of(context).textTheme.titleMedium),
                         InkWell(
                           onTap: () async {
-                            final String userId = context.read<AuthCubit>().state.maybeWhen(
-                                    authenticated: (user) => user.id,
-                                    orElse: () => "");
+                            final User user = context.read<AuthCubit>().state.maybeWhen(
+                                    authenticated: (user) => user,
+                                    orElse: () => User.generateFakeData());
                             if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0) {
                               onInvalidInput(context);
                             } else {
@@ -112,13 +113,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                   ? context.read<TaskBloc>().createTask(
                                           task: Task(
                                         name: _nameTextEditingController.text,
-                                        description:
-                                            _descriptionTextEditingController.text == "" ? null : _descriptionTextEditingController.text,
+                                        description: _descriptionTextEditingController.text,
                                         pomodoro: _currentPomodoroValue,
                                         pomodoroCompleted: 0,
-                                        completed: false,
-                                        referenceProject: widget.project!.id,
-                                        user: userId,
+                                        user: user,
                                         createdAt: DateTime.now(),
                                       ))
                                   : context.read<TaskBloc>().updateTaskById(
@@ -128,9 +126,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                           name: _nameTextEditingController.text,
                                           pomodoro: _currentPomodoroValue,
                                           pomodoroCompleted: widget.task?.pomodoroCompleted,
-                                          completed: widget.task!.completed,
-                                          referenceProject: widget.task?.referenceProject,
-                                          user: userId,
+                                          user: user,
                                           createdAt: widget.task!.createdAt,
                                           completedAt: widget.task?.completedAt));
                               context.router.pop();

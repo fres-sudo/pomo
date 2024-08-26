@@ -8,20 +8,16 @@ class UserStringMapper extends Mapper<User, String> {
   static const _idField = '_id';
   static const _usernameField = 'username';
   static const _emailField = 'email';
-  static const _nameField = 'name';
-  static const _surnameField = 'surname';
-  static const _photoField = 'photo';
-  static const _tokenField = 'token';
+  static const _avatarField = 'avatar';
+  static const _createdAtField = 'createdAt';
 
   @override
   String from(User from) => jsonEncode(<String, dynamic>{
     _idField: from.id,
     _usernameField: from.username,
     _emailField: from.email,
-    _nameField: from.name,
-    _surnameField: from.surname,
-    _tokenField: from.token,
-    _photoField : from.photo,
+    _avatarField: from.avatar,
+    _createdAtField: from.createdAt.toIso8601String()
   });
 
   @override
@@ -29,15 +25,10 @@ class UserStringMapper extends Mapper<User, String> {
     final json = jsonDecode(to);
 
     return User(
-      id: json[_idField],
-      username: json[_usernameField],
-      email: json[_emailField],
-      name: json [_nameField],
-      surname: json[_surnameField],
-      token: json[_tokenField],
-      photo: json[_photoField]
-    );
+        id: json[_idField],
+        username: json[_usernameField],
+        email: json[_emailField],
+        avatar: json[_avatarField],
+        createdAt: DateTime.parse(json[_createdAtField]));
   }
-  
-  
 }

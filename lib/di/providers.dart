@@ -1,7 +1,12 @@
 part of 'dependency_injector.dart';
 
-
 final List<SingleChildWidget> _providers = [
+  Provider<PersistCookieJar>(
+    create: (_) => PersistCookieJar(storage: SharedPrefStorage())
+  ),
+  Provider<CookieManager>(
+    create: (context) => CookieManager(context.read<PersistCookieJar>()),
+  ),
   if (kDebugMode)
     Provider<PrettyDioLogger>(
       create: (_) => PrettyDioLogger(
@@ -13,10 +18,9 @@ final List<SingleChildWidget> _providers = [
   Provider<Dio>(
     create: (context) => Dio(
       BaseOptions(contentType: 'application/json'),
-
-    )
-      ..interceptors.addAll([
+    )..interceptors.addAll([
         if (kDebugMode) context.read<PrettyDioLogger>(),
+        context.read<CookieManager>(),
       ]),
   ),
   Provider<AuthenticationService>(
@@ -48,3 +52,20 @@ final List<SingleChildWidget> _providers = [
   ),
 
 ];
+
+Future<PersistCookieJar> createPersistCookieJar() async {
+  try {
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final String appDocPath = appDocDir.path;
+    final String cookiePath = path.join(appDocPath, "/.cookies");
+
+    await Directory(cookiePath).create(recursive: true);
+
+    return PersistCookieJar(
+      ignoreExpires: true,
+      storage: FileStorage(cookiePath),
+    );
+  } catch (e) {
+    throw Exception('Failed to create PersistCookieJar: $e');
+  }
+}

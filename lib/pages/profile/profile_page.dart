@@ -8,11 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
-import 'package:pomo/cubits/timer/timer_cubit.dart';
-import 'package:pomo/pages/profile/widget/privacy_policy_page.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
-import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
@@ -27,18 +24,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-  @override
-  void initState() {
-
-        context.read<AuthCubit>().state.whenOrNull(
-          authenticated: (user) => user.name == null && user.surname == null
-              ? onFirstProfileSeen(context)
-              : null
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
@@ -62,8 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     InkWell(
                       onTap: () => context.router.push(const EditProfileRoute()),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 17),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(16),
@@ -76,22 +60,27 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         child: Row(children: [
                           context.watch<AuthCubit>().state.maybeWhen(
-                                authenticated: (user) {
-                                  if (user.photo == null) {
-                                    return const CircleAvatar(
-                                      backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
-                                    );
-                                  } else {
-                                    return ClipOval(
-                                        child: SizedBox(
-                                            height: 56,
-                                            width: 56,
-                                            child: FancyShimmerImage(imageUrl: user.photo!, boxFit: BoxFit.cover,)));
-                                  }
-                                },
-                                orElse: () => const CircleAvatar(
-                                  backgroundImage:  AssetImage("assets/images/propic-placeholder.jpg"),
-                                )),
+                              authenticated: (user) {
+                                if (user.avatar == null) {
+                                  return const CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        "assets/images/propic-placeholder.jpg"),
+                                  );
+                                } else {
+                                  return ClipOval(
+                                      child: SizedBox(
+                                          height: 56,
+                                          width: 56,
+                                          child: FancyShimmerImage(
+                                            imageUrl: user.avatar!,
+                                            boxFit: BoxFit.cover,
+                                          )));
+                                }
+                              },
+                              orElse: () => const CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        "assets/images/propic-placeholder.jpg"),
+                                  )),
                           const SizedBox(
                             width: 12,
                           ),
@@ -100,12 +89,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Text(
                                   context.read<AuthCubit>().state.maybeWhen(
-                                      authenticated: (user) => "${user.name ?? 'Name'} ${user.surname ?? "Surname"}",
+                                      authenticated: (user) => user.username,
                                       orElse: () => "??"),
-                                  style: Theme.of(context).textTheme.titleMedium),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
                               Text(
                                 context.read<AuthCubit>().state.maybeWhen(
-                                    authenticated: (user) => "@${user.username}",
+                                    authenticated: (user) =>
+                                        "@${user.username}",
                                     orElse: () => "??"),
                                 style: GoogleFonts.inter(
                                   fontSize: 10,
@@ -124,11 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Text(
                       "General",
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: kNeutral600,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)
                     ),
                     const SizedBox(
                       height: 8,
@@ -154,7 +141,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     //),
                     InkWell(
                         onTap: () {
-                            showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const SetTimer());
+                          showModalBottomSheet(
+                              context: context,
+                              useRootNavigator: true,
+                              builder: (context) => const SetTimer());
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
@@ -177,10 +167,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () {
                           showModalBottomSheet(
                             useRootNavigator: true,
-                            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
                             builder: (BuildContext context) {
                               return const ThemeModeSwitcher();
-                            }, context: context,
+                            },
+                            context: context,
                           );
                         },
                         borderRadius: BorderRadius.circular(20),
@@ -192,17 +184,20 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             BlocBuilder<ThemeCubit, ThemeState>(
-                                builder: (context, state){
-                                  return Transform.scale(
-                                    scale: 0.8,
-                                    child: Switch.adaptive(
-                                      activeColor: Theme.of(context).primaryColor,
-                                      value: state.mode == ThemeMode.dark, onChanged: (bool value) {
-                                      context.read<ThemeCubit>().changeMode(
-                                          value ? ThemeMode.dark : ThemeMode.light);
-                                    },),
-                                  );
-                                })
+                                builder: (context, state) {
+                              return Transform.scale(
+                                scale: 0.8,
+                                child: Switch.adaptive(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: state.mode == ThemeMode.dark,
+                                  onChanged: (bool value) {
+                                    context.read<ThemeCubit>().changeMode(value
+                                        ? ThemeMode.dark
+                                        : ThemeMode.light);
+                                  },
+                                ),
+                              );
+                            })
                           ],
                         )),
                     const Padding(
@@ -244,7 +239,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     */
                     InkWell(
-                        onTap: () => context.router.push(const PrivacyPolicyRoute()),
+                        onTap: () =>
+                            context.router.push(const PrivacyPolicyRoute()),
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,7 +268,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return DestructionBottomSheet(
                                   title: "Account",
                                   buttonText: 'Log Out',
-                                  description: "Are you sure you want to log out this account?",
+                                  description:
+                                      "Are you sure you want to log out this account?",
                                   function: () {
                                     context.read<AuthCubit>().signOut();
                                     Navigator.of(context).pop();
