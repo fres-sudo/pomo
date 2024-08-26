@@ -23,7 +23,7 @@ mixin _$SignUpRequest {
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  String get confirmPassword => throw _privateConstructorUsedError;
+  String get passwordConfirmation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +38,10 @@ abstract class $SignUpRequestCopyWith<$Res> {
       _$SignUpRequestCopyWithImpl<$Res, SignUpRequest>;
   @useResult
   $Res call(
-      {String username, String email, String password, String confirmPassword});
+      {String username,
+      String email,
+      String password,
+      String passwordConfirmation});
 }
 
 /// @nodoc
@@ -57,7 +60,7 @@ class _$SignUpRequestCopyWithImpl<$Res, $Val extends SignUpRequest>
     Object? username = null,
     Object? email = null,
     Object? password = null,
-    Object? confirmPassword = null,
+    Object? passwordConfirmation = null,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -72,9 +75,9 @@ class _$SignUpRequestCopyWithImpl<$Res, $Val extends SignUpRequest>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmPassword: null == confirmPassword
-          ? _value.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirmation: null == passwordConfirmation
+          ? _value.passwordConfirmation
+          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -89,7 +92,10 @@ abstract class _$$SignUpRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String username, String email, String password, String confirmPassword});
+      {String username,
+      String email,
+      String password,
+      String passwordConfirmation});
 }
 
 /// @nodoc
@@ -106,7 +112,7 @@ class __$$SignUpRequestImplCopyWithImpl<$Res>
     Object? username = null,
     Object? email = null,
     Object? password = null,
-    Object? confirmPassword = null,
+    Object? passwordConfirmation = null,
   }) {
     return _then(_$SignUpRequestImpl(
       username: null == username
@@ -121,9 +127,9 @@ class __$$SignUpRequestImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmPassword: null == confirmPassword
-          ? _value.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirmation: null == passwordConfirmation
+          ? _value.passwordConfirmation
+          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -136,7 +142,7 @@ class _$SignUpRequestImpl implements _SignUpRequest {
       {required this.username,
       required this.email,
       required this.password,
-      required this.confirmPassword});
+      required this.passwordConfirmation});
 
   factory _$SignUpRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$SignUpRequestImplFromJson(json);
@@ -148,11 +154,11 @@ class _$SignUpRequestImpl implements _SignUpRequest {
   @override
   final String password;
   @override
-  final String confirmPassword;
+  final String passwordConfirmation;
 
   @override
   String toString() {
-    return 'SignUpRequest(username: $username, email: $email, password: $password, confirmPassword: $confirmPassword)';
+    return 'SignUpRequest(username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation)';
   }
 
   @override
@@ -165,14 +171,14 @@ class _$SignUpRequestImpl implements _SignUpRequest {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.confirmPassword, confirmPassword) ||
-                other.confirmPassword == confirmPassword));
+            (identical(other.passwordConfirmation, passwordConfirmation) ||
+                other.passwordConfirmation == passwordConfirmation));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, username, email, password, confirmPassword);
+      Object.hash(runtimeType, username, email, password, passwordConfirmation);
 
   @JsonKey(ignore: true)
   @override
@@ -193,7 +199,7 @@ abstract class _SignUpRequest implements SignUpRequest {
       {required final String username,
       required final String email,
       required final String password,
-      required final String confirmPassword}) = _$SignUpRequestImpl;
+      required final String passwordConfirmation}) = _$SignUpRequestImpl;
 
   factory _SignUpRequest.fromJson(Map<String, dynamic> json) =
       _$SignUpRequestImpl.fromJson;
@@ -205,7 +211,7 @@ abstract class _SignUpRequest implements SignUpRequest {
   @override
   String get password;
   @override
-  String get confirmPassword;
+  String get passwordConfirmation;
   @override
   @JsonKey(ignore: true)
   _$$SignUpRequestImplCopyWith<_$SignUpRequestImpl> get copyWith =>

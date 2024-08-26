@@ -15,8 +15,9 @@ class AuthInterceptor extends QueuedInterceptor {
     //print("USER IN INTECEPTOR: $user");
 
     if (user != null) {
-      options.headers[HttpHeaders.authorizationHeader] = 'Bearer ${user.token}';
+      //options.headers[HttpHeaders.authorizationHeader] = 'Bearer ${user.token}';
     }
     super.onRequest(options, handler);
   }
 }
+

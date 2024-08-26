@@ -1,8 +1,12 @@
+import 'dart:io';
 
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/cubits/timer/timer_cubit.dart';
@@ -13,6 +17,7 @@ import 'package:pomo/repositories/mappers/user_string_mapper.dart';
 import 'package:pomo/repositories/project_repository.dart';
 import 'package:pomo/repositories/task_repository.dart';
 import 'package:pomo/repositories/user_repository.dart';
+import 'package:pomo/services/cookies/shared_pref_storage.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
 import 'package:pomo/services/network/response/sign_up/sign_up_response.dart';
@@ -30,7 +35,6 @@ import '../cubits/auth/auth_cubit.dart';
 import '../cubits/theme/theme_cubit.dart';
 import '../models/task/task.dart';
 import '../models/user/user.dart';
-import '../repositories/mappers/sign_in_response_mapper.dart';
 import '../repositories/mappers/sign_up_response_mapper.dart';
 import '../repositories/mappers/task_mapper.dart';
 import '../repositories/mappers/user_mapper.dart';
@@ -38,8 +42,8 @@ import '../services/network/interceptors/auth_interceptor.dart';
 import '../services/network/jto/project/project_jto.dart';
 import '../services/network/jto/user/user_jto.dart';
 import '../services/network/project/project_service.dart';
-import '../services/network/response/sign_in/sign_in_response.dart';
 import '../services/network/task/task_service.dart';
+import 'package:path/path.dart' as path;
 
 part 'blocs.dart';
 

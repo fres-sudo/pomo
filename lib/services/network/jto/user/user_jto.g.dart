@@ -8,22 +8,18 @@ part of 'user_jto.dart';
 
 _$UserJTOImpl _$$UserJTOImplFromJson(Map<String, dynamic> json) =>
     _$UserJTOImpl(
-      id: json['_id'] as String,
-      name: json['name'] as String?,
-      surname: json['surname'] as String?,
+      id: json['id'] as String,
       username: json['username'] as String,
       email: json['email'] as String,
-      photo: json['photo'] as String?,
-      token: json['token'] as String?,
+      avatar: json['avatar'] as String?,
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$UserJTOImplToJson(_$UserJTOImpl instance) =>
     <String, dynamic>{
-      '_id': instance.id,
-      'name': instance.name,
-      'surname': instance.surname,
+      'id': instance.id,
       'username': instance.username,
       'email': instance.email,
-      'photo': instance.photo,
-      'token': instance.token,
+      'avatar': instance.avatar,
+      'createdAt': instance.createdAt.toIso8601String(),
     };

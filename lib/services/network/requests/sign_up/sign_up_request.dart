@@ -11,7 +11,7 @@ class SignUpRequest extends DTO with _$SignUpRequest {
     required String username,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String passwordConfirmation,
   }) = _SignUpRequest;
 
   factory SignUpRequest.fromJson(Map<String, dynamic> json) =>

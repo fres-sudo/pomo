@@ -19,8 +19,11 @@ mixin _$Project {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  DateTime get dueDate => throw _privateConstructorUsedError;
-  String get owner => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime get startDate => throw _privateConstructorUsedError;
+  DateTime get endDate => throw _privateConstructorUsedError;
+  DateTime? get completedAt => throw _privateConstructorUsedError;
+  User get owner => throw _privateConstructorUsedError;
   String? get imageCover => throw _privateConstructorUsedError;
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<User>? get contributors => throw _privateConstructorUsedError;
@@ -38,11 +41,16 @@ abstract class $ProjectCopyWith<$Res> {
       {String? id,
       String name,
       String? description,
-      DateTime dueDate,
-      String owner,
+      DateTime? createdAt,
+      DateTime startDate,
+      DateTime endDate,
+      DateTime? completedAt,
+      User owner,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
+
+  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -61,7 +69,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
-    Object? dueDate = null,
+    Object? createdAt = freezed,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? completedAt = freezed,
     Object? owner = null,
     Object? imageCover = freezed,
     Object? tasks = freezed,
@@ -80,14 +91,26 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      endDate: null == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as String,
+              as User,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -102,6 +125,14 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
               as List<User>?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get owner {
+    return $UserCopyWith<$Res>(_value.owner, (value) {
+      return _then(_value.copyWith(owner: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -115,11 +146,17 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       {String? id,
       String name,
       String? description,
-      DateTime dueDate,
-      String owner,
+      DateTime? createdAt,
+      DateTime startDate,
+      DateTime endDate,
+      DateTime? completedAt,
+      User owner,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
+
+  @override
+  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -136,7 +173,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
-    Object? dueDate = null,
+    Object? createdAt = freezed,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? completedAt = freezed,
     Object? owner = null,
     Object? imageCover = freezed,
     Object? tasks = freezed,
@@ -155,14 +195,26 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      endDate: null == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as String,
+              as User,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -186,7 +238,10 @@ class _$ProjectImpl extends _Project {
       {this.id,
       required this.name,
       this.description,
-      required this.dueDate,
+      this.createdAt,
+      required this.startDate,
+      required this.endDate,
+      this.completedAt,
       required this.owner,
       this.imageCover,
       final List<Task>? tasks,
@@ -202,9 +257,15 @@ class _$ProjectImpl extends _Project {
   @override
   final String? description;
   @override
-  final DateTime dueDate;
+  final DateTime? createdAt;
   @override
-  final String owner;
+  final DateTime startDate;
+  @override
+  final DateTime endDate;
+  @override
+  final DateTime? completedAt;
+  @override
+  final User owner;
   @override
   final String? imageCover;
   final List<Task>? _tasks;
@@ -229,7 +290,7 @@ class _$ProjectImpl extends _Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, dueDate: $dueDate, owner: $owner, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, owner: $owner, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
   }
 
   @override
@@ -241,7 +302,13 @@ class _$ProjectImpl extends _Project {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
             (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.imageCover, imageCover) ||
                 other.imageCover == imageCover) &&
@@ -256,7 +323,10 @@ class _$ProjectImpl extends _Project {
       id,
       name,
       description,
-      dueDate,
+      createdAt,
+      startDate,
+      endDate,
+      completedAt,
       owner,
       imageCover,
       const DeepCollectionEquality().hash(_tasks),
@@ -274,8 +344,11 @@ abstract class _Project extends Project {
       {final String? id,
       required final String name,
       final String? description,
-      required final DateTime dueDate,
-      required final String owner,
+      final DateTime? createdAt,
+      required final DateTime startDate,
+      required final DateTime endDate,
+      final DateTime? completedAt,
+      required final User owner,
       final String? imageCover,
       final List<Task>? tasks,
       final List<User>? contributors}) = _$ProjectImpl;
@@ -288,9 +361,15 @@ abstract class _Project extends Project {
   @override
   String? get description;
   @override
-  DateTime get dueDate;
+  DateTime? get createdAt;
   @override
-  String get owner;
+  DateTime get startDate;
+  @override
+  DateTime get endDate;
+  @override
+  DateTime? get completedAt;
+  @override
+  User get owner;
   @override
   String? get imageCover;
   @override

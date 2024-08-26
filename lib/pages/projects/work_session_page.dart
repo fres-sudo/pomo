@@ -100,7 +100,6 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         id: widget.task.id!,
                         task: widget.task.copyWith(
                             pomodoroCompleted: (widget.task.pomodoroCompleted! + 1),
-                            completed: widget.task.pomodoro == widget.task.pomodoroCompleted,
                             completedAt: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted ? DateTime.now() : null,
                         ));
 

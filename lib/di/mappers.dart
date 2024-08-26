@@ -7,20 +7,14 @@ final List<SingleChildWidget> _mappers = [
   Provider<Mapper<User, String>>(
     create: (_) => const UserStringMapper(),
   ),
-  Provider<DTOMapper<SignInResponse, User>>(
-    create: (_) => SignInResponseMapper(),
-  ),
   Provider<DTOMapper<SignUpResponse, User>>(
     create: (_) => const SignUpResponseMapper(),
-  ),
-  Provider<DTOMapper<ProjectJTO, Project>>(
-    create: (context) => ProjectMapper(userMapper: context.read(), taskMapper: context.read()),
   ),
   Provider<DTOMapper<TaskJTO, Task>>(
     create: (context) => TaskMapper(userMapper: context.read()),
   ),
-
-
-
+  Provider<DTOMapper<ProjectJTO, Project>>(
+    create: (context) =>
+        ProjectMapper(userMapper: context.read(), taskMapper: context.read()),
+  ),
 ];
-

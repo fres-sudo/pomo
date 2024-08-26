@@ -3,9 +3,9 @@ import 'package:pine/pine.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import '../constants/constants.dart';
 import '../models/user/user.dart';
+import '../services/network/jto/user/user_jto.dart';
 import '../services/network/requests/sign_in/sign_in_request.dart';
 import '../services/network/requests/sign_up/sign_up_request.dart';
-import '../services/network/response/sign_in/sign_in_response.dart';
 import '../services/network/response/sign_up/sign_up_response.dart';
 
 /// Abstract class of AuthenticationRepository
@@ -29,17 +29,17 @@ abstract class AuthenticationRepository {
 /// Implementation of the base interface AuthenticationRepository
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({
+    required this.userMapper,
     required this.authenticationService,
-    required this.signInMapper,
     required this.signUpMapper,
     required this.userStringMapper,
     required this.secureStorage,
   });
 
   final AuthenticationService authenticationService;
-  final DTOMapper<SignInResponse, User> signInMapper;
   final DTOMapper<SignUpResponse, User> signUpMapper;
   final Mapper<User, String> userStringMapper;
+  final DTOMapper<UserJTO, User> userMapper;
   final FlutterSecureStorage secureStorage;
 
   @override
@@ -48,13 +48,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String password,
   }) async {
     try {
-      final response = await authenticationService.signIn(
-        SignInRequest(
-          email: email,
-          password: password,
-        ),
-      );
-      final user = signInMapper.fromDTO(response);
+      final request = SignInRequest(email: email, password: password);
+
+      final response = await authenticationService.signIn(request);
+
+      final user = userMapper.fromDTO(response);
 
       await secureStorage.write(
         key: 'user_data',
@@ -80,14 +78,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           username: username,
           email: email,
           password: password,
-          confirmPassword: password,
+          passwordConfirmation: password,
         ),
       );
 
       final user = signUpMapper.fromDTO(response);
 
       return user;
-
     } catch (error) {
       logger.e(
         'Error signing up with name: $username, email $email and password $password',
@@ -109,5 +106,4 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
     return null;
   }
-
 }

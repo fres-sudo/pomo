@@ -8,17 +8,13 @@ part 'user_jto.freezed.dart';
 @freezed
 class UserJTO extends DTO with _$UserJTO {
   const factory UserJTO({
-    // ignore: invalid_annotation_target
-    @JsonKey(name:'_id')required String id,
-    String? name,
-    String? surname,
+    required String id,
     required String username,
     required String email,
-    String? photo,
-    String? token,
-}) = _UserJTO;
-
+    String? avatar,
+    required DateTime createdAt,
+  }) = _UserJTO;
 
   factory UserJTO.fromJson(Map<String, dynamic> json) =>
-    _$UserJTOFromJson(json);
+      _$UserJTOFromJson(json);
 }

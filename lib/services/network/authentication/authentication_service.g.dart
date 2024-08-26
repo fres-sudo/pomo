@@ -19,20 +19,20 @@ class _AuthenticationService implements AuthenticationService {
   String? baseUrl;
 
   @override
-  Future<SignInResponse> signIn(SignInRequest request) async {
+  Future<UserJTO> signIn(SignInRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<SignInResponse>(Options(
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<UserJTO>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/users/login',
+              '/auth/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,7 +41,7 @@ class _AuthenticationService implements AuthenticationService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = SignInResponse.fromJson(_result.data!);
+    final value = UserJTO.fromJson(_result.data!);
     return value;
   }
 
@@ -59,7 +59,7 @@ class _AuthenticationService implements AuthenticationService {
     )
             .compose(
               _dio.options,
-              '/users/signup',
+              '/auth/signup',
               queryParameters: queryParameters,
               data: _data,
             )

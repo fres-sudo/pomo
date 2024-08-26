@@ -16,7 +16,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted &&
         task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Calculate the total focus time
@@ -30,7 +30,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Calculate the total break time
@@ -44,7 +44,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for today
     List<Task> completedToday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(today.subtract(const Duration(days: 1)))).toList();
 
     // Total number of completed tasks
@@ -58,7 +58,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
@@ -73,7 +73,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
@@ -88,7 +88,7 @@ class StatsBrain {
 
     // Get the list of completed tasks for yesterday
     List<Task> completedYesterday = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(yesterday.subtract(const Duration(days: 1))) &&
         task.createdAt.isBefore(yesterday)).toList();
 
@@ -157,7 +157,7 @@ class StatsBrain {
 
     // Filter completed tasks for the specified day
     List<Task> tasksForDay = completedTasks.where((task) =>
-    task.completed &&
+    task.pomodoro == task.pomodoroCompleted  &&
         task.createdAt.isAfter(startOfDay) &&
         task.createdAt.isBefore(endOfDay)).toList();
 
@@ -170,7 +170,7 @@ class StatsBrain {
   }
 
   double  getCompletionPercentageOfWeek(List<Task> tasks) {
-    int completedTasksCount = completedTasks.where((task) => task.completed).length;
+    int completedTasksCount = completedTasks.where((task) => task.pomodoro == task.pomodoroCompleted ).length;
     int totalTasksCount = tasks.length;
 
     double completionPercentage = (completedTasksCount / totalTasksCount) * 100;

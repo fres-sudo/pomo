@@ -100,7 +100,7 @@ class InfoTaskBottomSheet extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            task.completed ?
+            task.pomodoro == task.pomodoroCompleted  ?
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

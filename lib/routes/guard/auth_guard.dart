@@ -8,14 +8,15 @@ import '../app_router.gr.dart';
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-
+    resolver.next(true);
     const storage = FlutterSecureStorage();
     //check if user is authenticated if yes go to root, if not to login
     var value = await storage.read(key: "user_data");
 
     if (value != null) {
       // User logged in, check JWT token validity
-      final Map<String, dynamic> userData = Map<String, dynamic>.from(jsonDecode(value));
+      final Map<String, dynamic> userData =
+          Map<String, dynamic>.from(jsonDecode(value));
       final String? token = userData['token'];
 
       if (token != null) {
@@ -36,4 +37,3 @@ class AuthGuard extends AutoRouteGuard {
     }
   }
 }
-

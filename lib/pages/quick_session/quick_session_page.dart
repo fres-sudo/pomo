@@ -11,6 +11,7 @@ import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/text.dart';
 import '../../main.dart';
+import '../../models/user/user.dart';
 
 @RoutePage()
 class QuickSessionPage extends StatefulWidget {
@@ -82,11 +83,10 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                 ),
                 selectedMode[0]
                     ? QuickTimerView(onComplete: () async {
-                 String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-                  context.read<TaskBloc>().createTask(task: Task(name: "user-$id-${DateTime.now()}",
+                 final user = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                  context.read<TaskBloc>().createTask(task: Task(name: "user-${user.id}-${DateTime.now()}",
                       pomodoro: 1,
-                      completed: true,
-                      user: id,
+                      user: user,
                       createdAt: DateTime.now(),
                       completedAt: DateTime.now(),
                       pomodoroCompleted: 1));
