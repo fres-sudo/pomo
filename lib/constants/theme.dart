@@ -108,7 +108,40 @@ class LightTheme {
             backgroundColor: kPrimary500,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-            ))),);
+            ))),
+    datePickerTheme: DatePickerThemeData(
+      dayStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral700),
+      weekdayStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral700),
+      backgroundColor: Colors.white,
+      surfaceTintColor: kNeutral100,
+      headerForegroundColor: kNeutral700,
+      dividerColor: kNeutral300,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16)
+      ),
+      dayForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
+      dayBackgroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : Colors.white),
+      dayOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+      yearForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
+      yearOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+      todayForegroundColor: WidgetStateColor.resolveWith((states) => kPrimary500),
+      confirmButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateColor.resolveWith((states) => Colors.white),
+          backgroundColor: WidgetStateColor.resolveWith((_) => kPrimary500),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
+          textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))
+      ),
+      cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateColor.resolveWith((states) =>
+          states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+          side: WidgetStateBorderSide.resolveWith((states) => const BorderSide(color: kNeutral300)),
+          overlayColor: WidgetStateColor.resolveWith((states) => kNeutral300),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
+          textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))
+      ),
+    ),
+  );
 }
 
 class DarkTheme {
@@ -218,7 +251,40 @@ class DarkTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ))),
-      );
+    datePickerTheme: DatePickerThemeData(
+      dayStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral700),
+      weekdayStyle: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral700),
+      backgroundColor: kNeutral900,
+      surfaceTintColor: kNeutral800,
+      headerForegroundColor: kNeutral700,
+      dividerColor: kNeutral300,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16)
+      ),
+      dayForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kNeutral900 : kNeutral700),
+      dayBackgroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+      dayOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+      yearForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kNeutral900 : kNeutral700),
+      yearOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+      todayForegroundColor: WidgetStateColor.resolveWith((states) => kPrimary500),
+      confirmButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateColor.resolveWith((states) => kNeutral900),
+          backgroundColor: WidgetStateColor.resolveWith((_) => kPrimary500),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
+          textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral900))
+      ),
+      cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateColor.resolveWith((states) =>
+          states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+          side: WidgetStateBorderSide.resolveWith((states) => const BorderSide(color: kNeutral300)),
+          overlayColor: WidgetStateColor.resolveWith((states) => kNeutral300),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
+          textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))
+      ),
+    ),
+
+  );
 }
 
 TextTheme textTheme = GoogleFonts.interTextTheme();

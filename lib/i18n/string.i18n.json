@@ -1,0 +1,129 @@
+{
+  "general": {
+    "search": "Search",
+    "save": "Save",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "create": "Create",
+    "name": "Name",
+    "description": "Description",
+    "username": "Username",
+    "collaborator": "Collaborator",
+    "due_date": "Due date",
+    "start_date": "Start date",
+    "actions": "Actions",
+    "share": "Share",
+    "reset": "Reset",
+    "update": "Update",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "all_times": "All Time",
+    "done" : "Done"
+  },
+  "projects": {
+    "title": "Project",
+    "plural": "Projects",
+    "header_project_page": "Let's work",
+    "invite_friends": "Invite friends",
+    "create": {
+      "title": "New Project",
+      "add_cover": "Add Cover",
+      "invite_collaborator": "Invite a collaborator"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "account": "Account",
+    "settings": {
+      "general": {
+        "title": "General",
+        "timer_options": "Timer Options",
+        "set_timer_options": "Set Timer Options",
+        "dark_mode": "Dark Mode"
+      },
+      "about_us": {
+        "title": "About us",
+        "privacy_policy": "Privacy Policy"
+      },
+      "logout": {
+        "title": "Logout",
+        "description": "Are you sure you want to log out this account?"
+      }
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "short_title": "Stats",
+    "weekly_focus": "Weekly Focus Overview",
+    "weekly_productivity": "Weekly Productivity Average"
+  },
+  "tasks": {
+    "title": "Task",
+    "plural": "Tasks",
+    "focus_time": "Focus Time",
+    "break_time": "Break Time",
+    "total_tasks": "Total Tasks",
+    "timer": "Timer",
+    "breaktime": "Break",
+    "reset_timer": {
+      "title": "Reset Timer",
+      "description": "Are you sure you want to reset the timer?"
+    }
+  },
+  "authentication": {
+    "login": {
+      "title" : "Log in",
+      "welcome" : "Welcome back!",
+      "description" : "Enter your email & password for logging in",
+      "forgot_password" : "Forgot Password?",
+      "dont_have_an_account" : "Don't have an account?"
+    },
+    "signup": {
+      "title" : "Sign up",
+      "welcome" : "Welcome!",
+      "description" : "Create your account",
+      "i_accept" : "I accept",
+      "terms_and_conditions": "terms & conditions",
+      "already_have_an_account" : "Already have an account?"
+    },
+    "forgot_password": {
+      "reset_password" : "Reset Your Password",
+      "description_forgot" : "Renew yout access with a password reset safeguarding yout account with simplicity and peace of mind",
+      "secure_access" : "Secure Access in a Snap!",
+      "description_reset" : "Enter one time code we just sent to yout decide to unlock the door to your digital realm. Fast easy and extra secure!",
+      "dont_recive_email" : "Don't recive an email yet?",
+      "resend" : "You can resend code in ",
+      "seconds" : "seconds",
+      "change_password" : "Crafting your shield",
+      "description_change_password" : "Create a robust new password to keep your digital world secure and yout information guarded. Your fortress, your rules.",
+      "new_password" : "New password",
+      "confirm_password" : "Confirm new password"
+    }
+  },
+  "errors": {
+    "general_error": "A very bad error occurred.",
+    "please_restart": "Please restart the application.",
+    "please_retry" : "Please Retry",
+    "projects": {
+      "fetching_project": "An error occurred while fetching your projects.",
+      "creating_project": "An error occurred while creating a new project",
+      "updating_project": "An error occurred while updating your project",
+      "deleting_project": "An error occurred while deleting your project"
+    },
+    "tasks": {
+      "creating_task": "An error occurred while creating a new task",
+      "updating_task": "An error occurred while updating a task"
+    },
+    "login" : {
+      "general_error" : "An error occurred while logging",
+      "wrong_password" : "You submit the wrong password",
+      "user_not_existing" : "This email is not associated with any user"
+    },
+    "register" : {
+      "general_error" : "An error occurred while registering.",
+      "email_already_associated" : "This email is already associated with an account",
+      "username_already_in_use" : "This username is already in use",
+      "invalid_password" : "The submitted password is not valid"
+    }
+  }
+}

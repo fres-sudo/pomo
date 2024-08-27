@@ -74,7 +74,7 @@ class _TaskCardState extends State<TaskCard> {
                           context
                               .read<TaskBloc>()
                               .deleteTaskById(id: widget.task.id!);
-                          context.router.pop();
+                          context.router.maybePop();
                         },
                       );
                     },

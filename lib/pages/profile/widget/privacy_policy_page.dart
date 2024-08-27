@@ -17,7 +17,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  GestureDetector(onTap: () => context.router.pop(), child: Icon(Icons.chevron_left_rounded)),
+                  GestureDetector(onTap: () => context.router.maybePop(), child: Icon(Icons.chevron_left_rounded)),
                   const SizedBox(
                     width: 8,
                   ),

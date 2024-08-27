@@ -4,12 +4,12 @@ import 'guard/auth_guard.dart';
 import 'guard/onBoarding_guard.dart';
 
 @AutoRouterConfig()
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
         page: RootRoute.page,
-        //guards: [ OnBoardingGuard(), AuthGuard() ],
+        guards: [ OnBoardingGuard(), AuthGuard() ],
         initial: true,
         fullscreenDialog: true,
         children: [

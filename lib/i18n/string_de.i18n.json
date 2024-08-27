@@ -1,0 +1,129 @@
+{
+  "general": {
+    "search": "Zoeken",
+    "save": "Opslaan",
+    "confirm": "Bevestigen",
+    "delete": "Verwijderen",
+    "create": "Aanmaken",
+    "name": "Naam",
+    "description": "Beschrijving",
+    "username": "Gebruikersnaam",
+    "collaborator": "Samenwerker",
+    "due_date": "Vervaldatum",
+    "start_date": "Startdatum",
+    "actions": "Acties",
+    "share": "Delen",
+    "reset": "Resetten",
+    "update": "Bijwerken",
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "all_times": "Alle Tijden",
+    "done" : "Klaar"
+  },
+  "projects": {
+    "title": "Project",
+    "plural": "Projecten",
+    "header_project_page": "Aan de slag",
+    "invite_friends": "Vrienden uitnodigen",
+    "create": {
+      "title": "Nieuw Project",
+      "add_cover": "Omslag Toevoegen",
+      "invite_collaborator": "Samenwerker Uitnodigen"
+    }
+  },
+  "profile": {
+    "title": "Profiel",
+    "account": "Account",
+    "settings": {
+      "general": {
+        "title": "Algemeen",
+        "timer_options": "Timer Opties",
+        "set_timer_options": "Stel Timer Opties in",
+        "dark_mode": "Donkere Modus"
+      },
+      "about_us": {
+        "title": "Over ons",
+        "privacy_policy": "Privacybeleid"
+      },
+      "logout": {
+        "title": "Uitloggen",
+        "description": "Weet je zeker dat je dit account wilt uitloggen?"
+      }
+    }
+  },
+  "stats": {
+    "title": "Statistieken",
+    "short_title": "Statistieken",
+    "weekly_focus": "Wekelijks Focusoverzicht",
+    "weekly_productivity": "Wekelijks Gemiddelde Productiviteit"
+  },
+  "tasks": {
+    "title": "Taak",
+    "plural": "Taken",
+    "focus_time": "Focustijd",
+    "break_time": "Pauzetijd",
+    "total_tasks": "Totale Taken",
+    "timer": "Timer",
+    "break": "Pauze",
+    "reset_timer": {
+      "title": "Timer Resetten",
+      "description": "Weet je zeker dat je de timer wilt resetten?"
+    }
+  },
+  "authentication": {
+    "login": {
+      "title" : "Inloggen",
+      "welcome" : "Welkom terug!",
+      "description" : "Voer je e-mail en wachtwoord in om in te loggen",
+      "forgot_password" : "Wachtwoord Vergeten?",
+      "dont_have_an_account" : "Nog geen account?"
+    },
+    "signup": {
+      "title" : "Registreren",
+      "welcome" : "Welkom!",
+      "description" : "Maak je account aan",
+      "i_accept" : "Ik accepteer",
+      "terms_and_conditions": "voorwaarden & condities",
+      "already_have_an_account" : "Heb je al een account?"
+    },
+    "forgot_password": {
+      "reset_password" : "Wachtwoord Resetten",
+      "description_forgot" : "Vernieuw je toegang met een wachtwoordreset en beveilig je account met eenvoud en gemoedsrust",
+      "secure_access" : "Veilige Toegang in een Oogwenk!",
+      "description_reset" : "Voer de eenmalige code in die we net naar je apparaat hebben gestuurd om de toegang tot je digitale domein te ontgrendelen. Snel, eenvoudig en extra veilig!",
+      "dont_recive_email" : "Nog geen e-mail ontvangen?",
+      "resend" : "Je kunt de code opnieuw versturen in ",
+      "seconds" : "seconden",
+      "change_password" : "Maak je schild",
+      "description_change_password" : "Maak een robuust nieuw wachtwoord om je digitale wereld veilig te houden en je informatie te beschermen. Jouw fort, jouw regels.",
+      "new_password" : "Nieuw wachtwoord",
+      "confirm_password" : "Bevestig nieuw wachtwoord"
+    }
+  },
+  "errors": {
+    "general_error": "Er is een ernstige fout opgetreden.",
+    "please_restart": "Herstart de applicatie.",
+    "please_retry" : "Probeer het opnieuw",
+    "projects": {
+      "fetching_project": "Er is een fout opgetreden bij het ophalen van je projecten.",
+      "creating_project": "Er is een fout opgetreden bij het aanmaken van een nieuw project",
+      "updating_project": "Er is een fout opgetreden bij het bijwerken van je project",
+      "deleting_project": "Er is een fout opgetreden bij het verwijderen van je project"
+    },
+    "tasks": {
+      "creating_task": "Er is een fout opgetreden bij het aanmaken van een nieuwe taak",
+      "updating_task": "Er is een fout opgetreden bij het bijwerken van een taak"
+    },
+    "login" : {
+      "general_error" : "Er is een fout opgetreden bij het inloggen",
+      "wrong_password" : "Je hebt een verkeerd wachtwoord ingevoerd",
+      "user_not_existing" : "Dit e-mailadres is niet gekoppeld aan een gebruiker"
+    },
+    "register" : {
+      "general_error" : "Er is een fout opgetreden bij het registreren.",
+      "email_already_associated" : "Dit e-mailadres is al gekoppeld aan een account",
+      "username_already_in_use" : "Deze gebruikersnaam is al in gebruik",
+      "invalid_password" : "Het ingevoerde wachtwoord is ongeldig"
+    }
+  }
+}

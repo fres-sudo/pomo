@@ -129,7 +129,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                           user: user,
                                           createdAt: widget.task!.createdAt,
                                           completedAt: widget.task?.completedAt));
-                              context.router.pop();
+                              context.router.maybePop();
                             }
                           },
                           child: Text(

@@ -13,8 +13,8 @@ part 'project_service.g.dart';
 abstract class ProjectService {
   factory ProjectService(Dio dio, {String baseUrl}) = _ProjectService;
 
-  @GET('/projects/user/{id}')
-  Future<List<ProjectJTO>> getProjectsByUser(@Path('id') String id);
+  @GET('/projects/{userId}')
+  Future<List<ProjectJTO>> getProjectsByUser(@Path('userId') String id);
 
   @POST('/projects/')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
@@ -22,8 +22,6 @@ abstract class ProjectService {
   @MultiPart()
   Future<ProjectJTO> uploadProjectImageCover(@Path('id') String id, @Part() File photo,);
 
-  @GET('/projects/{id}')
-  Future<ProjectJTO> getProjectById(@Path('id') String id);
   @PATCH('/projects/{id}')
   Future<ProjectJTO> updateProjectById(@Path('id') String id, @Body() ProjectJTO body);
   @DELETE('/projects/{id}')

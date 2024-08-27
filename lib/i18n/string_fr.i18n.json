@@ -1,0 +1,129 @@
+{
+  "general": {
+    "search": "Rechercher",
+    "save": "Enregistrer",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "name": "Nom",
+    "description": "Description",
+    "username": "Nom d'utilisateur",
+    "collaborator": "Collaborateur",
+    "due_date": "Date d'échéance",
+    "start_date": "Date de début",
+    "actions": "Actions",
+    "share": "Partager",
+    "reset": "Réinitialiser",
+    "update": "Mettre à jour",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "all_times": "Tous les Temps",
+    "done" : "Terminé"
+  },
+  "projects": {
+    "title": "Projet",
+    "plural": "Projets",
+    "header_project_page": "Au travail",
+    "invite_friends": "Inviter des amis",
+    "create": {
+      "title": "Nouveau Projet",
+      "add_cover": "Ajouter une Couverture",
+      "invite_collaborator": "Inviter un collaborateur"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "account": "Compte",
+    "settings": {
+      "general": {
+        "title": "Général",
+        "timer_options": "Options de Minuteur",
+        "set_timer_options": "Définir les Options du Minuteur",
+        "dark_mode": "Mode Sombre"
+      },
+      "about_us": {
+        "title": "À propos de nous",
+        "privacy_policy": "Politique de confidentialité"
+      },
+      "logout": {
+        "title": "Déconnexion",
+        "description": "Êtes-vous sûr de vouloir vous déconnecter de ce compte ?"
+      }
+    }
+  },
+  "stats": {
+    "title": "Statistiques",
+    "short_title": "Stats",
+    "weekly_focus": "Vue d'ensemble de la Semaine",
+    "weekly_productivity": "Moyenne de Productivité Hebdomadaire"
+  },
+  "tasks": {
+    "title": "Tâche",
+    "plural": "Tâches",
+    "focus_time": "Temps de Concentration",
+    "break_time": "Temps de Pause",
+    "total_tasks": "Total des Tâches",
+    "timer": "Minuteur",
+    "break": "Pause",
+    "reset_timer": {
+      "title": "Réinitialiser le Minuteur",
+      "description": "Êtes-vous sûr de vouloir réinitialiser le minuteur ?"
+    }
+  },
+  "authentication": {
+    "login": {
+      "title" : "Connexion",
+      "welcome" : "Bon retour!",
+      "description" : "Entrez votre e-mail et votre mot de passe pour vous connecter",
+      "forgot_password" : "Mot de passe oublié ?",
+      "dont_have_an_account" : "Vous n'avez pas de compte?"
+    },
+    "signup": {
+      "title" : "S'inscrire",
+      "welcome" : "Bienvenue!",
+      "description" : "Créez votre compte",
+      "i_accept" : "J'accepte",
+      "terms_and_conditions": "termes & conditions",
+      "already_have_an_account" : "Vous avez déjà un compte?"
+    },
+    "forgot_password": {
+      "reset_password" : "Réinitialisez votre mot de passe",
+      "description_forgot" : "Renouvelez votre accès avec une réinitialisation de mot de passe pour sécuriser votre compte avec simplicité et tranquillité d'esprit",
+      "secure_access" : "Accès sécurisé en un clin d'œil!",
+      "description_reset" : "Entrez le code unique que nous venons d'envoyer à votre appareil pour déverrouiller la porte de votre domaine numérique. Rapide, facile et ultra sécurisé!",
+      "dont_recive_email" : "Vous n'avez pas encore reçu d'email?",
+      "resend" : "Vous pouvez renvoyer le code dans ",
+      "seconds" : "secondes",
+      "change_password" : "Forgez votre bouclier",
+      "description_change_password" : "Créez un nouveau mot de passe robuste pour garder votre monde numérique sécurisé et protéger vos informations. Votre forteresse, vos règles.",
+      "new_password" : "Nouveau mot de passe",
+      "confirm_password" : "Confirmez le nouveau mot de passe"
+    }
+  },
+  "errors": {
+    "general_error": "Une erreur très grave est survenue.",
+    "please_restart": "Veuillez redémarrer l'application.",
+    "please_retry" : "Veuillez réessayer",
+    "projects": {
+      "fetching_project": "Une erreur est survenue lors de la récupération de vos projets.",
+      "creating_project": "Une erreur est survenue lors de la création d'un nouveau projet",
+      "updating_project": "Une erreur est survenue lors de la mise à jour de votre projet",
+      "deleting_project": "Une erreur est survenue lors de la suppression de votre projet"
+    },
+    "tasks": {
+      "creating_task": "Une erreur est survenue lors de la création d'une nouvelle tâche",
+      "updating_task": "Une erreur est survenue lors de la mise à jour d'une tâche"
+    },
+    "login" : {
+      "general_error" : "Une erreur est survenue lors de la connexion",
+      "wrong_password" : "Vous avez saisi un mot de passe incorrect",
+      "user_not_existing" : "Cet e-mail n'est associé à aucun utilisateur"
+    },
+    "register" : {
+      "general_error" : "Une erreur est survenue lors de l'inscription.",
+      "email_already_associated" : "Cet e-mail est déjà associé à un compte",
+      "username_already_in_use" : "Ce nom d'utilisateur est déjà utilisé",
+      "invalid_password" : "Le mot de passe saisi n'est pas valide"
+    }
+  }
+}

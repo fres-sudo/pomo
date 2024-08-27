@@ -26,15 +26,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 
    List<Task> tasks = [];
 
-   @override
-  void initState() {
-    _getTasksByProject(context);
-     super.initState();
-  }
-
-   void _getTasksByProject(BuildContext context) {
-     context.read<TaskBloc>().getTasksByProject(projectId: widget.project.id!);
-   }
 
    void updateTaskView(TaskState state, BuildContext context) {
      state.maybeWhen(
@@ -65,7 +56,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           errorCreating: () => onErrorState(context, "creating tasks"),
           errorUpdating: () => onErrorState(context, "updating tasks"),
           errorDeleting: () => onErrorState(context, "deleting project"),
-          updated: (task) => _getTasksByProject(context),
           deleted: (task) => updateTaskView(state, context),
           fetched: (tasks) => this.tasks = tasks,
           created: (task) => updateTaskView(state, context),

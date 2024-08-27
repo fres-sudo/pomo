@@ -121,7 +121,7 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                           builder: (BuildContext context) =>
                               DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
                                 description: "Are you sure you want to reset the timer",
-                                function: () {widget.timerController.restart(duration: state.focusTime *60); context.router.pop();} )),
+                                function: () {widget.timerController.restart(duration: state.focusTime *60); context.router.maybePop();} )),
                       child: widget.timerController.isStarted && !widget.timerController.isPaused
                           ? Icon(Icons.pause_circle_filled_rounded,
                           color: Theme.of(context).iconTheme.color, size: 70)

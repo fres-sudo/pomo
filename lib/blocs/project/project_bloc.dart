@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pomo/error/localized.dart';
+import 'package:pomo/error/projects_error.dart';
 import 'dart:async';
 
 import '../../models/project/project.dart';
@@ -20,17 +22,16 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   /// Create a new instance of [ProjectBloc].
   ProjectBloc({
     required this.projectRepository,
-}) : super(const ProjectState.fetching()) {
+}) : super(const ProjectState()) {
     on<GetProjectsByUserProjectEvent>(_onGetProjectsByUser);
     on<CreateProjectProjectEvent>(_onCreateProject);
     on<UploadImageCoverProjectEvent>(_onUploadProjectImageCover);
-    on<GetProjectByIdProjectEvent>(_onGetProjectById);
     on<UpdateProjectByIdProjectEvent>(_onUpdateProjectById);
     on<DeleteProjectByIdProjectEvent>(_onDeleteProjectById);
   }
   
   /// Method used to add the [GetProjectsByUserProjectEvent] event
-  void getProjectsByUser({required String id}) => add(ProjectEvent.getProjectsByUser(id: id));
+  void getProjectsByUser({required String userId}) => add(ProjectEvent.getProjectsByUser(id: userId));
   
   /// Method used to add the [CreateProjectProjectEvent] event
   void createProject({required Project project}) => add(ProjectEvent.createProject(project: project));
@@ -52,17 +53,12 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     GetProjectsByUserProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState.fetching());
+    emit(const ProjectState(isLoading: true));
     try{
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
-      if(projects.isEmpty) {
-        emit(const ProjectState.none());
-      } else {
-        emit(ProjectState.fetched(projects));
-        emit(ProjectState.retrieveProject(projects));
-      }
+      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.read));
     }catch(_){
-      emit(const ProjectState.errorFetching());
+      emit(ProjectState(error: FetchingProjectsError()));
     }
   }
   
@@ -70,13 +66,13 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     CreateProjectProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState.creating());
+    emit(const ProjectState(isLoading: true));
     try{
       final project = await projectRepository.createProject(project: event.project);
-      emit(ProjectState.created(project));
-
+      final updatedProjects = List<Project>.from(state.projects)..add(project);
+      emit(state.copyWith(isLoading: false, projects: updatedProjects, operation: ProjectOperation.create),);
     }catch(_){
-      emit(const ProjectState.errorCreating());
+      emit(ProjectState(error: CreatingProjectsError()));
     }
   }
 
@@ -84,39 +80,27 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       UploadImageCoverProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState.uploadingImageCover());
+    emit(const ProjectState(isLoading: true));
     try{
       final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
-      emit(ProjectState.uploadedImageCover(project));
+    }catch(_){
+    }
+  }
+  
 
-    }catch(_){
-      emit(const ProjectState.errorUploadingImageCover());
-    }
-  }
-  
-  FutureOr<void> _onGetProjectById(
-    GetProjectByIdProjectEvent event,
-    Emitter<ProjectState> emit,
-  ) async {
-    emit(const ProjectState.getting());
-    try{
-      final project = await projectRepository.getProjectsById(id: event.id);
-      emit(ProjectState.got(project));
-    }catch(_){
-      emit(const ProjectState.errorGetting());
-    }
-  }
-  
   FutureOr<void> _onUpdateProjectById(
     UpdateProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState.updating());
+    emit(const ProjectState(isLoading: true));
     try{
       final project = await projectRepository.updateProjectById(id: event.id, project: event.project);
-      emit(ProjectState.updated(project));
+      final projects = List<Project>.from(state.projects);
+      projects.removeWhere((element) => element.id == project.id);
+      projects.add(project);
+      emit(state.copyWith(isLoading: false, projects: projects,operation: ProjectOperation.update));
     }catch(_){
-      emit(const ProjectState.errorUpdating());
+      emit(ProjectState(error: UpdatingProjectsError()));
     }
   }
   
@@ -124,12 +108,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     DeleteProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState.deleting());
+    emit(const ProjectState(isLoading: true));
     try{
       final project = await projectRepository.deleteProjectById(id: event.id);
-      emit(ProjectState.deleted(project));
+      final projects = List<Project>.from(state.projects);
+      projects.removeWhere((element) => element.id == project.id);
+      emit(state.copyWith(isLoading: false, projects:projects, operation: ProjectOperation.delete));
     }catch(_){
-      emit(const ProjectState.errorDeleting());
+      emit(ProjectState(error: DeletingProjectsError()));
   }
   }
   

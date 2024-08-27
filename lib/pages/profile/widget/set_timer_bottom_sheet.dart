@@ -57,7 +57,7 @@ class _SetTimerState extends State<SetTimer> {
                 TextButton(
                     onPressed: () => {
                       context.read<TimerCubit>().resetAll(),
-                      context.router.pop(),
+                      context.router.maybePop(),
                     },
                     child: Text(
                       "Reset",
@@ -83,7 +83,7 @@ class _SetTimerState extends State<SetTimer> {
                 TextButton(
                     onPressed: () => {
                           context.read<TimerCubit>().setTimer(_currentFocusMinutes, _currentBreakMinutes),
-                          context.router.pop(),
+                          context.router.maybePop(),
                         },
                     child: Text(
                       "Update",
