@@ -93,11 +93,15 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
 ### Built With
 
- <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a>
- <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a>
-  <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/nodejs/nodejs-horizontal.svg" alt="nodejs" width="120" height="60"/> </a>
-  <a href="https://mongodb.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/expressjs/expressjs-ar21.svg" alt="expressjs" width="120" height="60"/> </a>
-  <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-ar21.svg" alt="mongo" width="120" height="60"/> </a>
+<div align="left">
+  <img src="https://skillicons.dev/icons?i=dart" height="60" alt="html5 logo"  />
+  <img width="12" />
+  <img src="https://skillicons.dev/icons?i=flutter" height="60" alt="html5 logo"  />
+  <img width="12" />
+  <img src="https://skillicons.dev/icons?i=nodejs" height="60" alt="html5 logo"  />
+   <img width="12" />
+  <img src="https://skillicons.dev/icons?i=postgresql" height="60" alt="html5 logo"  />
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
