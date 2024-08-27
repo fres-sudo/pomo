@@ -62,7 +62,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.router.pop();
+                          context.router.maybePop();
                         },
                         child: SvgPicture.asset(
                           'assets/icons/arrow-left.svg',

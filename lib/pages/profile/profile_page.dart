@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 import '../../constants/colors.dart';
@@ -213,10 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
 
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    /*
+                    Gap.SM,
                     InkWell(
                         onTap: () {},
                         borderRadius: BorderRadius.circular(20),
@@ -227,17 +225,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               "Help Center",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            SvgPicture.asset(
-                              "assets/icons/arrow-right.svg",
-                              height: 18,
-                            )
+                             const Icon(Icons.chevron_right_rounded,)
                           ],
                         )),
 
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    */
+                    Gap.MD,
                     InkWell(
                         onTap: () =>
                             context.router.push(const PrivacyPolicyRoute()),

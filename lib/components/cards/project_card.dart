@@ -25,14 +25,11 @@ class ProjectCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, bottom: 16),
       child: InkWell(
-        onTap: () {
-          context.router.push(ProjectDetailsRoute(project: project));
-        },
+        onTap: () => context.router.push(ProjectDetailsRoute(project: project)),
         borderRadius: BorderRadius.circular(20),
         child: Container(
           //height: //height * 1 / 2.8,
           width: width,
-
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 15),

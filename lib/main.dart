@@ -10,8 +10,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/di/dependency_injector.dart';
 import 'package:pomo/routes/app_router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 import 'constants/theme.dart';
+import 'i18n/strings.g.dart';
 import 'local_notification.dart';
 
 /// ----------- [Notification] ---------------
@@ -96,10 +99,12 @@ void main() async {
 
   await LocalNotifications.init();
 
+  LocaleSettings.useDeviceLocale(); // and this
+
   // Remove splash screen.
   FlutterNativeSplash.remove();
 
-  runApp(DependencyInjector(child: PomoApp()));
+  runApp(TranslationProvider(child: PomoApp()));
 }
 
 class PomoApp extends StatelessWidget {
@@ -116,10 +121,17 @@ class PomoApp extends StatelessWidget {
           return MaterialApp.router(
             title: "Pomo",
             debugShowCheckedModeBanner: false,
+            locale: TranslationProvider.of(context).flutterLocale, // use provider,
+            supportedLocales: AppLocaleUtils.supportedLocales,
             routerDelegate: AutoRouterDelegate(
               appRouter,
               navigatorObservers: () => [AutoRouteObserver()],
             ),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
             routeInformationParser: appRouter.defaultRouteParser(),
             theme: LightTheme.make,
             darkTheme: DarkTheme.make,

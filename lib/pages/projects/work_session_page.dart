@@ -42,9 +42,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                 children: [
                   Row(children: [
                     InkWell(
-                      onTap: () {
-                        context.router.pop();
-                      },
+                      onTap: () => context.router.maybePop(),
                       child: SvgPicture.asset(
                         'assets/icons/arrow-left.svg',
                         colorFilter: ColorFilter.mode(

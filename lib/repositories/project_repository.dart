@@ -133,9 +133,9 @@ class ProjectRepositoryImpl implements ProjectRepository {
   @override
   Future<Project> getProjectsById({required String id}) async {
     try {
-      final project = await projectService.getProjectById(id);
+      final project = await projectService.getProjectsByUser(id);
 
-      return projectMapper.fromDTO(project);
+      return projectMapper.fromDTO(project.first);
     } catch (error) {
       logger.e('Error fetching project in: $error');
       throw Exception('Getter failed');

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
+
 import '../../../constants/colors.dart';
 import '../../../constants/text.dart';
 import '../../../models/project/project.dart';
@@ -30,14 +31,10 @@ class HeaderProjectDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    isProjectCreated ? context.router.replace(const ProjectRoute()): context.router.pop();
-                  },
+                  onTap: () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),
                   child: SvgPicture.asset(
                     'assets/icons/arrow-left.svg',
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).iconTheme.color!,
-                        BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(
@@ -45,9 +42,7 @@ class HeaderProjectDetails extends StatelessWidget {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1.3,
-                  child: Text(project.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: kSerzif(context)),
+                  child: Text(project.name, overflow: TextOverflow.ellipsis, style: kSerzif(context)),
                 ),
               ],
             ),
@@ -64,8 +59,7 @@ class HeaderProjectDetails extends StatelessWidget {
               },
               child: SvgPicture.asset(
                 "assets/icons/kebab.svg",
-                colorFilter: ColorFilter.mode(
-                    Theme.of(context).iconTheme.color!, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
               ),
             ),
           ],
@@ -74,10 +68,7 @@ class HeaderProjectDetails extends StatelessWidget {
           height: 8,
         ),
         Text(project.description == null || project.description!.isEmpty ? "No description" : project.description!,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: kNeutral600)),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kNeutral600)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -88,14 +79,12 @@ class HeaderProjectDetails extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   "Invite friend",
-                  style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: kPrimary500),
+                  style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: kPrimary500),
                 ),
               ),
             ),
-            Text("Due date: ${DateFormat('MMM dd, yyyy').format(project.endDate)}",
+            Text(
+              "Due date: ${DateFormat('MMM dd, yyyy').format(project.endDate)}",
               style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500),
             )
           ],

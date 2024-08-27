@@ -125,7 +125,7 @@ class _QuickBreakViewState extends State<QuickBreakView> {
                         builder: (BuildContext context) =>
                             DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
                                 description: "Are you sure you want to reset the timer",
-                                function: () {widget.breakController.restart(duration: state.breakTime * 60); context.router.pop();} )),
+                                function: () {widget.breakController.restart(duration: state.breakTime * 60); context.router.maybePop();} )),
                     child: widget.breakController.isStarted && !widget.breakController.isPaused
                         ? Icon(Icons.pause_circle_filled_rounded,
                         color: Theme.of(context).iconTheme.color, size: 70)

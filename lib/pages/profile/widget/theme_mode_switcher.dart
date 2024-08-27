@@ -32,7 +32,7 @@ class ThemeModeSwitcher extends StatelessWidget {
                   groupValue: state.mode,
                   onChanged: (value) {
                     context.read<ThemeCubit>().changeMode(value);
-                    context.router.pop();
+                    context.router.maybePop();
                   }),
             )
                 .toList(growable: false),

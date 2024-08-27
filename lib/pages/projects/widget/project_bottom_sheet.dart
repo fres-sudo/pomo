@@ -17,17 +17,15 @@ class ProjectBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 230,
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
           topLeft: Radius.circular(20),
         ),
         boxShadow: const [
-          BoxShadow(
-              color: Colors.black12, spreadRadius: 1000, blurRadius: 100),
+          BoxShadow(color: Colors.black12, spreadRadius: 1000, blurRadius: 100),
         ],
-        color: Theme.of(context).bottomSheetTheme
-            .backgroundColor,
+        color: Theme.of(context).bottomSheetTheme.backgroundColor,
       ),
       padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
       child: Center(
@@ -42,8 +40,7 @@ class ProjectBottomSheet extends StatelessWidget {
               width: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).bottomSheetTheme
-                    .backgroundColor,
+                color: Theme.of(context).bottomSheetTheme.backgroundColor,
               ),
             ),
             const SizedBox(
@@ -53,13 +50,10 @@ class ProjectBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Actions',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)
-                ),
+                Text('Actions', style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child:  Divider(),
+                  child: Divider(),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,67 +61,75 @@ class ProjectBottomSheet extends StatelessWidget {
                     InkWell(
                       onTap: () => onAvailableSoon(context),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width / 2 - 20,
-                        decoration: BoxDecoration(
-                          color: kGreen500.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                          width: MediaQuery.sizeOf(context).width / 2 - 20,
+                          decoration: BoxDecoration(
+                            color: kGreen500.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                           child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.share_rounded, color: kGreen500,),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text("Share", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),)
-                          ],
-                        )
-                      ),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.share_rounded,
+                                color: kGreen500,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "Share",
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),
+                              )
+                            ],
+                          )),
                     ),
                     InkWell(
-                      onTap: (){
-                        context.router.pop().then((value) => showModalBottomSheet(
+                      onTap: () {
+                        context.router.maybePop().then((value) => showModalBottomSheet(
                             context: context,
                             useRootNavigator: true,
                             builder: (BuildContext context) {
                               return DestructionBottomSheet(
                                 title: "Project",
                                 buttonText: 'Delete',
-                                description:
-                                "Are you sure you want to delete this project?",
+                                description: "Are you sure you want to delete this project?",
                                 function: () {
                                   context.read<ProjectBloc>().deleteProjectById(id: project.id!);
-                                  context.router.pop();
+                                  context.router.maybePop();
                                 },
                               );
                             },
                             isDismissible: true));
                       },
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width / 2 - 20,
-                        decoration: BoxDecoration(
-                          color: kRed500.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                          width: MediaQuery.sizeOf(context).width / 2 - 20,
+                          decoration: BoxDecoration(
+                            color: kRed500.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                           child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.delete_forever, color: kRed500,),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text("Delete", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),)
-                          ],
-                        )
-                      ),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.delete_forever,
+                                color: kRed500,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "Delete",
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),
+                              )
+                            ],
+                          )),
                     )
                   ],
                 ),
-
               ],
             ),
           ],

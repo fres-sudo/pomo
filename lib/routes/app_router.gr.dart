@@ -35,141 +35,6 @@ import 'package:pomo/pages/root_page.dart' as _i15;
 import 'package:pomo/pages/splash/onBoarding_page.dart' as _i7;
 import 'package:pomo/pages/stats/stats_page.dart' as _i18;
 
-abstract class $AppRouter extends _i20.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i20.PageFactory> pagesMap = {
-    CreateProjectRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i1.CreateProjectPage(),
-      );
-    },
-    EditProfileRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i2.EditProfilePage(),
-      );
-    },
-    ForgotPasswordOTPRoute.name: (routeData) {
-      final args = routeData.argsAs<ForgotPasswordOTPRouteArgs>();
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i3.ForgotPasswordOTPPage(
-          email: args.email,
-          key: args.key,
-        ),
-      );
-    },
-    ForgotPasswordRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.ForgotPasswordPage(),
-      );
-    },
-    ForgotPasswordRecoverRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.ForgotPasswordRecoverPage(),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.LoginPage(),
-      );
-    },
-    OnBoardingRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.OnBoardingPage(),
-      );
-    },
-    PrivacyPolicyRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.PrivacyPolicyPage(),
-      );
-    },
-    ProfileNavigation.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.ProfileNavigation(),
-      );
-    },
-    ProfileRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i10.ProfilePage(),
-      );
-    },
-    ProjectDetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<ProjectDetailsRouteArgs>();
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i11.ProjectDetailsPage(
-          key: args.key,
-          project: args.project,
-          isCreatedProject: args.isCreatedProject,
-        ),
-      );
-    },
-    ProjectNavigation.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i12.ProjectNavigation(),
-      );
-    },
-    ProjectRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i13.ProjectPage(),
-      );
-    },
-    QuickSessionRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i14.QuickSessionPage(),
-      );
-    },
-    RootRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i15.RootPage(),
-      );
-    },
-    SessionCompleteRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i16.SessionCompletePage(),
-      );
-    },
-    SignUpRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i17.SignUpPage(),
-      );
-    },
-    StatsRoute.name: (routeData) {
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i18.StatsPage(),
-      );
-    },
-    WorkSessionRoute.name: (routeData) {
-      final args = routeData.argsAs<WorkSessionRouteArgs>();
-      return _i20.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i19.WorkSessionPage(
-          key: args.key,
-          task: args.task,
-        ),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.CreateProjectPage]
 class CreateProjectRoute extends _i20.PageRouteInfo<void> {
@@ -181,7 +46,12 @@ class CreateProjectRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'CreateProjectRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.CreateProjectPage();
+    },
+  );
 }
 
 /// generated route for
@@ -195,7 +65,12 @@ class EditProfileRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'EditProfileRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.EditProfilePage();
+    },
+  );
 }
 
 /// generated route for
@@ -217,8 +92,16 @@ class ForgotPasswordOTPRoute
 
   static const String name = 'ForgotPasswordOTPRoute';
 
-  static const _i20.PageInfo<ForgotPasswordOTPRouteArgs> page =
-      _i20.PageInfo<ForgotPasswordOTPRouteArgs>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ForgotPasswordOTPRouteArgs>();
+      return _i3.ForgotPasswordOTPPage(
+        email: args.email,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class ForgotPasswordOTPRouteArgs {
@@ -248,7 +131,12 @@ class ForgotPasswordRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.ForgotPasswordPage();
+    },
+  );
 }
 
 /// generated route for
@@ -262,7 +150,12 @@ class ForgotPasswordRecoverRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRecoverRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.ForgotPasswordRecoverPage();
+    },
+  );
 }
 
 /// generated route for
@@ -276,7 +169,12 @@ class LoginRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.LoginPage();
+    },
+  );
 }
 
 /// generated route for
@@ -290,7 +188,12 @@ class OnBoardingRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'OnBoardingRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i7.OnBoardingPage();
+    },
+  );
 }
 
 /// generated route for
@@ -304,7 +207,12 @@ class PrivacyPolicyRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'PrivacyPolicyRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.PrivacyPolicyPage();
+    },
+  );
 }
 
 /// generated route for
@@ -318,7 +226,12 @@ class ProfileNavigation extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ProfileNavigation';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i9.ProfileNavigation();
+    },
+  );
 }
 
 /// generated route for
@@ -332,7 +245,12 @@ class ProfileRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i10.ProfilePage();
+    },
+  );
 }
 
 /// generated route for
@@ -355,8 +273,17 @@ class ProjectDetailsRoute extends _i20.PageRouteInfo<ProjectDetailsRouteArgs> {
 
   static const String name = 'ProjectDetailsRoute';
 
-  static const _i20.PageInfo<ProjectDetailsRouteArgs> page =
-      _i20.PageInfo<ProjectDetailsRouteArgs>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ProjectDetailsRouteArgs>();
+      return _i11.ProjectDetailsPage(
+        key: args.key,
+        project: args.project,
+        isCreatedProject: args.isCreatedProject,
+      );
+    },
+  );
 }
 
 class ProjectDetailsRouteArgs {
@@ -389,7 +316,12 @@ class ProjectNavigation extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ProjectNavigation';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i12.ProjectNavigation();
+    },
+  );
 }
 
 /// generated route for
@@ -403,7 +335,12 @@ class ProjectRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'ProjectRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i13.ProjectPage();
+    },
+  );
 }
 
 /// generated route for
@@ -417,7 +354,12 @@ class QuickSessionRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'QuickSessionRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i14.QuickSessionPage();
+    },
+  );
 }
 
 /// generated route for
@@ -431,7 +373,12 @@ class RootRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'RootRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i15.RootPage();
+    },
+  );
 }
 
 /// generated route for
@@ -445,7 +392,12 @@ class SessionCompleteRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'SessionCompleteRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i16.SessionCompletePage();
+    },
+  );
 }
 
 /// generated route for
@@ -459,7 +411,12 @@ class SignUpRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i17.SignUpPage();
+    },
+  );
 }
 
 /// generated route for
@@ -473,7 +430,12 @@ class StatsRoute extends _i20.PageRouteInfo<void> {
 
   static const String name = 'StatsRoute';
 
-  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      return const _i18.StatsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -494,8 +456,16 @@ class WorkSessionRoute extends _i20.PageRouteInfo<WorkSessionRouteArgs> {
 
   static const String name = 'WorkSessionRoute';
 
-  static const _i20.PageInfo<WorkSessionRouteArgs> page =
-      _i20.PageInfo<WorkSessionRouteArgs>(name);
+  static _i20.PageInfo page = _i20.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WorkSessionRouteArgs>();
+      return _i19.WorkSessionPage(
+        key: args.key,
+        task: args.task,
+      );
+    },
+  );
 }
 
 class WorkSessionRouteArgs {
