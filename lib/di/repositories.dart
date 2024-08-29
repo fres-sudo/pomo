@@ -42,4 +42,11 @@ final List<RepositoryProvider> _repositories = [
     );
     return userRepository;
   }),
+  RepositoryProvider<StatsRepository>(create: (context) {
+    final userRepository = StatsRepositoryImpl(
+      statsService: context.read(),
+      statsMapper: context.read(),
+    );
+    return userRepository;
+  }),
 ];

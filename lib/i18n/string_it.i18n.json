@@ -18,7 +18,8 @@
     "today": "Oggi",
     "yesterday": "Ieri",
     "all_times": "Tutto",
-    "done": "Fatto"
+    "done": "Fatto",
+    "quick_session":  "Sessione Veloce"
   },
   "projects": {
     "title": "Progetto",
@@ -39,7 +40,11 @@
         "title": "Generali",
         "timer_options": "Opzioni Timer",
         "set_timer_options": "Imposta il Timer",
-        "dark_mode": "Dark Mode"
+        "dark_mode": "Dark Mode",
+        "languages" : {
+          "title": "Lingua",
+          "select_language" : "Seleziona una lingua"
+        }
       },
       "about_us": {
         "title": "About us",
@@ -60,7 +65,7 @@
   "tasks": {
     "title": "Task",
     "plural": "Tasks",
-    "focus_time": "Tempo di concentrazione",
+    "focus_time": "Tempo di focus",
     "break_time": "Tempo di pausa",
     "total_tasks": "Tasks Totali",
     "timer": "Timer",
@@ -115,6 +120,9 @@
       "creating_task": "Si è verificato un errore durante la creazione di un nuovo task.",
       "updating_task": "Si è verificato un errore durante l'aggiornamento di un task."
     },
+    "stats" : {
+      "fetching_stats" : "Si è verificato un errore durante il caricamento delle statistiche"
+    },
     "login" : {
       "general_error" : "Si è verificato un errore durante l'accesso.",
       "wrong_password" : "Hai inserito la password sbagliata.",
@@ -126,6 +134,36 @@
       "username_already_in_use" : "Questo useraname è già in uso.",
       "invalid_password" : "La password inserita non è valida."
     }
-  }
+  },
+  "week_days" : {
+    "monday" : {
+      "short" : "Lun",
+      "long" : "Lunedì"
+    },
+    "tuesday" : {
+      "short" : "Mar",
+      "long" : "Martedì"
+    },
+    "wednesday" : {
+      "short" : "Mer",
+      "long" : "Mercoledì"
+    },
 
+    "thursday" : {
+      "short" : "Gio",
+      "long" : "Giovedì"
+    },
+    "friday" : {
+      "short": "Ven",
+      "long" : "Venerdì"
+    },
+    "saturday" : {
+      "short" : "Sab",
+      "long" : "Sabato"
+    },
+    "sunday" : {
+      "short": "Dom",
+      "long" : "Domenica"
+    }
+  }
 }

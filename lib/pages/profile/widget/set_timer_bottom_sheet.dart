@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:pomo/constants/colors.dart';
+import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import 'package:pomo/cubits/timer/timer_cubit.dart';
+
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 
 class SetTimer extends StatefulWidget {
   const SetTimer({super.key});
@@ -40,17 +42,11 @@ class _SetTimerState extends State<SetTimer> {
           color: Theme.of(context).bottomSheetTheme.backgroundColor,
         ),
         padding:
-            const EdgeInsets.only(top: 26, left: 16, bottom: 16, right: 16),
+            const EdgeInsets.only(left: 16, bottom: 16, right: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: 4,
-              width: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).bottomSheetTheme.backgroundColor),
-            ),
+            const TopBottomSheetWidget(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -60,23 +56,18 @@ class _SetTimerState extends State<SetTimer> {
                       context.router.maybePop(),
                     },
                     child: Text(
-                      "Reset",
-                      style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: kNeutral500),
+                      t.general.reset,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color :Theme.of(context).colorScheme.error)
                     )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Icons.timer,
+                      Icons.timer_outlined,
                       size: 20,
                     ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text('Set Timer Options',
+                    Gap.XS_H,
+                    Text(t.profile.settings.general.set_timer_options,
                         style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
@@ -86,11 +77,8 @@ class _SetTimerState extends State<SetTimer> {
                           context.router.maybePop(),
                         },
                     child: Text(
-                      "Update",
-                      style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: kPrimary500),
+                      t.general.update,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor)
                     ))
               ],
             ),
@@ -102,12 +90,10 @@ class _SetTimerState extends State<SetTimer> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Focus Time:",
+                  "${t.tasks.focus_time}:",
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                Gap.SM,
                 NumberPicker(
                   value: _currentFocusMinutes,
                   minValue: 1,
@@ -130,19 +116,15 @@ class _SetTimerState extends State<SetTimer> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            Gap.MD,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Break Time:",
+                  "${t.tasks.break_time}:",
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                Gap.SM,
                 NumberPicker(
                   value: _currentBreakMinutes,
                   minValue: 1,

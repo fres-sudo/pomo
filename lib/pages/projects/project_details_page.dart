@@ -70,18 +70,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   child: Column(
                     children: [
                       HeaderProjectDetails(project: widget.project, isProjectCreated: widget.isCreatedProject),
-                      state.maybeWhen(
-                          fetching: () => const MyProgressIndicator(),
-                          creating: () => const MyProgressIndicator(),
-                          updating: () => const MyProgressIndicator(),
-                          fetched: (tasks) => TaskView(tasks: this.tasks, project: widget.project),
-                          deleted: (task) => TaskView(tasks: tasks, project: widget.project),
-                          updated: (task) => TaskView(tasks: tasks, project: widget.project),
-                          created: (task) => TaskView(tasks: tasks, project: widget.project),
-                          none: () => NoTaskView(project: widget.project,),
-                          errorFetching: () => const ErrorPage(text: "fetching tasks",),
-                          orElse: () => TaskView(tasks: tasks, project: widget.project),
-                      ),
+                      TaskView(project: widget.project),
                     ],
                   ),
                 ),

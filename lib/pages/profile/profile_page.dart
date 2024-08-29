@@ -1,19 +1,21 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
+import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
+import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
+import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
+import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';
 
 @RoutePage()
@@ -25,11 +27,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) => state.whenOrNull(
-          //signOut: () => context.router.replace(const RootRoute()),
           notAuthenticated: () => context.router.replace(const RootRoute())),
       builder: (context, state) {
         return Scaffold(
@@ -41,10 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Account", style: kSerzif(context)),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    Text(t.profile.account, style: kSerzif(context)),
+                    Gap.MD,
                     InkWell(
                       onTap: () => context.router.push(const EditProfileRoute()),
                       child: Container(
@@ -53,59 +53,25 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black12,
-                                spreadRadius: 1,
-                                blurRadius: 10),
+                            BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 10),
                           ],
                         ),
                         child: Row(children: [
-                          context.watch<AuthCubit>().state.maybeWhen(
-                              authenticated: (user) {
-                                if (user.avatar == null) {
-                                  return const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        "assets/images/propic-placeholder.jpg"),
-                                  );
-                                } else {
-                                  return ClipOval(
-                                      child: SizedBox(
-                                          height: 56,
-                                          width: 56,
-                                          child: FancyShimmerImage(
-                                            imageUrl: user.avatar!,
-                                            boxFit: BoxFit.cover,
-                                          )));
-                                }
-                              },
-                              orElse: () => const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        "assets/images/propic-placeholder.jpg"),
-                                  )),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  context.read<AuthCubit>().state.maybeWhen(
-                                      authenticated: (user) => user.username,
-                                      orElse: () => "??"),
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
-                              Text(
-                                context.read<AuthCubit>().state.maybeWhen(
-                                    authenticated: (user) =>
-                                        "@${user.username}",
-                                    orElse: () => "??"),
-                                style: GoogleFonts.inter(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  color: kNeutral600,
-                                ),
-                              ),
-                            ],
+                          const ProfilePicture(height: 56, width: 56),
+                          const SizedBox(width: 12,),
+                          BlocBuilder<AuthCubit, AuthState>(
+                            builder: (context, state) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(state.maybeWhen(authenticated: (user) => "@${user.username}", orElse: () => "??"),
+                                      style: Theme.of(context).textTheme.titleMedium),
+                                  Text(
+                                    state.maybeWhen(authenticated: (user) => "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}", orElse: () => "??"),
+                                  style: Theme.of(context).textTheme.bodySmall),
+                                ],
+                              );
+                            },
                           )
                         ]),
                       ),
@@ -114,13 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
                     ),
-                    Text(
-                      "General",
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    Text(t.profile.settings.general.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+                    Gap.SM,
                     //InkWell(
                     //    onTap: () {},
                     //    borderRadius: BorderRadius.circular(20),
@@ -140,65 +101,58 @@ class _ProfilePageState extends State<ProfilePage> {
                     //const SizedBox(
                     //  height: 20,
                     //),
+
+
                     InkWell(
                         onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              useRootNavigator: true,
-                              builder: (context) => const SetTimer());
+                          showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const SetTimer());
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Timer Option",
+                              t.profile.settings.general.timer_options,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            SvgPicture.asset(
-                              "assets/icons/arrow-right.svg",
-                              height: 18,
-                            )
+                           const Icon(Icons.chevron_right_rounded)
                           ],
                         )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                            useRootNavigator: true,
-                            backgroundColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            builder: (BuildContext context) {
-                              return const ThemeModeSwitcher();
-                            },
-                            context: context,
+                    Gap.XS,
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          t.profile.settings.general.dark_mode,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        BlocBuilder<ThemeCubit, ThemeState>(builder: (context, state) {
+                          return Transform.scale(
+                            scale: 0.8,
+                            child: Switch.adaptive(
+                              activeColor: Theme.of(context).primaryColor,
+                              value: state.mode == ThemeMode.dark,
+                              onChanged: (bool value) {
+                                context.read<ThemeCubit>().changeMode(value ? ThemeMode.dark : ThemeMode.light);
+                              },
+                            ),
                           );
-                        },
+                        })
+                      ],
+                    ),
+                    Gap.XS,
+                    InkWell(
+                        onTap: () => showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const LanguageBottomSheet()),
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Dark Mode",
+                              t.profile.settings.general.languages.title,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            BlocBuilder<ThemeCubit, ThemeState>(
-                                builder: (context, state) {
-                              return Transform.scale(
-                                scale: 0.8,
-                                child: Switch.adaptive(
-                                  activeColor: Theme.of(context).primaryColor,
-                                  value: state.mode == ThemeMode.dark,
-                                  onChanged: (bool value) {
-                                    context.read<ThemeCubit>().changeMode(value
-                                        ? ThemeMode.dark
-                                        : ThemeMode.light);
-                                  },
-                                ),
-                              );
-                            })
+                            const Icon(Icons.chevron_right_rounded)
                           ],
                         )),
                     const Padding(
@@ -206,14 +160,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Divider(),
                     ),
                     Text(
-                      "About us",
+                      t.profile.settings.about_us.title,
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: kNeutral600,
                       ),
                     ),
-
                     Gap.SM,
                     InkWell(
                         onTap: () {},
@@ -222,29 +175,27 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Help Center",
+                              t.profile.settings.about_us.privacy_policy,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                             const Icon(Icons.chevron_right_rounded,)
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                            )
                           ],
                         )),
 
                     Gap.MD,
                     InkWell(
-                        onTap: () =>
-                            context.router.push(const PrivacyPolicyRoute()),
+                        onTap: () => context.router.push(const PrivacyPolicyRoute()),
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Privacy Policy",
+                              t.profile.settings.about_us.privacy_policy,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            SvgPicture.asset(
-                              "assets/icons/arrow-right.svg",
-                              height: 18,
-                            )
+                            const Icon(Icons.chevron_right_rounded)
                           ],
                         )),
                     const Padding(
@@ -258,10 +209,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               useRootNavigator: true,
                               builder: (BuildContext context) {
                                 return DestructionBottomSheet(
-                                  title: "Account",
-                                  buttonText: 'Log Out',
-                                  description:
-                                      "Are you sure you want to log out this account?",
+                                  title: t.profile.account,
+                                  buttonText: t.profile.settings.logout.title,
+                                  description: t.profile.settings.logout.description,
                                   function: () {
                                     context.read<AuthCubit>().signOut();
                                     Navigator.of(context).pop();
@@ -275,12 +225,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: SizedBox(
                           width: MediaQuery.sizeOf(context).width,
                           child: Text(
-                            "Logout",
-                            style: GoogleFonts.inter(
-                              color: kRed600,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                              t.profile.settings.logout.title,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.error)
                           ),
                         )),
                   ],

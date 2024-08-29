@@ -1,68 +1,63 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
+import 'package:pomo/models/stats/stats.dart';
 
-import '../logic/stats_brain.dart';
+import '../../../i18n/strings.g.dart';
 
 class CustomLineChart extends StatefulWidget {
-  const CustomLineChart({super.key, required this.brain});
+  const CustomLineChart({
+    super.key,
+    required this.stats,
+  });
 
-  final StatsBrain brain;
+  final Stats stats;
 
   @override
   State<CustomLineChart> createState() => _CustomLineChartState();
 }
 
 class _CustomLineChartState extends State<CustomLineChart> {
-
   bool showAvg = false;
+  List<String> weekDays = [
+    t.week_days.monday.short,
+    t.week_days.tuesday.short,
+    t.week_days.wednesday.short,
+    t.week_days.thursday.short,
+    t.week_days.friday.short,
+    t.week_days.saturday.short,
+    t.week_days.sunday.short
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-            'Weekly Productivity Average',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Text(
-            "${widget.brain.getTasksOfTheWeek()} Tasks",
-            style: Theme.of(context).textTheme.displayMedium
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+      children: [
+        Text(t.stats.weekly_productivity,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+        Gap.XS,
+        Text("${widget.stats.completedTasksOfTheWeek} ${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr) > 0 ? t.tasks.plural : t.tasks.title}",
+            style: Theme.of(context).textTheme.displayMedium),
+        Gap.SM,
         Expanded(
-          //height: MediaQuery.sizeOf(context).height / 4,
           child: LineChart(
-              mainData(),
-            ),
+            mainData(),
+          ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        Gap.MD,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Mon", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Tue", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Wed", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Thu", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Fri", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Sat", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-              Text("Sun", style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer),),
-            ],
-          ),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                  7, (index) => Text(weekDays[index],
+                      style: Theme.of(context).textTheme.titleSmall
+                          ?.copyWith(fontSize: 10, color: Theme.of(context).colorScheme.onSecondaryContainer)))),
         )
       ],
     );
   }
-
   LineChartData mainData() {
     return LineChartData(
       gridData: const FlGridData(
@@ -77,18 +72,10 @@ class _CustomLineChartState extends State<CustomLineChart> {
       minX: 0,
       maxX: 6.3,
       minY: 0,
-      maxY: widget.brain.getAllTasksAll().toDouble() / 2,
+      maxY: widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr).toDouble() / 2,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, widget.brain.getTaskOfMonday()),
-            FlSpot(1, widget.brain.getTaskOfTuesday()),
-            FlSpot(2, widget.brain.getTaskOfWednesday()),
-            FlSpot(3, widget.brain.getTaskOfThursday()),
-            FlSpot(4, widget.brain.getTaskOfFriday()),
-            FlSpot(5, widget.brain.getTaskOfSaturday()),
-            FlSpot(6, widget.brain.getTaskOfSunday()),
-          ],
+          spots: List.generate(7, (index) => FlSpot(index.toDouble(), widget.stats.completedTasksOfTheWeek[index].toDouble())),
           isCurved: true,
           color: Theme.of(context).primaryColor,
           barWidth: 3,
@@ -97,16 +84,14 @@ class _CustomLineChartState extends State<CustomLineChart> {
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: false,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Theme.of(context).primaryColor,Colors.transparent],
-            )
-          ),
+              show: false,
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Theme.of(context).primaryColor, Colors.transparent],
+              )),
         ),
       ],
     );
   }
-
 }
