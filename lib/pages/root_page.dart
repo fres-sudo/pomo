@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import '../components/fancy_shimmer/fancy_shimmer_image.dart';
+import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
@@ -39,9 +40,7 @@ class RootPage extends StatelessWidget {
               ),
               child: BottomNavigationBar(
                 currentIndex: tabsRouter.activeIndex,
-                onTap: (value) {
-                  tabsRouter.setActiveIndex(value);
-                },
+                onTap: (value) => tabsRouter.setActiveIndex(value),
                 items: [
                   BottomNavigationBarItem(
                     activeIcon: SvgPicture.asset(
@@ -50,14 +49,10 @@ class RootPage extends StatelessWidget {
                     icon: SvgPicture.asset(
                       'assets/icons/nav-bar/Light/Document.svg',
                       colorFilter: ColorFilter.mode(
-                          Theme.of(context)
-                                  .bottomNavigationBarTheme
-                                  .unselectedIconTheme
-                                  ?.color ??
-                              Colors.white,
+                          Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
                           BlendMode.srcIn),
                     ),
-                    label: "Project",
+                    label: t.projects.plural,
                   ),
                   BottomNavigationBarItem(
                       activeIcon: SvgPicture.asset(
@@ -72,7 +67,7 @@ class RootPage extends StatelessWidget {
                                 Colors.white,
                             BlendMode.srcIn),
                       ),
-                      label: "Stats"),
+                      label: t.stats.short_title),
                   BottomNavigationBarItem(
                       activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Bold/Play.svg'),
@@ -86,7 +81,7 @@ class RootPage extends StatelessWidget {
                                 Colors.white,
                             BlendMode.srcIn),
                       ),
-                      label: "QuickSession"),
+                      label: t.general.quick_session),
                   BottomNavigationBarItem(
                       icon: context.read<AuthCubit>().state.maybeWhen(
                           authenticated: (user) {
@@ -111,7 +106,7 @@ class RootPage extends StatelessWidget {
                                 backgroundImage: AssetImage(
                                     "assets/images/propic-placeholder.jpg"),
                               )),
-                      label: "Profile"),
+                      label: t.profile.title),
                 ],
               ),
             ),

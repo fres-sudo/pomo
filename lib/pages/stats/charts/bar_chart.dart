@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/pages/stats/logic/stats_brain.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 
+import '../../../i18n/strings.g.dart';
+import '../../../models/stats/stats.dart';
 import '../../../models/task/task.dart';
 
 class CustomBarChart extends StatefulWidget {
-  const CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.brain, required this.tasks});
+  const CustomBarChart(
+      {super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.tasks, required this.stats});
 
+  final Stats stats;
   final Color barBackgroundColor;
   final Color barColor;
   final Color touchedBarColor;
-  final StatsBrain brain;
   final List<Task> tasks;
 
   @override
@@ -28,6 +32,26 @@ class CustomBarChartState extends State<CustomBarChart> {
 
   bool isPlaying = false;
 
+  List<String> weekDaysShort = [
+    t.week_days.monday.short,
+    t.week_days.tuesday.short,
+    t.week_days.wednesday.short,
+    t.week_days.thursday.short,
+    t.week_days.friday.short,
+    t.week_days.saturday.short,
+    t.week_days.sunday.short
+  ];
+
+  List<String> weekDaysLong = [
+    t.week_days.monday.long,
+    t.week_days.tuesday.long,
+    t.week_days.wednesday.long,
+    t.week_days.thursday.long,
+    t.week_days.friday.long,
+    t.week_days.saturday.long,
+    t.week_days.sunday.long,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -37,26 +61,16 @@ class CustomBarChartState extends State<CustomBarChart> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
-                'Weekly Focus Overview',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(
-                "${widget.tasks.isEmpty ? "0" :  widget.brain.getCompletionPercentageOfWeek(widget.tasks).round()}%",
-                style: Theme.of(context).textTheme.displayMedium
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              Text(t.stats.weekly_focus,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+              Gap.MD,
+              Text("${widget.tasks.isEmpty ? "0" : widget.stats.completionPercentage}%", style: Theme.of(context).textTheme.displayMedium),
+              Gap.SM,
               Expanded(
                 child: BarChart(
                   mainBarData(),
                 ),
               ),
-
             ],
           )
         ],
@@ -65,13 +79,13 @@ class CustomBarChartState extends State<CustomBarChart> {
   }
 
   BarChartGroupData makeGroupData(
-      int x,
-      double y, {
-        bool isTouched = false,
-        Color? barColor,
-        double width = 10,
-        List<int> showTooltips = const [],
-      }) {
+    int x,
+    double y, {
+    bool isTouched = false,
+    Color? barColor,
+    double width = 10,
+    List<int> showTooltips = const [],
+  }) {
     barColor ??= widget.barColor;
     return BarChartGroupData(
       x: x,
@@ -80,9 +94,7 @@ class CustomBarChartState extends State<CustomBarChart> {
           toY: isTouched ? y + 1 : y,
           color: isTouched ? widget.touchedBarColor : barColor,
           width: width,
-          borderSide: isTouched
-              ? BorderSide(color: widget.touchedBarColor.darken(80))
-              : const BorderSide(color: Colors.white, width: 0),
+          borderSide: isTouched ? BorderSide(color: widget.touchedBarColor.darken(80)) : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             toY: 20,
@@ -94,26 +106,8 @@ class CustomBarChartState extends State<CustomBarChart> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-    switch (i) {
-      case 0:
-        return makeGroupData(0, widget.brain.getTaskOfMonday(), isTouched: i == touchedIndex);
-      case 1:
-        return makeGroupData(1, widget.brain.getTaskOfTuesday(), isTouched: i == touchedIndex);
-      case 2:
-        return makeGroupData(2, widget.brain.getTaskOfWednesday(), isTouched: i == touchedIndex);
-      case 3:
-        return makeGroupData(3, widget.brain.getTaskOfThursday(), isTouched: i == touchedIndex);
-      case 4:
-        return makeGroupData(4, widget.brain.getTaskOfFriday(), isTouched: i == touchedIndex);
-      case 5:
-        return makeGroupData(5, widget.brain.getTaskOfSaturday(), isTouched: i == touchedIndex);
-      case 6:
-        return makeGroupData(6, widget.brain.getTaskOfSunday(), isTouched: i == touchedIndex);
-      default:
-        return throw Error();
-    }
-  });
+  List<BarChartGroupData> showingGroups() =>
+      List.generate(7, (i) => makeGroupData(0, widget.stats.completedTasksOfTheWeek[i].toDouble(), isTouched: i == touchedIndex));
 
   BarChartData mainBarData() {
     return BarChartData(
@@ -122,49 +116,19 @@ class CustomBarChartState extends State<CustomBarChart> {
           tooltipHorizontalAlignment: FLHorizontalAlignment.right,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            String weekDay;
-            switch (group.x) {
-              case 0:
-                weekDay = 'Monday';
-                break;
-              case 1:
-                weekDay = 'Tuesday';
-                break;
-              case 2:
-                weekDay = 'Wednesday';
-                break;
-              case 3:
-                weekDay = 'Thursday';
-                break;
-              case 4:
-                weekDay = 'Friday';
-                break;
-              case 5:
-                weekDay = 'Saturday';
-                break;
-              case 6:
-                weekDay = 'Sunday';
-                break;
-              default:
-                throw Error();
-            }
+            String weekDay = weekDaysLong[group.x];
             return BarTooltipItem(
               '$weekDay\n',
               Theme.of(context).textTheme.titleSmall!,
               children: <TextSpan>[
-                TextSpan(
-                  text: (rod.toY - 1).toString(),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500)
-                ),
+                TextSpan(text: (rod.toY - 1).toString(), style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500)),
               ],
             );
           },
         ),
         touchCallback: (FlTouchEvent event, barTouchResponse) {
           setState(() {
-            if (!event.isInterestedForInteractions ||
-                barTouchResponse == null ||
-                barTouchResponse.spot == null) {
+            if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
               touchedIndex = -1;
               return;
             }
@@ -202,34 +166,9 @@ class CustomBarChartState extends State<CustomBarChart> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    final style = Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10, color: DateTime.now().day == value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSecondaryContainer);
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = Text('Mon', style: style);
-        break;
-      case 1:
-        text = Text('Tue', style: style);
-        break;
-      case 2:
-        text = Text('Wed', style: style);
-        break;
-      case 3:
-        text = Text('Thu', style: style);
-        break;
-      case 4:
-        text = Text('Fri', style: style);
-        break;
-      case 5:
-        text = Text('Sat', style: style);
-        break;
-      case 6:
-        text = Text('Sun', style: style);
-        break;
-      default:
-        text = Text('', style: style);
-        break;
-    }
+    final style = Theme.of(context).textTheme.titleSmall?.copyWith(
+        fontSize: 10, color: DateTime.now().day == value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSecondaryContainer);
+    Widget text = Text(weekDaysShort[value.toInt()], style: style);
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 16,
@@ -273,47 +212,19 @@ class CustomBarChartState extends State<CustomBarChart> {
       barGroups: List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(
-              0,
-              Random().nextInt(15).toDouble() + 6,
-              barColor:Theme.of(context).primaryColor
-            );
+            return makeGroupData(0, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 1:
-            return makeGroupData(
-              1,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: Theme.of(context).primaryColor
-            );
+            return makeGroupData(1, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 2:
-            return makeGroupData(
-              2,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: Theme.of(context).primaryColor
-            );
+            return makeGroupData(2, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 3:
-            return makeGroupData(
-              3,
-              Random().nextInt(15).toDouble() + 6,
-              barColor:Theme.of(context).primaryColor
-            );
+            return makeGroupData(3, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 4:
-            return makeGroupData(
-              4,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: Theme.of(context).primaryColor
-            );
+            return makeGroupData(4, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 5:
-            return makeGroupData(
-              5,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: Theme.of(context).primaryColor
-            );
+            return makeGroupData(5, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           case 6:
-            return makeGroupData(
-              6,
-              Random().nextInt(15).toDouble() + 6,
-              barColor: Theme.of(context).primaryColor
-            );
+            return makeGroupData(6, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
           default:
             return throw Error();
         }

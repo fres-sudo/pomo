@@ -11,7 +11,7 @@ part 'task_service.g.dart';
 abstract class TaskService {
   factory TaskService(Dio dio, {String baseUrl}) = _TaskService;
 
-  @POST('/tasks/')
+  @POST('/tasks')
   Future<TaskJTO> createTask(@Body() TaskJTO body);
 
   @GET('/tasks/{id}')

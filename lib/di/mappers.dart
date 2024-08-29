@@ -17,4 +17,7 @@ final List<SingleChildWidget> _mappers = [
     create: (context) =>
         ProjectMapper(userMapper: context.read(), taskMapper: context.read()),
   ),
+  Provider<DTOMapper<StatsJTO, Stats>>(
+    create: (_) => StatsMapper(),
+  ),
 ];

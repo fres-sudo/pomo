@@ -18,7 +18,8 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "all_times": "All Time",
-    "done" : "Done"
+    "done" : "Done",
+    "quick_session" : "Quick Session"
   },
   "projects": {
     "title": "Project",
@@ -39,7 +40,11 @@
         "title": "General",
         "timer_options": "Timer Options",
         "set_timer_options": "Set Timer Options",
-        "dark_mode": "Dark Mode"
+        "dark_mode": "Dark Mode",
+        "languages" : {
+          "title": "Languages",
+          "select_language" : "Select a language"
+        }
       },
       "about_us": {
         "title": "About us",
@@ -114,6 +119,9 @@
       "creating_task": "An error occurred while creating a new task",
       "updating_task": "An error occurred while updating a task"
     },
+    "stats" : {
+      "fetching_stats" : "An error occurred while fetching your statistics."
+    },
     "login" : {
       "general_error" : "An error occurred while logging",
       "wrong_password" : "You submit the wrong password",
@@ -124,6 +132,37 @@
       "email_already_associated" : "This email is already associated with an account",
       "username_already_in_use" : "This username is already in use",
       "invalid_password" : "The submitted password is not valid"
+    }
+  },
+  "week_days" : {
+    "monday" : {
+      "short" : "Mon",
+      "long" : "Monday"
+    },
+    "tuesday" : {
+      "short" : "Tue",
+      "long" : "Tuesday"
+    },
+    "wednesday" : {
+      "short" : "Wed",
+      "long" : "Wednesday"
+    },
+
+    "thursday" : {
+      "short" : "Thu",
+      "long" : "Thursday"
+    },
+    "friday" : {
+      "short": "Fri",
+      "long" : "Friday"
+    },
+    "saturday" : {
+      "short" : "Sat",
+      "long" : "Saturday"
+    },
+    "sunday" : {
+      "short": "Sun",
+      "long" : "Sunday"
     }
   }
 }
