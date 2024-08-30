@@ -19,6 +19,9 @@ class DateField extends StatelessWidget {
       children: [
         Expanded(
           child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary
+              ),
               onPressed: () async {
                 final date = await showDatePicker(
                     context: context,
@@ -38,7 +41,7 @@ class DateField extends StatelessWidget {
                     DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(selectedDate!)
                         : hintText ?? "Select a date",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: selectedDate != null ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.onSecondary,
+                      color: selectedDate != null ? Theme.of(context).colorScheme.onSecondary: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),

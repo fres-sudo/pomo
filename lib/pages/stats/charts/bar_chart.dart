@@ -63,7 +63,7 @@ class CustomBarChartState extends State<CustomBarChart> {
             children: <Widget>[
               Text(t.stats.weekly_focus,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
-              Gap.MD,
+              Gap.XS,
               Text("${widget.tasks.isEmpty ? "0" : widget.stats.completionPercentage}%", style: Theme.of(context).textTheme.displayMedium),
               Gap.SM,
               Expanded(
@@ -209,26 +209,7 @@ class CustomBarChartState extends State<CustomBarChart> {
       borderData: FlBorderData(
         show: false,
       ),
-      barGroups: List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 1:
-            return makeGroupData(1, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 2:
-            return makeGroupData(2, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 3:
-            return makeGroupData(3, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 4:
-            return makeGroupData(4, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 5:
-            return makeGroupData(5, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          case 6:
-            return makeGroupData(6, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor);
-          default:
-            return throw Error();
-        }
-      }),
+      barGroups: List.generate(7, (i) => makeGroupData(i, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor)),
       gridData: const FlGridData(show: false),
     );
   }

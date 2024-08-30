@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomo/constants/colors.dart';
 
 onInvalidInput(BuildContext context){
   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -59,9 +60,14 @@ onErrorState(BuildContext context, String text) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          duration: const Duration(seconds: 2),
+          backgroundColor: kRed100,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: kRed200)
+          ),
+          duration: const Duration(seconds: 3),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('Something went wrong while $text, please try again 🚨')),
+          content: Text('$text🚨')),
     );
   });
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/rounded_button.dart';
+import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
+
 import '../../constants/colors.dart';
+import '../../extension/sized_box_extension.dart';
 
 class DestructionBottomSheet extends StatelessWidget {
   const DestructionBottomSheet({super.key, required this.title, required this.buttonText, required this.description, required this.function});
@@ -26,62 +29,29 @@ class DestructionBottomSheet extends StatelessWidget {
         color: Theme.of(context).bottomSheetTheme.backgroundColor,
       ),
       padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 12,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TopBottomSheetWidget(),
+          Gap.MD,
+          Text(title, style: Theme.of(context).textTheme.titleMedium ),
+          Gap.XS,
+          Text(description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.secondary) ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Divider(),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error
             ),
-            Container(
-              height: 4,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).bottomSheetTheme.backgroundColor,
-              ),
+            onPressed: function, child: Center(
+            child: Text(
+              buttonText,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onError)
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall
-                        ?.copyWith(fontSize: 16)),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(description,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(color: kNeutral600)),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Divider(),
-                ),
-                RoundedButton(
-                  progressColor: kNeutral50,
-                  borderColor: Colors.transparent,
-                color: kRed500,
-                  onPressed: function,
-                  child: Text(
-                    buttonText,
-                    style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: kNeutral50),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),)
+        ],
       ),
     );
   }
