@@ -53,12 +53,12 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     GetProjectsByUserProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
       emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.read));
     }catch(_){
-      emit(ProjectState(error: FetchingProjectsError()));
+      emit(state.copyWith(error: FetchingProjectsError()));
     }
   }
   
@@ -66,13 +66,13 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     CreateProjectProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final project = await projectRepository.createProject(project: event.project);
       final updatedProjects = List<Project>.from(state.projects)..add(project);
       emit(state.copyWith(isLoading: false, projects: updatedProjects, operation: ProjectOperation.create),);
     }catch(_){
-      emit(ProjectState(error: CreatingProjectsError()));
+      emit(state.copyWith(error: CreatingProjectsError()));
     }
   }
 
@@ -80,7 +80,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       UploadImageCoverProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
     }catch(_){
@@ -92,7 +92,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     UpdateProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final project = await projectRepository.updateProjectById(id: event.id, project: event.project);
       final projects = List<Project>.from(state.projects);
@@ -100,7 +100,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       projects.add(project);
       emit(state.copyWith(isLoading: false, projects: projects,operation: ProjectOperation.update));
     }catch(_){
-      emit(ProjectState(error: UpdatingProjectsError()));
+      emit(state.copyWith(error: UpdatingProjectsError()));
     }
   }
   
@@ -108,14 +108,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     DeleteProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(const ProjectState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final project = await projectRepository.deleteProjectById(id: event.id);
       final projects = List<Project>.from(state.projects);
       projects.removeWhere((element) => element.id == project.id);
       emit(state.copyWith(isLoading: false, projects:projects, operation: ProjectOperation.delete));
     }catch(_){
-      emit(ProjectState(error: DeletingProjectsError()));
+      emit(state.copyWith(error: DeletingProjectsError()));
   }
   }
   

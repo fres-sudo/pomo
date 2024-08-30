@@ -132,9 +132,10 @@ class _TaskCardState extends State<TaskCard> {
                                   description: widget.task.description,
                                   pomodoro: widget.task.pomodoro,
                                   pomodoroCompleted: value! ? widget.task.pomodoro : 0,
-                                  user: widget.task.user,
+                                  userId: widget.task.userId,
                                   createdAt: widget.task.createdAt,
-                                  completedAt: value ? DateTime.now() : null
+                                  completedAt: value ? DateTime.now() : null,
+                                  dueDate: widget.task.dueDate,
                               ));
                         }),
                     Column(

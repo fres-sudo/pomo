@@ -16,7 +16,7 @@ abstract class ProjectService {
   @GET('/projects/{userId}')
   Future<List<ProjectJTO>> getProjectsByUser(@Path('userId') String id);
 
-  @POST('/projects/')
+  @POST('/projects')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
   @PUT('/projects/uploadImageCover/{id}')
   @MultiPart()

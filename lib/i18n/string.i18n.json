@@ -11,6 +11,7 @@
     "collaborator": "Collaborator",
     "due_date": "Due date",
     "start_date": "Start date",
+    "select_date" : "Select a date",
     "actions": "Actions",
     "share": "Share",
     "reset": "Reset",
@@ -26,6 +27,7 @@
     "plural": "Projects",
     "header_project_page": "Let's work",
     "invite_friends": "Invite friends",
+    "no_proj" : "You still don't have any project",
     "create": {
       "title": "New Project",
       "add_cover": "Add Cover",
@@ -113,6 +115,7 @@
     "general_error": "A very bad error occurred.",
     "please_restart": "Please restart the application.",
     "please_retry" : "Please Retry",
+    "valid_info" : "Please enter valid information",
     "projects": {
       "fetching_project": "An error occurred while fetching your projects.",
       "creating_project": "An error occurred while creating a new project",

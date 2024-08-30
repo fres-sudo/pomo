@@ -18,7 +18,7 @@ class ProjectJTO extends DTO with _$ProjectJTO {
     required DateTime startDate,
     required DateTime endDate,
     DateTime? completedAt,
-    required UserJTO owner,
+    required String userId,
     String? imageCover,
     List<TaskJTO>? tasks,
     List<UserJTO>? contributors,

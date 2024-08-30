@@ -116,8 +116,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                         description: _descriptionTextEditingController.text,
                                         pomodoro: _currentPomodoroValue,
                                         pomodoroCompleted: 0,
-                                        user: user,
+                                        userId: user.id,
                                         createdAt: DateTime.now(),
+                                        dueDate: DateTime.now(),
                                       ))
                                   : context.read<TaskBloc>().updateTaskById(
                                       id: widget.task!.id!,
@@ -126,7 +127,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                           name: _nameTextEditingController.text,
                                           pomodoro: _currentPomodoroValue,
                                           pomodoroCompleted: widget.task?.pomodoroCompleted,
-                                          user: user,
+                                          userId: user.id,
+                                          dueDate: widget.task?.dueDate ?? DateTime.now(),
                                           createdAt: widget.task!.createdAt,
                                           completedAt: widget.task?.completedAt));
                               context.router.maybePop();

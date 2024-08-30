@@ -16,8 +16,8 @@ class LightTheme {
           error: kRed500,
           onError: kRed100,
           primary: kPrimary500,
-          secondary: kNeutral600,
-          onSecondary: kNeutral400,
+          secondary: kNeutral100,
+          onSecondary: kNeutral600,
           onSecondaryContainer: kNeutral600,
           onSurfaceVariant: kNeutralWhite),
       radioTheme: RadioThemeData(
@@ -38,7 +38,7 @@ class LightTheme {
       inputDecorationTheme: InputDecorationTheme(
           prefixIconColor: kNeutral900,
           fillColor: kNeutral100,
-          hintStyle: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500, color: kNeutral600),
+          hintStyle: textTheme.bodyMedium?.copyWith(color: kNeutral600),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           errorBorder: OutlineInputBorder(
@@ -48,10 +48,7 @@ class LightTheme {
           disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           filled: true,
-          contentPadding: const EdgeInsets.only(
-            bottom: 20 / 2,
-            left: 16,
-          ),
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           suffixIconColor: kNeutral900),
       bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral100),
       checkboxTheme: CheckboxThemeData(
@@ -110,9 +107,10 @@ class LightTheme {
                 borderRadius: BorderRadius.circular(16),
               ))),
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: TextButton.styleFrom(
+          style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 14),
               backgroundColor: kPrimary500,
+              foregroundColor: kNeutral300,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ))),
@@ -149,7 +147,8 @@ class LightTheme {
         focusColor: Colors.transparent,
         selectedColor: Colors.transparent,
         fillColor: Colors.transparent,
-      ));
+      ),
+  );
 }
 
 class DarkTheme {
@@ -178,10 +177,7 @@ class DarkTheme {
           disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
           filled: true,
-          contentPadding: const EdgeInsets.only(
-            bottom: 20 / 2,
-            left: 16,
-          ),
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           suffixIconColor: kNeutral100),
       bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral900),
       colorScheme: const ColorScheme.dark(
@@ -262,9 +258,10 @@ class DarkTheme {
                 borderRadius: BorderRadius.circular(16),
               ))),
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: TextButton.styleFrom(
+          style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 14),
               backgroundColor: kPrimary500,
+              foregroundColor: kNeutral300,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ))),
@@ -301,7 +298,8 @@ class DarkTheme {
         focusColor: Colors.transparent,
         selectedColor: Colors.transparent,
         fillColor: Colors.transparent,
-      ));
+      ),
+      );
 }
 
 TextTheme textTheme = GoogleFonts.interTightTextTheme();

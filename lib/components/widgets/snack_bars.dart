@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pomo/constants/colors.dart';
 
+import '../../i18n/strings.g.dart';
+
 onInvalidInput(BuildContext context){
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
-       const SnackBar(
-          duration:  Duration(seconds: 2),
-          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('Please enter valid information 📝',)),
+      SnackBar(
+           backgroundColor: kYellow100,
+           shape: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(12),
+               borderSide: const BorderSide(color: kYellow200)
+           ),
+          duration: const Duration(seconds: 2),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: Text('${t.errors.valid_info}📝',)),
     );
   });
 }
@@ -87,10 +94,15 @@ onSuccessState(BuildContext context, String text,) {
 onAvailableSoon(BuildContext context) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          duration:  Duration(seconds: 2),
-          padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
+      SnackBar(
+          backgroundColor: kYellow100,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: kYellow200)
+          ),
+          duration: const Duration(seconds: 2),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          content: const Text(
               'Sorry! 😣 This feature will be available soon 👀')),
     );
   });

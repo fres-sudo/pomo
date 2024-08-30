@@ -76,7 +76,8 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                                     task: Task(
                                         name: "user-${user.id}-${DateTime.now()}",
                                         pomodoro: 1,
-                                        user: user,
+                                        userId: user.id,
+                                        dueDate: DateTime.now(),
                                         createdAt: DateTime.now(),
                                         completedAt: DateTime.now(),
                                         pomodoroCompleted: 1));

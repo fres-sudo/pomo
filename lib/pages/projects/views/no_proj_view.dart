@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 
-import '../../../components/widgets/rounded_button.dart';
-import '../../../constants/colors.dart';
+import '../../../i18n/strings.g.dart';
 import '../../../routes/app_router.gr.dart';
 
 class NoProjectView extends StatelessWidget {
@@ -19,33 +18,22 @@ class NoProjectView extends StatelessWidget {
           "assets/images/no-proj-image.png",
           scale: 0.85,
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        Gap.SM,
         Text(
-          "You still don't have \n any project",
+          t.projects.no_proj,
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        RoundedButton(
-          borderColor: Colors.transparent,
-          color: kPrimary500,
-          width: MediaQuery.sizeOf(context).width / 2.5,
-          onPressed: () {
-            AutoRouter.of(context)
-                .push(const CreateProjectRoute());
-          },
-          child: Text(
-            "New Project",
-            style: GoogleFonts.inter(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: kNeutral50),
-          ),
-        ),
+        Gap.MD,
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(150, 48)
+            ),
+            onPressed: () => context.router.push(const CreateProjectRoute()),
+            child: Text(
+              t.projects.create.title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            ))
       ],
     );
   }

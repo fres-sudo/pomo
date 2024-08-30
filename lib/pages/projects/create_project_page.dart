@@ -37,7 +37,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   XFile? image;
 
-  DateTime _selectedDate = DateTime.now();
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   String userId = "";
 
@@ -92,9 +93,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                       project: Project(
                                     name: _nameTextController.text,
                                     description: _descriptionTextController.text,
-                                    startDate: _selectedDate,
-                                    endDate: _selectedDate,
-                                    owner: user,
+                                    startDate: _startDate ?? DateTime.now(),
+                                    endDate: _endDate ?? DateTime.now(),
+                                    userId: user.id,
                                   ))
                               : onInvalidInput(context);
                         },
@@ -102,22 +103,16 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                             ? const CustomCircularProgressIndicator()
                             : Text(
                                 t.general.create,
-                                style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                    color: _formKey.currentState?.validate() != null
-                                        ? _formKey.currentState!.validate()
-                                            ? kPrimary500
-                                            : kNeutral400
-                                        : kNeutral400),
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color:_nameTextController.text.length >= 3 && _endDate != null ? Theme.of(context).primaryColor
+                                    : Theme.of(context).colorScheme.onSecondary)
                               ))
                   ],
                 ),
                 Gap.MD,
                 DottedBorder(
                   strokeWidth: 2,
-                  color: kNeutral300,
-                  dashPattern: const [30, 1],
+                  color: Theme.of(context).dividerColor,
+                  dashPattern: const [3, 10],
                   strokeCap: StrokeCap.round,
                   borderType: BorderType.RRect,
                   radius: const Radius.circular(30),
@@ -165,9 +160,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                             image = null;
                                           });
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.delete_forever,
-                                          color: kRed500,
+                                          color: Theme.of(context).colorScheme.error,
                                         )),
                                   ),
                                 ),
@@ -176,7 +171,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                     ),
                   ),
                 ),
-                Gap.LG,
+                Gap.MD,
                 Form(
                     key: _formKey,
                     child: Column(
@@ -186,9 +181,11 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         Gap.XS,
                         TextFormField(
                           controller: _nameTextController,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           decoration: InputDecoration(
                             hintText: t.general.name,
                           ),
+                          onChanged: (_) => setState(() {}),
                           validator: (value) {
                             if (value == null || value.isEmpty || value.length < 3) {
                               return 'Please enter a valid project name';
@@ -196,11 +193,12 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                             return null;
                           },
                         ),
-                        Gap.LG,
+                        Gap.MD,
                         Text(t.general.description, style: Theme.of(context).textTheme.titleMedium),
                         Gap.XS,
                         TextFormField(
                           controller: _descriptionTextController,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           maxLines: 5,
                           decoration: InputDecoration(
                             hintText: t.general.description,
@@ -208,34 +206,45 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         ),
                       ],
                     )),
-                Gap.LG,
+                Gap.MD,
                 Text(t.general.collaborator, style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
-                GestureDetector(
-                  onTap: () => onAvailableSoon(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).inputDecorationTheme.fillColor),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(t.projects.invite_friends, style: Theme.of(context).textTheme.titleMedium?.copyWith(color:  Theme.of(context).colorScheme.onSecondary)),
-                        Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
-                      ],
-                    ),
+                TextButton(
+                  onPressed: () => onAvailableSoon(context),
+                  style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      padding: Theme.of(context).inputDecorationTheme.contentPadding?.add(const EdgeInsets.symmetric(vertical: 2)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(t.projects.invite_friends, style: Theme.of(context).inputDecorationTheme.hintStyle),
+                      Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
+                    ],
                   ),
                 ),
-                Gap.LG,
+                Gap.MD,
+                Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
+                Gap.XS,
+                DateField(
+                    selectedDate:_startDate,
+                    onPress: (date) => setState(() {
+                          _startDate= date;
+                        }),
+                    onDelete: () => setState(() {
+                          _startDate= null;
+                        })),
+                Gap.MD,
                 Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
                 DateField(
-                    selectedDate: _selectedDate,
+                    selectedDate:_endDate,
                     onPress: (date) => setState(() {
-                          _selectedDate = date;
-                        }),
+                      _endDate= date;
+                    }),
                     onDelete: () => setState(() {
-                          _selectedDate = DateTime.now();
-                        }))
+                      _endDate= null;
+                    }))
               ],
             ),
           ),

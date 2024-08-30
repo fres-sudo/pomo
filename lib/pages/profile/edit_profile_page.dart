@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:pomo/components/utils/my_progress_indicator.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/user/user.dart';
+
 import '../../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
@@ -36,8 +38,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   late User user;
 
-  Future<void> updateUserSecureStorage(
-      {String? name, String? surname, String? photo}) async {
+  Future<void> updateUserSecureStorage({String? name, String? surname, String? photo}) async {
     const storage = FlutterSecureStorage();
     final String? userDataString = await storage.read(key: "user_data");
 
@@ -72,8 +73,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           state.whenOrNull(
               updated: (user) {
                 this.user = user;
-                if (_nameTextController.text.isNotEmpty &&
-                    _surnameTextController.text.isNotEmpty) {
+                if (_nameTextController.text.isNotEmpty && _surnameTextController.text.isNotEmpty) {
                   updateUserSecureStorage(photo: image?.path);
                   onSuccessState(context, "update your information");
                   context.read<AuthCubit>().authenticated(user);
@@ -87,13 +87,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   context.read<AuthCubit>().authenticated(user);
                 }
               },
-              deleted: () => {
-                    context.read<AuthCubit>().signOut(),
-                    context.router.replace(const RootRoute())
-                  },
+              deleted: () => {context.read<AuthCubit>().signOut(), context.router.replace(const RootRoute())},
               errorDeleting: () => onErrorState(context, "deleting user"),
-              errorUpdatingPhoto: () =>
-                  onErrorState(context, "updating user photo"),
+              errorUpdatingPhoto: () => onErrorState(context, "updating user photo"),
               errorUpdating: () => onErrorState(context, "updating user"));
         },
         builder: (context, state) => state.maybeWhen(
@@ -116,15 +112,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 Row(children: [
                                   InkWell(
                                     onTap: () {
-                                      context.router
-                                          .replace(const ProfileRoute());
+                                      context.router.replace(const ProfileRoute());
                                     },
                                     child: SvgPicture.asset(
                                       'assets/icons/arrow-left.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          Theme.of(context).iconTheme.color ??
-                                              Colors.white,
-                                          BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color ?? Colors.white, BlendMode.srcIn),
                                     ),
                                   ),
                                   Text(
@@ -137,34 +129,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       if (_nameTextController.text == "" &&
                                           _nameTextController.text.length < 4 &&
                                           _surnameTextController.text == "" &&
-                                          _surnameTextController.text.length <
-                                              4) {
+                                          _surnameTextController.text.length < 4) {
                                         onInvalidInput(context);
                                       } else {
-                                        image != null
-                                            ? context
-                                                .read<UserBloc>()
-                                                .updateUserPhoto(
-                                                    id: user.id,
-                                                    photo: File(image!.path))
-                                            : null;
+                                        image != null ? context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path)) : null;
                                       }
                                     },
                                     child: Text("Update",
                                         style: GoogleFonts.inter(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 14,
-                                            color: (_nameTextController.text !=
-                                                            "" &&
-                                                        _nameTextController
-                                                                .text.length >
-                                                            4 ||
-                                                    _surnameTextController
-                                                                .text !=
-                                                            "" &&
-                                                        _surnameTextController
-                                                                .text.length >
-                                                            4)
+                                            color: (_nameTextController.text != "" && _nameTextController.text.length > 4 ||
+                                                    _surnameTextController.text != "" && _surnameTextController.text.length > 4)
                                                 ? Theme.of(context).primaryColor
                                                 : kNeutral400))),
                               ],
@@ -182,8 +158,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           if (user.avatar == null) {
                                             return const CircleAvatar(
                                               maxRadius: 75,
-                                              backgroundImage: AssetImage(
-                                                  "assets/images/propic-placeholder.jpg"),
+                                              backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
                                             );
                                           } else {
                                             return ClipOval(
@@ -196,16 +171,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     )));
                                           }
                                         } else {
-                                          return CircleAvatar(
-                                              radius: 75,
-                                              backgroundImage:
-                                                  FileImage(File(image!.path)));
+                                          return CircleAvatar(radius: 75, backgroundImage: FileImage(File(image!.path)));
                                         }
                                       },
                                       orElse: () => const CircleAvatar(
                                             radius: 75,
-                                            backgroundImage: AssetImage(
-                                                "assets/images/propic-placeholder.jpg"),
+                                            backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
                                           )),
                                   GestureDetector(
                                     onTap: () async {
@@ -247,10 +218,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Name",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium),
+                                  Text("Name", style: Theme.of(context).textTheme.titleMedium),
                                   const SizedBox(
                                     height: 6,
                                   ),
@@ -258,21 +226,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     keyboardType: TextInputType.name,
                                     controller: _nameTextController,
                                     cursorColor: kPrimary600,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     decoration: const InputDecoration(
                                       hintText: "Username",
                                     ),
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.deny(
-                                          RegExp('[ ]')),
+                                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
                                     ],
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
+                                    style: Theme.of(context).textTheme.titleMedium,
                                     validator: (value) {
-                                      if (value == null ||
-                                          value.isEmpty ||
-                                          value.length < 3) {
+                                      if (value == null || value.isEmpty || value.length < 3) {
                                         return 'Please enter a valid name';
                                       }
                                       return null;
@@ -281,10 +244,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Text("Surname",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium),
+                                  Text("Surname", style: Theme.of(context).textTheme.titleMedium),
                                   const SizedBox(
                                     height: 6,
                                   ),
@@ -292,21 +252,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     keyboardType: TextInputType.emailAddress,
                                     controller: _surnameTextController,
                                     cursorColor: kPrimary600,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     decoration: const InputDecoration(
                                       hintText: "Surname",
                                     ),
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.deny(
-                                          RegExp('[ ]')),
+                                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
                                     ],
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
+                                    style: Theme.of(context).textTheme.titleMedium,
                                     validator: (value) {
-                                      if (value == null ||
-                                          value.isEmpty ||
-                                          value.length < 3) {
+                                      if (value == null || value.isEmpty || value.length < 3) {
                                         return 'Please enter a valid surname';
                                       }
                                       return null;
@@ -315,10 +270,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Text("Email",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium),
+                                  Text("Email", style: Theme.of(context).textTheme.titleMedium),
                                   const SizedBox(
                                     height: 6,
                                   ),
@@ -326,20 +278,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     initialValue: user.email,
                                     readOnly: true,
                                     cursorColor: kPrimary600,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    decoration: InputDecoration(
-                                        suffixIcon: const Icon(Icons.lock,
-                                            size: 20, color: kNeutral500),
-                                        hintText: user.email),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(color: kNeutral500),
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    decoration:
+                                        InputDecoration(suffixIcon: const Icon(Icons.lock, size: 20, color: kNeutral500), hintText: user.email),
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),
                                   ),
                                   const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 20.0),
+                                    padding: EdgeInsets.symmetric(vertical: 20.0),
                                     child: Divider(),
                                   ),
                                   TextButton(
@@ -347,30 +292,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         context: context,
                                         isDismissible: true,
                                         useRootNavigator: true,
-                                        builder: (BuildContext context) =>
-                                            DestructionBottomSheet(
+                                        builder: (BuildContext context) => DestructionBottomSheet(
                                               title: "Delete Account",
                                               buttonText: "Delete",
                                               description:
                                                   "Are you sure you want to delete your account? This action is irreversible and all the data associated with this account will be deleted",
-                                              function: () => context
-                                                  .read<UserBloc>()
-                                                  .deleteUser(id: user.id),
+                                              function: () => context.read<UserBloc>().deleteUser(id: user.id),
                                             )),
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                          color: kRed500.withOpacity(0.15),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                                      decoration: BoxDecoration(color: kRed500.withOpacity(0.15), borderRadius: BorderRadius.circular(12)),
                                       alignment: Alignment.center,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12),
+                                      padding: const EdgeInsets.symmetric(vertical: 12),
                                       child: Text(
                                         "Delete Account",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(color: kRed500),
+                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),
                                       ),
                                     ),
                                   )

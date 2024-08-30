@@ -17,7 +17,7 @@ class Project with _$Project {
     required DateTime startDate,
     required DateTime endDate,
     DateTime? completedAt,
-    required User owner,
+    required String userId,
     String? imageCover,
     List<Task>? tasks,
     List<User>? contributors,

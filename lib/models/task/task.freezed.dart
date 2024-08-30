@@ -21,7 +21,8 @@ mixin _$Task {
   String? get description => throw _privateConstructorUsedError;
   int get pomodoro => throw _privateConstructorUsedError;
   int? get pomodoroCompleted => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  DateTime get dueDate => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
 
@@ -40,11 +41,10 @@ abstract class $TaskCopyWith<$Res> {
       String? description,
       int pomodoro,
       int? pomodoroCompleted,
-      User user,
+      String userId,
+      DateTime dueDate,
       DateTime createdAt,
       DateTime? completedAt});
-
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -65,7 +65,8 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? description = freezed,
     Object? pomodoro = null,
     Object? pomodoroCompleted = freezed,
-    Object? user = null,
+    Object? userId = null,
+    Object? dueDate = null,
     Object? createdAt = null,
     Object? completedAt = freezed,
   }) {
@@ -90,10 +91,14 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.pomodoroCompleted
           : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
               as int?,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      dueDate: null == dueDate
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -103,14 +108,6 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -127,12 +124,10 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String? description,
       int pomodoro,
       int? pomodoroCompleted,
-      User user,
+      String userId,
+      DateTime dueDate,
       DateTime createdAt,
       DateTime? completedAt});
-
-  @override
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -150,7 +145,8 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? pomodoro = null,
     Object? pomodoroCompleted = freezed,
-    Object? user = null,
+    Object? userId = null,
+    Object? dueDate = null,
     Object? createdAt = null,
     Object? completedAt = freezed,
   }) {
@@ -175,10 +171,14 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.pomodoroCompleted
           : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
               as int?,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      dueDate: null == dueDate
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,8 @@ class _$TaskImpl extends _Task {
       this.description,
       required this.pomodoro,
       this.pomodoroCompleted,
-      required this.user,
+      required this.userId,
+      required this.dueDate,
       required this.createdAt,
       this.completedAt})
       : super._();
@@ -216,7 +217,9 @@ class _$TaskImpl extends _Task {
   @override
   final int? pomodoroCompleted;
   @override
-  final User user;
+  final String userId;
+  @override
+  final DateTime dueDate;
   @override
   final DateTime createdAt;
   @override
@@ -224,7 +227,7 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, user: $user, createdAt: $createdAt, completedAt: $completedAt)';
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, dueDate: $dueDate, createdAt: $createdAt, completedAt: $completedAt)';
   }
 
   @override
@@ -240,7 +243,8 @@ class _$TaskImpl extends _Task {
                 other.pomodoro == pomodoro) &&
             (identical(other.pomodoroCompleted, pomodoroCompleted) ||
                 other.pomodoroCompleted == pomodoroCompleted) &&
-            (identical(other.user, user) || other.user == user) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.completedAt, completedAt) ||
@@ -249,7 +253,7 @@ class _$TaskImpl extends _Task {
 
   @override
   int get hashCode => Object.hash(runtimeType, id, name, description, pomodoro,
-      pomodoroCompleted, user, createdAt, completedAt);
+      pomodoroCompleted, userId, dueDate, createdAt, completedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -265,7 +269,8 @@ abstract class _Task extends Task {
       final String? description,
       required final int pomodoro,
       final int? pomodoroCompleted,
-      required final User user,
+      required final String userId,
+      required final DateTime dueDate,
       required final DateTime createdAt,
       final DateTime? completedAt}) = _$TaskImpl;
   const _Task._() : super._();
@@ -281,7 +286,9 @@ abstract class _Task extends Task {
   @override
   int? get pomodoroCompleted;
   @override
-  User get user;
+  String get userId;
+  @override
+  DateTime get dueDate;
   @override
   DateTime get createdAt;
   @override
