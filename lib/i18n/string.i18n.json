@@ -30,6 +30,10 @@
       "title": "New Project",
       "add_cover": "Add Cover",
       "invite_collaborator": "Invite a collaborator"
+    },
+    "delete" : {
+      "title": "Delete project",
+      "description" : "Are you sure you want to delete this project?"
     }
   },
   "profile": {

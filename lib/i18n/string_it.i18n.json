@@ -30,6 +30,10 @@
       "title": "Nuovo Progetto",
       "add_cover": "Aggiungi copertina",
       "invite_collaborator": "Invita un collaboratore"
+    },
+    "delete" : {
+      "title": "Elimina progetto",
+      "description" : "Sei sicuro di voler elminare questo progetto?"
     }
   },
   "profile": {

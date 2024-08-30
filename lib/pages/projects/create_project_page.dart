@@ -219,7 +219,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.projects.invite_friends, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral600)),
+                        Text(t.projects.invite_friends, style: Theme.of(context).textTheme.titleMedium?.copyWith(color:  Theme.of(context).colorScheme.onSecondary)),
                         Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
                       ],
                     ),

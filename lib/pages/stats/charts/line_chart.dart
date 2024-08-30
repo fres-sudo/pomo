@@ -37,7 +37,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
         Text(t.stats.weekly_productivity,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
         Gap.XS,
-        Text("${widget.stats.completedTasksOfTheWeek} ${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr) > 0 ? t.tasks.plural : t.tasks.title}",
+        Text("${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr)} ${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr) > 0 ? t.tasks.plural : t.tasks.title}",
             style: Theme.of(context).textTheme.displayMedium),
         Gap.SM,
         Expanded(

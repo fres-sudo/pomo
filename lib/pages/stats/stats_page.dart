@@ -30,23 +30,17 @@ class StatsPage extends StatefulWidget {
 class _StatsPageState extends State<StatsPage> {
   var selectedMode = [true, false, false];
   List<Task> tasks = [];
-  List<Task> completedTasks = [];
+  List<String> titles = [t.tasks.focus_time, t.tasks.break_time, t.tasks.total_tasks];
+  List<String> days = [t.general.today, t.general.yesterday, t.general.all_times];
 
   Future<void> _fetchStats() async {
     String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
     context.read<StatsBloc>().fetchStats(userId: id);
   }
 
-  double _formatFocusTime(int? time){
-    final focusTime = context.select<TimerCubit, int>((cubit) => cubit.state.focusTime);
-    final hours = time ?? 0 * focusTime / 25;
-    return double.tryParse(hours.toStringAsFixed(1)) ?? 0;
-  }
-
-  double _formatBreakTime(int? time){
-    final breakTime = context.select<TimerCubit, int>((cubit) => cubit.state.breakTime);
-    final hours = time ?? 0 * breakTime / 25;
-    return double.tryParse(hours.toStringAsFixed(1)) ?? 0;
+  double _formatTime(int? time, int factor) {
+    final hours = time ?? 0 * factor / 60;
+    return double.tryParse(hours.toStringAsFixed(2)) ?? 0;
   }
 
   @override
@@ -58,7 +52,8 @@ class _StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    final focusTime = context.select<TimerCubit, int>((cubit) => cubit.state.focusTime);
+    final breakTime = context.select<TimerCubit, int>((cubit) => cubit.state.breakTime);
 
     return BlocConsumer<StatsBloc, StatsState>(
       listener: (BuildContext context, StatsState state) => state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null,
@@ -77,7 +72,7 @@ class _StatsPageState extends State<StatsPage> {
                   Gap.MD,
                   Skeletonizer(
                     enabled: state.isLoading,
-                    child: tasks.isEmpty
+                    child: (state.statistics?.totalTasksAll ?? 0) == 0
                         ? const NoStatsPage()
                         : Column(
                             children: [
@@ -97,29 +92,17 @@ class _StatsPageState extends State<StatsPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         ToggleButtons(
-                                            renderBorder: false,
-                                            splashColor: Colors.transparent,
-                                            borderRadius: BorderRadius.circular(12),
-                                            focusColor: Colors.transparent,
-                                            selectedColor: Colors.transparent,
-                                            fillColor: Colors.transparent,
-                                            isSelected: selectedMode,
-                                            onPressed: (int index) {
-                                              setState(() {
-                                                for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
-                                                  if (buttonIndex == index) {
-                                                    selectedMode[buttonIndex] = true;
-                                                  } else {
-                                                    selectedMode[buttonIndex] = false;
-                                                  }
-                                                }
-                                              });
-                                            },
-                                            children: [
-                                              TimeSelector(text: t.general.today, isSelected: selectedMode[0]),
-                                              TimeSelector(text: t.general.yesterday, isSelected: selectedMode[1]),
-                                              TimeSelector(text: t.general.all_times, isSelected: selectedMode[2]),
-                                            ]),
+                                          renderBorder: false,
+                                          isSelected: selectedMode,
+                                          onPressed: (int index) {
+                                            setState(() {
+                                              for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
+                                                selectedMode[buttonIndex] = buttonIndex == index;
+                                              }
+                                            });
+                                          },
+                                          children: List.generate(3, (index) => TimeSelector(text: days[index], isSelected: selectedMode[index])),
+                                        ),
                                         IconButton(
                                             onPressed: () => onAvailableSoon(context),
                                             icon: Icon(
@@ -135,72 +118,35 @@ class _StatsPageState extends State<StatsPage> {
                                           width: 83,
                                           height: 83,
                                         ),
-                                        Gap.MD,
-                                        SizedBox(
-                                          width: MediaQuery.sizeOf(context).width / 2,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        Gap.MD_H,
+                                        Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    t.tasks.focus_time,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall
-                                                        ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                  ),
-                                                  Text(
-                                                    "${selectedMode[0]
-                                                        ? _formatFocusTime(state.statistics?.totalTasksToday): selectedMode[1]
-                                                        ? _formatFocusTime(state.statistics?.totalTasksYesterday)
-                                                        : _formatFocusTime(state.statistics?.totalTasksAll)}h",
-                                                    style: Theme.of(context).textTheme.titleMedium,
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    t.tasks.break_time,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall
-                                                        ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                  ),
-                                                  Text(
-                                                    "${selectedMode[0]
-                                                        ? _formatBreakTime(state.statistics?.totalTasksToday) : selectedMode[1]
-                                                        ? _formatBreakTime(state.statistics?.totalTasksYesterday)
-                                                        : _formatBreakTime(state.statistics?.totalTasksAll)}h",
-                                                    style: Theme.of(context).textTheme.titleMedium,
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    t.tasks.total_tasks,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall
-                                                        ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                  ),
-                                                  Text(
-                                                    "${selectedMode[0]
-                                                        ? state.statistics?.totalTasksToday ?? 0 : selectedMode[1]
-                                                        ? state.statistics?.totalTasksYesterday ?? 0
-                                                        : state.statistics?.totalTasksAll ?? 0}",
-                                                    style: Theme.of(context).textTheme.titleMedium,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                            children: titles
+                                                .map((title) => Text(
+                                                      title,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall
+                                                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                                    ))
+                                                .toList(growable: false)),
+                                        const Spacer(),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "${selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, focusTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, focusTime) : _formatTime(state.statistics?.totalTasksAll, focusTime)}h",
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            ),
+                                            Text(
+                                              "${selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, breakTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, breakTime) : _formatTime(state.statistics?.totalTasksAll, breakTime)}h",
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            ),
+                                            Text(
+                                              "${selectedMode[0] ? state.statistics?.totalTasksToday ?? 0 : selectedMode[1] ? state.statistics?.totalTasksYesterday ?? 0 : state.statistics?.totalTasksAll ?? 0}",
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            )
+                                          ],
                                         )
                                       ],
                                     )

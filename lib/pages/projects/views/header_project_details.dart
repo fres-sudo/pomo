@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/text.dart';
@@ -30,16 +31,12 @@ class HeaderProjectDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(12),
                   onTap: () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),
-                  child: SvgPicture.asset(
-                    'assets/icons/arrow-left.svg',
-                    colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color!, BlendMode.srcIn),
-                  ),
+                  child: Icon(Icons.chevron_left_outlined),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                Gap.SM_H,
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1.3,
                   child: Text(project.name, overflow: TextOverflow.ellipsis, style: kSerzif(context)),
@@ -52,6 +49,7 @@ class HeaderProjectDetails extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   isDismissible: true,
+                  useRootNavigator: true,
                   builder: (BuildContext context) {
                     return ProjectBottomSheet(project: project);
                   },
