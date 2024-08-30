@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../components/cards/task_card.dart';
+import '../../../i18n/strings.g.dart';
 import '../../../models/task/task.dart';
 import '../widget/task_bottom_sheet.dart';
 import 'no_task_view.dart';
@@ -50,9 +52,7 @@ class TaskView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return TaskCard(task: inProgressTasks[index]);
                     }),
-                const SizedBox(
-                  height: 32,
-                ),
+                Gap.XL,
                 Text("Already Done", style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)),
                 ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),

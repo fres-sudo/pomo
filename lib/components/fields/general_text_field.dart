@@ -22,37 +22,11 @@ class GeneralFieldState extends State<GeneralField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      cursorColor: kPrimary600,
       validator: widget.validator,
       maxLines: widget.rows,
-      onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
       decoration: InputDecoration(
-        prefixIcon: widget.prefixIcon,
-        prefixIconColor: context.isDarkMode ? kNeutral100 : kNeutral900,
         hintText: widget.hintText,
-        fillColor: context.isDarkMode ? kNeutral900: kNeutral100,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kRed500, width: 1),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none),
-        filled: true,
-        //contentPadding: const EdgeInsets.only(bottom: 17, top: 17, left: 16),
-        contentPadding: const EdgeInsets.only(bottom: 48 / 2, left: 16, top: 12),
-        // Error text will be set based on email validation result
       ),
       style: Theme.of(context).textTheme.titleMedium,
       autovalidateMode: AutovalidateMode.onUserInteraction,

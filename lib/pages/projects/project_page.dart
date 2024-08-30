@@ -79,6 +79,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     Gap.MD,
                     TextFormField(
                       controller: searchController,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       onChanged: (query) => filterSearchResults(query, state.projects),
                       decoration: const InputDecoration(hintText: "Search", prefixIcon: Icon(Icons.search)),
                     ),

@@ -23,7 +23,7 @@ mixin _$Project {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
-  User get owner => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   String? get imageCover => throw _privateConstructorUsedError;
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<User>? get contributors => throw _privateConstructorUsedError;
@@ -45,12 +45,10 @@ abstract class $ProjectCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       DateTime? completedAt,
-      User owner,
+      String userId,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
-
-  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -73,7 +71,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? startDate = null,
     Object? endDate = null,
     Object? completedAt = freezed,
-    Object? owner = null,
+    Object? userId = null,
     Object? imageCover = freezed,
     Object? tasks = freezed,
     Object? contributors = freezed,
@@ -107,10 +105,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      owner: null == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as User,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -124,14 +122,6 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           : contributors // ignore: cast_nullable_to_non_nullable
               as List<User>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get owner {
-    return $UserCopyWith<$Res>(_value.owner, (value) {
-      return _then(_value.copyWith(owner: value) as $Val);
-    });
   }
 }
 
@@ -150,13 +140,10 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       DateTime? completedAt,
-      User owner,
+      String userId,
       String? imageCover,
       List<Task>? tasks,
       List<User>? contributors});
-
-  @override
-  $UserCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -177,7 +164,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? completedAt = freezed,
-    Object? owner = null,
+    Object? userId = null,
     Object? imageCover = freezed,
     Object? tasks = freezed,
     Object? contributors = freezed,
@@ -211,10 +198,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      owner: null == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as User,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
       imageCover: freezed == imageCover
           ? _value.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
@@ -242,7 +229,7 @@ class _$ProjectImpl extends _Project {
       required this.startDate,
       required this.endDate,
       this.completedAt,
-      required this.owner,
+      required this.userId,
       this.imageCover,
       final List<Task>? tasks,
       final List<User>? contributors})
@@ -265,7 +252,7 @@ class _$ProjectImpl extends _Project {
   @override
   final DateTime? completedAt;
   @override
-  final User owner;
+  final String userId;
   @override
   final String? imageCover;
   final List<Task>? _tasks;
@@ -290,7 +277,7 @@ class _$ProjectImpl extends _Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, owner: $owner, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
   }
 
   @override
@@ -309,7 +296,7 @@ class _$ProjectImpl extends _Project {
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.completedAt, completedAt) ||
                 other.completedAt == completedAt) &&
-            (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.imageCover, imageCover) ||
                 other.imageCover == imageCover) &&
             const DeepCollectionEquality().equals(other._tasks, _tasks) &&
@@ -327,7 +314,7 @@ class _$ProjectImpl extends _Project {
       startDate,
       endDate,
       completedAt,
-      owner,
+      userId,
       imageCover,
       const DeepCollectionEquality().hash(_tasks),
       const DeepCollectionEquality().hash(_contributors));
@@ -348,7 +335,7 @@ abstract class _Project extends Project {
       required final DateTime startDate,
       required final DateTime endDate,
       final DateTime? completedAt,
-      required final User owner,
+      required final String userId,
       final String? imageCover,
       final List<Task>? tasks,
       final List<User>? contributors}) = _$ProjectImpl;
@@ -369,7 +356,7 @@ abstract class _Project extends Project {
   @override
   DateTime? get completedAt;
   @override
-  User get owner;
+  String get userId;
   @override
   String? get imageCover;
   @override

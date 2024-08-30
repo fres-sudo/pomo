@@ -11,6 +11,7 @@
     "collaborator": "Collaboratore",
     "due_date": "Data di fine",
     "start_date": "Data di inizio",
+    "select_date" : "Seleziona una data",
     "actions": "Azioni",
     "share": "Condividi",
     "reset": "Resetta",
@@ -26,6 +27,7 @@
     "plural": "Progetti",
     "header_project_page": "Mettiti a Lavoro",
     "invite_friends": "Invita i tuoi amici",
+    "no_proj" : "Non hai ancora nessun progetto",
     "create": {
       "title": "Nuovo Progetto",
       "add_cover": "Aggiungi copertina",
@@ -114,6 +116,7 @@
     "general_error": "Si è verificato un errore inaspettato.",
     "please_restart": "Si prega di riavviare l'applicazione.",
     "please_retry": "Si prega di riprovare",
+    "valid_info" : "Perfavore inserisci delle informazioni corrette.",
     "projects": {
       "fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../i18n/strings.g.dart';
+
 class DateField extends StatelessWidget {
   const DateField(
       {super.key, required this.selectedDate, required this.onPress, required this.onDelete, this.hintText, this.firstDate, this.lastDate, });
@@ -39,7 +41,7 @@ class DateField extends StatelessWidget {
                   child: Text(
                     selectedDate != null ?
                     DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(selectedDate!)
-                        : hintText ?? "Select a date",
+                        : hintText ?? t.general.select_date,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: selectedDate != null ? Theme.of(context).colorScheme.onSecondary: Theme.of(context).colorScheme.onSecondary,
                     ),

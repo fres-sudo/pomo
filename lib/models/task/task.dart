@@ -15,7 +15,8 @@ class Task with _$Task {
     String? description,
     required int pomodoro,
     int? pomodoroCompleted,
-    required User user,
+    required String userId,
+    required DateTime dueDate,
     required DateTime createdAt,
     DateTime? completedAt,
 }) = _Task;
