@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pomo/components/widgets/invalid_input_dialog.dart';
 import 'package:pomo/constants/colors.dart';
 
 import '../../i18n/strings.g.dart';
 
-onInvalidInput(BuildContext context){
+onInvalidInput(BuildContext context, {bool isAlert = false}){
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    !isAlert
+        ? ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
            backgroundColor: kYellow100,
            shape: OutlineInputBorder(
@@ -15,7 +17,8 @@ onInvalidInput(BuildContext context){
           duration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           content: Text('${t.errors.valid_info}📝',)),
-    );
+    )
+        : showDialog(context: context, builder: (BuildContext context)  => const InvalidInputDialog());
   });
 }
 

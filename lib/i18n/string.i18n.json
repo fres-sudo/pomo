@@ -16,18 +16,20 @@
     "share": "Share",
     "reset": "Reset",
     "update": "Update",
+    "edit" : "Edit",
     "today": "Today",
     "yesterday": "Yesterday",
     "all_times": "All Time",
     "done" : "Done",
-    "quick_session" : "Quick Session"
+    "quick_session" : "Quick Session",
+    "still_dont_have" : "You still don't have"
   },
   "projects": {
     "title": "Project",
     "plural": "Projects",
     "header_project_page": "Let's work",
     "invite_friends": "Invite friends",
-    "no_proj" : "You still don't have any project",
+    "any_project" : "any project",
     "create": {
       "title": "New Project",
       "add_cover": "Add Cover",
@@ -66,7 +68,8 @@
     "title": "Statistics",
     "short_title": "Stats",
     "weekly_focus": "Weekly Focus Overview",
-    "weekly_productivity": "Weekly Productivity Average"
+    "weekly_productivity": "Weekly Productivity Average",
+    "any_stats" : "any statistics"
   },
   "tasks": {
     "title": "Task",
@@ -79,7 +82,21 @@
     "reset_timer": {
       "title": "Reset Timer",
       "description": "Are you sure you want to reset the timer?"
-    }
+    },
+    "any_tasks" : "any task",
+    "update" : {
+      "edit": "Edit Task"
+    },
+    "create": {
+      "title" : "New Task",
+      "working_on" : "I'm working on...",
+      "description": "Write a description of your task...",
+      "pomodoros" : "Pomodoros",
+      "due_date" : "Due date",
+      "high_priority" : "High Priority",
+      "end_in" : "To be finished by..."
+    },
+    "start_quick_session" : "Start Quick Session"
   },
   "authentication": {
     "login": {

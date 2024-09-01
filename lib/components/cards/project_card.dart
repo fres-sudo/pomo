@@ -67,21 +67,18 @@ class ProjectCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              project.imageCover != null && project.imageCover!.isEmpty
-                  ? ClipRRect(
+              ClipRRect(
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                      child: Container(
+                      child: project.imageCover != null && project.imageCover!.isEmpty
+                      ? Container(
                         height: MediaQuery.of(context).size.height / 7,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                          image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
-                          fit: BoxFit.cover,
-                        )),
-                      ),
-                    )
-                  : ClipRRect(
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                      child: SizedBox(
+                              image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
+                              fit: BoxFit.cover,
+                            )),
+                      )
+                      : SizedBox(
                         height: MediaQuery.of(context).size.height / 7,
                         width: MediaQuery.of(context).size.width,
                         child: FancyShimmerImage(

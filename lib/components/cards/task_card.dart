@@ -133,6 +133,7 @@ class _TaskCardState extends State<TaskCard> {
                                   pomodoro: widget.task.pomodoro,
                                   pomodoroCompleted: value! ? widget.task.pomodoro : 0,
                                   userId: widget.task.userId,
+                                  highPriority: widget.task.highPriority,
                                   createdAt: widget.task.createdAt,
                                   completedAt: value ? DateTime.now() : null,
                                   dueDate: widget.task.dueDate,

@@ -16,43 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignInEvent {
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) perform,
+    required TResult Function() google,
+    required TResult Function() apple,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? perform,
+    TResult? Function()? google,
+    TResult? Function()? apple,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? perform,
+    TResult Function()? google,
+    TResult Function()? apple,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PerformSignInEvent value) perform,
+    required TResult Function(GoogleSignInEvent value) google,
+    required TResult Function(AppleSignInEvent value) apple,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PerformSignInEvent value)? perform,
+    TResult? Function(GoogleSignInEvent value)? google,
+    TResult? Function(AppleSignInEvent value)? apple,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PerformSignInEvent value)? perform,
+    TResult Function(GoogleSignInEvent value)? google,
+    TResult Function(AppleSignInEvent value)? apple,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SignInEventCopyWith<SignInEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -61,8 +67,6 @@ abstract class $SignInEventCopyWith<$Res> {
   factory $SignInEventCopyWith(
           SignInEvent value, $Res Function(SignInEvent) then) =
       _$SignInEventCopyWithImpl<$Res, SignInEvent>;
-  @useResult
-  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -74,33 +78,13 @@ class _$SignInEventCopyWithImpl<$Res, $Val extends SignInEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$PerformSignInEventImplCopyWith<$Res>
-    implements $SignInEventCopyWith<$Res> {
+abstract class _$$PerformSignInEventImplCopyWith<$Res> {
   factory _$$PerformSignInEventImplCopyWith(_$PerformSignInEventImpl value,
           $Res Function(_$PerformSignInEventImpl) then) =
       __$$PerformSignInEventImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String email, String password});
 }
@@ -171,6 +155,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) perform,
+    required TResult Function() google,
+    required TResult Function() apple,
   }) {
     return perform(email, password);
   }
@@ -179,6 +165,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String email, String password)? perform,
+    TResult? Function()? google,
+    TResult? Function()? apple,
   }) {
     return perform?.call(email, password);
   }
@@ -187,6 +175,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? perform,
+    TResult Function()? google,
+    TResult Function()? apple,
     required TResult orElse(),
   }) {
     if (perform != null) {
@@ -199,6 +189,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(PerformSignInEvent value) perform,
+    required TResult Function(GoogleSignInEvent value) google,
+    required TResult Function(AppleSignInEvent value) apple,
   }) {
     return perform(this);
   }
@@ -207,6 +199,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PerformSignInEvent value)? perform,
+    TResult? Function(GoogleSignInEvent value)? google,
+    TResult? Function(AppleSignInEvent value)? apple,
   }) {
     return perform?.call(this);
   }
@@ -215,6 +209,8 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PerformSignInEvent value)? perform,
+    TResult Function(GoogleSignInEvent value)? google,
+    TResult Function(AppleSignInEvent value)? apple,
     required TResult orElse(),
   }) {
     if (perform != null) {
@@ -229,14 +225,227 @@ abstract class PerformSignInEvent implements SignInEvent {
       {required final String email,
       required final String password}) = _$PerformSignInEventImpl;
 
-  @override
   String get email;
-  @override
   String get password;
-  @override
   @JsonKey(ignore: true)
   _$$PerformSignInEventImplCopyWith<_$PerformSignInEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GoogleSignInEventImplCopyWith<$Res> {
+  factory _$$GoogleSignInEventImplCopyWith(_$GoogleSignInEventImpl value,
+          $Res Function(_$GoogleSignInEventImpl) then) =
+      __$$GoogleSignInEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GoogleSignInEventImplCopyWithImpl<$Res>
+    extends _$SignInEventCopyWithImpl<$Res, _$GoogleSignInEventImpl>
+    implements _$$GoogleSignInEventImplCopyWith<$Res> {
+  __$$GoogleSignInEventImplCopyWithImpl(_$GoogleSignInEventImpl _value,
+      $Res Function(_$GoogleSignInEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GoogleSignInEventImpl implements GoogleSignInEvent {
+  const _$GoogleSignInEventImpl();
+
+  @override
+  String toString() {
+    return 'SignInEvent.google()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GoogleSignInEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String email, String password) perform,
+    required TResult Function() google,
+    required TResult Function() apple,
+  }) {
+    return google();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String email, String password)? perform,
+    TResult? Function()? google,
+    TResult? Function()? apple,
+  }) {
+    return google?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String email, String password)? perform,
+    TResult Function()? google,
+    TResult Function()? apple,
+    required TResult orElse(),
+  }) {
+    if (google != null) {
+      return google();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PerformSignInEvent value) perform,
+    required TResult Function(GoogleSignInEvent value) google,
+    required TResult Function(AppleSignInEvent value) apple,
+  }) {
+    return google(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PerformSignInEvent value)? perform,
+    TResult? Function(GoogleSignInEvent value)? google,
+    TResult? Function(AppleSignInEvent value)? apple,
+  }) {
+    return google?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PerformSignInEvent value)? perform,
+    TResult Function(GoogleSignInEvent value)? google,
+    TResult Function(AppleSignInEvent value)? apple,
+    required TResult orElse(),
+  }) {
+    if (google != null) {
+      return google(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GoogleSignInEvent implements SignInEvent {
+  const factory GoogleSignInEvent() = _$GoogleSignInEventImpl;
+}
+
+/// @nodoc
+abstract class _$$AppleSignInEventImplCopyWith<$Res> {
+  factory _$$AppleSignInEventImplCopyWith(_$AppleSignInEventImpl value,
+          $Res Function(_$AppleSignInEventImpl) then) =
+      __$$AppleSignInEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$AppleSignInEventImplCopyWithImpl<$Res>
+    extends _$SignInEventCopyWithImpl<$Res, _$AppleSignInEventImpl>
+    implements _$$AppleSignInEventImplCopyWith<$Res> {
+  __$$AppleSignInEventImplCopyWithImpl(_$AppleSignInEventImpl _value,
+      $Res Function(_$AppleSignInEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$AppleSignInEventImpl implements AppleSignInEvent {
+  const _$AppleSignInEventImpl();
+
+  @override
+  String toString() {
+    return 'SignInEvent.apple()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AppleSignInEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String email, String password) perform,
+    required TResult Function() google,
+    required TResult Function() apple,
+  }) {
+    return apple();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String email, String password)? perform,
+    TResult? Function()? google,
+    TResult? Function()? apple,
+  }) {
+    return apple?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String email, String password)? perform,
+    TResult Function()? google,
+    TResult Function()? apple,
+    required TResult orElse(),
+  }) {
+    if (apple != null) {
+      return apple();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PerformSignInEvent value) perform,
+    required TResult Function(GoogleSignInEvent value) google,
+    required TResult Function(AppleSignInEvent value) apple,
+  }) {
+    return apple(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PerformSignInEvent value)? perform,
+    TResult? Function(GoogleSignInEvent value)? google,
+    TResult? Function(AppleSignInEvent value)? apple,
+  }) {
+    return apple?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PerformSignInEvent value)? perform,
+    TResult Function(GoogleSignInEvent value)? google,
+    TResult Function(AppleSignInEvent value)? apple,
+    required TResult orElse(),
+  }) {
+    if (apple != null) {
+      return apple(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AppleSignInEvent implements SignInEvent {
+  const factory AppleSignInEvent() = _$AppleSignInEventImpl;
 }
 
 /// @nodoc

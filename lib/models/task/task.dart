@@ -16,8 +16,10 @@ class Task with _$Task {
     required int pomodoro,
     int? pomodoroCompleted,
     required String userId,
+    String? projectId,
     required DateTime dueDate,
     required DateTime createdAt,
+    required bool highPriority,
     DateTime? completedAt,
 }) = _Task;
 }

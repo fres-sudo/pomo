@@ -77,6 +77,7 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                                         name: "user-${user.id}-${DateTime.now()}",
                                         pomodoro: 1,
                                         userId: user.id,
+                                        highPriority: false,
                                         dueDate: DateTime.now(),
                                         createdAt: DateTime.now(),
                                         completedAt: DateTime.now(),

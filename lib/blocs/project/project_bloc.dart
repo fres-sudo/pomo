@@ -58,7 +58,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
       emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.read));
     }catch(_){
-      emit(state.copyWith(error: FetchingProjectsError()));
+      emit(state.copyWith(isLoading: false, error: FetchingProjectsError()));
     }
   }
   

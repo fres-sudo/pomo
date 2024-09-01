@@ -5,7 +5,7 @@ final List<BlocProvider> _blocs = [
     create: (_) => ThemeCubit(),
   ),
   BlocProvider<SignInBloc>(
-    create: (context) => SignInBloc(authenticationRepository: context.read()),
+    create: (context) => SignInBloc(authenticationRepository: context.read(), oAuthRepository: context.read()),
   ),
   BlocProvider<SignUpBloc>(
     create: (context) => SignUpBloc(authenticationRepository: context.read()),

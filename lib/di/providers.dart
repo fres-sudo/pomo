@@ -29,6 +29,19 @@ final List<SingleChildWidget> _providers = [
       baseUrl: kServerConnectionIP,
     ),
   ),
+  Provider<OAuthService>(
+    create: (context) => OAuthServiceImpl(
+      appleSignInFactory: ({required scopes, nonce}) =>
+          SignInWithApple.getAppleIDCredential(
+            scopes: scopes,
+            nonce: nonce,
+          ),
+      googleSignInFactory: (scopes) => GoogleSignIn(
+        clientId: Platform.isIOS ? googleClientId : null,
+        scopes: scopes,
+      ),
+    ),
+  ),
   Provider<ProjectService>(
     create: (context) => ProjectService(
       context.read<Dio>(),

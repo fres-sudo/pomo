@@ -20,7 +20,7 @@ class NoProjectView extends StatelessWidget {
         ),
         Gap.SM,
         Text(
-          t.projects.no_proj,
+          "${t.general.still_dont_have} \n ${t.projects.any_project}",
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),

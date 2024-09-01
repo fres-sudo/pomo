@@ -225,7 +225,7 @@ class DarkTheme {
           return kPrimary500;
         }),
       ),
-      textTheme: textTheme,
+      textTheme: textTheme.apply(bodyColor: Colors.white),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedIconTheme: const IconThemeData(color: kPrimary500),
         unselectedIconTheme: const IconThemeData(

@@ -1,15 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:pomo/components/fields/date_field.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
 
 import '../../../blocs/task/task_bloc.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/auth/auth_cubit.dart';
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 import '../../../models/project/project.dart';
 
 class TaskBottomSheet extends StatefulWidget {
@@ -29,19 +32,21 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   final _nameTextEditingController = TextEditingController();
   final _descriptionTextEditingController = TextEditingController();
   int _currentPomodoroValue = 1;
+  DateTime? _selectedDate;
+  bool highPriority = false;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
-    widget.task != null
-        ? _nameTextEditingController.text = widget.task!.name
-        : "";
-    widget.task != null && widget.task?.description != null
-        ? _descriptionTextEditingController.text = widget.task!.description!
-        : "";
-    widget.task != null ? _currentPomodoroValue = widget.task!.pomodoro : "";
+    if(widget.task != null) {
+      _nameTextEditingController.text = widget.task!.name;
+      _descriptionTextEditingController.text = widget.task!.description ?? '';
+      _currentPomodoroValue = widget.task!.pomodoro;
+      _selectedDate = widget.task!.dueDate;
+      highPriority = widget.task!.highPriority;
+    }
     super.initState();
   }
 
@@ -56,172 +61,151 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height / 2 + 150,
+      height: MediaQuery.sizeOf(context).height - 90,
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(20),
-            topLeft: Radius.circular(20),
-          ),
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.black12, spreadRadius: 1000, blurRadius: 100),
-          ],
-          color: Theme.of(context).bottomSheetTheme.backgroundColor,
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
         ),
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, spreadRadius: 1000, blurRadius: 100),
+        ],
+        color: Theme.of(context).bottomSheetTheme.backgroundColor,
+      ),
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Center(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                    height: 4,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          width: 36,
-                        ),
-                        Text(widget.task == null ? 'New Task' : 'Edit Task',
-                            style: Theme.of(context).textTheme.titleMedium),
-                        InkWell(
-                          onTap: () async {
-                            final User user = context.read<AuthCubit>().state.maybeWhen(
-                                    authenticated: (user) => user,
-                                    orElse: () => User.generateFakeData());
-                            if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0) {
-                              onInvalidInput(context);
-                            } else {
-                              widget.task == null
-                                  ? context.read<TaskBloc>().createTask(
-                                          task: Task(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const TopBottomSheetWidget(),
+                Gap.MD,
+                Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Gap.LG_H,
+                      Align(
+                          alignment: Alignment.center,
+                          child: Text(widget.task == null ? t.tasks.create.title : t.tasks.update.edit, style: Theme.of(context).textTheme.titleMedium)),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () async {
+                          final User user =
+                              context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                          if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0 || _selectedDate == null) {
+                            onInvalidInput(context, isAlert: true);
+                          } else {
+                            widget.task == null
+                                ? context.read<TaskBloc>().createTask(
+                                        task: Task(
+                                      name: _nameTextEditingController.text,
+                                      description: _descriptionTextEditingController.text,
+                                      pomodoro: _currentPomodoroValue,
+                                      pomodoroCompleted: 0,
+                                      highPriority: highPriority,
+                                      userId: user.id,
+                                      projectId: widget.project?.id,
+                                      createdAt: DateTime.now(),
+                                      dueDate: _selectedDate ?? DateTime.now(),
+                                    ))
+                                : context.read<TaskBloc>().updateTaskById(
+                                    id: widget.task!.id!,
+                                    task: Task(
+                                        id: widget.task!.id!,
                                         name: _nameTextEditingController.text,
-                                        description: _descriptionTextEditingController.text,
                                         pomodoro: _currentPomodoroValue,
-                                        pomodoroCompleted: 0,
+                                        pomodoroCompleted: widget.task?.pomodoroCompleted,
                                         userId: user.id,
-                                        createdAt: DateTime.now(),
-                                        dueDate: DateTime.now(),
-                                      ))
-                                  : context.read<TaskBloc>().updateTaskById(
-                                      id: widget.task!.id!,
-                                      task: Task(
-                                          id: widget.task!.id!,
-                                          name: _nameTextEditingController.text,
-                                          pomodoro: _currentPomodoroValue,
-                                          pomodoroCompleted: widget.task?.pomodoroCompleted,
-                                          userId: user.id,
-                                          dueDate: widget.task?.dueDate ?? DateTime.now(),
-                                          createdAt: widget.task!.createdAt,
-                                          completedAt: widget.task?.completedAt));
-                              context.router.maybePop();
-                            }
-                          },
-                          child: Text(
-                            widget.task == null ? 'Create' : 'Edit',
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: _formKey.currentState?.validate() != null
-                                  ? (_formKey.currentState!.validate() && _currentPomodoroValue > 0 ? kPrimary500
-                                      : Theme.of(context).dividerColor)
-                                  : Theme.of(context).dividerColor,
-                            ),
-                          ),
+                                        projectId: widget.project?.id,
+                                        highPriority: highPriority,
+                                        dueDate: _selectedDate ?? widget.task!.dueDate,
+                                        createdAt: widget.task!.createdAt,
+                                        completedAt: widget.task?.completedAt));
+                            context.router.maybePop();
+                          }
+                        },
+                        child: Text(
+                          widget.task == null ? t.general.create : t.general.edit,
+                          style: Theme.of(context).textTheme.titleMedium
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Divider(),
+                  ),
+                  TextFormField(
+                    controller: _nameTextEditingController,
+                    focusNode: _focusNode,
+                    cursorColor: kPrimary500,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                    decoration: InputDecoration(
+                      hintText: t.tasks.create.working_on,
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSecondary),
+                      border: InputBorder.none,
+                      errorBorder: InputBorder.none,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: Divider(),
-                    ),
-                    Column(
+                  ),
+                  TextFormField(
+                    controller: _descriptionTextEditingController,
+                    cursorColor: kPrimary500,
+                    style: Theme.of(context).textTheme.titleSmall,
+                    decoration: InputDecoration(
+                        hintText: t.tasks.create.description,
+                        hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                        errorBorder: InputBorder.none,
+                        border: InputBorder.none),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
                       children: [
-                        TextFormField(
-                          controller: _nameTextEditingController,
-                          focusNode: _focusNode,
-                          cursorColor: kPrimary500,
-                          style: GoogleFonts.inter(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).textTheme.titleSmall?.color,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "I'm working on...",
-                            hintStyle: GoogleFonts.inter(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer),
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        TextFormField(
-                          controller: _descriptionTextEditingController,
-                          cursorColor: kPrimary500,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).textTheme.titleSmall?.color,
-                          ),
-                          decoration: InputDecoration(
-                              hintText: "Write a description of your task...",
-                              hintStyle: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondaryContainer),
-                              errorBorder: InputBorder.none,
-                              border: InputBorder.none),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(t.tasks.create.high_priority,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Switch.adaptive(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: highPriority, //state.mode == ThemeMode.dark,
+                                onChanged: (bool value) => setState(() {
+                                  highPriority = value;
+                                }),
+                              ),
+                            )
+                          ],
                         ),
                         Row(
                           children: [
                             Text(
-                              "Pomodoros | ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondaryContainer),
+                              "${t.tasks.create.pomodoros} | ",
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                             ),
                             NumberPicker(
                               value: _currentPomodoroValue,
                               minValue: 0,
                               maxValue: 30,
                               step: 1,
-                              itemHeight: 25,
+                              itemHeight: 35,
                               itemWidth: 37,
                               haptics: true,
-                              selectedTextStyle:
-                                  Theme.of(context).textTheme.titleSmall,
+                              selectedTextStyle: Theme.of(context).textTheme.titleSmall,
                               textStyle: Theme.of(context).textTheme.titleSmall,
                               axis: Axis.horizontal,
-                              onChanged: (value) =>
-                                  setState(() => _currentPomodoroValue = value),
+                              onChanged: (value) => setState(() => _currentPomodoroValue = value),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(12),
                                 color: Colors.transparent,
                                 //backgroundBlendMode: BlendMode.screen,
                                 border: Border.all(color: Colors.black26),
@@ -229,13 +213,28 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             ),
                           ],
                         ),
+                        Gap.SM,
+                        DateField(
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(const Duration(days: 365 * 1)),
+                            borderRadius: 12,
+                            borderColor: Theme.of(context).dividerColor,
+                            hintText: t.tasks.create.end_in,
+                            selectedDate: _selectedDate,
+                            onPress: (date) => setState(() {
+                              _selectedDate = date;
+                            }),
+                            onDelete: () => setState(() {
+                              _selectedDate = null;
+                            }))
                       ],
-                    )
-                  ]),
-                ],
-              ),
+                    ),
+                  )
+                ]),
+              ],
             ),
           ),
+        ),
       ),
     );
   }

@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
+import 'package:pomo/services/network/authentication/oauth_service.dart';
 import 'dart:async';
 
 import '../../models/user/user.dart';
+import '../../repositories/o_auth_repository.dart';
 
 part 'sign_in_event.dart';
 
@@ -14,12 +16,16 @@ part 'sign_in_bloc.freezed.dart';
 /// The SignInBloc
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final AuthenticationRepository authenticationRepository;
+  final OAuthRepository oAuthRepository;
 
   /// Create a new instance of [SignInBloc].
-  SignInBloc({
+  SignInBloc( {
     required this.authenticationRepository,
+    required this.oAuthRepository,
   }) : super(const SignInState.notSignedIn()) {
     on<PerformSignInEvent>(_onPerform);
+    on<GoogleSignInEvent>(_onGoogleSignIn);
+    on<AppleSignInEvent>(_onAppleSignIn);
   }
 
   /// Method used to add the [PerformSignInEvent] event
@@ -31,6 +37,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         email: email,
         password: password,
       ));
+  void google() => add(const SignInEvent.google());
+  void apple() => add(const SignInEvent.apple());
 
 
   FutureOr<void> _onPerform(
@@ -39,11 +47,36 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) async {
     emit(const SignInState.signingIn());
     try {
-      await Future.delayed(const Duration(seconds: 5));
       final user = await authenticationRepository.signIn(
         email: event.email,
         password: event.password,
       );
+      emit(SignInState.signedIn(user));
+    } catch (_) {
+      emit(const SignInState.errorSignIn());
+    }
+  }
+
+  FutureOr<void> _onGoogleSignIn(
+      GoogleSignInEvent event,
+      Emitter<SignInState> emit,
+      ) async {
+    emit(const SignInState.signingIn());
+    try {
+      final user = await oAuthRepository.signInWithGoogle();
+      emit(SignInState.signedIn(user));
+    } catch (_) {
+      emit(const SignInState.errorSignIn());
+    }
+  }
+
+  FutureOr<void> _onAppleSignIn(
+      AppleSignInEvent event,
+      Emitter<SignInState> emit,
+      ) async {
+    emit(const SignInState.signingIn());
+    try {
+      final user = await oAuthRepository.signInWithGoogle();
       emit(SignInState.signedIn(user));
     } catch (_) {
       emit(const SignInState.errorSignIn());

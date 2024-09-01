@@ -27,6 +27,16 @@ final List<RepositoryProvider> _repositories = [
     );
     return projectRepository;
   }),
+  RepositoryProvider<OAuthRepository>(create: (context) {
+    final oAuthRepository = OAuthRepositoryImpl(
+      userMapper: context.read(),
+      authenticationService: context.read(),
+      oAuthService: context.read(),
+      userStringMapper: context.read(),
+      secureStorage: context.read(),
+    );
+    return oAuthRepository;
+  }),
   RepositoryProvider<TaskRepository>(create: (context) {
     final taskRepository = TaskRepositoryImpl(
       taskMapper: context.read(),

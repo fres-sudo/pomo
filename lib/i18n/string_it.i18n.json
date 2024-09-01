@@ -16,18 +16,20 @@
     "share": "Condividi",
     "reset": "Resetta",
     "update": "Aggiorna",
+    "edit" : "Modifica",
     "today": "Oggi",
     "yesterday": "Ieri",
     "all_times": "Tutto",
     "done": "Fatto",
-    "quick_session":  "Sessione Veloce"
+    "quick_session":  "Sessione Veloce",
+    "still_dont_have" : "Non hai ancora"
   },
   "projects": {
     "title": "Progetto",
     "plural": "Progetti",
     "header_project_page": "Mettiti a Lavoro",
     "invite_friends": "Invita i tuoi amici",
-    "no_proj" : "Non hai ancora nessun progetto",
+    "any_project" : "nessun progetto",
     "create": {
       "title": "Nuovo Progetto",
       "add_cover": "Aggiungi copertina",
@@ -66,7 +68,8 @@
     "title": "Statistiche",
     "short_title": "Stats",
     "weekly_focus": "Overview Focus Settimanale",
-    "weekly_productivity": "Produttività Media Settimanale"
+    "weekly_productivity": "Produttività Media Settimanale",
+    "any_stats" : "nessuna statistica."
   },
   "tasks": {
     "title": "Task",
@@ -79,7 +82,21 @@
     "reset_timer": {
       "title": "Resetta il Timer",
       "description": "Sei sicuro di voler resettare il timer?"
-    }
+    },
+    "any_tasks" : "nessuna task.",
+    "update": {
+      "edit": "Modifica Task"
+    },
+    "create": {
+      "title" : "Nuova Task",
+      "working_on" : "Sto lavorando a...",
+      "description": "Scrivi una descrizione della task...",
+      "pomodoros" : "Pomodori",
+      "due_date" : "Data di fine",
+      "high_priority" : "Alta priorità",
+      "end_in" : "Da finire entro..."
+    },
+    "start_quick_session" : "Inizia una Sessione Veloce"
   },
   "authentication": {
     "login": {
