@@ -10,6 +10,11 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
+import '../../../services/network/authentication/oauth_service.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -52,11 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     Container(
                       height: MediaQuery.sizeOf(context).height / 3.5,
                       decoration: const BoxDecoration(
-                          gradient: kGradientPurple2,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                          )),
+                          gradient: kGradientPurple2,)
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
@@ -64,11 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Welcome back! 🍅", style: kSerzif(context)),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text("Enter your email & password for logging in ",
+                          Text("${t.authentication.login.welcome} 🍅", style: kSerzif(context)),
+                          Gap.XS,
+                          Text(t.authentication.login.description,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
                         ],
                       ),
@@ -83,39 +82,24 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
                           Text("Email", style: Theme.of(context).textTheme.titleMedium),
-                          const SizedBox(
-                            height: 6,
-                          ),
+                          Gap.SM,
                           EmailField(controller: _emailTextController),
-                          const SizedBox(
-                            height: 18,
-                          ),
+                          Gap.MD,
                           Text("Password", style: Theme.of(context).textTheme.titleMedium),
-                          const SizedBox(
-                            height: 6,
-                          ),
+                          Gap.SM,
                           PasswordField(controller: _passwordTextController),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          Gap.SM,
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 0),
-                              ),
-                              onPressed: () {
-                                context.pushRoute(const ForgotPasswordRoute());
-                              },
+                              onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
                               child: Text(
-                                "Forgot password?",
+                                t.authentication.login.forgot_password,
                                 style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          Gap.SM,
                         ]),
                         Column(
                           children: [
@@ -129,31 +113,25 @@ class _LoginPageState extends State<LoginPage> {
                                 signingIn: () => const CustomCircularProgressIndicator(),
                                 orElse: () => Center(
                                   child: Text(
-                                    "Login",
+                                    t.authentication.login.title,
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14, color: kNeutral100),
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            Gap.MD,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Don't have an account?",
+                                  t.authentication.login.dont_have_an_account,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
+                                Gap.XS_H,
                                 GestureDetector(
-                                  onTap: () {
-                                    context.pushRoute(const SignUpRoute());
-                                  },
+                                  onTap: () => context.pushRoute(const SignUpRoute()),
                                   child: Text(
-                                    "Sign up",
+                                    t.authentication.signup.title,
                                     style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
@@ -161,6 +139,12 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
+                         Gap.MD,
+                         SignInWithAppleButton(
+                             style: SignInWithAppleButtonStyle.whiteOutlined,
+                             onPressed: (){}),
+                         IconButton(onPressed: () {}, icon:  Icon(Icons.gps_off_outlined))
+
                       ],
                     ),
                   ),

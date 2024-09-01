@@ -70,6 +70,8 @@ dependencies:
   slang: ^3.31.1
   slang_flutter: ^3.31.0
   flutter_localization: ^0.2.2
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^6.1.2
 
 dev_dependencies:
   flutter_test:

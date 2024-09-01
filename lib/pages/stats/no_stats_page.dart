@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../components/widgets/rounded_button.dart';
 import '../../constants/colors.dart';
+import '../../extension/sized_box_extension.dart';
+import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';
 
 class NoStatsPage extends StatelessWidget {
@@ -21,30 +23,20 @@ class NoStatsPage extends StatelessWidget {
           "assets/images/statistics.png",
           scale: 0.85,
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        Gap.SM,
         Text(
-          "You still don't have \n any statistics",
+          "${t.general.still_dont_have} \n ${t.stats.any_stats}",
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        RoundedButton(
-          borderColor: Colors.transparent,
-          color: kPrimary500,
-          width: MediaQuery.sizeOf(context).width / 2,
-          onPressed: () => context.router.push(const QuickSessionRoute()),
-          child: Text(
-            "Start Quick Session",
-            style: GoogleFonts.inter(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: kNeutral50),
-          ),
-        ),
+        Gap.MD,
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(minimumSize: const Size(220, 48)),
+            onPressed: () => context.router.push(QuickSessionRoute()),
+            child: Text(
+              t.tasks.start_quick_session,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            ))
       ],
     );
   }

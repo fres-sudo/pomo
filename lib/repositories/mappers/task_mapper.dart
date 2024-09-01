@@ -14,8 +14,10 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
         pomodoro: dto.pomodoro,
         pomodoroCompleted: dto.pomodoroCompleted,
         userId: dto.userId,
+        projectId: dto.projectId,
         createdAt: dto.createdAt,
         completedAt: dto.completedAt,
+        highPriority: dto.highPriority,
         dueDate: dto.dueDate
       );
 
@@ -27,7 +29,9 @@ class TaskMapper extends DTOMapper<TaskJTO, Task> {
       pomodoro: model.pomodoro,
       pomodoroCompleted: model.pomodoroCompleted,
       userId: model.userId,
+      projectId: model.projectId,
       createdAt: model.createdAt,
+      highPriority: model.highPriority,
       completedAt: model.completedAt,
       dueDate: model.dueDate
   );

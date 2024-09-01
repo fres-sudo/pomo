@@ -7,5 +7,7 @@ class SignInEvent with _$SignInEvent {
     required String email,
     required String password,
   }) = PerformSignInEvent;
-  
+
+  const factory SignInEvent.google() = GoogleSignInEvent;
+  const factory SignInEvent.apple() = AppleSignInEvent;
 }

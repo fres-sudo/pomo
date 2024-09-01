@@ -10,7 +10,7 @@ final phoneRegex = RegExp(r'^\+\d{12}$');
 final landlinePhoneRegex = RegExp(r'^\d+\d+$');
 final digitsOnlyRegex = RegExp(r'[^\d]');
 
-
+const googleClientId = "446557214930-rdi28ha44osho9q43k6323ih7tpv1cr9.apps.googleusercontent.com";
 const kServerConnectionIP =
     "http://localhost:9000/api";
     //"https://pomo-fres-sudos-projects.vercel.app/api/v1";

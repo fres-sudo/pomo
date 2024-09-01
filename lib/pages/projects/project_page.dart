@@ -3,10 +3,10 @@ import 'dart:io' show Platform;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/pages/profile/widget/create_project_floating_button.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
@@ -36,7 +36,6 @@ class _ProjectPageState extends State<ProjectPage> {
     });
   }
 
-
   @override
   void initState() {
     final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
@@ -58,56 +57,61 @@ class _ProjectPageState extends State<ProjectPage> {
       return Scaffold(
         floatingActionButton: const CreateProjectFloatingButton(),
         body: SafeArea(
-            child: Padding(
-          padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(t.projects.header_project_page, style: kSerzif(context)),
-                        const ProfilePicture(),
-                      ],
-                    ),
-                    Gap.MD,
-                    TextFormField(
-                      controller: searchController,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (query) => filterSearchResults(query, state.projects),
-                      decoration: const InputDecoration(hintText: "Search", prefixIcon: Icon(Icons.search)),
-                    ),
-                  ],
-                ),
-                Gap.MD,
-                Skeletonizer(
-                    enabled: state.isLoading,
-                    child: searchController.text.isEmpty ? _buildProjectsListView(state.projects) : _buildProjectsListView(searchedProjects))
-              ],
-            ),
-          ),
-        )),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
+              physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(t.projects.header_project_page, style: kSerzif(context)),
+                          const ProfilePicture(),
+                        ],
+                      ),
+                      Gap.MD,
+                      TextFormField(
+                        controller: searchController,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        onChanged: (query) => filterSearchResults(query, state.projects),
+                        decoration: const InputDecoration(hintText: "Search", prefixIcon: Icon(Icons.search)),
+                      ),
+                    ],
+                  ),
+                  Gap.MD,
+                  Skeletonizer(
+                      enabled: state.isLoading,
+                      child: searchController.text.isEmpty ? _buildProjectsListView(state.projects) : _buildProjectsListView(searchedProjects))
+                ],
+              ),
+            )),
       );
     });
   }
 
   Widget _buildProjectsListView(List<Project> projects) {
-    if (projects.isEmpty) {
-      return const NoProjectView();
-    }
-    return SizedBox(
+    return projects.isEmpty
+        ? const NoProjectView()
+        : SizedBox(
       height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300,
-      child: ListView.builder(
-        shrinkWrap: false,
-        itemCount: projects.length,
-        itemBuilder: (context, index) => ProjectCard(project: projects[index]),
+      child: RefreshIndicator.adaptive(
+        onRefresh: _onRefresh,
+        child: ListView.builder(
+          shrinkWrap: false,
+          itemCount: projects.length,
+          itemBuilder: (context, index) => ProjectCard(project: projects[index]),
+        ),
       ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+    context.read<ProjectBloc>().getProjectsByUser(userId: userId);
   }
 }
