@@ -13,7 +13,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Pomo</string>
-	<key>C7FBundleExecutable</key>
+	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
@@ -24,7 +24,8 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>GIDClientID</key>
-	<key>CFBundleURLTypes</key>
+	<string>446557214930-ko2r5pjdb94jk2gcv83l8te8rvk8jbmk.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
     <array>
     	<dict>
     		<key>CFBundleTypeRole</key>
@@ -35,7 +36,6 @@
     		</array>
     	</dict>
     </array>
-	<string>446557214930-ko2r5pjdb94jk2gcv83l8te8rvk8jbmk.apps.googleusercontent.com</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>

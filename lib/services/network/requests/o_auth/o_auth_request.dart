@@ -11,6 +11,7 @@ class OAuthRequest extends DTO with _$OAuthRequest {
     required String username,
     required String email,
     String? avatar,
+    String? providerUserId,
 }) = _OAuthRequest;
 
   factory OAuthRequest.fromJson(Map<String, dynamic> json) =>

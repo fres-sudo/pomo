@@ -22,7 +22,8 @@
     "all_times": "All Time",
     "done" : "Done",
     "quick_session" : "Quick Session",
-    "still_dont_have" : "You still don't have"
+    "still_dont_have" : "You still don't have",
+    "no_description" : "No description"
   },
   "projects": {
     "title": "Project",

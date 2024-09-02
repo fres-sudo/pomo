@@ -3,6 +3,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pomo/components/widgets/sound_player.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/models/task/task.dart';
@@ -12,6 +13,7 @@ import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
 
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/text.dart';
+import '../../i18n/strings.g.dart';
 import '../../main.dart';
 import '../../models/user/user.dart';
 
@@ -43,7 +45,13 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Quick Session", style: kSerzif(context)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(t.general.quick_session, style: kSerzif(context)),
+                              SoundPlayer(),
+                            ],
+                          ),
                           const SizedBox(
                             height: 16,
                           ),
