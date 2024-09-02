@@ -65,7 +65,8 @@ class OAuthRepositoryImpl implements OAuthRepository {
           OAuthRequest(
               username: googleAccount?.displayName ?? "",
               email: googleAccount?.email ?? "",
-              avatar: googleAccount?.photoUrl
+              avatar: googleAccount?.photoUrl,
+              providerUserId: googleAccount?.id ?? '',
           ));
       final user = userMapper.fromDTO(response);
       await secureStorage.write(

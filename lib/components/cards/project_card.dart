@@ -7,6 +7,9 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
+import '../../extension/sized_box_extension.dart';
+import '../../i18n/strings.g.dart';
+
 enum ProjectStatus {
   progress,
   completed,
@@ -23,7 +26,7 @@ extension ProjectExt on ProjectStatus {
   }
 
   Color get backGroundColor {
-    return switch (this) { ProjectStatus.completed => kGreen100, ProjectStatus.expired => kRed100, ProjectStatus.progress => kYellow100 };
+    return switch (this) { ProjectStatus.completed => kGreen100.withOpacity(0.15), ProjectStatus.expired => kRed100, ProjectStatus.progress => kYellow100 };
   }
 }
 
@@ -67,18 +70,21 @@ class ProjectCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ClipRRect(
+              project.imageCover == null
+                  ? ClipRRect(
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                      child: project.imageCover != null && project.imageCover!.isEmpty
-                      ? Container(
+                      child: Container(
                         height: MediaQuery.of(context).size.height / 7,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
-                              fit: BoxFit.cover,
-                            )),
-                      )
-                      : SizedBox(
+                          image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
+                          fit: BoxFit.cover,
+                        )),
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height / 7,
                         width: MediaQuery.of(context).size.width,
                         child: FancyShimmerImage(
@@ -101,10 +107,18 @@ class ProjectCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(project.name.capitalize(),
-                                overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16)),
-                            Text(DateFormat('MMM dd, yyyy').format(project.endDate), style: Theme.of(context).textTheme.bodySmall),
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                            const SizedBox(height: 2,),
+                            Text(DateFormat('MMM dd, yyyy').format(project.endDate),
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary))
                           ],
                         ),
                         Chip(
@@ -121,8 +135,8 @@ class ProjectCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(project.description == null || project.description!.isEmpty ? "No description" : project.description!,
-                            maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+                        Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
+                            maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                         Text("${project.tasks?.length != null ? project.tasks!.length.toString() : "0"} tasks",
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor))
                       ],

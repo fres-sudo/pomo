@@ -72,6 +72,7 @@ dependencies:
   flutter_localization: ^0.2.2
   google_sign_in: ^6.2.1
   sign_in_with_apple: ^6.1.2
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/sounds/
     - assets/icons/nav-bar/Bold/
     - assets/icons/nav-bar/Light/
 

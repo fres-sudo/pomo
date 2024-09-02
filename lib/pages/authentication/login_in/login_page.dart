@@ -142,8 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                          Gap.MD,
                          SignInWithAppleButton(
                              style: SignInWithAppleButtonStyle.whiteOutlined,
-                             onPressed: (){}),
-                         IconButton(onPressed: () {}, icon:  Icon(Icons.gps_off_outlined))
+                             onPressed: () => context.read<SignInBloc>().apple()),
+                         IconButton(onPressed: () => context.read<SignInBloc>().google(), icon: const Icon(Icons.gps_off_outlined))
 
                       ],
                     ),
