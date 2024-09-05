@@ -41,13 +41,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<UserBloc, UserState>(
       listener: (BuildContext context, UserState state) {
-        state.whenOrNull(
+        /*state.whenOrNull(
           errorFetchingOTP: () => onErrorState(context, "sending recover email"),
           fetchedOTP: (response) => {
                   onEmailSent(context),
                   context.router.push(
                       ForgotPasswordOTPRoute(email: _emailTextController.text)),
-                });
+                });*/
       },
       builder: (BuildContext context, UserState state) => Scaffold(
         body: SafeArea(
@@ -106,7 +106,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       width: MediaQuery.sizeOf(context).width,
                       height: 50,
-                      child: context.read<UserBloc>().state.maybeWhen(
+                      child: TextButton(
+                        onPressed: () {
+                          context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text ));
+                          //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
+                        },
+                        child: Text("Send Email", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
+                      ),/*context.read<UserBloc>().state.maybeWhen(
                         fetchingOTP: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
                         orElse: () => TextButton(
                           onPressed: () {
@@ -114,7 +120,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
                           },
                           child: Text("Send Email", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                        ),)
+                        ),)*/
                   ),
                   const SizedBox(
                     height: 10,

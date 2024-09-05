@@ -23,7 +23,9 @@
     "done": "Fatto",
     "quick_session":  "Sessione Veloce",
     "still_dont_have" : "Non hai ancora",
-    "no_description" : "Nessuna descrizione"
+    "no_description" : "Nessuna descrizione",
+    "continue_with" : "Continua con",
+    "or" : "o"
   },
   "projects": {
     "title": "Progetto",
@@ -31,6 +33,8 @@
     "header_project_page": "Mettiti a Lavoro",
     "invite_friends": "Invita i tuoi amici",
     "any_project" : "nessun progetto",
+    "in_progress" : "In corso",
+    "already_done" : "Completate",
     "create": {
       "title": "Nuovo Progetto",
       "add_cover": "Aggiungi copertina",
@@ -54,6 +58,14 @@
           "title": "Lingua",
           "select_language" : "Seleziona una lingua"
         }
+      },
+      "delete_account" : {
+        "title": "Elimina Account",
+        "description" : "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i dati associati al tuo account andranno persi."
+      },
+      "update" : {
+        "updated_info" : "Le tue informazioni sono state correttamente aggionrate",
+        "updated_photo" : "La tua immagine profilo è stata correttamente aggiornata"
       },
       "about_us": {
         "title": "About us",
@@ -140,6 +152,11 @@
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",
       "updating_project": "Si è verificato un errore durante l'aggiornamento del tuo progetto.",
       "deleting_project": "Si è verificato un errore durante l'eliminazione del tuo progetto."
+    },
+    "users" : {
+      "updating_user" : "Si è verificato un errore durante l'aggionramento dei tuoi dati.",
+      "updating_user_photo" : "Si è verificato un errore durante l'aggionramento della tua immagine di profilo.",
+      "deleting_user" : "Si è verificato un errore durante l'eliminazione del tuo account."
     },
     "tasks": {
       "creating_task": "Si è verificato un errore durante la creazione di un nuovo task.",

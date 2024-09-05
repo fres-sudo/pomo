@@ -64,7 +64,7 @@ class CustomBarChartState extends State<CustomBarChart> {
               Text(t.stats.weekly_focus,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
               Gap.XS,
-              Text("${widget.tasks.isEmpty ? "0" : widget.stats.completionPercentage}%", style: Theme.of(context).textTheme.displayMedium),
+              Text("${widget.tasks.isEmpty ? "0" : widget.stats.completionPercentage}%", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
               Gap.SM,
               Expanded(
                 child: BarChart(

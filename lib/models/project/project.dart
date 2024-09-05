@@ -22,4 +22,6 @@ class Project with _$Project {
     List<Task>? tasks,
     List<User>? contributors,
 }) = _Project;
+
+  static Project fake() => Project(name: "name", startDate: DateTime.now(), endDate: DateTime.now(), userId: "");
 }

@@ -2,20 +2,19 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../blocs/task/task_bloc.dart';
+import '../../i18n/strings.g.dart';
 import '../../models/task/task.dart';
 import '../../pages/projects/widget/info_task_bottom_sheet.dart';
 import '../../pages/projects/widget/task_bottom_sheet.dart';
 import '../widgets/destruction_bottomsheet.dart';
 
 class TaskCard extends StatefulWidget {
-   TaskCard({super.key, required this.task});
-
+  TaskCard({super.key, required this.task});
 
   Task task;
 
@@ -28,15 +27,14 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   void initState() {
-    checkBox = widget.task.pomodoro == widget.task.pomodoroCompleted ;
+    checkBox = widget.task.pomodoro == widget.task.pomodoroCompleted;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Slidable(
         key: const ValueKey(0),
         endActionPane: ActionPane(
@@ -52,9 +50,7 @@ class _TaskCardState extends State<TaskCard> {
                       return TaskBottomSheet(task: widget.task);
                     });
               },
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20)),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
               backgroundColor: kYellow500,
               foregroundColor: Colors.white,
               icon: Icons.edit_note_rounded,
@@ -67,22 +63,17 @@ class _TaskCardState extends State<TaskCard> {
                     builder: (BuildContext context) {
                       return DestructionBottomSheet(
                         title: widget.task.name,
-                        buttonText: 'Delete',
-                        description:
-                            'Are you sure you want to delete this task?',
+                        buttonText: t.general.delete,
+                        description: 'Are you sure you want to delete this task?',
                         function: () {
-                          context
-                              .read<TaskBloc>()
-                              .deleteTaskById(id: widget.task.id!);
+                          context.read<TaskBloc>().deleteTaskById(id: widget.task.id!);
                           context.router.maybePop();
                         },
                       );
                     },
                     isDismissible: true);
               },
-              borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
+              borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
               backgroundColor: kRed500,
               foregroundColor: Colors.white,
               icon: Icons.delete_forever,
@@ -90,7 +81,7 @@ class _TaskCardState extends State<TaskCard> {
           ],
         ),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             showModalBottomSheet(
                 useRootNavigator: true,
                 context: context,
@@ -99,11 +90,8 @@ class _TaskCardState extends State<TaskCard> {
                 });
           },
           child: Container(
-            padding:
-                const EdgeInsets.only(top: 16, right: 5, bottom: 16, left: 5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Theme.of(context).cardColor),
+            padding: const EdgeInsets.only(top: 16, right: 5, bottom: 16, left: 5),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).cardColor),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -112,9 +100,8 @@ class _TaskCardState extends State<TaskCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Checkbox(
-                        fillColor: MaterialStateProperty.resolveWith((states) {
-                          // If the button is pressed, return green, otherwise blue
-                          if (states.contains(MaterialState.selected)) {
+                        fillColor: WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.selected)) {
                             return kGreen500;
                           }
                           return null;
@@ -128,15 +115,16 @@ class _TaskCardState extends State<TaskCard> {
                               id: widget.task.id ?? "",
                               task: Task(
                                 id: widget.task.id ?? "",
-                                  name: widget.task.name,
-                                  description: widget.task.description,
-                                  pomodoro: widget.task.pomodoro,
-                                  pomodoroCompleted: value! ? widget.task.pomodoro : 0,
-                                  userId: widget.task.userId,
-                                  highPriority: widget.task.highPriority,
-                                  createdAt: widget.task.createdAt,
-                                  completedAt: value ? DateTime.now() : null,
-                                  dueDate: widget.task.dueDate,
+                                name: widget.task.name,
+                                description: widget.task.description,
+                                pomodoro: widget.task.pomodoro,
+                                pomodoroCompleted: value! ? widget.task.pomodoro : 0,
+                                userId: widget.task.userId,
+                                highPriority: widget.task.highPriority,
+                                createdAt: widget.task.createdAt,
+                                projectId: widget.task.projectId,
+                                completedAt: value ? DateTime.now() : null,
+                                dueDate: widget.task.dueDate,
                               ));
                         }),
                     Column(
@@ -148,21 +136,20 @@ class _TaskCardState extends State<TaskCard> {
                             widget.task.name.capitalize(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.copyWith(fontSize: 14),
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 5,
                         ),
                         RichText(
                           text: TextSpan(
                             children: <TextSpan>[
-                              TextSpan(text: widget.task.pomodoro > 1 ? "${durationToString(
-                                  widget.task.pomodoro * 30)} hours " : "${widget.task.pomodoro * 30} mins", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500)),
-                              TextSpan(text: " • ${widget.task.pomodoro} pomodoro", style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500) ),
+                              TextSpan(
+                                  text: widget.task.pomodoro > 1
+                                      ? "${durationToString(widget.task.pomodoro * 30)} hours "
+                                      : "${widget.task.pomodoro * 30} mins",
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500)),
+                              TextSpan(
+                                  text: " • ${widget.task.pomodoro} pomodoro",
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                             ],
                           ),
                         ),
@@ -170,18 +157,16 @@ class _TaskCardState extends State<TaskCard> {
                     ),
                   ],
                 ),
-                widget.task.pomodoro != widget.task.pomodoroCompleted  ?
-                IconButton(
-                  onPressed: () {
-                    AutoRouter.of(context)
-                        .push(WorkSessionRoute(task: widget.task));
-                  },
-                  icon: SvgPicture.asset(
-                    "assets/icons/play-bold.svg",
-                    colorFilter:
-                        const ColorFilter.mode(kPrimary500, BlendMode.srcIn),
-                  ),
-                ) : const SizedBox()
+                if (widget.task.pomodoro != widget.task.pomodoroCompleted)
+                  IconButton(
+                      onPressed: () {
+                        AutoRouter.of(context).push(WorkSessionRoute(task: widget.task));
+                      },
+                      icon: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 32,
+                        color: Theme.of(context).primaryColor,
+                      ))
               ],
             ),
           ),

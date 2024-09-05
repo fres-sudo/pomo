@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/invalid_input_dialog.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:provider/provider.dart';
 
+import '../../cubits/theme/theme_cubit.dart';
 import '../../i18n/strings.g.dart';
 
 onInvalidInput(BuildContext context, {bool isAlert = false}){
@@ -9,10 +12,10 @@ onInvalidInput(BuildContext context, {bool isAlert = false}){
     !isAlert
         ? ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-           backgroundColor: kYellow100,
+           backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
            shape: OutlineInputBorder(
                borderRadius: BorderRadius.circular(12),
-               borderSide: const BorderSide(color: kYellow200)
+               borderSide: BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 :kYellow400)
            ),
           duration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -70,10 +73,10 @@ onErrorState(BuildContext context, String text) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          backgroundColor: kRed100,
+          backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kRed800 : kRed200,
           shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: kRed200)
+              borderSide: const BorderSide(color: kRed500)
           ),
           duration: const Duration(seconds: 3),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),

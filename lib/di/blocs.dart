@@ -30,4 +30,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<StatsBloc>(
     create: (context) => StatsBloc(statsRepository: context.read()),
   ),
+  BlocProvider<SoundCubit>(
+    create: (_) => SoundCubit(),
+  ),
 ];

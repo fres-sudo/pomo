@@ -101,14 +101,14 @@ class LightTheme {
       ),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               backgroundColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ))),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               backgroundColor: kPrimary500,
               foregroundColor: kNeutral300,
               shape: RoundedRectangleBorder(
@@ -252,14 +252,14 @@ class DarkTheme {
       ),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               backgroundColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ))),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               backgroundColor: kPrimary500,
               foregroundColor: kNeutral300,
               shape: RoundedRectangleBorder(

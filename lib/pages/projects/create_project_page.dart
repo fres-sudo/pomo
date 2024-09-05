@@ -97,7 +97,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                     endDate: _endDate ?? DateTime.now(),
                                     userId: user.id,
                                   ))
-                              : onInvalidInput(context);
+                              : onErrorState(context, "PORCODIOOOOOOOO");
                         },
                         child: state.isLoading
                             ? const CustomCircularProgressIndicator()

@@ -38,7 +38,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
         Gap.XS,
         Text("${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr)} ${widget.stats.completedTasksOfTheWeek.fold(0, (prev, curr) => prev + curr) > 0 ? t.tasks.plural : t.tasks.title}",
-            style: Theme.of(context).textTheme.displayMedium),
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
         Gap.SM,
         Expanded(
           child: LineChart(
