@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../jto/task/task_jto.dart';
@@ -16,9 +15,9 @@ abstract class TaskService {
 
   @GET('/tasks/{id}')
   Future<TaskJTO> getTaskById(@Path('id') String id);
-  @PATCH('/tasks/{id}')
+  @PATCH('/tasks/{taskId}')
   Future<TaskJTO> updateTaskById(@Path('id') String id ,@Body() TaskJTO task);
-  @DELETE('/tasks/{id}')
+  @DELETE('/tasks/{taskId}')
   Future<TaskJTO> deleteTaskById(@Path('id') String id);
 
   @GET('/tasks/project/{projectId}')

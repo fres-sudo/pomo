@@ -36,7 +36,7 @@ class DestructionBottomSheet extends StatelessWidget {
           Gap.MD,
           Text(title, style: Theme.of(context).textTheme.titleMedium ),
           Gap.XS,
-          Text(description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.secondary) ),
+          Text(description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary) ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Divider(),

@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../components/widgets/count_down_timer.dart';
 import '../../../components/widgets/destruction_bottomsheet.dart';
+import '../../../components/widgets/pulsing_wrapper.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/timer/timer_cubit.dart';
+import '../../../i18n/strings.g.dart';
 
 class QuickBreakView extends StatefulWidget {
   QuickBreakView({super.key, required this.onComplete, required this.breakController});
@@ -19,6 +22,21 @@ class QuickBreakView extends StatefulWidget {
 }
 
 class _QuickBreakViewState extends State<QuickBreakView> {
+
+  late AnimationController _controller;
+  bool _isRunning = false;
+
+  void _onControllerCreated(AnimationController controller) {
+    _controller = controller;
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        widget.onComplete?.call();
+      }
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
@@ -26,77 +44,20 @@ class _QuickBreakViewState extends State<QuickBreakView> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: kGreen200,
-                    boxShadow: [
-                      BoxShadow(
-                        color: kGreen200.withOpacity(0.51),
-                        spreadRadius: 1,
-                        blurRadius: 100,
-                      ),
-                    ],
-                  ),
-                  height: MediaQuery.sizeOf(context).height / 3,
-                  padding: const EdgeInsets.all(18.5),
-                ),
-                Container(
-                  height: MediaQuery.sizeOf(context).height / 3 - 37,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: kGreen400,
-                  ),
-                ),
-                Container(
-                  height:
-                  MediaQuery.sizeOf(context).height / 3 - (37 * 2),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: kGreen600,
-                  ),
-                  child: CircularCountDownTimer(
-                    duration: state.breakTime * 60,
-                    initialDuration: 0,
-                    controller: widget.breakController,
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: MediaQuery.of(context).size.height / 2,
-                    ringColor: kGreen400,
-                    fillColor: kGreen600,
-                    fillGradient: const RadialGradient(
-                      radius: 10,
-                      colors: [kGreen600, kGreen400],
-                    ),
-                    backgroundColor: kGreen600,
-                    backgroundGradient: null,
-                    strokeWidth: 10.0,
-                    strokeCap: StrokeCap.round,
-                    textStyle: GoogleFonts.inter(
-                      fontSize: 33.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textFormat: CountdownTextFormat.S,
-                    isReverse: true,
-                    isReverseAnimation: true,
-                    isTimerTextShown: true,
-                    autoStart: false,
-                    onStart: () {
-                      print('Countdown Started');
-                    },
-                    onComplete: widget.onComplete,
-                    timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
-                      // Custom time formatter function
-                      int minutes = duration.inMinutes;
-                      int seconds = duration.inSeconds.remainder(60);
-                      return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-                    },
-                  ),
-                ),
-              ],
+            PulsingWrapper(
+              shape: BoxShape.circle,
+              pulseColor: kGreen400,
+              pulseFactor: 2,
+              disabled: !_isRunning,
+              child: CountDownTimer(
+                innerColor: kGreen600,
+                middleColor: kGreen400,
+                outerColor: kGreen200,
+                darkShadow: kGreen200.withOpacity(0.51),
+                lightShadow: kGreen300.withOpacity(0.8),
+                durationInMinutes: state.breakTime,
+                onControllerCreated: _onControllerCreated,
+              ),
             ),
             Column(
               children: [
@@ -107,30 +68,41 @@ class _QuickBreakViewState extends State<QuickBreakView> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(100),
                     onTap: () {
-                      if (!widget.breakController.isStarted) {
-                        widget.breakController.start();
-                      } else {
-                        if (widget.breakController.isPaused) {
-                          widget.breakController.resume();
+                      setState(() {
+                        if (!_isRunning) {
+                          _controller.forward();
                         } else {
-                          widget.breakController.pause();
+                          if (_controller.isAnimating) {
+                            _controller.stop();
+                          } else {
+                            _controller.forward();
+                          }
                         }
-                      }
-                      setState(() {}); // Update UI after modifying timer state
-
+                        _isRunning = !_isRunning;
+                      });
                     },
                     onLongPress: () => showModalBottomSheet(
-                        useRootNavigator: true,
-                        context: context,
-                        builder: (BuildContext context) =>
-                            DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
-                                description: "Are you sure you want to reset the timer",
-                                function: () {widget.breakController.restart(duration: state.breakTime * 60); context.router.maybePop();} )),
-                    child: widget.breakController.isStarted && !widget.breakController.isPaused
-                        ? Icon(Icons.pause_circle_filled_rounded,
-                        color: Theme.of(context).iconTheme.color, size: 70)
-                        : Icon(Icons.play_circle_fill_rounded,
-                        color: Theme.of(context).iconTheme.color, size: 70),
+                      useRootNavigator: true,
+                      context: context,
+                      builder: (BuildContext context) => DestructionBottomSheet(
+                        title: t.tasks.reset_timer.title,
+                        buttonText: t.general.reset,
+                        description: t.tasks.reset_timer.description,
+                        function: () {
+                          _controller.reset();
+                          _isRunning = false;
+                          setState(() {});
+                          context.router.maybePop();
+                        },
+                      ),
+                    ),
+                    child: Icon(
+                      _isRunning && _controller.isAnimating
+                          ? Icons.pause_circle_filled_rounded
+                          : Icons.play_circle_fill_rounded,
+                      color: Theme.of(context).iconTheme.color,
+                      size: 70,
+                    ),
                   ),
                 ),
 

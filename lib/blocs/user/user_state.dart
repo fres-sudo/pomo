@@ -1,8 +1,20 @@
 part of 'user_bloc.dart';
 
+enum UserOperation { updated , deleted , updatedImage }
+
 @freezed
 class UserState with _$UserState {
 
+  const factory UserState({
+    User? user,
+    @Default(false) bool isLoading,
+    LocalizedError? error,
+    UserOperation? operation,
+  }) = _UserState;
+
+  const UserState._();
+
+  /*
   const factory UserState.updating() = UpdatingUserState;
   
   const factory UserState.updated(User user) = UpdatedUserState;
@@ -34,5 +46,5 @@ class UserState with _$UserState {
   const factory UserState.errorRecovering() = ErrorRecoveringUserState;
 
   const factory UserState.none() = NoneUserState;
-
+*/
 }

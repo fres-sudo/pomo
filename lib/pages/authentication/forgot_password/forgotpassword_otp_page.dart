@@ -106,7 +106,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () => _seconds == 0 ? context.read<UserBloc>().forgotPassword(email: widget.email) : null,
+                              onTap: () {}, //_seconds == 0 ? context.read<UserBloc>().forgotPassword(email: widget.email) : null,
                               child: Text(
                                 "resend code",
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(

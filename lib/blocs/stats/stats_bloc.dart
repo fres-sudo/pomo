@@ -18,7 +18,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   final StatsRepository statsRepository;
   /// Create a new instance of [StatsBloc].
-  StatsBloc({ required this.statsRepository}) : super(const StatsState()) {
+  StatsBloc({ required this.statsRepository}) : super(StatsState(statistics: Stats.fake())) {
     on<FetchStatsStatsEvent>(_onFetchStats);
     
   }
@@ -31,10 +31,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     FetchStatsStatsEvent event,
     Emitter<StatsState> emit,
   ) async {
-    emit(const StatsState(isLoading: true));
+    emit(state.copyWith(isLoading: true));
     try{
       final stats = await statsRepository.fetchStats(userId: event.userId);
-      emit(StatsState(statistics: stats, isLoading: false));
+      emit(state.copyWith(statistics: stats, isLoading: false));
     }catch(_) {
       emit(StatsState(error: FetchingStatsError(), isLoading: false));
     }

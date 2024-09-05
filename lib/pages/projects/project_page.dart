@@ -39,7 +39,7 @@ class _ProjectPageState extends State<ProjectPage> {
   @override
   void initState() {
     final String userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-    if (context.read<ProjectBloc>().state.projects.isEmpty) context.read<ProjectBloc>().getProjectsByUser(userId: userId);
+    context.read<ProjectBloc>().getProjectsByUser(userId: userId);
     super.initState();
   }
 
@@ -58,56 +58,54 @@ class _ProjectPageState extends State<ProjectPage> {
         floatingActionButton: const CreateProjectFloatingButton(),
         body: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
-              physics: const NeverScrollableScrollPhysics(),
-              child: Column(
+          padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(t.projects.header_project_page, style: kSerzif(context)),
-                          const ProfilePicture(),
-                        ],
-                      ),
-                      Gap.MD,
-                      TextFormField(
-                        controller: searchController,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        onChanged: (query) => filterSearchResults(query, state.projects),
-                        decoration: const InputDecoration(hintText: "Search", prefixIcon: Icon(Icons.search)),
-                      ),
+                      Text(t.projects.header_project_page, style: kSerzif(context)),
+                      const ProfilePicture(),
                     ],
                   ),
                   Gap.MD,
-                  Skeletonizer(
-                      enabled: state.isLoading,
-                      child: searchController.text.isEmpty ? _buildProjectsListView(state.projects) : _buildProjectsListView(searchedProjects))
+                  TextFormField(
+                    controller: searchController,
+                    cursorColor: Theme.of(context).primaryColor,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    onChanged: (query) => filterSearchResults(query, state.projects),
+                    decoration: InputDecoration(hintText: t.general.search, prefixIcon: const Icon(Icons.search)),
+                  ),
                 ],
               ),
-            )),
+              Gap.MD,
+              Skeletonizer(
+                  enabled: state.isLoading,
+                  child: state.projects.isEmpty
+                      ? const NoProjectView()
+                      : SizedBox(
+                          height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300,
+                          child: RefreshIndicator.adaptive(
+                            onRefresh: _onRefresh,
+                            child: ListView.builder(
+                              shrinkWrap: false,
+                              itemCount: searchController.text.isEmpty ? state.projects.length : searchedProjects.length,
+                              itemBuilder: (context, index) =>
+                                  ProjectCard(project: searchController.text.isEmpty ? state.projects[index] : searchedProjects[index]),
+                            ),
+                          ),
+                        ))
+            ],
+          ),
+        )),
       );
     });
-  }
-
-  Widget _buildProjectsListView(List<Project> projects) {
-    return projects.isEmpty
-        ? const NoProjectView()
-        : SizedBox(
-      height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300,
-      child: RefreshIndicator.adaptive(
-        onRefresh: _onRefresh,
-        child: ListView.builder(
-          shrinkWrap: false,
-          itemCount: projects.length,
-          itemBuilder: (context, index) => ProjectCard(project: projects[index]),
-        ),
-      ),
-    );
   }
 
   Future<void> _onRefresh() async {

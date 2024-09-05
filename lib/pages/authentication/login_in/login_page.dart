@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
 import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
+import 'package:pomo/components/utils/utils.dart';
+import 'package:pomo/components/widgets/or_separator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -29,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  final List<String> oAuthButtons = ["google", "apple"];
   @override
   void dispose() {
     _emailTextController.dispose();
@@ -55,8 +59,8 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.bottomLeft,
                   children: [
                     Container(
-                      height: MediaQuery.sizeOf(context).height / 3.5,
-                      decoration: const BoxDecoration(
+                        height: MediaQuery.sizeOf(context).height / 4,
+                        decoration: const BoxDecoration(
                           gradient: kGradientPurple2,)
                     ),
                     Padding(
@@ -139,11 +143,27 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                         Gap.MD,
-                         SignInWithAppleButton(
-                             style: SignInWithAppleButtonStyle.whiteOutlined,
-                             onPressed: () => context.read<SignInBloc>().apple()),
-                         IconButton(onPressed: () => context.read<SignInBloc>().google(), icon: const Icon(Icons.gps_off_outlined))
+                        Gap.MD,
+                        const OrSeparator(),
+                        Gap.MD,
+                        ...oAuthButtons.map((e) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: TextButton(
+                              onPressed: () => e == "google" ? context.read<SignInBloc>().google() : context.read<SignInBloc>().apple(),
+                              style: TextButton.styleFrom(
+                                  side: BorderSide(color: Theme.of(context).dividerColor),
+                                  backgroundColor: Colors.transparent),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset("assets/icons/$e-logo.svg", width: 19, height: 19,),
+                                  Gap.SM_H,
+                                  Text("Continue with ${e.capitalize()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),)
+                                ],
+                              )),
+                        ),),
+
 
                       ],
                     ),

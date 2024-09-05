@@ -1,140 +1,107 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
+import 'package:pomo/components/widgets/pulsing_wrapper.dart';
+import 'package:pomo/extension/sized_box_extension.dart';
 
+import '../../../components/widgets/count_down_timer.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/timer/timer_cubit.dart';
+import '../../../i18n/strings.g.dart';
 
 class QuickTimerView extends StatefulWidget {
-  QuickTimerView({super.key, required this.onComplete, required this.timerController});
+  QuickTimerView({super.key, required this.onComplete});
 
   final VoidCallback? onComplete;
-  CountDownController timerController;
 
   @override
   State<QuickTimerView> createState() => _QuickTimerViewState();
 }
 
 class _QuickTimerViewState extends State<QuickTimerView> {
+  late AnimationController _controller;
+  bool _isRunning = false;
+
+  void _onControllerCreated(AnimationController controller) {
+    _controller = controller;
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        widget.onComplete?.call();
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimerCubit, TimerState>(
-      builder: (context,state) {
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<TimerCubit, TimerState>(builder: (context, state) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          PulsingWrapper(
+            shape: BoxShape.circle,
+            pulseColor: kPrimary300,
+            pulseFactor: 2,
+            disabled: !_isRunning,
+            child: CountDownTimer(
+              innerColor: kPrimary900,
+              middleColor: kPrimary300,
+              outerColor: kPrimary400,
+              darkShadow: kPrimary500,
+              lightShadow: kPrimary600.withOpacity(0.8),
+              durationInMinutes: state.focusTime,
+              onControllerCreated: _onControllerCreated,
+            ),
+          ),
+          Column(
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kPrimary100,
-                      boxShadow: [
-                        BoxShadow(
-                          color: kPrimary400.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 100,
-                        ),
-                      ],
-                    ),
-                    height: MediaQuery.sizeOf(context).height / 3,
-                    padding: const EdgeInsets.all(18.5),
-                  ),
-                  Container(
-                    height: MediaQuery.sizeOf(context).height / 3 - 37,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kPrimary300,
-                    ),
-                  ),
-                  Container(
-                    height:
-                    MediaQuery.sizeOf(context).height / 3 - (37 * 2),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: kPrimary900,
-                    ),
-                    child: CircularCountDownTimer(
-                      duration: state.focusTime * 60,
-                      initialDuration: 0,
-                      controller: widget.timerController,
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.height / 2,
-                      ringColor: kPrimary300,
-                      fillColor: kPrimary900,
-                      fillGradient: const RadialGradient(
-                        radius: 10,
-                        colors: [kPrimary900, kPrimary300],
-                      ),
-                      backgroundColor: kPrimary900,
-                      backgroundGradient: null,
-                      strokeWidth: 10.0,
-                      strokeCap: StrokeCap.round,
-                      textStyle: GoogleFonts.inter(
-                        fontSize: 33.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textFormat: CountdownTextFormat.S,
-                      isReverse: true,
-                      isReverseAnimation: true,
-                      isTimerTextShown: true,
-                      autoStart: false,
-                      onStart: () {},
-                      onComplete: widget.onComplete,
-                      timeFormatterFunction: (defaultFormatterFunction, Duration duration) {
-                        int minutes = duration.inMinutes;
-                        int seconds = duration.inSeconds.remainder(60);
-                        return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Center(
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () {
-                        if (!widget.timerController.isStarted) {
-                          widget.timerController.start();
+              Gap.XL,
+              Center(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(100),
+                  onTap: () {
+                    setState(() {
+                      if (!_isRunning) {
+                        _controller.forward();
+                      } else {
+                        if (_controller.isAnimating) {
+                          _controller.stop();
                         } else {
-                          if (widget.timerController.isPaused) {
-                            widget.timerController.resume();
-                          } else {
-                            widget.timerController.pause();
-                          }
+                          _controller.forward();
                         }
-                        setState(() {}); // Update UI after modifying timer state
+                      }
+                      _isRunning = !_isRunning;
+                    });
+                  },
+                  onLongPress: () => showModalBottomSheet(
+                    useRootNavigator: true,
+                    context: context,
+                    builder: (BuildContext context) => DestructionBottomSheet(
+                      title: t.tasks.reset_timer.title,
+                      buttonText: t.general.reset,
+                      description: t.tasks.reset_timer.description,
+                      function: () {
+                        _controller.reset();
+                        _isRunning = false;
+                        setState(() {});
+                        context.router.maybePop();
                       },
-                      onLongPress: () => showModalBottomSheet(
-                          useRootNavigator: true,
-                          context: context,
-                          builder: (BuildContext context) =>
-                              DestructionBottomSheet(title: "Reset Timer", buttonText: "Reset",
-                                description: "Are you sure you want to reset the timer",
-                                function: () {widget.timerController.restart(duration: state.focusTime *60); context.router.maybePop();} )),
-                      child: widget.timerController.isStarted && !widget.timerController.isPaused
-                          ? Icon(Icons.pause_circle_filled_rounded,
-                          color: Theme.of(context).iconTheme.color, size: 70)
-                          : Icon(Icons.play_circle_fill_rounded,
-                          color: Theme.of(context).iconTheme.color, size: 70),
                     ),
                   ),
-
-                ],
+                  child: Icon(
+                    _isRunning && _controller.isAnimating
+                        ? Icons.pause_circle_filled_rounded
+                        : Icons.play_circle_fill_rounded,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 70,
+                  ),
+                ),
               ),
             ],
-          );
-      }
-    );
+          ),
+        ],
+      );
+    });
   }
 }

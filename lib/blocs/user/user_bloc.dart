@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pomo/error/users_error.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 import 'package:pomo/services/network/response/forgot_pass/forgot_pass_response.dart';
 import 'dart:async';
 
+import '../../error/localized.dart';
 import '../../models/user/user.dart';
 import '../../repositories/user_repository.dart';
 
@@ -28,31 +30,28 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   String get otp => _otp;
 
   /// Create a new instance of [UserBloc].
-  UserBloc({required this.userRepository, required this.authenticationRepository}) : super(const UserState.none()) {
+  UserBloc({required this.userRepository, required this.authenticationRepository}) : super(const UserState()) {
     on<UpdateUserUserEvent>(_onUpdateUser);
     on<UpdateUserPhotoUserEvent>(_onUpdateUserPhoto);
     on<DeleteUserUserEvent>(_onDeleteUser);
-    on<ForgotPasswordUserEvent>(_onForgotPassword);
-    on<RecoverPasswordUserEvent>(_onRecoverPassword);
+
   }
   
   /// Method used to add the [UpdateUserUserEvent] event
   void updateUser({required String id, required User user}) => add(UserEvent.updateUser(user: user, id: id));
   void deleteUser({required String id}) => add(UserEvent.deleteUser(id: id));
   void updateUserPhoto({required String id, required File photo}) => add(UserEvent.updateUserPhoto(id: id, photo: photo));
-  void forgotPassword({required String email}) => add(UserEvent.forgotPassword(email: email));
-  void recoverPassword({required String token, required String password, required String passwordConfirm}) => add(UserEvent.recoverPassword(token: token, password: password, passwordConfirm: passwordConfirm));
 
   FutureOr<void> _onUpdateUser(
     UpdateUserUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(const UserState.updating());
+    emit(state.copyWith(isLoading: true));
     try{
       final user = await userRepository.updateUser(user: event.user, id: event.id,);
-      emit(UserState.updated(user));
+      emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updated));
     }catch(_){
-      emit(const UserState.errorUpdating());
+      emit(state.copyWith(isLoading: false, error: UpdatingUserError()));
     }
   }
 
@@ -60,12 +59,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     DeleteUserUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(const UserState.updating());
+    emit(state.copyWith(isLoading: true));
     try{
       await userRepository.deleteUser(id: event.id,);
-      emit(const UserState.deleted());
+      emit(state.copyWith( isLoading: false, error: null, operation: UserOperation.deleted));
     }catch(_){
-      emit(const UserState.errorUpdating());
+      emit(state.copyWith(isLoading: false, error: DeletingUserError()));
     }
   }
 
@@ -73,15 +72,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UpdateUserPhotoUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(const UserState.updatingPhoto());
+    emit(state.copyWith(isLoading: true));
     try{
       final user = await userRepository.updateUserPhoto(id: event.id, photo: event.photo);
-      emit(UserState.updatedPhoto(user));
+      emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updatedImage));
     }catch(_){
-      emit(const UserState.errorUpdatingPhoto());
+      emit(state.copyWith(isLoading: false, error: UpdatingUserImageError()));
     }
   }
-
+/*
   FutureOr<void> _onForgotPassword(
     ForgotPasswordUserEvent event,
     Emitter<UserState> emit,
@@ -109,5 +108,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(const UserState.errorRecovering());
     }
   }
-  
+  */
 }

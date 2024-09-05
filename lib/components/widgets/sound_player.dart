@@ -1,41 +1,61 @@
+import 'dart:ui';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:pomo/components/widgets/pulsing_button.dart';
+import 'package:pomo/constants/colors.dart';
+import '../../constants/constants.dart';
 import '../../cubits/sound_cubit.dart';
 
-class SoundPlayer extends StatelessWidget {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  final List<String> _sounds = [
-    'sounds/garden-vibes-lofi.mp3', // Replace with your actual sound file paths
-    'sounds/heavy-rain.mp3',
-    'sounds/light-rain.mp3',
-    'sounds/lofi-study.mp3',
-    'sounds/nature.mp3',
-  ];
+class SoundPlayer extends StatefulWidget {
+  @override
+  _SoundPlayerState createState() => _SoundPlayerState();
+}
 
-  void _playSound(int index) async {
-    if (index == -1) {
-      await _audioPlayer.stop(); // Stop the sound if index is -1 (no sound state)
+class _SoundPlayerState extends State<SoundPlayer> {
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void playSound(int index) async {
+    if (index == kSounds.length) {
+      await audioPlayer.stop();
     } else {
-      await _audioPlayer.play(AssetSource(_sounds[index])); // Use AssetSource for asset files
+      await audioPlayer.stop();
+      await audioPlayer.play(AssetSource(kSounds[index]));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print("AUDIO: ${_audioPlayer.state}" );
-    return BlocProvider(
-        create: (context) => SoundCubit(),
-        child: BlocBuilder<SoundCubit, int>(
-          builder: (context, currentIndex) {
-            _playSound(currentIndex); // Play the corresponding sound on each state change
-            return Center(
-              child: IconButton(
-                  onPressed: () => context.read<SoundCubit>().nextSound(_sounds.length),
-                  icon: Icon(Icons.music_note_outlined)),
-            );
-          },
-        ));
+    return BlocConsumer<SoundCubit, int>(
+      listener: (context, currentIndex) => playSound(currentIndex),
+      builder: (context, currentIndex) => PulsingButton(
+        onLongPress: () => context.read<SoundCubit>().stopSound(),
+        onTap: () => context.read<SoundCubit>().nextSound(),
+        disabled: currentIndex == kSounds.length,
+        pulseColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.2),
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: kNeutralWhite),
+            image: currentIndex == kSounds.length
+                ? null
+                : DecorationImage(
+                image: Image.asset(kBackgroundsImages[currentIndex]).image,
+                fit: BoxFit.cover),
+          ),
+          child: currentIndex != kSounds.length
+              ? const SizedBox()
+              : const Icon(Icons.music_note_outlined),
+        ),
+      ),
+    );
   }
 }

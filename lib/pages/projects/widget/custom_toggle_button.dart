@@ -14,7 +14,7 @@ class CustomToggleButton extends StatelessWidget {
     return Container(
       width: MediaQuery.sizeOf(context).width * 1 / 2 - 32,
       decoration: BoxDecoration(
-          color: selectedMode ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
+          color: selectedMode ? Theme.of(context).scaffoldBackgroundColor : Colors.transparent,
           borderRadius: BorderRadius.circular(12)),
       padding: const EdgeInsets.symmetric(
         vertical: 12,
@@ -22,12 +22,9 @@ class CustomToggleButton extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: selectedMode
-                  ? kPrimary500
-                  : Theme.of(context).colorScheme.onSecondaryContainer),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: selectedMode
+              ? kPrimary500
+              : Theme.of(context).colorScheme.onSecondaryContainer)
         ),
       ),
     );

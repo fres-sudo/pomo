@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:io' show Platform;
 
+import '../../cubits/theme/theme_cubit.dart';
 import 'custom_popup.dart';
+
 
 
 String durationToString(int minutes) {
@@ -24,8 +27,7 @@ Future<String> getUserId() async {
 
 extension DarkMode on BuildContext {
   bool get isDarkMode {
-    final brightness = MediaQuery.of(this).platformBrightness;
-    return brightness == Brightness.dark;
+    return watch<ThemeCubit>().state.mode == ThemeMode.dark;
   }
 }
 

@@ -44,12 +44,8 @@ class ProjectCard extends StatelessWidget {
     if (completedTask == totalTasks) {
       return ProjectStatus.completed;
     }
-    if (completedTask < totalTasks && project.completedAt == null) {
-      return ProjectStatus.expired;
-    } else {
-      return ProjectStatus.progress;
-    }
-  }
+    return completedTask < totalTasks && project.completedAt == null ? ProjectStatus.expired : ProjectStatus.progress;
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -110,12 +106,15 @@ class ProjectCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(project.name.capitalize(),
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall
-                                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                            Hero(
+                              tag: "project-title",
+                              child: Text(project.name.capitalize(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                            ),
                             const SizedBox(height: 2,),
                             Text(DateFormat('MMM dd, yyyy').format(project.endDate),
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary))

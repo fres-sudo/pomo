@@ -12,7 +12,9 @@ class ProjectEvent with _$ProjectEvent {
   const factory ProjectEvent.getProjectById({required String id}) = GetProjectByIdProjectEvent;
   
   const factory ProjectEvent.updateProjectById({required String id, required Project project}) = UpdateProjectByIdProjectEvent;
-  
+
+  const factory ProjectEvent.updateProjectsTasks({required String projectId, required List<Task> tasks}) = UpdateProjectsTasksProjectEvent;
+
   const factory ProjectEvent.deleteProjectById({required String id}) = DeleteProjectByIdProjectEvent;
   
 }

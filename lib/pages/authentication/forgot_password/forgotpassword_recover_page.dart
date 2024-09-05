@@ -96,12 +96,10 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                         ),
                         width: MediaQuery.sizeOf(context).width,
                         height: 50,
-                        child: context.read<UserBloc>().state.maybeWhen(
-                          recovering: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
-                          orElse: () => TextButton(
-                            onPressed: () {
-                              //context.router.push(const LoginRoute());
-                              if(_passwordTextController.text == _confirmPasswordTextController.text) {
+                        child:  TextButton(
+                          onPressed: () {
+                            //context.router.push(const LoginRoute());
+                            /*if(_passwordTextController.text == _confirmPasswordTextController.text) {
                                 _formKey.currentState!.validate()
                                     ? context.read<UserBloc>().recoverPassword(
                                     token: context.read<UserBloc>().resetToken,
@@ -109,11 +107,27 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                                     passwordConfirm: _confirmPasswordTextController.text) : onInvalidInput(context);
                               } else {
                                 onDoesntMatch(context);
-                              }
+                              }*/
+                          },
+                          child: Text("Done", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
+                        ),/*context.read<UserBloc>().state.maybeWhen(
+                          recovering: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
+                          orElse: () => TextButton(
+                            onPressed: () {
+                              //context.router.push(const LoginRoute());
+                              /*if(_passwordTextController.text == _confirmPasswordTextController.text) {
+                                _formKey.currentState!.validate()
+                                    ? context.read<UserBloc>().recoverPassword(
+                                    token: context.read<UserBloc>().resetToken,
+                                    password: _passwordTextController.text,
+                                    passwordConfirm: _confirmPasswordTextController.text) : onInvalidInput(context);
+                              } else {
+                                onDoesntMatch(context);
+                              }*/
                             },
                             child: Text("Done", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                          ),)
-                    ),
+                          ),*/)
+
                   ],
                 ),
               ),
@@ -122,11 +136,11 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
         ),
       ),
       listener: (BuildContext context, UserState state) {
-        state.whenOrNull(
+        /*state.whenOrNull(
             recovered: () => {
               onSuccessState(context, "recover your password, please proceed with login 👤"),
               context.router.push(const LoginRoute())}
-        );
+        );*/
       },
     );
   }
