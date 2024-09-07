@@ -19,7 +19,7 @@ class ProjectBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 320,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
@@ -45,34 +45,55 @@ class ProjectBottomSheet extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Divider(),
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {},
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: kPrimary500.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.edit_note_rounded,
+                              color: kPrimary500,
+                            ),
+                            Gap.SM_H,
+                            Text(
+                              t.general.edit,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kPrimary500),
+                            ),
+                          ],
+                        )),
+                  ),
+                  Gap.SM,
+                  InkWell(
                     onTap: () => onAvailableSoon(context),
                     child: Container(
-                        width: MediaQuery.sizeOf(context).width / 2 - 20,
                         decoration: BoxDecoration(
                           color: kGreen500.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
                           children: [
                             const Icon(
                               Icons.share_rounded,
                               color: kGreen500,
                             ),
-                            Gap.SM,
+                            Gap.SM_H,
                             Text(
-                              "Share",
+                              t.general.share,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),
-                            )
+                            ),
                           ],
                         )),
                   ),
+                  Gap.SM,
                   InkWell(
                     onTap: () {
                       context.router.maybePop().then((value) => showModalBottomSheet(
@@ -92,21 +113,18 @@ class ProjectBottomSheet extends StatelessWidget {
                           isDismissible: true));
                     },
                     child: Container(
-                        width: MediaQuery.sizeOf(context).width / 2 - 20,
                         decoration: BoxDecoration(
                           color: kRed500.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
                           children: [
                             const Icon(
                               Icons.delete_forever,
                               color: kRed500,
                             ),
-                            Gap.SM,
+                            Gap.SM_H,
                             Text(
                               t.general.delete,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),

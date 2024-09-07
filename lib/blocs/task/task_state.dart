@@ -1,8 +1,21 @@
 part of 'task_bloc.dart';
 
+enum TaskOperation { read, create, update, delete }
+
+
 @freezed
 class TaskState with _$TaskState {
-  
+
+  const factory TaskState({
+    @Default([]) List<Task> tasks,
+    @Default(false) bool isLoading,
+    LocalizedError? error,
+    TaskOperation? operation
+  }) = _TaskState;
+
+  const TaskState._();
+
+  /*
   const factory TaskState.creating() = CreatingTaskState;
   
   const factory TaskState.created(Task task) = CreatedTaskState;
@@ -42,5 +55,5 @@ class TaskState with _$TaskState {
   const factory TaskState.got(Task task) = GotTaskState;
   
   const factory TaskState.errorGetting() = ErrorGettingTaskState;
-  
+  */
 }

@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pomo/components/utils/utils.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:pomo/pages/projects/views/break_view.dart';
-import 'package:pomo/pages/projects/views/timer_view.dart';
+import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
-import 'package:pomo/routes/app_router.gr.dart';
+import 'package:pomo/pages/quick_session/views/quick_break_view.dart';
+import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
+import '../../i18n/strings.g.dart';
 import '../../models/task/task.dart';
+import '../../routes/app_router.gr.dart';
 
 @RoutePage()
 class WorkSessionPage extends StatefulWidget {
@@ -26,8 +27,6 @@ class WorkSessionPage extends StatefulWidget {
 class _WorkSessionPageState extends State<WorkSessionPage> {
   var selectedMode = [true, false];
 
-  final CountDownController _timerController = CountDownController();
-  final CountDownController _breakController = CountDownController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +40,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
               Column(
                 children: [
                   Row(children: [
-                    InkWell(
-                      onTap: () => context.router.maybePop(),
-                      child: SvgPicture.asset(
-                        'assets/icons/arrow-left.svg',
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).iconTheme.color ?? Colors.white,
-                            BlendMode.srcIn),
-                      ),
-                    ),
+                    BackIconButton(onPress: () => context.router.maybePop()),
                     Text(
                       "Work Session",
                       style: kSerzif(context),
@@ -91,28 +82,24 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                 ],
               ),
               selectedMode[0] ?
-              TimerView(
-                  timerController: _timerController,
-                  onComplete: () {
-                    context.read<TaskBloc>().updateTaskById(
+                  QuickTimerView(onComplete: () {
+                    context.read<TaskBloc>().update(
                         id: widget.task.id!,
                         task: widget.task.copyWith(
-                            pomodoroCompleted: (widget.task.pomodoroCompleted! + 1),
-                            completedAt: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted ? DateTime.now() : null,
+                          pomodoroCompleted: (widget.task.pomodoroCompleted! + 1),
+                          completedAt: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted ? DateTime.now() : null,
                         ));
 
                     if((widget.task.pomodoroCompleted! + 1) == widget.task.pomodoro){
-                    context.router.push(const SessionCompleteRoute());
+                      context.router.push(const SessionCompleteRoute());
                     }
                     setState(() {
                       selectedMode = [false, true];
                     });
-              }) :
-              BreakView(onComplete:  () {
-                setState(() {
-                  selectedMode = [true, false];
-                });
-              }, breakController: _breakController),
+                  })
+              : QuickBreakView(onComplete: () =>  setState(() {
+                selectedMode = [true, false];
+              })),
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
@@ -146,11 +133,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       ],
                     ),
                     Text(
-                      "${context.read<TaskBloc>().state.maybeWhen(
-                          updated: (task) => {
-                            task.pomodoroCompleted,
-                          },
-                          orElse: ()=> widget.task.pomodoroCompleted)}/${widget.task.pomodoro}",
+                      "${ widget.task.pomodoroCompleted}/${widget.task.pomodoro}",
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

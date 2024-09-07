@@ -57,10 +57,10 @@ class CustomBarChartState extends State<CustomBarChart> {
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
-        children: <Widget>[
+        children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               Text(t.stats.weekly_focus,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
               Gap.XS,
@@ -120,7 +120,7 @@ class CustomBarChartState extends State<CustomBarChart> {
             return BarTooltipItem(
               '$weekDay\n',
               Theme.of(context).textTheme.titleSmall!,
-              children: <TextSpan>[
+              children: [
                 TextSpan(text: (rod.toY - 1).toString(), style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500)),
               ],
             );
@@ -168,11 +168,10 @@ class CustomBarChartState extends State<CustomBarChart> {
   Widget getTitles(double value, TitleMeta meta) {
     final style = Theme.of(context).textTheme.titleSmall?.copyWith(
         fontSize: 10, color: DateTime.now().day == value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSecondaryContainer);
-    Widget text = Text(weekDaysShort[value.toInt()], style: style);
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 16,
-      child: text,
+      child: Text(weekDaysShort[value.toInt()], style: style),
     );
   }
 

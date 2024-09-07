@@ -4,10 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/components/fields/date_field.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
+import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
@@ -16,20 +16,26 @@ import 'package:pomo/models/project/project.dart';
 import 'package:pomo/models/user/user.dart';
 
 import '../../blocs/project/project_bloc.dart';
-import '../../components/utils/utils.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';
 
 @RoutePage()
 class CreateProjectPage extends StatefulWidget {
-  const CreateProjectPage({super.key});
+  const CreateProjectPage({super.key, this.startDate, this.endDate, this.name, this.description, this.image});
+
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String? name;
+  final String? description;
+  final XFile? image;
 
   @override
   State<CreateProjectPage> createState() => _CreateProjectPageState();
 }
 
 class _CreateProjectPageState extends State<CreateProjectPage> {
+
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _descriptionTextController = TextEditingController();
 
@@ -40,13 +46,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
   DateTime? _startDate;
   DateTime? _endDate;
 
-  String userId = "";
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      userId = await getUserId();
-    });
+    _nameTextController.text = widget.name ?? "";
+    _descriptionTextController.text = widget.description?? "";
+    _startDate = widget.startDate;
+    _endDate = widget.endDate;
+    image = widget.image;
     super.initState();
   }
 
@@ -78,7 +84,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
               children: [
                 Row(
                   children: [
-                  IconButton(onPressed: context.router.maybePop, icon: const Icon(Icons.chevron_left_rounded)),
+                  BackIconButton(onPress: context.router.maybePop),
+                  Gap.XS_H,
                   Text(
                     t.projects.create.title,
                     style: kSerzif(context),
@@ -97,7 +104,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                     endDate: _endDate ?? DateTime.now(),
                                     userId: user.id,
                                   ))
-                              : onErrorState(context, "PORCODIOOOOOOOO");
+                              : onInvalidInput(context);
                         },
                         child: state.isLoading
                             ? const CustomCircularProgressIndicator()
@@ -182,6 +189,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         TextFormField(
                           controller: _nameTextController,
                           style: Theme.of(context).textTheme.bodyMedium,
+                          cursorColor: Theme.of(context).primaryColor,
                           decoration: InputDecoration(
                             hintText: t.general.name,
                           ),
@@ -199,6 +207,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         TextFormField(
                           controller: _descriptionTextController,
                           style: Theme.of(context).textTheme.bodyMedium,
+                          cursorColor: Theme.of(context).primaryColor,
                           maxLines: 5,
                           decoration: InputDecoration(
                             hintText: t.general.description,
@@ -213,14 +222,16 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   onPressed: () => onAvailableSoon(context),
                   style: TextButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary,
-                      padding: Theme.of(context).inputDecorationTheme.contentPadding?.add(const EdgeInsets.symmetric(vertical: 2)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(t.projects.invite_friends, style: Theme.of(context).inputDecorationTheme.hintStyle),
-                      Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(t.projects.invite_friends, style: Theme.of(context).inputDecorationTheme.hintStyle),
+                        Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
+                      ],
+                    ),
                   ),
                 ),
                 Gap.MD,
@@ -238,6 +249,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
                 DateField(
+                    firstDate: _startDate,
                     selectedDate:_endDate,
                     onPress: (date) => setState(() {
                       _endDate= date;

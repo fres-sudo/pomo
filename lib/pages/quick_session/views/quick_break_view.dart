@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,10 +11,9 @@ import '../../../cubits/timer/timer_cubit.dart';
 import '../../../i18n/strings.g.dart';
 
 class QuickBreakView extends StatefulWidget {
-  QuickBreakView({super.key, required this.onComplete, required this.breakController});
+  QuickBreakView({super.key, required this.onComplete, });
 
   final VoidCallback? onComplete;
-  CountDownController breakController;
 
   @override
   State<QuickBreakView> createState() => _QuickBreakViewState();

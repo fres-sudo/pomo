@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pomo/components/fields/date_field.dart';
+import 'package:pomo/components/fields/project_drop_down.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
 
+import '../../../blocs/project/project_bloc.dart';
 import '../../../blocs/task/task_bloc.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/auth/auth_cubit.dart';
@@ -16,10 +18,11 @@ import '../../../i18n/strings.g.dart';
 import '../../../models/project/project.dart';
 
 class TaskBottomSheet extends StatefulWidget {
-  const TaskBottomSheet({super.key, this.project, this.task});
+  const TaskBottomSheet({super.key, this.project, this.task, this.dueDate});
 
   final Project? project;
   final Task? task;
+  final DateTime? dueDate;
 
   @override
   State<TaskBottomSheet> createState() => _TaskBottomSheetState();
@@ -34,12 +37,19 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   int _currentPomodoroValue = 1;
   DateTime? _selectedDate;
   bool highPriority = false;
+  Project? _selectedProject;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
+    if(widget.dueDate != null){
+      _selectedDate = widget.dueDate;
+      context.read<ProjectBloc>().getProjectsByUser(userId: context.read<AuthCubit>().state.maybeWhen(
+          authenticated: (user) => user.id,
+          orElse: () => ""));
+    }
     if(widget.task != null) {
       _nameTextEditingController.text = widget.task!.name;
       _descriptionTextEditingController.text = widget.task!.description ?? '';
@@ -101,7 +111,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             onInvalidInput(context, isAlert: true);
                           } else {
                             widget.task == null
-                                ? context.read<TaskBloc>().createTask(
+                                ? context.read<TaskBloc>().create(
                                         task: Task(
                                       name: _nameTextEditingController.text,
                                       description: _descriptionTextEditingController.text,
@@ -113,7 +123,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                       createdAt: DateTime.now(),
                                       dueDate: _selectedDate ?? DateTime.now(),
                                     ))
-                                : context.read<TaskBloc>().updateTaskById(
+                                : context.read<TaskBloc>().update(
                                     id: widget.task!.id!,
                                     task: Task(
                                         id: widget.task!.id!,
@@ -168,6 +178,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,6 +226,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           ],
                         ),
                         Gap.SM,
+                        Text(t.tasks.create.due_date, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
+                        Gap.XS,
                         DateField(
                             firstDate: DateTime.now(),
                             lastDate: widget.project?.endDate,
@@ -226,6 +240,18 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             }),
                             onDelete: () => setState(() {
                               _selectedDate = null;
+                            })),
+                        Gap.SM,
+                        Text(t.tasks.create.due_date, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
+                        Gap.XS,
+                        ProjectDropDown(
+                            selectedProject: _selectedProject,
+                            visible: widget.dueDate != null,
+                            onChanged: (proj) => setState(() {
+                              _selectedProject = proj;
+                            }),
+                            onDelete: () => setState(() {
+                              _selectedProject = null;
                             }))
                       ],
                     ),

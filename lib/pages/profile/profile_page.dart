@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
@@ -10,7 +9,6 @@ import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
-import 'package:pomo/pages/profile/widget/theme_mode_switcher.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
@@ -68,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       style: Theme.of(context).textTheme.titleMedium),
                                   Text(
                                     state.maybeWhen(authenticated: (user) => "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}", orElse: () => "??"),
-                                  style: Theme.of(context).textTheme.bodySmall),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                                 ],
                               );
                             },
@@ -80,29 +78,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
                     ),
-                    Text(t.profile.settings.general.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+                    Text(t.profile.settings.general.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                     Gap.SM,
-                    //InkWell(
-                    //    onTap: () {},
-                    //    borderRadius: BorderRadius.circular(20),
-                    //    child: Row(
-                    //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //      children: [
-                    //        Text(
-                    //          "Notification & Sound",
-                    //          style: Theme.of(context).textTheme.titleMedium,
-                    //        ),
-                    //        SvgPicture.asset(
-                    //          "assets/icons/arrow-right.svg",
-                    //          height: 18,
-                    //        )
-                    //      ],
-                    //    )),
-                    //const SizedBox(
-                    //  height: 20,
-                    //),
-
-
                     InkWell(
                         onTap: () {
                           showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const SetTimer());
@@ -119,7 +96,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         )),
                     Gap.XS,
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -159,14 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
                     ),
-                    Text(
-                      t.profile.settings.about_us.title,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: kNeutral600,
-                      ),
-                    ),
+                    Text(t.profile.settings.about_us.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                     Gap.SM,
                     InkWell(
                         onTap: () {},
@@ -175,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              t.profile.settings.about_us.privacy_policy,
+                             "Notification",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Icon(
@@ -183,7 +152,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             )
                           ],
                         )),
-
                     Gap.MD,
                     InkWell(
                         onTap: () => context.router.push(const PrivacyPolicyRoute()),

@@ -109,6 +109,10 @@
       "high_priority" : "High Priority",
       "end_in" : "To be finished by..."
     },
+    "delete" : {
+      "title" : "Delete task",
+      "description" : "Are you sure you want to delete this task?"
+    },
     "start_quick_session" : "Start Quick Session"
   },
   "authentication": {
@@ -159,13 +163,15 @@
     },
     "tasks": {
       "creating_task": "An error occurred while creating a new task",
-      "updating_task": "An error occurred while updating a task"
+      "updating_task": "An error occurred while updating your task",
+      "deleting_task": "An error occurred while deleting your task",
+      "fetching_task": "An error occurred while fetching your tasks"
     },
     "stats" : {
       "fetching_stats" : "An error occurred while fetching your statistics."
     },
     "login" : {
-      "general_error" : "An error occurred while logging",
+      "general_error" : "An error occurred while logging in",
       "wrong_password" : "You submit the wrong password",
       "user_not_existing" : "This email is not associated with any user"
     },

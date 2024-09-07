@@ -15,10 +15,10 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsRouter(
       routes: const [
+        ScheduleRoute(),
         ProjectNavigation(),
         StatsRoute(),
         QuickSessionRoute(),
-        ProfileRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -26,8 +26,6 @@ class RootPage extends StatelessWidget {
           body: child,
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30), topLeft: Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
                     color: Colors.black12, spreadRadius: 10, blurRadius: 50),
@@ -35,17 +33,23 @@ class RootPage extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0),
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
               ),
               child: BottomNavigationBar(
                 currentIndex: tabsRouter.activeIndex,
                 onTap: (value) => tabsRouter.setActiveIndex(value),
                 items: [
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset(
-                      'assets/icons/nav-bar/Bold/Document.svg',
-                    ),
+                      activeIcon: const Icon(Icons.edit_calendar_rounded),
+                      icon: Icon(Icons.edit_calendar_rounded, color: Theme.of(context)
+                          .bottomNavigationBarTheme
+                          .unselectedIconTheme
+                          ?.color ??
+                          Colors.white,),
+                      label: "Schedule"),
+                  BottomNavigationBarItem(
+                    activeIcon: const Icon(Icons.assignment_outlined),
                     icon: SvgPicture.asset(
                       'assets/icons/nav-bar/Light/Document.svg',
                       colorFilter: ColorFilter.mode(
@@ -55,8 +59,7 @@ class RootPage extends StatelessWidget {
                     label: t.projects.plural,
                   ),
                   BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset(
-                          'assets/icons/nav-bar/Bold/Graph.svg'),
+                      activeIcon: Icon(Icons.area_chart),
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Graph.svg',
                         colorFilter: ColorFilter.mode(
@@ -82,31 +85,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcIn),
                       ),
                       label: t.general.quick_session),
-                  BottomNavigationBarItem(
-                      icon: context.read<AuthCubit>().state.maybeWhen(
-                          authenticated: (user) {
-                            if (user.avatar == null) {
-                              return const CircleAvatar(
-                                maxRadius: 12,
-                                backgroundImage: AssetImage(
-                                    "assets/images/propic-placeholder.jpg"),
-                              );
-                            } else {
-                              return ClipOval(
-                                  child: SizedBox(
-                                      height: 24,
-                                      width: 24,
-                                      child: FancyShimmerImage(
-                                        imageUrl: user.avatar!,
-                                        boxFit: BoxFit.cover,
-                                      )));
-                            }
-                          },
-                          orElse: () => const CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/images/propic-placeholder.jpg"),
-                              )),
-                      label: t.profile.title),
+
                 ],
               ),
             ),

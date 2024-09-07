@@ -19,10 +19,7 @@ class AppRouter extends RootStackRouter {
           ]),
           AutoRoute(page: StatsRoute.page),
           AutoRoute(page: QuickSessionRoute.page),
-          AutoRoute(page: ProfileNavigation.page, fullscreenDialog: true,children: [
-            CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ProfileRoute.page),
-            AutoRoute(page: EditProfileRoute.page),
-          ]),
+          AutoRoute(page: ScheduleRoute.page)
         ]),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: LoginRoute.page, fullscreenDialog: true, ),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SignUpRoute.page, fullscreenDialog: true),
@@ -32,6 +29,10 @@ class AppRouter extends RootStackRouter {
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: OnBoardingRoute.page,  ),
     AutoRoute(page: WorkSessionRoute.page),
     AutoRoute(page: CreateProjectRoute.page,),
+    AutoRoute(page: ProfileNavigation.page, fullscreenDialog: true,children: [
+      CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ProfileRoute.page),
+      AutoRoute(page: EditProfileRoute.page),
+    ]),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SessionCompleteRoute.page),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: PrivacyPolicyRoute.page),
 

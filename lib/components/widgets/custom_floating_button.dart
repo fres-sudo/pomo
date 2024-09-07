@@ -1,16 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants/colors.dart';
-import '../../../routes/app_router.gr.dart';
+import '../../constants/colors.dart';
+import '../../routes/app_router.gr.dart';
 
-class CreateProjectFloatingButton extends StatelessWidget {
-  const CreateProjectFloatingButton({super.key});
+class CustomFloatingActionButton extends StatelessWidget {
+  const CustomFloatingActionButton({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () => context.router.push(const CreateProjectRoute()),
+      style: IconButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12)
+        )
+      ),
+        onPressed: onPressed,
         icon: Container(
           height: 50,
           width: 50,

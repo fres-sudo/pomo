@@ -109,6 +109,10 @@
       "high_priority" : "Alta priorità",
       "end_in" : "Da finire entro..."
     },
+    "delete" : {
+      "title" : "Elimina task",
+      "description" : "Sei sicuro di voler eliminare questa task?"
+    },
     "start_quick_session" : "Inizia una Sessione Veloce"
   },
   "authentication": {
@@ -160,7 +164,9 @@
     },
     "tasks": {
       "creating_task": "Si è verificato un errore durante la creazione di un nuovo task.",
-      "updating_task": "Si è verificato un errore durante l'aggiornamento di un task."
+      "updating_task": "Si è verificato un errore durante l'aggiornamento della tua task.",
+      "deleting_task" : "Si è verificato un errore durante l'eliminazione della tua task",
+      "fetching_task" : "Si è verificato un errore durante il recupero delle tasks"
     },
     "stats" : {
       "fetching_stats" : "Si è verificato un errore durante il caricamento delle statistiche"

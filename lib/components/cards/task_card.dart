@@ -62,11 +62,11 @@ class _TaskCardState extends State<TaskCard> {
                     context: context,
                     builder: (BuildContext context) {
                       return DestructionBottomSheet(
-                        title: widget.task.name,
+                        title: t.tasks.delete.title,
                         buttonText: t.general.delete,
-                        description: 'Are you sure you want to delete this task?',
+                        description: t.tasks.delete.description,
                         function: () {
-                          context.read<TaskBloc>().deleteTaskById(id: widget.task.id!);
+                          context.read<TaskBloc>().delete(id: widget.task.id!);
                           context.router.maybePop();
                         },
                       );
@@ -111,7 +111,7 @@ class _TaskCardState extends State<TaskCard> {
                           setState(() {
                             checkBox = value!;
                           });
-                          context.read<TaskBloc>().updateTaskById(
+                          context.read<TaskBloc>().update(
                               id: widget.task.id ?? "",
                               task: Task(
                                 id: widget.task.id ?? "",
