@@ -36,30 +36,28 @@ class DateField extends StatelessWidget {
               style: TextButton.styleFrom(
                   side: borderColor != null ? BorderSide(color: borderColor!) : null,
                   shape: borderRadius != null ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius ?? 0)) : null,
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.secondary),
               onPressed: () async {
                 final date = await showDatePicker(
                         context: context,
                         confirmText: "Ok",
-                        initialDate: DateTime.now(),
+                        initialDate: firstDate ?? DateTime.now(),
                         currentDate: DateTime.now(),
                         firstDate: firstDate ?? DateTime.now(),
                         lastDate: lastDate ?? DateTime.now().add(const Duration(days: 365 * 100))) ??
                     DateTime.now();
                 onPress(date);
               },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    selectedDate != null
-                        ? DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(selectedDate!)
-                        : hintText ?? t.general.select_date,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: selectedDate != null ? Theme.of(context).colorScheme.onSecondary : Theme.of(context).colorScheme.onSecondary,
-                        ),
-                  ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  selectedDate != null
+                      ? DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(selectedDate!)
+                      : hintText ?? t.general.select_date,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: selectedDate != null ? Theme.of(context).colorScheme.onSecondary : Theme.of(context).colorScheme.onSecondary,
+                      ),
                 ),
               )),
         ),

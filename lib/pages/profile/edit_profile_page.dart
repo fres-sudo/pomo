@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
+import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 
@@ -87,13 +88,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(children: [
-                    InkWell(
-                      onTap: () => context.router.replace(const ProfileRoute()),
-                      child: SvgPicture.asset(
-                        'assets/icons/arrow-left.svg',
-                        colorFilter: ColorFilter.mode(Theme.of(context).iconTheme.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                    ),
+                   BackIconButton(onPress: () => context.router.maybePop()),
+                    Gap.XS_H,
                     Text(
                       "My Profile",
                       style: kSerzif(context),

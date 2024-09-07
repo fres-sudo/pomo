@@ -1,9 +1,5 @@
-// ... (previous SoundPlayer and SoundCubit code remains the same)
-
-// QuickSessionPage
 import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -35,8 +31,6 @@ class QuickSessionPage extends StatefulWidget {
 class _QuickSessionPageState extends State<QuickSessionPage> {
   var selectedMode = [true, false];
 
-  final CountDownController _timerController = CountDownController();
-  final CountDownController _breakController = CountDownController();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +105,7 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                             final user = context.read<AuthCubit>().state.maybeWhen(
                                 authenticated: (user) => user,
                                 orElse: () => User.generateFakeData());
-                            context.read<TaskBloc>().createTask(
+                            context.read<TaskBloc>().create(
                               task: Task(
                                 name: "user-${user.id}-${DateTime.now()}",
                                 pomodoro: 1,
@@ -142,7 +136,6 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                               selectedMode = [true, false];
                             });
                           },
-                          breakController: _breakController,
                         ),
                         Gap.MD,
                       ],

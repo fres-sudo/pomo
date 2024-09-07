@@ -8,8 +8,9 @@ import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/models/project/project.dart';
-import 'package:pomo/pages/profile/widget/create_project_floating_button.dart';
+import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
+import 'package:pomo/routes/app_router.gr.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../blocs/project/project_bloc.dart';
@@ -55,7 +56,9 @@ class _ProjectPageState extends State<ProjectPage> {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
     }, builder: (context, state) {
       return Scaffold(
-        floatingActionButton: const CreateProjectFloatingButton(),
+        floatingActionButton: CustomFloatingActionButton(
+          onPressed: () => context.router.push( CreateProjectRoute()),
+        ),
         body: SafeArea(
             child: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 16.0, left: 16, right: 16),
@@ -63,26 +66,22 @@ class _ProjectPageState extends State<ProjectPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(t.projects.header_project_page, style: kSerzif(context)),
-                      const ProfilePicture(),
-                    ],
-                  ),
-                  Gap.MD,
-                  TextFormField(
-                    controller: searchController,
-                    cursorColor: Theme.of(context).primaryColor,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    onChanged: (query) => filterSearchResults(query, state.projects),
-                    decoration: InputDecoration(hintText: t.general.search, prefixIcon: const Icon(Icons.search)),
-                  ),
+                  Text(t.projects.header_project_page, style: kSerzif(context)),
+                  InkWell(
+                      onTap: () => context.router.push(const ProfileNavigation()),
+                      child: const ProfilePicture()),
                 ],
+              ),
+              Gap.MD,
+              TextFormField(
+                controller: searchController,
+                cursorColor: Theme.of(context).primaryColor,
+                style: Theme.of(context).textTheme.titleMedium,
+                onChanged: (query) => filterSearchResults(query, state.projects),
+                decoration: InputDecoration(hintText: t.general.search, prefixIcon: const Icon(Icons.search)),
               ),
               Gap.MD,
               Skeletonizer(

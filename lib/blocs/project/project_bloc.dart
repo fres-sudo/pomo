@@ -99,11 +99,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     final projects = List<Project>.from(state.projects);
     final projectIndex = projects.indexWhere((proj) => proj.id == event.projectId);
+    print("projectIndex: ${projectIndex}");
     if (projectIndex != -1) {
       final updatedProject = projects[projectIndex].copyWith(
         tasks: List.from(event.tasks),
       );
       projects[projectIndex] = updatedProject;
+      print("-------------- updatedProject: ${updatedProject.tasks?.where((task) => task.pomodoro == task.pomodoroCompleted).length}");
+
       emit(state.copyWith(projects: projects));
     }
   }
