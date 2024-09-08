@@ -10,7 +10,7 @@ abstract class TasksError extends LocalizedError {
   }
 }
 
-class FetchingTasksByProjectError extends TasksError {
+class FetchingTasksError extends TasksError {
   @override
   String localizedString(BuildContext context) {
     return context.t.errors.tasks.fetching_task;

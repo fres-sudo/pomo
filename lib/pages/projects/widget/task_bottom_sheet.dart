@@ -30,6 +30,7 @@ class TaskBottomSheet extends StatefulWidget {
 
 class _TaskBottomSheetState extends State<TaskBottomSheet> {
   final _formKey = GlobalKey<FormState>();
+
   final FocusNode _focusNode = FocusNode();
 
   final _nameTextEditingController = TextEditingController();
@@ -71,7 +72,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height - 90,
+      height: MediaQuery.sizeOf(context).height - (widget.dueDate != null ? 60 : 90),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
@@ -119,7 +120,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                       pomodoroCompleted: 0,
                                       highPriority: highPriority,
                                       userId: user.id,
-                                      projectId: widget.project?.id,
+                                      projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
                                       createdAt: DateTime.now(),
                                       dueDate: _selectedDate ?? DateTime.now(),
                                     ))
@@ -131,7 +132,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                         pomodoro: _currentPomodoroValue,
                                         pomodoroCompleted: widget.task?.pomodoroCompleted,
                                         userId: user.id,
-                                        projectId: widget.project?.id,
+                                        projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
                                         highPriority: highPriority,
                                         dueDate: _selectedDate ?? widget.task!.dueDate,
                                         createdAt: widget.task!.createdAt,
@@ -242,7 +243,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                               _selectedDate = null;
                             })),
                         Gap.SM,
-                        Text(t.tasks.create.due_date, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
+                        Text(t.tasks.create.project, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                         Gap.XS,
                         ProjectDropDown(
                             selectedProject: _selectedProject,

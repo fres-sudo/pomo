@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/sound_player.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/sound_cubit.dart';
@@ -102,15 +103,16 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                         selectedMode[0]
                             ? QuickTimerView(
                           onComplete: () async {
-                            final user = context.read<AuthCubit>().state.maybeWhen(
-                                authenticated: (user) => user,
-                                orElse: () => User.generateFakeData());
+                            final userId = context.read<AuthCubit>().state.maybeWhen(
+                                authenticated: (user) => user.id,
+                                orElse: () => "");
+                            print("USERID: ${userId}");
                             context.read<TaskBloc>().create(
                               task: Task(
-                                name: "user-${user.id}-${DateTime.now()}",
+                                name: "${t.general.quick_session} • ${DateFormat("dd-MM", TranslationProvider.of(context).flutterLocale.languageCode).format(DateTime.now())}",
                                 pomodoro: 1,
                                 pomodoroCompleted: 1,
-                                userId: user.id,
+                                userId: userId,
                                 highPriority: false,
                                 dueDate: DateTime.now(),
                                 createdAt: DateTime.now(),

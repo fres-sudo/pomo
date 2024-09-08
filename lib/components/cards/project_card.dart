@@ -113,7 +113,7 @@ class ProjectCard extends StatelessWidget {
                                     .displaySmall
                                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
                             const SizedBox(height: 2,),
-                            Text(DateFormat('MMM dd, yyyy').format(project.endDate),
+                            Text(DateFormat('MMM dd, yyyy',TranslationProvider.of(context).flutterLocale.languageCode).format(project.endDate),
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary))
                           ],
                         ),

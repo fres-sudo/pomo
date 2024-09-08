@@ -61,7 +61,7 @@ class HeaderProjectDetails extends StatelessWidget {
               ),
             ),
             Text(
-              "${t.tasks.create.due_date}: ${DateFormat('MMM dd, yyyy').format(project.endDate)}",
+              "${t.tasks.create.due_date}: ${DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode).format(project.endDate)}",
               style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
             )
           ],

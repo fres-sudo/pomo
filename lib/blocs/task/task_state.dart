@@ -1,6 +1,6 @@
 part of 'task_bloc.dart';
 
-enum TaskOperation { read, create, update, delete }
+enum TaskOperation { read, create, update, delete, readByDay }
 
 
 @freezed

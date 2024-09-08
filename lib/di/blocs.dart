@@ -33,4 +33,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<SoundCubit>(
     create: (_) => SoundCubit(),
   ),
+  BlocProvider<ScheduleCubit>(
+    create: (_) => ScheduleCubit(),
+  ),
 ];

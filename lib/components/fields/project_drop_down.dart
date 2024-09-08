@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/project/project_bloc.dart';
+import '../../i18n/strings.g.dart';
 import '../../models/project/project.dart';
 
 class ProjectDropDown extends StatefulWidget {
@@ -53,39 +54,50 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
             Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<Project>(
-                    value: _selectedProject,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.secondary,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(
-                          color: Colors.blue,
-                          width: 3,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButtonFormField<Project>(
+                      value: _selectedProject,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).colorScheme.secondary,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:  BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
                         ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:  BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16,),
+                        constraints: BoxConstraints()
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      hint:  Text(t.tasks.create.select_a_project),
+                      dropdownColor: Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      alignment: Alignment.centerLeft, // Aligns the dropdown under the button
+                      onChanged: (Project? newValue) {
+                        setState(() {
+                          _selectedProject = newValue;
+                        });
+                        widget.onChanged(newValue);
+                      },
+                      items: state.projects.map((Project project) {
+                        return DropdownMenuItem<Project>(
+                          value: project,
+                          child: Text(
+                            project.name,
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    hint: const Text('Select a Project'),
-                    dropdownColor: Theme.of(context).colorScheme.secondary,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    onChanged: (Project? newValue) {
-                      setState(() {
-                        _selectedProject = newValue;
-                      });
-                      widget.onChanged(newValue);
-                    },
-                    items: state.projects.map((Project project) {
-                      return DropdownMenuItem<Project>(
-                        value: project,
-                        child: Text(
-                          project.name,
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      );
-                    }).toList(),
                   ),
                 ),
                 if (_selectedProject != null)
