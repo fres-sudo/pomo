@@ -13,10 +13,14 @@ import '../../pages/projects/widget/info_task_bottom_sheet.dart';
 import '../../pages/projects/widget/task_bottom_sheet.dart';
 import '../widgets/destruction_bottomsheet.dart';
 
+enum TaskCardSize { small , large }
+
 class TaskCard extends StatefulWidget {
-  TaskCard({super.key, required this.task});
+  TaskCard({super.key, required this.task, this.size = TaskCardSize.large});
 
   Task task;
+  TaskCardSize size;
+
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -34,7 +38,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: widget.size == TaskCardSize.small ? 4.0 : 8.0),
       child: Slidable(
         key: const ValueKey(0),
         endActionPane: ActionPane(
@@ -90,83 +94,77 @@ class _TaskCardState extends State<TaskCard> {
                 });
           },
           child: Container(
-            padding: const EdgeInsets.only(top: 16, right: 5, bottom: 16, left: 5),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).cardColor),
+            padding:widget.size == TaskCardSize.small ? const EdgeInsets.symmetric(vertical: 8, horizontal: 5) : const EdgeInsets.symmetric(vertical: 16, horizontal: 5),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).cardColor, border: Border(
+              left: widget.task.highPriority ? BorderSide(color: Theme.of(context).colorScheme.error, width: 3) : BorderSide.none
+            )),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Checkbox(
+                    fillColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.selected)) {
+                        return kGreen500;
+                      }
+                      return null;
+                    }),
+                    value: checkBox,
+                    onChanged: (value) {
+                      setState(() {
+                        checkBox = value!;
+                      });
+                      context.read<TaskBloc>().update(
+                          id: widget.task.id ?? "",
+                          task: Task(
+                            id: widget.task.id ?? "",
+                            name: widget.task.name,
+                            description: widget.task.description,
+                            pomodoro: widget.task.pomodoro,
+                            pomodoroCompleted: value! ? widget.task.pomodoro : 0,
+                            userId: widget.task.userId,
+                            highPriority: widget.task.highPriority,
+                            createdAt: widget.task.createdAt,
+                            projectId: widget.task.projectId,
+                            completedAt: value ? DateTime.now() : null,
+                            dueDate: widget.task.dueDate,
+                          ));
+                    }),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Checkbox(
-                        fillColor: WidgetStateProperty.resolveWith((states) {
-                          if (states.contains(WidgetState.selected)) {
-                            return kGreen500;
-                          }
-                          return null;
-                        }),
-                        value: checkBox,
-                        onChanged: (value) {
-                          setState(() {
-                            checkBox = value!;
-                          });
-                          context.read<TaskBloc>().update(
-                              id: widget.task.id ?? "",
-                              task: Task(
-                                id: widget.task.id ?? "",
-                                name: widget.task.name,
-                                description: widget.task.description,
-                                pomodoro: widget.task.pomodoro,
-                                pomodoroCompleted: value! ? widget.task.pomodoro : 0,
-                                userId: widget.task.userId,
-                                highPriority: widget.task.highPriority,
-                                createdAt: widget.task.createdAt,
-                                projectId: widget.task.projectId,
-                                completedAt: value ? DateTime.now() : null,
-                                dueDate: widget.task.dueDate,
-                              ));
-                        }),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Text(
-                            widget.task.name.capitalize(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: widget.task.pomodoro > 1
-                                      ? "${durationToString(widget.task.pomodoro * 30)} hours "
-                                      : "${widget.task.pomodoro * 30} mins",
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kNeutral500)),
-                              TextSpan(
-                                  text: " • ${widget.task.pomodoro} pomodoro",
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
-                            ],
-                          ),
-                        ),
-                      ],
+                    Text(
+                      widget.task.name.capitalize(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.bodyMedium : Theme.of(context).textTheme.titleMedium,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: widget.task.pomodoro > 1
+                                  ? "${durationToString(widget.task.pomodoro * 30)} hours "
+                                  : "${widget.task.pomodoro * 30} mins",
+                              style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.labelSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary) : Theme.of(context).textTheme.titleSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary)),
+                          TextSpan(
+                              text: " • ${widget.task.pomodoro} pomodoro",
+                              style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.labelSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary) : Theme.of(context).textTheme.titleSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
+                const Spacer(),
                 if (widget.task.pomodoro != widget.task.pomodoroCompleted)
-                  IconButton(
-                      onPressed: () {
-                        AutoRouter.of(context).push(WorkSessionRoute(task: widget.task));
-                      },
-                      icon: Icon(
-                        Icons.play_arrow_rounded,
-                        size: 32,
-                        color: Theme.of(context).primaryColor,
-                      ))
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: InkWell(
+                        onTap: () => context.router.push(WorkSessionRoute(task: widget.task)),
+                        child: Icon(
+                          Icons.play_arrow_rounded,
+                          size: widget.size == TaskCardSize.small ? 28 :  32,
+                          color: Theme.of(context).primaryColor,
+                        )),
+                  )
               ],
             ),
           ),

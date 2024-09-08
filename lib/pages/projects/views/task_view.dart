@@ -90,7 +90,7 @@ class TaskView extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: completedTasks.length,
-                      itemBuilder: (context, index) => TaskCard(task: completedTasks[index])),
+                      itemBuilder: (context, index) => TaskCard(task: completedTasks[index],)),
                 ],
               ),
             );

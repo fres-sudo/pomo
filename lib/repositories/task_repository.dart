@@ -1,4 +1,5 @@
 
+import 'package:intl/intl.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 import '../constants/constants.dart';
@@ -28,6 +29,10 @@ abstract class TaskRepository {
   });
   Future<List<Task>> getTasksByUser({
     required String userId,
+  });
+  Future<List<Task>> getTasksByDay({
+    required String userId,
+    required DateTime date,
   });
 }
 
@@ -106,11 +111,23 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<Task> updateTaskById({required String id, required Task task}) async {
     try {
-        final updatedTask = await taskService.updateTaskById(id, taskMapper.toDTO(task));
+      final updatedTask = await taskService.updateTaskById(id, taskMapper.toDTO(task));
 
       return taskMapper.fromDTO(updatedTask);
     } catch (error) {
       logger.e('Error updating taskin: $error');
+      throw Exception('Update failed');
+    }
+  }
+
+  @override
+  Future<List<Task>> getTasksByDay({required String userId, required DateTime date}) async {
+    try {
+      final dateString = DateFormat("yyyy-MM-dd").format(date);
+      final tasks = await taskService.getTasksByDay(userId, dateString);
+      return tasks.map((task) => taskMapper.fromDTO(task)).toList(growable: false);
+    } catch (error) {
+      logger.e('Error fetching tasks by day: $error');
       throw Exception('Update failed');
     }
   }

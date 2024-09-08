@@ -26,6 +26,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<DeleteTaskByIdTaskEvent>(_onDeleteTaskById);
     on<SetTasksTaskEvent>(_onSetTasks);
     on<GetTasksByProjectTaskEvent>(_onGetTasksByProject);
+    on<GetTasksByDayTaskEvent>(_onGetTasksByDay);
   }
 
   /// Method used to add the [SetTasksTaskEvent] event
@@ -42,6 +43,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   /// Method used to add the [GetTasksByProjectTaskEvent] event
   void getByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
+
+  /// Method used to add the [GetTasksByDayTaskEvent] event
+  void getByDay({required String userId, required DateTime date}) => add(TaskEvent.getTasksByDay(userId: userId, date: date));
 
   FutureOr<void> _onSetTasks(
       SetTasksTaskEvent event,
@@ -93,20 +97,33 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       tasks.removeWhere((t) => t.id == event.id);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.delete, tasks: tasks));
     } catch (_) {
-      emit(state.copyWith(isLoading: false, error: UpdatingTasksError()));
+      emit(state.copyWith(isLoading: false, error: DeletingTasksError()));
     }
   }
 
   FutureOr<void> _onGetTasksByProject(
-    GetTasksByProjectTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
+      GetTasksByProjectTaskEvent event,
+      Emitter<TaskState> emit,
+      ) async {
     emit(state.copyWith(isLoading: true));
     try {
       final tasks = await taskRepository.getTasksByProject(projectId: event.projectId);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.read, tasks:tasks));
     } catch (_) {
-      emit(state.copyWith(isLoading: false, error: FetchingTasksByProjectError()));
+      emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
+    }
+  }
+
+  FutureOr<void> _onGetTasksByDay(
+    GetTasksByDayTaskEvent event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final tasks = await taskRepository.getTasksByDay(userId: event.userId, date: event.date);
+      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.readByDay, tasks:tasks));
+    } catch (_) {
+      emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
     }
   }
 

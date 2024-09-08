@@ -107,7 +107,9 @@
       "pomodoros" : "Pomodori",
       "due_date" : "Data di fine",
       "high_priority" : "Alta priorità",
-      "end_in" : "Da finire entro..."
+      "end_in" : "Da finire entro...",
+      "project" : "Progetto",
+      "select_a_project" : "Seleziona un progetto..."
     },
     "delete" : {
       "title" : "Elimina task",

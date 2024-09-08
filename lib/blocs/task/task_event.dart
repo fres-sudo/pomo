@@ -11,6 +11,8 @@ class TaskEvent with _$TaskEvent {
 
   const factory TaskEvent.getTasksByProject({required String projectId}) = GetTasksByProjectTaskEvent;
 
+  const factory TaskEvent.getTasksByDay({required String userId, required DateTime date}) = GetTasksByDayTaskEvent;
+
   const factory TaskEvent.setTasks({required List<Task> tasks}) = SetTasksTaskEvent;
 
 }

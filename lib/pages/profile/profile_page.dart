@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
@@ -41,7 +42,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(t.profile.account, style: kSerzif(context)),
+                    Row(
+                      children: [
+                        BackIconButton(onPress: context.router.maybePop),
+                        Gap.SM,
+                        Text(t.profile.account, style: kSerzif(context)),
+                      ],
+                    ),
                     Gap.MD,
                     InkWell(
                       onTap: () => context.router.push(const EditProfileRoute()),
