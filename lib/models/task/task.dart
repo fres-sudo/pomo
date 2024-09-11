@@ -22,4 +22,13 @@ class Task with _$Task {
     required bool highPriority,
     DateTime? completedAt,
 }) = _Task;
+
+  int compareTo(Task other) {
+    // First, compare by highPriority (highPriority tasks first)
+    if (highPriority != other.highPriority) {
+      return other.highPriority ? 1 : -1; // High priority (true) tasks come first
+    }
+    // If highPriority is the same, sort by dueDate in ascending order
+    return dueDate.compareTo(other.dueDate);
+  }
 }

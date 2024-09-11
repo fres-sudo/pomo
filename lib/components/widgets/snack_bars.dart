@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../cubits/theme/theme_cubit.dart';
 import '../../i18n/strings.g.dart';
 
-onInvalidInput(BuildContext context, {bool isAlert = false}){
+onInvalidInput(BuildContext context, {bool isAlert = false, String? text}){
   WidgetsBinding.instance.addPostFrameCallback((_) {
     !isAlert
         ? ScaffoldMessenger.of(context).showSnackBar(
@@ -19,9 +19,9 @@ onInvalidInput(BuildContext context, {bool isAlert = false}){
            ),
           duration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('${t.errors.valid_info}📝',)),
+          content: Text('${text ?? t.errors.valid_info}📝',)),
     )
-        : showDialog(context: context, builder: (BuildContext context)  => const InvalidInputDialog());
+        : showDialog(context: context, builder: (BuildContext context)  => InvalidInputDialog(text: text));
   });
 }
 

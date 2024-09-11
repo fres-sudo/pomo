@@ -6,7 +6,9 @@ import 'package:pomo/extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 
 class InvalidInputDialog extends StatelessWidget {
-  const InvalidInputDialog({super.key});
+  const InvalidInputDialog({super.key, this.text});
+
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class InvalidInputDialog extends StatelessWidget {
               ),
               Gap.MD,
               Text(
-                t.errors.valid_info,
+                text ?? t.errors.valid_info,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),

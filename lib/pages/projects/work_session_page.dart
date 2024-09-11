@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/back_icon_button.dart';
+import 'package:pomo/cubits/timer/timer_cubit.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
 import 'package:pomo/pages/quick_session/views/quick_break_view.dart';
 import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
 import '../../blocs/task/task_bloc.dart';
-import '../../constants/colors.dart';
 import '../../constants/text.dart';
+import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../models/task/task.dart';
 import '../../routes/app_router.gr.dart';
@@ -42,7 +42,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                   Row(children: [
                     BackIconButton(onPress: () => context.router.maybePop()),
                     Text(
-                      "Work Session",
+                      t.general.work_session,
                       style: kSerzif(context),
                     ),
                   ]),
@@ -75,22 +75,23 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                         },
                         isSelected: selectedMode,
                         children: [
-                          CustomToggleButton(text: "Timer", selectedMode: selectedMode[0]),
-                          CustomToggleButton(text: "Break", selectedMode: selectedMode[1]),
+                          CustomToggleButton(text: t.tasks.timer, selectedMode: selectedMode[0]),
+                          CustomToggleButton(text: t.tasks.breaktime, selectedMode: selectedMode[1]),
                         ]),
                   ),
                 ],
               ),
               selectedMode[0] ?
                   QuickTimerView(onComplete: () {
+                    final isTaskCompleted =(widget.task.pomodoroCompleted ?? 0 + 1) == widget.task.pomodoro ;
                     context.read<TaskBloc>().update(
                         id: widget.task.id!,
                         task: widget.task.copyWith(
-                          pomodoroCompleted: (widget.task.pomodoroCompleted! + 1),
-                          completedAt: widget.task.pomodoroCompleted == widget.task.pomodoroCompleted ? DateTime.now() : null,
+                          pomodoroCompleted: (widget.task.pomodoroCompleted ?? 0 + 1),
+                          completedAt: isTaskCompleted ? DateTime.now() : null,
                         ));
 
-                    if((widget.task.pomodoroCompleted! + 1) == widget.task.pomodoro){
+                    if(isTaskCompleted){
                       context.router.push(const SessionCompleteRoute());
                     }
                     setState(() {
@@ -117,18 +118,15 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                           widget.task.name.capitalize(),
                           style: Theme.of(context)
                               .textTheme
-                              .displaySmall
-                              ?.copyWith(fontSize: 20),
+                              .titleLarge
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        Gap.XS,
                         Text(
-                          widget.task.pomodoro > 1 ? "${durationToString(widget.task.pomodoro * 30)} hours " : "${widget.task.pomodoro * 30} mins",
+                          widget.task.pomodoro > 1 ? "${durationToString(widget.task.pomodoro * (context.watch<TimerCubit>().state.focusTime + context.watch<TimerCubit>().state.breakTime))} ${t.general.hours} " : "${widget.task.pomodoro * (context.watch<TimerCubit>().state.focusTime + context.watch<TimerCubit>().state.breakTime)} min",
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
-                              ?.copyWith(color: kNeutral600),
+                              ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                         ),
                       ],
                     ),
@@ -137,7 +135,7 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium
-                          ?.copyWith(color: kPrimary500),
+                          ?.copyWith(color: Theme.of(context).primaryColor),
                     )
                   ],
                 ),

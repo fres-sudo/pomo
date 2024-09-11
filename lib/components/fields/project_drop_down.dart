@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/project/project_bloc.dart';
+import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../models/project/project.dart';
+import '../../models/task/task.dart';
 
 class ProjectDropDown extends StatefulWidget {
   const ProjectDropDown({
@@ -12,8 +14,10 @@ class ProjectDropDown extends StatefulWidget {
     required this.onDelete,
     this.selectedProject,
     required this.visible,
+    this.task
   });
 
+  final Task? task;
   final Function(Project? project) onChanged;
   final VoidCallback onDelete;
   final Project? selectedProject;
@@ -51,6 +55,11 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              t.tasks.create.project,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+            ),
+            Gap.XS,
             Row(
               children: [
                 Expanded(
@@ -58,30 +67,39 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
                     child: DropdownButtonFormField<Project>(
                       value: _selectedProject,
                       decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.secondary,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:  BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
+                          filled: true,
+                          fillColor: Theme.of(context).colorScheme.secondary,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).dividerColor,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide:  BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).dividerColor,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16,),
-                        constraints: BoxConstraints()
-                      ),
-                      hint:  Text(t.tasks.create.select_a_project),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).dividerColor,
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          constraints: BoxConstraints()),
+                      hint: Text(t.tasks.create.select_a_project),
                       dropdownColor: Theme.of(context).colorScheme.secondary,
                       icon: const Icon(Icons.arrow_drop_down),
                       style: Theme.of(context).textTheme.bodyMedium,
-                      alignment: Alignment.centerLeft, // Aligns the dropdown under the button
+                      alignment: Alignment.centerLeft,
+                      // Aligns the dropdown under the button
                       onChanged: (Project? newValue) {
                         setState(() {
                           _selectedProject = newValue;

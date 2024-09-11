@@ -36,6 +36,13 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   @override
+  void didChangeDependencies() {
+    checkBox = widget.task.pomodoro == widget.task.pomodoroCompleted;
+    super.didChangeDependencies();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: widget.size == TaskCardSize.small ? 4.0 : 8.0),
@@ -107,11 +114,8 @@ class _TaskCardState extends State<TaskCard> {
                       }
                       return null;
                     }),
-                    value: checkBox,
+                    value: widget.task.pomodoro == widget.task.pomodoroCompleted,
                     onChanged: (value) {
-                      setState(() {
-                        checkBox = value!;
-                      });
                       context.read<TaskBloc>().update(
                           id: widget.task.id ?? "",
                           task: Task(

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +24,7 @@ class _SoundPlayerState extends State<SoundPlayer> {
     if (index == kSounds.length) {
       await audioPlayer.stop();
     } else {
-      await audioPlayer.stop();
+      await audioPlayer.setReleaseMode(ReleaseMode.loop);
       await audioPlayer.play(AssetSource(kSounds[index]));
     }
   }

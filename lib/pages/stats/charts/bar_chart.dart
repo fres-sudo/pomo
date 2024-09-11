@@ -121,7 +121,7 @@ class CustomBarChartState extends State<CustomBarChart> {
               '$weekDay\n',
               Theme.of(context).textTheme.titleSmall!,
               children: [
-                TextSpan(text: (rod.toY - 1).toString(), style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500)),
+                TextSpan(text: (rod.toY - 1).toString(), style: Theme.of(context).textTheme.titleSmall),
               ],
             );
           },
