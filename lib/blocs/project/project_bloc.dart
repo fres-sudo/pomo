@@ -63,7 +63,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
       emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.read));
     } catch (_) {
-      emit(state.copyWith(isLoading: false, error: FetchingProjectsError()));
+      emit(state.copyWith(isLoading: false, projects: [], error: FetchingProjectsError()));
     }
   }
 
@@ -105,7 +105,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         tasks: List.from(event.tasks),
       );
       projects[projectIndex] = updatedProject;
-      print("-------------- updatedProject: ${updatedProject.tasks?.where((task) => task.pomodoro == task.pomodoroCompleted).length}");
 
       emit(state.copyWith(projects: projects));
     }
@@ -125,7 +124,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       projects.add(project);
       emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.update));
     } catch (_) {
-      emit(state.copyWith(error: UpdatingProjectsError()));
+      emit(state.copyWith(isLoading: false, projects: [], error: UpdatingProjectsError()));
     }
   }
 
@@ -140,7 +139,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       projects.removeWhere((element) => element.id == project.id);
       emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.delete));
     } catch (_) {
-      emit(state.copyWith(error: DeletingProjectsError()));
+      emit(state.copyWith(isLoading: false, projects: [], error: DeletingProjectsError()));
     }
   }
 }

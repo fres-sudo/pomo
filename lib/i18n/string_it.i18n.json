@@ -20,12 +20,17 @@
     "today": "Oggi",
     "yesterday": "Ieri",
     "all_times": "Tutto",
+    "pomodoro_done" : "Pomodori completati",
     "done": "Fatto",
     "quick_session":  "Sessione Veloce",
     "still_dont_have" : "Non hai ancora",
     "no_description" : "Nessuna descrizione",
     "continue_with" : "Continua con",
-    "or" : "o"
+    "completed_at" : "Completata",
+    "created_at" : "Creata",
+    "or" : "o",
+    "work_session" : "Sessione di lavoro",
+    "hours": "ore"
   },
   "projects": {
     "title": "Progetto",
@@ -91,6 +96,7 @@
     "break_time": "Tempo di pausa",
     "total_tasks": "Tasks Totali",
     "timer": "Timer",
+    "task_info" : "Informazioni Task",
     "breaktime": "Pausa",
     "reset_timer": {
       "title": "Resetta il Timer",
@@ -153,6 +159,7 @@
     "please_restart": "Si prega di riavviare l'applicazione.",
     "please_retry": "Si prega di riprovare",
     "valid_info" : "Perfavore inserisci delle informazioni corrette.",
+    "due_date_before_today" : "La data di fine non può essere nel passato.",
     "projects": {
       "fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",

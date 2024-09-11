@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pomo/constants/constants.dart';
+import 'package:pomo/constants/enum.dart';
 import 'package:pomo/error/tasks_error.dart';
 
 import '../../error/localized.dart';
@@ -45,7 +46,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   void getByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
 
   /// Method used to add the [GetTasksByDayTaskEvent] event
-  void getByDay({required String userId, required DateTime date}) => add(TaskEvent.getTasksByDay(userId: userId, date: date));
+  void fetch({required String userId, required DateTime date, required FetchType type}) => add(TaskEvent.fetchTasks(userId: userId, date: date, type: type));
 
   FutureOr<void> _onSetTasks(
       SetTasksTaskEvent event,
@@ -120,7 +121,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final tasks = await taskRepository.getTasksByDay(userId: event.userId, date: event.date);
+      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, type: event.type);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.readByDay, tasks:tasks));
     } catch (_) {
       emit(state.copyWith(isLoading: false, error: FetchingTasksError()));

@@ -38,9 +38,16 @@ class _StatsPageState extends State<StatsPage> {
     context.read<StatsBloc>().fetchStats(userId: id);
   }
 
-  double _formatTime(int? time, int factor) {
-    final hours = time ?? 0 * factor / 60;
-    return double.tryParse(hours.toStringAsFixed(2)) ?? 0;
+  String _formatTime(int? time, int factor) {
+    final hours = (time ?? 0) * factor / 60;
+    return _formatHours(double.tryParse(hours.toStringAsFixed(2)) ?? 0);
+  }
+
+  String _formatHours(double decimalHours) {
+    int hours = decimalHours.floor(); // Get the whole number part (hours)
+    int minutes = ((decimalHours - hours) * 60).round(); // Convert the decimal part to minutes
+
+    return hours > 0 ? '${hours}h ${minutes}m' : '${minutes}m';
   }
 
   @override
@@ -135,11 +142,11 @@ class _StatsPageState extends State<StatsPage> {
                                         Column(
                                           children: [
                                             Text(
-                                              "${selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, focusTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, focusTime) : _formatTime(state.statistics?.totalTasksAll, focusTime)}h",
+                                              selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, focusTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, focusTime) : _formatTime(state.statistics?.totalTasksAll, focusTime),
                                               style: Theme.of(context).textTheme.titleMedium,
                                             ),
                                             Text(
-                                              "${selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, breakTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, breakTime) : _formatTime(state.statistics?.totalTasksAll, breakTime)}h",
+                                              selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, breakTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, breakTime) : _formatTime(state.statistics?.totalTasksAll, breakTime),
                                               style: Theme.of(context).textTheme.titleMedium,
                                             ),
                                             Text(

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 import '../constants/constants.dart';
+import '../constants/enum.dart';
 import '../models/project/project.dart';
 import '../models/task/task.dart';
 import '../services/network/jto/project/project_jto.dart';
@@ -30,9 +31,10 @@ abstract class TaskRepository {
   Future<List<Task>> getTasksByUser({
     required String userId,
   });
-  Future<List<Task>> getTasksByDay({
+  Future<List<Task>> fetchTasks({
     required String userId,
     required DateTime date,
+    required FetchType type
   });
 }
 
@@ -121,10 +123,10 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<Task>> getTasksByDay({required String userId, required DateTime date}) async {
+  Future<List<Task>> fetchTasks({required String userId, required DateTime date, required FetchType type}) async {
     try {
       final dateString = DateFormat("yyyy-MM-dd").format(date);
-      final tasks = await taskService.getTasksByDay(userId, dateString);
+      final tasks = await taskService.getTasksByDay(userId, dateString, type.type);
       return tasks.map((task) => taskMapper.fromDTO(task)).toList(growable: false);
     } catch (error) {
       logger.e('Error fetching tasks by day: $error');
@@ -132,3 +134,5 @@ class TaskRepositoryImpl implements TaskRepository {
     }
   }
 }
+
+

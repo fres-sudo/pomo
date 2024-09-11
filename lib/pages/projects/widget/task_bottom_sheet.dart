@@ -6,6 +6,7 @@ import 'package:pomo/components/fields/date_field.dart';
 import 'package:pomo/components/fields/project_drop_down.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
+import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
 
@@ -108,8 +109,13 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                         onTap: () async {
                           final User user =
                               context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                          if(_selectedDate != null && _selectedDate!.isBeforeDay(DateTime.now())){
+                            onInvalidInput(context, text: t.errors.due_date_before_today, isAlert: true);
+                            return;
+                          }
                           if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0 || _selectedDate == null) {
                             onInvalidInput(context, isAlert: true);
+                            return;
                           } else {
                             widget.task == null
                                 ? context.read<TaskBloc>().create(
@@ -243,8 +249,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                               _selectedDate = null;
                             })),
                         Gap.SM,
-                        Text(t.tasks.create.project, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
-                        Gap.XS,
                         ProjectDropDown(
                             selectedProject: _selectedProject,
                             visible: widget.dueDate != null,

@@ -10,6 +10,7 @@ class AuthGuard extends AutoRouteGuard {
     //check if user is authenticated if yes go to root, if not to login
     var value = await storage.read(key: "user_data");
 
+    print("VALUE : $value");
     if (value != null) {
       resolver.next(true);
     } else {

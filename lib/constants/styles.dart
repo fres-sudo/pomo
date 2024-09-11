@@ -19,6 +19,7 @@ kCalendarStyle(BuildContext context) => CalendarStyle(
       shape: BoxShape.rectangle
   ),
   isTodayHighlighted: true,
+  todayTextStyle: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
   todayDecoration: BoxDecoration(
       border: Border.all(
         color: Theme.of(context).primaryColor.withOpacity(0.8),

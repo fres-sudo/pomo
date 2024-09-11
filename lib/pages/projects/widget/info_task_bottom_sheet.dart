@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import 'package:pomo/constants/colors.dart';
 
 import '../../../extension/sized_box_extension.dart';
@@ -29,24 +30,18 @@ class InfoTaskBottomSheet extends StatelessWidget {
               .bottomSheetTheme
               .backgroundColor,
         ),
-        padding: const EdgeInsets.only(top: 26, left: 16, bottom: 16, right: 16),
+        padding: const EdgeInsets.only(left: 16, bottom: 36, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: 4,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).bottomSheetTheme.backgroundColor
-              ),
-            ),
+            const TopBottomSheetWidget(),
+            Gap.MD,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.info_outline_rounded,size: 20,),
                 Gap.SM_H,
-                Text('Task Information',
+                Text(t.tasks.task_info,
                     style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
@@ -56,48 +51,48 @@ class InfoTaskBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Name:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text("${t.general.name}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                 Text(task.name, style: Theme.of(context).textTheme.titleMedium,)
             ],),
             Gap.SM,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Description:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text("${t.general.description}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                 Expanded(
-                    child: Text(task.description ?? "No description", style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.end, maxLines: 2, overflow: TextOverflow.ellipsis,))
+                    child: Text(task.description != null && task.description!.isNotEmpty ? task.description! : t.general.no_description, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.end, maxLines: 2, overflow: TextOverflow.ellipsis,))
             ],),
             Gap.SM,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Pomodoro:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color:kNeutral500),),
+                Text("${t.tasks.create.pomodoros}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color:Theme.of(context).colorScheme.onSecondary),),
                 Text(task.pomodoro.toString(), style: Theme.of(context).textTheme.titleMedium,)
               ],),
             Gap.SM,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Pomodoro completed:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text("${t.general.pomodoro_done}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                 Text(task.pomodoroCompleted.toString(), style: Theme.of(context).textTheme.titleMedium,)
               ],),
             Gap.SM,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Created At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text("${t.general.created_at}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                 Text(DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode).format(task.createdAt), style: Theme.of(context).textTheme.titleMedium,)
             ],),
             Gap.SM,
-            task.pomodoro == task.pomodoroCompleted  ?
+            if(task.pomodoro == task.pomodoroCompleted)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Completed At:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutral500),),
+                Text("${t.general.completed_at}:", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
                 Text(DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode).format(task.completedAt!), style: Theme.of(context).textTheme.titleMedium,)
-            ],) : const SizedBox(),
+            ],),
             Gap.SM,
-      
+
           ],
         )
       ),

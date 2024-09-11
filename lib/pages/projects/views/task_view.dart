@@ -24,8 +24,6 @@ class TaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
-      print("state.tasks ---- ------- ........: ${state.tasks.where((task) => task.pomodoroCompleted == task.pomodoro).length}");
-
       return switch(state.operation){
         TaskOperation.update => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
         TaskOperation.delete => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
@@ -48,13 +46,15 @@ class TaskView extends StatelessWidget {
       }
     }, builder: (context, state) {
 
-      print("STATE : ${state.tasks.length}");
+      List<Task> completedTasks = state.tasks
+          .where((task) => task.pomodoro == task.pomodoroCompleted)
+          .toList()
+        ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
 
-      List<Task> completedTasks = state.tasks.where((task) => task.pomodoro == task.pomodoroCompleted).toList() ?? [];
-      List<Task> inProgressTasks = state.tasks.where((task) => task.pomodoro != task.pomodoroCompleted).toList() ?? [];
-
-      print("COMPLETED: ${completedTasks.length}" );
-      print("PROGRES: ${inProgressTasks.length}" );
+      List<Task> inProgressTasks = state.tasks
+          .where((task) => task.pomodoro != task.pomodoroCompleted)
+          .toList()
+        ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
 
       return state.tasks.isEmpty
           ? NoTaskView(project: project)
