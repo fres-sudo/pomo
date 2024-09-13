@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/routes/app_router.gr.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../blocs/project/project_bloc.dart';
@@ -95,28 +99,17 @@ class _StatsPageState extends State<StatsPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ToggleButtons(
-                                          renderBorder: false,
-                                          isSelected: selectedMode,
-                                          onPressed: (int index) {
-                                            setState(() {
-                                              for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
-                                                selectedMode[buttonIndex] = buttonIndex == index;
-                                              }
-                                            });
-                                          },
-                                          children: List.generate(3, (index) => TimeSelector(text: days[index], isSelected: selectedMode[index])),
-                                        ),
-                                        IconButton(
-                                            onPressed: () => onAvailableSoon(context),
-                                            icon: Icon(
-                                              Icons.ios_share_rounded,
-                                              color: Theme.of(context).iconTheme.color,
-                                            ))
-                                      ],
+                                    ToggleButtons(
+                                      renderBorder: false,
+                                      isSelected: selectedMode,
+                                      onPressed: (int index) {
+                                        setState(() {
+                                          for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
+                                            selectedMode[buttonIndex] = buttonIndex == index;
+                                          }
+                                        });
+                                      },
+                                      children: List.generate(3, (index) => TimeSelector(text: days[index], isSelected: selectedMode[index])),
                                     ),
                                     Gap.MD,
                                     Row(

@@ -79,7 +79,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         state.copyWith(isLoading: false, projects: updatedProjects, operation: ProjectOperation.create),
       );
     } catch (_) {
-      emit(state.copyWith(error: CreatingProjectsError()));
+      emit(state.copyWith(isLoading: false, error: CreatingProjectsError()));
     }
   }
 
@@ -90,7 +90,13 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(state.copyWith(isLoading: true));
     try {
       final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
-    } catch (_) {}
+      final projects = List<Project>.from(state.projects);
+      projects.removeWhere((element) => element.id == project.id);
+      projects.add(project);
+      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.update));
+    } catch (_) {
+      emit(state.copyWith(isLoading: false, projects: [], error: UpdatingProjectsError()));
+    }
   }
 
   FutureOr<void> _onUpdateProjectsTasks(
@@ -99,7 +105,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     final projects = List<Project>.from(state.projects);
     final projectIndex = projects.indexWhere((proj) => proj.id == event.projectId);
-    print("projectIndex: ${projectIndex}");
     if (projectIndex != -1) {
       final updatedProject = projects[projectIndex].copyWith(
         tasks: List.from(event.tasks),

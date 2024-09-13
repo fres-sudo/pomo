@@ -42,12 +42,17 @@
     "already_done" : "Already Done",
     "create": {
       "title": "New Project",
-      "add_cover": "Add Cover",
-      "invite_collaborator": "Invite a collaborator"
+      "add_cover": "Add Cover"
     },
     "delete" : {
       "title": "Delete project",
       "description" : "Are you sure you want to delete this project?"
+    },
+    "collaborator": {
+      "invite_collaborator": "Invita un collaboratore",
+      "project_code" : "Ho un codice di invito",
+      "join" : "Partecipa",
+      "code_invitation" : "Codice di invito"
     }
   },
   "profile": {
@@ -121,7 +126,15 @@
       "title" : "Delete task",
       "description" : "Are you sure you want to delete this task?"
     },
-    "start_quick_session" : "Start Quick Session"
+    "start_quick_session" : "Start Quick Session",
+    "completed_task" : {
+      "session_complete" : "Task Completed",
+      "share_this_moment" : "Share This Moment",
+      "back_home" : "Back Home",
+      "first_part_desc" : "Bravo! You navigated this digital journey",
+      "second_part_desc" : "with finesse. Take a moment to celebrate",
+      "third_part_desc" : "your accomplishment."
+    }
   },
   "authentication": {
     "login": {

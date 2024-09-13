@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/project/project_bloc.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/destruction_bottomsheet.dart';
 import '../../../components/widgets/top_bottom_sheet_widget.dart';
@@ -19,7 +20,7 @@ class ProjectBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320,
+      height: 260,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
@@ -49,29 +50,6 @@ class ProjectBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () {},
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: kPrimary500.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.edit_note_rounded,
-                              color: kPrimary500,
-                            ),
-                            Gap.SM_H,
-                            Text(
-                              t.general.edit,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kPrimary500),
-                            ),
-                          ],
-                        )),
-                  ),
-                  Gap.SM,
-                  InkWell(
                     onTap: () => onAvailableSoon(context),
                     child: Container(
                         decoration: BoxDecoration(
@@ -82,12 +60,12 @@ class ProjectBottomSheet extends StatelessWidget {
                         child: Row(
                           children: [
                             const Icon(
-                              Icons.share_rounded,
+                              Icons.edit_note_rounded,
                               color: kGreen500,
                             ),
                             Gap.SM_H,
                             Text(
-                              t.general.share,
+                              t.general.edit,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),
                             ),
                           ],
@@ -107,6 +85,7 @@ class ProjectBottomSheet extends StatelessWidget {
                               function: () {
                                 context.read<ProjectBloc>().deleteProjectById(id: project.id!);
                                 context.router.maybePop();
+                                context.router.replace(const ProjectRoute());
                               },
                             );
                           },

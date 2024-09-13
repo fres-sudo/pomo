@@ -29,7 +29,7 @@ class HeaderProjectDetails extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BackIconButton(onPress:  () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),),
+            BackIconButton(onPress: () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),),
             Gap.SM_H,
             Text(project.name.capitalize(), overflow: TextOverflow.ellipsis, style: kSerzif(context)),
             const Spacer(),

@@ -23,7 +23,7 @@ class NoStatsPage extends StatelessWidget {
           "assets/images/statistics.png",
           scale: 0.85,
         ),
-        Gap.SM,
+        Gap.MD,
         Text(
           "${t.general.still_dont_have} \n ${t.stats.any_stats}",
           style: Theme.of(context).textTheme.titleMedium,
@@ -32,10 +32,10 @@ class NoStatsPage extends StatelessWidget {
         Gap.MD,
         ElevatedButton(
             style: ElevatedButton.styleFrom(minimumSize: const Size(220, 48)),
-            onPressed: () => context.router.push(QuickSessionRoute()),
+            onPressed: () => context.router.push(const QuickSessionRoute()),
             child: Text(
               t.tasks.start_quick_session,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
             ))
       ],
     );

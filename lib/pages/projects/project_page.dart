@@ -3,12 +3,13 @@ import 'dart:io' show Platform;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/components/utils/responsive.dart';
+import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/models/project/project.dart';
-import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/pages/projects/views/no_proj_view.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -57,7 +58,8 @@ class _ProjectPageState extends State<ProjectPage> {
     }, builder: (context, state) {
       return Scaffold(
         floatingActionButton: CustomFloatingActionButton(
-          onPressed: () => context.router.push( CreateProjectRoute()),
+          herTag: "fab-project",
+          onPressed: () => context.router.push(CreateProjectRoute()),
         ),
         body: SafeArea(
             child: SingleChildScrollView(
@@ -70,9 +72,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(t.projects.header_project_page, style: kSerzif(context)),
-                  InkWell(
-                      onTap: () => context.router.push(const ProfileNavigation()),
-                      child: const ProfilePicture()),
+                  InkWell(onTap: () => context.router.push(const ProfileNavigation()), child: const ProfilePicture()),
                 ],
               ),
               Gap.MD,
@@ -92,12 +92,19 @@ class _ProjectPageState extends State<ProjectPage> {
                           height: Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300,
                           child: RefreshIndicator.adaptive(
                             onRefresh: _onRefresh,
-                            child: ListView.builder(
-                              shrinkWrap: false,
-                              itemCount: searchController.text.isEmpty ? state.projects.length : searchedProjects.length,
-                              itemBuilder: (context, index) =>
-                                  ProjectCard(project: searchController.text.isEmpty ? state.projects[index] : searchedProjects[index]),
-                            ),
+                            child: Responsive.isMobile(context)
+                                ? ListView.builder(
+                                    itemCount: searchController.text.isEmpty ? state.projects.length : searchedProjects.length,
+                                    itemBuilder: (context, index) =>
+                                        ProjectCard(project: searchController.text.isEmpty ? state.projects[index] : searchedProjects[index]),
+                                  )
+                                : GridView.builder(
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 20),
+                                    shrinkWrap: false,
+                                    itemCount: searchController.text.isEmpty ? state.projects.length : searchedProjects.length,
+                                    itemBuilder: (context, index) =>
+                                        ProjectCard(project: searchController.text.isEmpty ? state.projects[index] : searchedProjects[index]),
+                                  ),
                           ),
                         ))
             ],

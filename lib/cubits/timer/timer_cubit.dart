@@ -11,7 +11,7 @@ part 'timer_cubit.freezed.dart';
 class TimerCubit extends HydratedCubit<TimerState> {
 
   /// Create a new instance of [TimerCubit].
-  TimerCubit() : super(const TimerState());
+  TimerCubit() : super(const TimerState(focusTime: 25, breakTime: 5));
 
   /// Method used to perform the [setTimer] action
   FutureOr<void> setTimer(int focusTime, int breakTime) {

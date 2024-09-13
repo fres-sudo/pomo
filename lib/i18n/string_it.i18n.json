@@ -42,8 +42,13 @@
     "already_done" : "Completate",
     "create": {
       "title": "Nuovo Progetto",
-      "add_cover": "Aggiungi copertina",
-      "invite_collaborator": "Invita un collaboratore"
+      "add_cover": "Aggiungi copertina"
+    },
+    "collaborator": {
+      "invite_collaborator": "Invita un collaboratore",
+      "project_code" : "I have a project code invitation",
+      "join" : "Join",
+      "code_invitation" : "Code invitation"
     },
     "delete" : {
       "title": "Elimina progetto",
@@ -121,7 +126,15 @@
       "title" : "Elimina task",
       "description" : "Sei sicuro di voler eliminare questa task?"
     },
-    "start_quick_session" : "Inizia una Sessione Veloce"
+    "start_quick_session" : "Inizia una Sessione Veloce",
+    "completed_task" : {
+      "session_complete" : "Task Completata",
+      "share_this_moment" : "Condividi questo momento",
+      "back_home" : "Torna alla home",
+      "first_part_desc" : "Ottimo! Hai dimostrato di essere un buon compagno",
+      "second_part_desc" : "di lavoro. Prenditi una pausa per riflettere e ",
+      "third_part_desc" : "condividi i tuoi successi."
+    }
   },
   "authentication": {
     "login": {
