@@ -55,7 +55,7 @@ class LanguageBottomSheet extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 value: AppLocale.values[index],
                 groupValue: TranslationProvider.of(context).locale,
-                title: Text('${_getFlagEmoji(AppLocale.values[index].languageCode)} ${_getLanguageName(AppLocale.values[index])}'),
+                title: Text('${_getFlagEmoji(AppLocale.values[index].languageCode)} ${_getLanguageName(AppLocale.values[index])}', style: Theme.of(context).textTheme.bodyMedium,),
                 onChanged: (AppLocale? newLocale) => LocaleSettings.setLocale(newLocale ?? AppLocale.en),
               ),
               separatorBuilder: (_, __) => const Divider(),

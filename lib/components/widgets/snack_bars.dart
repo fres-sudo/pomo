@@ -101,10 +101,10 @@ onAvailableSoon(BuildContext context) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          backgroundColor: kYellow100,
+          backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: kYellow200)
+              borderSide: BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 :kYellow400)
           ),
           duration: const Duration(seconds: 2),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),

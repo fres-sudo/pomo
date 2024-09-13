@@ -21,8 +21,8 @@ class RootPage extends StatelessWidget {
       routes: const [
         ScheduleRoute(),
         ProjectNavigation(),
-        StatsRoute(),
         QuickSessionRoute(),
+        StatsRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -44,11 +44,12 @@ class RootPage extends StatelessWidget {
                 onTap: (value) {
                   tabsRouter.setActiveIndex(value);
                   final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-                  return switch (value) {
-                    0 => context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
-                    1 => context.read<ProjectBloc>().getProjectsByUser(userId: userId),
-                    _ => null
-                  };
+                  if (value == 0) {
+                    context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
+                  }
+                  if (value == 1) {
+                    context.read<ProjectBloc>().getProjectsByUser(userId: userId);
+                  }
                 },
                 items: [
                   BottomNavigationBarItem(
@@ -59,9 +60,10 @@ class RootPage extends StatelessWidget {
                       ),
                       label: "Schedule"),
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset('assets/icons/nav-bar/Bold/Document.svg',
+                    activeIcon: SvgPicture.asset(
+                      'assets/icons/nav-bar/Bold/Document.svg',
                       colorFilter:
-                      ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                          ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                     ),
                     icon: SvgPicture.asset(
                       'assets/icons/nav-bar/Light/Document.svg',
@@ -71,17 +73,6 @@ class RootPage extends StatelessWidget {
                     label: t.projects.plural,
                   ),
                   BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset('assets/icons/nav-bar/Bold/Graph.svg',
-                        colorFilter:
-                        ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      icon: SvgPicture.asset(
-                        'assets/icons/nav-bar/Light/Graph.svg',
-                        colorFilter:
-                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      label: t.stats.short_title),
-                  BottomNavigationBarItem(
                       activeIcon: SvgPicture.asset('assets/icons/nav-bar/Bold/Play.svg'),
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Play.svg',
@@ -89,6 +80,18 @@ class RootPage extends StatelessWidget {
                             ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                       ),
                       label: t.general.quick_session),
+                  BottomNavigationBarItem(
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/nav-bar/Bold/Graph.svg',
+                        colorFilter:
+                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                      ),
+                      icon: SvgPicture.asset(
+                        'assets/icons/nav-bar/Light/Graph.svg',
+                        colorFilter:
+                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                      ),
+                      label: t.stats.short_title),
                 ],
               ),
             ),

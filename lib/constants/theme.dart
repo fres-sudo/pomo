@@ -53,7 +53,7 @@ class LightTheme {
             disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
             filled: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             suffixIconColor: kNeutral900),
         bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral100),
         checkboxTheme: CheckboxThemeData(
@@ -186,7 +186,7 @@ class DarkTheme {
             disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
             filled: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             suffixIconColor: kNeutral100),
         bottomSheetTheme: const BottomSheetThemeData(backgroundColor: kNeutral900),
         colorScheme: const ColorScheme.dark(

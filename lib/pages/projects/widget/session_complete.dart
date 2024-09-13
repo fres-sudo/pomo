@@ -8,6 +8,9 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
+
 @RoutePage()
 class SessionCompletePage extends StatefulWidget {
   const SessionCompletePage({super.key});
@@ -77,14 +80,14 @@ class _SessionCompletePageState extends State<SessionCompletePage> {
                         height: 16,
                       ),
                       Text(
-                        "Session Complete! 🎉",
+                        "${t.tasks.completed_task.session_complete}! 🎉",
                         style: kSerzif(context),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "Bravo! You've navigated this digital journey\n with finesse. Take a moment to celebrate\n your accomplishments.",
+                        "${t.tasks.completed_task.first_part_desc}\n ${t.tasks.completed_task.second_part_desc}\n ${t.tasks.completed_task.third_part_desc}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -95,22 +98,19 @@ class _SessionCompletePageState extends State<SessionCompletePage> {
 
                   Column(
                     children: [
-                      RoundedButton(
-                        onPressed: () {
-                          AutoRouter.of(context).push( const ProjectRoute());
-                        },
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        child: Text("Back Home",style: Theme.of(context).textTheme.titleMedium),
-                      ),
                       TextButton(
-                          onPressed: () {
-                            _controllerTopCenter.play();
-                          },
-                          child: Text(
-                            "Share This Moment!",
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                fontSize: 14),
+                        onPressed: () => context.router.push( const ProjectRoute()),
+                        child: Center(child: Text(t.tasks.completed_task.back_home,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor))),
+                      ),
+                      Gap.XS,
+                      ElevatedButton(
+                          onPressed: () => _controllerTopCenter.play(),
+                          child: Center(
+                            child: Text(
+                              "${t.tasks.completed_task.share_this_moment}!",
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface,),
+                            ),
                           ))
                     ],
                   ),

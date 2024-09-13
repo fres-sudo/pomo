@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pomo/services/network/jto/project/project_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'project_service.g.dart';
@@ -18,9 +17,9 @@ abstract class ProjectService {
 
   @POST('/projects')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
-  @PUT('/projects/uploadImageCover/{id}')
+  @PUT('/projects/image/{projectId}')
   @MultiPart()
-  Future<ProjectJTO> uploadProjectImageCover(@Path('id') String id, @Part() File photo,);
+  Future<ProjectJTO> uploadProjectImageCover(@Path('projectId') String id, @Part() File image,);
 
   @PATCH('/projects/{id}')
   Future<ProjectJTO> updateProjectById(@Path('id') String id, @Body() ProjectJTO body);

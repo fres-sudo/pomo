@@ -12,6 +12,7 @@ import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/models/user/user.dart';
 
@@ -35,7 +36,6 @@ class CreateProjectPage extends StatefulWidget {
 }
 
 class _CreateProjectPageState extends State<CreateProjectPage> {
-
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _descriptionTextController = TextEditingController();
 
@@ -49,7 +49,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
   @override
   void initState() {
     _nameTextController.text = widget.name ?? "";
-    _descriptionTextController.text = widget.description?? "";
+    _descriptionTextController.text = widget.description ?? "";
     _startDate = widget.startDate;
     _endDate = widget.endDate;
     image = widget.image;
@@ -67,11 +67,19 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
+      if (state.operation == ProjectOperation.update) {
+        final Project currProj = state.projects.firstWhere((proj) =>
+            proj.name == _nameTextController.text && proj.createdAt?.day == DateTime.now().day && proj.createdAt?.month == DateTime.now().month);
+
+        context.router.push(ProjectDetailsRoute(project: currProj, isCreatedProject: true));
+      }
       if (state.operation == ProjectOperation.create) {
+        final Project currProj = state.projects.firstWhere((proj) =>
+            proj.name == _nameTextController.text && proj.createdAt?.day == DateTime.now().day && proj.createdAt?.month == DateTime.now().month);
+
         image != null
-            ? context.read<ProjectBloc>().uploadProjectImageCover(id: state.projects.firstWhere((proj) => proj.name == _nameTextController.text).id ?? "", imageCover: File(image!.path))
-            : context.router.push(
-                ProjectDetailsRoute(project: state.projects.firstWhere((proj) => proj.name == _nameTextController.text), isCreatedProject: true));
+            ? context.read<ProjectBloc>().uploadProjectImageCover(id: currProj.id ?? '', imageCover: File(image!.path))
+            : context.router.push(ProjectDetailsRoute(project: currProj, isCreatedProject: true));
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -84,17 +92,25 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
               children: [
                 Row(
                   children: [
-                  BackIconButton(onPress: context.router.maybePop),
-                  Gap.XS_H,
-                  Text(
-                    t.projects.create.title,
-                    style: kSerzif(context),
-                  ),
+                    BackIconButton(onPress: context.router.maybePop),
+                    Gap.XS_H,
+                    Text(
+                      t.projects.create.title,
+                      style: kSerzif(context),
+                    ),
                     const Spacer(),
                     TextButton(
                         onPressed: () {
                           final user =
                               context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                          if(_endDate == null){
+                            onInvalidInput(context);
+                            return;
+                          }
+                          if (_endDate != null && _endDate!.isBeforeDay(DateTime.now())) {
+                            onInvalidInput(context, text: t.errors.due_date_before_today);
+                            return;
+                          }
                           _formKey.currentState!.validate()
                               ? context.read<ProjectBloc>().createProject(
                                       project: Project(
@@ -108,14 +124,30 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         },
                         child: state.isLoading
                             ? const CustomCircularProgressIndicator()
-                            : Text(
-                                t.general.create,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color:_nameTextController.text.length >= 3 && _endDate != null ? Theme.of(context).primaryColor
-                                    : Theme.of(context).colorScheme.onSecondary)
-                              ))
+                            : Text(t.general.create,
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: _nameTextController.text.length >= 3 && _endDate != null
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context).colorScheme.onSecondary)))
                   ],
                 ),
                 Gap.MD,
+                /*Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _projectCodeTextController,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        cursorColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          hintText: t.general.name,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(onPressed: (){}, child: )
+                  ],
+                ),
+                Gap.MD,*/
                 DottedBorder(
                   strokeWidth: 2,
                   color: Theme.of(context).dividerColor,
@@ -221,15 +253,15 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 TextButton(
                   onPressed: () => onAvailableSoon(context),
                   style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.projects.invite_friends, style: Theme.of(context).inputDecorationTheme.hintStyle),
-                        Icon(Icons.keyboard_arrow_down_rounded,color: Theme.of(context).colorScheme.onSecondary)
+                        Text(t.projects.collaborator.invite_collaborator, style: Theme.of(context).inputDecorationTheme.hintStyle),
+                        Icon(Icons.keyboard_arrow_down_rounded, color: Theme.of(context).colorScheme.onSecondary)
                       ],
                     ),
                   ),
@@ -238,25 +270,25 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
                 DateField(
-                    selectedDate:_startDate,
+                    selectedDate: _startDate,
                     onPress: (date) => setState(() {
-                          _startDate= date;
+                          _startDate = date;
                         }),
                     onDelete: () => setState(() {
-                          _startDate= null;
+                          _startDate = null;
                         })),
                 Gap.MD,
                 Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
                 DateField(
                     firstDate: _startDate,
-                    selectedDate:_endDate,
+                    selectedDate: _endDate,
                     onPress: (date) => setState(() {
-                      _endDate= date;
-                    }),
+                          _endDate = date;
+                        }),
                     onDelete: () => setState(() {
-                      _endDate= null;
-                    }))
+                          _endDate = null;
+                        }))
               ],
             ),
           ),

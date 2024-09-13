@@ -38,7 +38,7 @@ class NoTaskView extends StatelessWidget {
                 }),
             child: Text(
               t.tasks.create.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
             ))
       ],
     );
