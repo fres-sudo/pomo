@@ -1,16 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/blocs/sign_up/sign_up_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
 import 'package:pomo/components/fields/name_field.dart';
 import 'package:pomo/components/fields/password_field.dart';
+import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 
 @RoutePage()
 class SignUpPage extends StatefulWidget {
@@ -42,10 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocConsumer<SignUpBloc, SignUpState>(
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignUp: () => onErrorState(context, "signing up"),
-        signedUp: (_) => {
-          context.router.replace(const RootRoute()),
-          onSuccessState(context, "created your account")
-        },
+        signedUp: (_) => {context.router.replace(const RootRoute()), onSuccessState(context, "created your account")},
       ),
       builder: (BuildContext context, SignUpState state) {
         return Scaffold(
@@ -59,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Container(
                       height: MediaQuery.sizeOf(context).height * 1 / 3.5,
-                      decoration:const  BoxDecoration(
+                      decoration: const BoxDecoration(
                           gradient: kGradientPurple2,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(25),
@@ -68,25 +67,22 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("Welcome! 👋",
-                              style: kSerzif(context),),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text("Create your account.",
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
-                        ]
-                      ),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
+                        Text(
+                          "${t.authentication.signup.title} 👋",
+                          style: kSerzif(context),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(t.authentication.signup.description,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                      ]),
                     )
                   ],
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, right: 16, top: 36),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -97,8 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Username",
-                                style: Theme.of(context).textTheme.titleMedium),
+                            Text("Username", style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(
                               height: 6,
                             ),
@@ -106,8 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 18,
                             ),
-                            Text("Email",
-                                style: Theme.of(context).textTheme.titleMedium),
+                            Text("Email", style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(
                               height: 6,
                             ),
@@ -115,8 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 18,
                             ),
-                            Text("Password",
-                                style: Theme.of(context).textTheme.titleMedium),
+                            Text("Password", style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(
                               height: 6,
                             ),
@@ -132,27 +125,21 @@ class _SignUpPageState extends State<SignUpPage> {
                                     Checkbox(
                                       splashRadius: 3,
                                       value: _checkedValue,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _checkedValue = newValue!;
-                                        });
-                                      },
+                                      onChanged: (newValue) => setState(() {
+                                        _checkedValue = newValue!;
+                                      }),
                                     ),
                                     Row(
                                       children: [
                                         Text(
-                                          "I accept ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
+                                          "${t.authentication.signup.i_accept} ",
+                                          style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                         GestureDetector(
                                           onTap: () => context.router.push(const PrivacyPolicyRoute()),
                                           child: Text(
-                                            "terms & conditions",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                                            t.authentication.signup.terms_and_conditions,
+                                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
                                           ),
                                         ),
                                       ],
@@ -161,68 +148,50 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            Gap.SM,
                             const Divider(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                                decoration: BoxDecoration(
-                                    color: kPrimary500,
-                                    borderRadius: BorderRadius.circular(16)
-                                ),
-                                width: MediaQuery.sizeOf(context).width,
-                                height: 50,
+                            Gap.MD,
+                            ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate() && _checkedValue) {
+                                    context.read<SignUpBloc>().perform(
+                                        username: _usernameTextController.text,
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text,
+                                        confirmPassword: _passwordTextController.text);
+                                  } else if (!_checkedValue) {
+                                    onAcceptTermsCondition(context);
+                                  } else {
+                                    onInvalidInput(context);
+                                  }
+                                },
                                 child: state.maybeWhen(
-                                  signingUp: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
-                                  orElse: () => TextButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate() && _checkedValue) {
-                                        context.read<SignUpBloc>().perform(
-                                            username: _usernameTextController.text,
-                                            email: _emailTextController.text,
-                                            password: _passwordTextController.text,
-                                            confirmPassword: _passwordTextController.text);
-                                      } else if (!_checkedValue) {
-                                          onAcceptTermsCondition(context);
-                                      } else {
-                                        onInvalidInput(context);
-                                      }
-                                    },
-                                    child: Text("Sign up", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                                  ),)
-                            ),
+                                    signingUp: () => const CustomCircularProgressIndicator(),
+                                    orElse: () => Center(
+                                          child: Text(
+                                            t.authentication.login.title,
+                                            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),
+                                          ),
+                                        )))
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      Gap.MD,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Already have an account?",
-                              style: Theme.of(context).textTheme.titleSmall),
+                          Text(t.authentication.signup.already_have_an_account, style: Theme.of(context).textTheme.titleSmall),
                           const SizedBox(
                             width: 5,
                           ),
                           GestureDetector(
-                            onTap: () {
-                              context.pushRoute(const LoginRoute());
-                            },
-                            child: Text("Log in",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(color: Theme.of(context).primaryColor)),
+                            onTap: () => context.pushRoute(const LoginRoute()),
+                            child: Text(t.authentication.login.title,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor)),
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      )
+                      Gap.MD,
                     ],
                   ),
                 ),

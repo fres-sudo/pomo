@@ -21,7 +21,6 @@ class _EmailFieldState extends State<EmailField> {
       focusNode: widget.focusNode,
       keyboardType: TextInputType.emailAddress,
       controller: widget.controller,
-      cursorColor: kPrimary600,
       autovalidateMode:
       AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(

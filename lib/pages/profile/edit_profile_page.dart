@@ -186,7 +186,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     TextFormField(
                       keyboardType: TextInputType.name,
                       controller: _usernameTextController,
-                      cursorColor: kPrimary600,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
                         hintText: "Username",
@@ -208,7 +207,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     TextFormField(
                       initialValue: context.watch<AuthCubit>().state.maybeWhen(authenticated: (user) => user.email, orElse: () => "ciao"),
                       readOnly: true,
-                      cursorColor: kPrimary600,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.lock, size: 20, color: kNeutral500),

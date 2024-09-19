@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 
+import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   const LanguageBottomSheet({super.key});
 
   String _getFlagEmoji(String countryCode) {
-    return countryCode.toUpperCase().codeUnits.map((e) => String.fromCharCode(e + 0x1F1E6 - 65)).join();
+    return switch(countryCode){
+      'en' => "🇬🇧",
+      'it' => "🇮🇹",
+       _ => "🇺🇸"
+    };
   }
 
   String _getLanguageName(AppLocale locale) {
-    switch (locale) {
-      case AppLocale.en:
-        return 'English';
-      case AppLocale.it:
-        return 'Italiano';
-      default:
-        return locale.languageCode.toUpperCase(); // Fallback to the language code
-    }
+    return switch (locale) {
+      AppLocale.en => 'English',
+      AppLocale.it => 'Italiano',
+    };
   }
 
   @override
@@ -40,9 +41,18 @@ class LanguageBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const TopBottomSheetWidget(),
-            Text(
-              t.profile.settings.general.languages.select_language,
-              style: Theme.of(context).textTheme.titleMedium,
+            Gap.SM,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(Icons.language_rounded, size: 20,),
+                Gap.SM_H,
+                Text(
+                  t.profile.settings.general.languages.select_language,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 5.0),

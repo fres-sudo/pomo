@@ -40,7 +40,7 @@ class OAuthRepositoryImpl implements OAuthRepository {
       final googleAccount = await oAuthService.signInWithGoogle();
       final response = await authenticationService.retrieveGoogleUser(
           OAuthRequest(
-              username: googleAccount?.displayName ?? "",
+              username: "guest-${DateTime.now().millisecondsSinceEpoch.toString()}",
               email: googleAccount?.email ?? "",
               avatar: googleAccount?.photoUrl
           ));

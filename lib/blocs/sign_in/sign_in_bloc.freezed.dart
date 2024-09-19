@@ -455,7 +455,7 @@ mixin _$SignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
-    required TResult Function() errorSignIn,
+    required TResult Function(LocalizedError error) errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -463,7 +463,7 @@ mixin _$SignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
-    TResult? Function()? errorSignIn,
+    TResult? Function(LocalizedError error)? errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -471,7 +471,7 @@ mixin _$SignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
-    TResult Function()? errorSignIn,
+    TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -564,7 +564,7 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
-    required TResult Function() errorSignIn,
+    required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return notSignedIn();
   }
@@ -575,7 +575,7 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
-    TResult? Function()? errorSignIn,
+    TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return notSignedIn?.call();
   }
@@ -586,7 +586,7 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
-    TResult Function()? errorSignIn,
+    TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
     if (notSignedIn != null) {
@@ -679,7 +679,7 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
-    required TResult Function() errorSignIn,
+    required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return signingIn();
   }
@@ -690,7 +690,7 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
-    TResult? Function()? errorSignIn,
+    TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return signingIn?.call();
   }
@@ -701,7 +701,7 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
-    TResult Function()? errorSignIn,
+    TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
     if (signingIn != null) {
@@ -830,7 +830,7 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
-    required TResult Function() errorSignIn,
+    required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return signedIn(user);
   }
@@ -841,7 +841,7 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
-    TResult? Function()? errorSignIn,
+    TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return signedIn?.call(user);
   }
@@ -852,7 +852,7 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
-    TResult Function()? errorSignIn,
+    TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
     if (signedIn != null) {
@@ -915,6 +915,8 @@ abstract class _$$ErrorSignInSignInStateImplCopyWith<$Res> {
           _$ErrorSignInSignInStateImpl value,
           $Res Function(_$ErrorSignInSignInStateImpl) then) =
       __$$ErrorSignInSignInStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({LocalizedError error});
 }
 
 /// @nodoc
@@ -925,27 +927,51 @@ class __$$ErrorSignInSignInStateImplCopyWithImpl<$Res>
       _$ErrorSignInSignInStateImpl _value,
       $Res Function(_$ErrorSignInSignInStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$ErrorSignInSignInStateImpl(
+      null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as LocalizedError,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
-  const _$ErrorSignInSignInStateImpl();
+  const _$ErrorSignInSignInStateImpl(this.error);
+
+  @override
+  final LocalizedError error;
 
   @override
   String toString() {
-    return 'SignInState.errorSignIn()';
+    return 'SignInState.errorSignIn(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorSignInSignInStateImpl);
+            other is _$ErrorSignInSignInStateImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, error);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorSignInSignInStateImplCopyWith<_$ErrorSignInSignInStateImpl>
+      get copyWith => __$$ErrorSignInSignInStateImplCopyWithImpl<
+          _$ErrorSignInSignInStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -953,9 +979,9 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
-    required TResult Function() errorSignIn,
+    required TResult Function(LocalizedError error) errorSignIn,
   }) {
-    return errorSignIn();
+    return errorSignIn(error);
   }
 
   @override
@@ -964,9 +990,9 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
-    TResult? Function()? errorSignIn,
+    TResult? Function(LocalizedError error)? errorSignIn,
   }) {
-    return errorSignIn?.call();
+    return errorSignIn?.call(error);
   }
 
   @override
@@ -975,11 +1001,11 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
-    TResult Function()? errorSignIn,
+    TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
     if (errorSignIn != null) {
-      return errorSignIn();
+      return errorSignIn(error);
     }
     return orElse();
   }
@@ -1023,5 +1049,11 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
 }
 
 abstract class ErrorSignInSignInState implements SignInState {
-  const factory ErrorSignInSignInState() = _$ErrorSignInSignInStateImpl;
+  const factory ErrorSignInSignInState(final LocalizedError error) =
+      _$ErrorSignInSignInStateImpl;
+
+  LocalizedError get error;
+  @JsonKey(ignore: true)
+  _$$ErrorSignInSignInStateImplCopyWith<_$ErrorSignInSignInStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

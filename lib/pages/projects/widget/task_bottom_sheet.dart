@@ -160,7 +160,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     TextFormField(
                       controller: _nameTextEditingController,
                       focusNode: _focusNode,
-                      cursorColor: kPrimary500,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         hintText: t.tasks.create.working_on,
@@ -174,7 +173,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     ),
                     TextFormField(
                       controller: _descriptionTextEditingController,
-                      cursorColor: kPrimary500,
                       style: Theme.of(context).textTheme.titleSmall,
                       decoration: InputDecoration(
                           hintText: t.tasks.create.description,

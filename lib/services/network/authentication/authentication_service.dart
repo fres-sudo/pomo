@@ -18,7 +18,7 @@ abstract class AuthenticationService {
   @POST('/auth/login')
   Future<UserJTO> signIn(@Body() SignInRequest request);
   @POST('/auth/signup')
-  Future<SignUpResponse> signUp(@Body() SignUpRequest request);
+  Future<UserJTO> signUp(@Body() SignUpRequest request);
   @POST('/auth/google')
   Future<UserJTO> retrieveGoogleUser(@Body() OAuthRequest request);
   @POST('/auth/apple')

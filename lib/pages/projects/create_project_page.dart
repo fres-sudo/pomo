@@ -65,7 +65,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
+    return BlocConsumer<ProjectBloc, ProjectState>(
+
+        listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
       if (state.operation == ProjectOperation.update) {
         final Project currProj = state.projects.firstWhere((proj) =>
@@ -138,7 +140,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       child: TextField(
                         controller: _projectCodeTextController,
                         style: Theme.of(context).textTheme.bodyMedium,
-                        cursorColor: Theme.of(context).primaryColor,
                         decoration: InputDecoration(
                           hintText: t.general.name,
                         ),
@@ -221,7 +222,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         TextFormField(
                           controller: _nameTextController,
                           style: Theme.of(context).textTheme.bodyMedium,
-                          cursorColor: Theme.of(context).primaryColor,
                           decoration: InputDecoration(
                             hintText: t.general.name,
                           ),
@@ -239,7 +239,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         TextFormField(
                           controller: _descriptionTextController,
                           style: Theme.of(context).textTheme.bodyMedium,
-                          cursorColor: Theme.of(context).primaryColor,
                           maxLines: 5,
                           decoration: InputDecoration(
                             hintText: t.general.description,

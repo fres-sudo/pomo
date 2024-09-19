@@ -55,12 +55,12 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<SignUpResponse> signUp(SignUpRequest request) async {
+  Future<UserJTO> signUp(SignUpRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<SignUpResponse>(Options(
+    final _options = _setStreamType<UserJTO>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -77,9 +77,9 @@ class _AuthenticationService implements AuthenticationService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late SignUpResponse _value;
+    late UserJTO _value;
     try {
-      _value = SignUpResponse.fromJson(_result.data!);
+      _value = UserJTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -7,6 +7,7 @@ import 'package:pomo/blocs/task/task_bloc.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 
+import '../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../constants/enum.dart';
 import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
@@ -23,6 +24,7 @@ class RootPage extends StatelessWidget {
         ProjectNavigation(),
         QuickSessionRoute(),
         StatsRoute(),
+        ProfileRoute()
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -57,11 +59,10 @@ class RootPage extends StatelessWidget {
                       icon: Icon(
                         Icons.edit_calendar_rounded,
                         color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
-                      ),
-                      label: "Schedule"),
+                      ),label: t.general.schedule),
                   BottomNavigationBarItem(
                     activeIcon: SvgPicture.asset(
-                      'assets/icons/nav-bar/Bold/Document.svg',
+                      'assets/icons/nav-bar/Light/Document.svg',
                       colorFilter:
                           ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                     ),
@@ -70,19 +71,20 @@ class RootPage extends StatelessWidget {
                       colorFilter:
                           ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                     ),
-                    label: t.projects.plural,
+                    label: t.projects.title
                   ),
                   BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset('assets/icons/nav-bar/Bold/Play.svg'),
+                      activeIcon: SvgPicture.asset('assets/icons/nav-bar/Light/Play.svg',  colorFilter:
+                      ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                      ),
                       icon: SvgPicture.asset(
                         'assets/icons/nav-bar/Light/Play.svg',
                         colorFilter:
                             ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      label: t.general.quick_session),
+                      ), label: t.general.session),
                   BottomNavigationBarItem(
                       activeIcon: SvgPicture.asset(
-                        'assets/icons/nav-bar/Bold/Graph.svg',
+                        'assets/icons/nav-bar/Light/Graph.svg',
                         colorFilter:
                             ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                       ),
@@ -90,8 +92,17 @@ class RootPage extends StatelessWidget {
                         'assets/icons/nav-bar/Light/Graph.svg',
                         colorFilter:
                             ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      label: t.stats.short_title),
+                      ), label: t.stats.title),
+                  BottomNavigationBarItem(
+                      icon: context.read<AuthCubit>().state.maybeWhen(
+                          authenticated: (user) => user.avatar == null
+                              ? const CircleAvatar(
+                                  backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                                )
+                              : ClipOval(child: SizedBox(height: 24, width: 24, child: FancyShimmerImage(imageUrl: user.avatar!))),
+                          orElse: () => const CircleAvatar(
+                                backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                              )), label: t.profile.title),
                 ],
               ),
             ),
