@@ -455,6 +455,8 @@ mixin _$SignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
     required TResult Function(LocalizedError error) errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -463,6 +465,8 @@ mixin _$SignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
     TResult? Function(LocalizedError error)? errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -471,6 +475,8 @@ mixin _$SignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
     TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) =>
@@ -480,6 +486,10 @@ mixin _$SignInState {
     required TResult Function(NotSignedInSignInState value) notSignedIn,
     required TResult Function(SigningInSignInState value) signingIn,
     required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
     required TResult Function(ErrorSignInSignInState value) errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -488,6 +498,8 @@ mixin _$SignInState {
     TResult? Function(NotSignedInSignInState value)? notSignedIn,
     TResult? Function(SigningInSignInState value)? signingIn,
     TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult? Function(ErrorSignInSignInState value)? errorSignIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -496,6 +508,8 @@ mixin _$SignInState {
     TResult Function(NotSignedInSignInState value)? notSignedIn,
     TResult Function(SigningInSignInState value)? signingIn,
     TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult Function(ErrorSignInSignInState value)? errorSignIn,
     required TResult orElse(),
   }) =>
@@ -564,6 +578,8 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
     required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return notSignedIn();
@@ -575,6 +591,8 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
     TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return notSignedIn?.call();
@@ -586,6 +604,8 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
     TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -601,6 +621,10 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     required TResult Function(NotSignedInSignInState value) notSignedIn,
     required TResult Function(SigningInSignInState value) signingIn,
     required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
     required TResult Function(ErrorSignInSignInState value) errorSignIn,
   }) {
     return notSignedIn(this);
@@ -612,6 +636,8 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult? Function(NotSignedInSignInState value)? notSignedIn,
     TResult? Function(SigningInSignInState value)? signingIn,
     TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult? Function(ErrorSignInSignInState value)? errorSignIn,
   }) {
     return notSignedIn?.call(this);
@@ -623,6 +649,8 @@ class _$NotSignedInSignInStateImpl implements NotSignedInSignInState {
     TResult Function(NotSignedInSignInState value)? notSignedIn,
     TResult Function(SigningInSignInState value)? signingIn,
     TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult Function(ErrorSignInSignInState value)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -679,6 +707,8 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
     required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return signingIn();
@@ -690,6 +720,8 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
     TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return signingIn?.call();
@@ -701,6 +733,8 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
     TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -716,6 +750,10 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     required TResult Function(NotSignedInSignInState value) notSignedIn,
     required TResult Function(SigningInSignInState value) signingIn,
     required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
     required TResult Function(ErrorSignInSignInState value) errorSignIn,
   }) {
     return signingIn(this);
@@ -727,6 +765,8 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult? Function(NotSignedInSignInState value)? notSignedIn,
     TResult? Function(SigningInSignInState value)? signingIn,
     TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult? Function(ErrorSignInSignInState value)? errorSignIn,
   }) {
     return signingIn?.call(this);
@@ -738,6 +778,8 @@ class _$SigningInSignInStateImpl implements SigningInSignInState {
     TResult Function(NotSignedInSignInState value)? notSignedIn,
     TResult Function(SigningInSignInState value)? signingIn,
     TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult Function(ErrorSignInSignInState value)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -830,6 +872,8 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
     required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return signedIn(user);
@@ -841,6 +885,8 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
     TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return signedIn?.call(user);
@@ -852,6 +898,8 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
     TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -867,6 +915,10 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     required TResult Function(NotSignedInSignInState value) notSignedIn,
     required TResult Function(SigningInSignInState value) signingIn,
     required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
     required TResult Function(ErrorSignInSignInState value) errorSignIn,
   }) {
     return signedIn(this);
@@ -878,6 +930,8 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult? Function(NotSignedInSignInState value)? notSignedIn,
     TResult? Function(SigningInSignInState value)? signingIn,
     TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult? Function(ErrorSignInSignInState value)? errorSignIn,
   }) {
     return signedIn?.call(this);
@@ -889,6 +943,8 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
     TResult Function(NotSignedInSignInState value)? notSignedIn,
     TResult Function(SigningInSignInState value)? signingIn,
     TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult Function(ErrorSignInSignInState value)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -907,6 +963,358 @@ abstract class SignedInSignInState implements SignInState {
   @JsonKey(ignore: true)
   _$$SignedInSignInStateImplCopyWith<_$SignedInSignInStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SignedInWithGoogleSignInStateImplCopyWith<$Res> {
+  factory _$$SignedInWithGoogleSignInStateImplCopyWith(
+          _$SignedInWithGoogleSignInStateImpl value,
+          $Res Function(_$SignedInWithGoogleSignInStateImpl) then) =
+      __$$SignedInWithGoogleSignInStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$SignedInWithGoogleSignInStateImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$SignedInWithGoogleSignInStateImpl>
+    implements _$$SignedInWithGoogleSignInStateImplCopyWith<$Res> {
+  __$$SignedInWithGoogleSignInStateImplCopyWithImpl(
+      _$SignedInWithGoogleSignInStateImpl _value,
+      $Res Function(_$SignedInWithGoogleSignInStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$SignedInWithGoogleSignInStateImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$SignedInWithGoogleSignInStateImpl
+    implements SignedInWithGoogleSignInState {
+  const _$SignedInWithGoogleSignInStateImpl(this.user);
+
+  @override
+  final User user;
+
+  @override
+  String toString() {
+    return 'SignInState.signedInWithGoogle(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignedInWithGoogleSignInStateImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignedInWithGoogleSignInStateImplCopyWith<
+          _$SignedInWithGoogleSignInStateImpl>
+      get copyWith => __$$SignedInWithGoogleSignInStateImplCopyWithImpl<
+          _$SignedInWithGoogleSignInStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() notSignedIn,
+    required TResult Function() signingIn,
+    required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
+    required TResult Function(LocalizedError error) errorSignIn,
+  }) {
+    return signedInWithGoogle(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? notSignedIn,
+    TResult? Function()? signingIn,
+    TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
+    TResult? Function(LocalizedError error)? errorSignIn,
+  }) {
+    return signedInWithGoogle?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? notSignedIn,
+    TResult Function()? signingIn,
+    TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
+    TResult Function(LocalizedError error)? errorSignIn,
+    required TResult orElse(),
+  }) {
+    if (signedInWithGoogle != null) {
+      return signedInWithGoogle(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NotSignedInSignInState value) notSignedIn,
+    required TResult Function(SigningInSignInState value) signingIn,
+    required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
+    required TResult Function(ErrorSignInSignInState value) errorSignIn,
+  }) {
+    return signedInWithGoogle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NotSignedInSignInState value)? notSignedIn,
+    TResult? Function(SigningInSignInState value)? signingIn,
+    TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
+    TResult? Function(ErrorSignInSignInState value)? errorSignIn,
+  }) {
+    return signedInWithGoogle?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NotSignedInSignInState value)? notSignedIn,
+    TResult Function(SigningInSignInState value)? signingIn,
+    TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
+    TResult Function(ErrorSignInSignInState value)? errorSignIn,
+    required TResult orElse(),
+  }) {
+    if (signedInWithGoogle != null) {
+      return signedInWithGoogle(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignedInWithGoogleSignInState implements SignInState {
+  const factory SignedInWithGoogleSignInState(final User user) =
+      _$SignedInWithGoogleSignInStateImpl;
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$$SignedInWithGoogleSignInStateImplCopyWith<
+          _$SignedInWithGoogleSignInStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SignedInWithAppleSignInStateImplCopyWith<$Res> {
+  factory _$$SignedInWithAppleSignInStateImplCopyWith(
+          _$SignedInWithAppleSignInStateImpl value,
+          $Res Function(_$SignedInWithAppleSignInStateImpl) then) =
+      __$$SignedInWithAppleSignInStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$SignedInWithAppleSignInStateImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$SignedInWithAppleSignInStateImpl>
+    implements _$$SignedInWithAppleSignInStateImplCopyWith<$Res> {
+  __$$SignedInWithAppleSignInStateImplCopyWithImpl(
+      _$SignedInWithAppleSignInStateImpl _value,
+      $Res Function(_$SignedInWithAppleSignInStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$SignedInWithAppleSignInStateImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$SignedInWithAppleSignInStateImpl
+    implements SignedInWithAppleSignInState {
+  const _$SignedInWithAppleSignInStateImpl(this.user);
+
+  @override
+  final User user;
+
+  @override
+  String toString() {
+    return 'SignInState.signedInWithApple(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignedInWithAppleSignInStateImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignedInWithAppleSignInStateImplCopyWith<
+          _$SignedInWithAppleSignInStateImpl>
+      get copyWith => __$$SignedInWithAppleSignInStateImplCopyWithImpl<
+          _$SignedInWithAppleSignInStateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() notSignedIn,
+    required TResult Function() signingIn,
+    required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
+    required TResult Function(LocalizedError error) errorSignIn,
+  }) {
+    return signedInWithApple(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? notSignedIn,
+    TResult? Function()? signingIn,
+    TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
+    TResult? Function(LocalizedError error)? errorSignIn,
+  }) {
+    return signedInWithApple?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? notSignedIn,
+    TResult Function()? signingIn,
+    TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
+    TResult Function(LocalizedError error)? errorSignIn,
+    required TResult orElse(),
+  }) {
+    if (signedInWithApple != null) {
+      return signedInWithApple(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NotSignedInSignInState value) notSignedIn,
+    required TResult Function(SigningInSignInState value) signingIn,
+    required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
+    required TResult Function(ErrorSignInSignInState value) errorSignIn,
+  }) {
+    return signedInWithApple(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NotSignedInSignInState value)? notSignedIn,
+    TResult? Function(SigningInSignInState value)? signingIn,
+    TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
+    TResult? Function(ErrorSignInSignInState value)? errorSignIn,
+  }) {
+    return signedInWithApple?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NotSignedInSignInState value)? notSignedIn,
+    TResult Function(SigningInSignInState value)? signingIn,
+    TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
+    TResult Function(ErrorSignInSignInState value)? errorSignIn,
+    required TResult orElse(),
+  }) {
+    if (signedInWithApple != null) {
+      return signedInWithApple(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignedInWithAppleSignInState implements SignInState {
+  const factory SignedInWithAppleSignInState(final User user) =
+      _$SignedInWithAppleSignInStateImpl;
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$$SignedInWithAppleSignInStateImplCopyWith<
+          _$SignedInWithAppleSignInStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -979,6 +1387,8 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     required TResult Function() notSignedIn,
     required TResult Function() signingIn,
     required TResult Function(User user) signedIn,
+    required TResult Function(User user) signedInWithGoogle,
+    required TResult Function(User user) signedInWithApple,
     required TResult Function(LocalizedError error) errorSignIn,
   }) {
     return errorSignIn(error);
@@ -990,6 +1400,8 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult? Function()? notSignedIn,
     TResult? Function()? signingIn,
     TResult? Function(User user)? signedIn,
+    TResult? Function(User user)? signedInWithGoogle,
+    TResult? Function(User user)? signedInWithApple,
     TResult? Function(LocalizedError error)? errorSignIn,
   }) {
     return errorSignIn?.call(error);
@@ -1001,6 +1413,8 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult Function()? notSignedIn,
     TResult Function()? signingIn,
     TResult Function(User user)? signedIn,
+    TResult Function(User user)? signedInWithGoogle,
+    TResult Function(User user)? signedInWithApple,
     TResult Function(LocalizedError error)? errorSignIn,
     required TResult orElse(),
   }) {
@@ -1016,6 +1430,10 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     required TResult Function(NotSignedInSignInState value) notSignedIn,
     required TResult Function(SigningInSignInState value) signingIn,
     required TResult Function(SignedInSignInState value) signedIn,
+    required TResult Function(SignedInWithGoogleSignInState value)
+        signedInWithGoogle,
+    required TResult Function(SignedInWithAppleSignInState value)
+        signedInWithApple,
     required TResult Function(ErrorSignInSignInState value) errorSignIn,
   }) {
     return errorSignIn(this);
@@ -1027,6 +1445,8 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult? Function(NotSignedInSignInState value)? notSignedIn,
     TResult? Function(SigningInSignInState value)? signingIn,
     TResult? Function(SignedInSignInState value)? signedIn,
+    TResult? Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult? Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult? Function(ErrorSignInSignInState value)? errorSignIn,
   }) {
     return errorSignIn?.call(this);
@@ -1038,6 +1458,8 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
     TResult Function(NotSignedInSignInState value)? notSignedIn,
     TResult Function(SigningInSignInState value)? signingIn,
     TResult Function(SignedInSignInState value)? signedIn,
+    TResult Function(SignedInWithGoogleSignInState value)? signedInWithGoogle,
+    TResult Function(SignedInWithAppleSignInState value)? signedInWithApple,
     TResult Function(ErrorSignInSignInState value)? errorSignIn,
     required TResult orElse(),
   }) {
