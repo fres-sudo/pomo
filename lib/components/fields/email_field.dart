@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import '../../constants/colors.dart';
 
 class EmailField extends StatefulWidget {
-  const EmailField({super.key, required this.controller, this.focusNode});
+  const EmailField({super.key, required this.controller, this.focusNode, this.onChanged});
 
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final Function(String?)? onChanged;
+
+
 
   @override
   State<EmailField> createState() => _EmailFieldState();
@@ -29,6 +32,7 @@ class _EmailFieldState extends State<EmailField> {
       inputFormatters: [
         FilteringTextInputFormatter.deny(RegExp('[ ]')),
       ],
+      onChanged: widget.onChanged,
       style: Theme.of(context).textTheme.titleMedium,
       validator: (value) {
         if (value == null ||

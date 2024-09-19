@@ -16,6 +16,9 @@ abstract class UserService {
   factory UserService(Dio dio, {String baseUrl}) = _UserService;
 
 
+  @GET("/users")
+  Future<String> searchUsername(@Query('username') String username);
+
   @PUT('/users/{id}')
   Future<UserJTO> updateUser(@Path('id') String id ,@Body() UserJTO user);
 

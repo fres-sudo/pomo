@@ -70,7 +70,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     emit(const SignInState.signingIn());
     try {
       final user = await oAuthRepository.signInWithGoogle();
-      emit(SignInState.signedIn(user));
+      emit(SignInState.signedInWithGoogle(user));
     } catch (_) {
       emit(SignInState.errorSignIn(GeneralSignInError()));
     }
@@ -83,7 +83,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     emit(const SignInState.signingIn());
     try {
       final user = await oAuthRepository.signInWithGoogle();
-      emit(SignInState.signedIn(user));
+      emit(SignInState.signedInWithApple(user));
     } catch (_) {
       emit(SignInState.errorSignIn(GeneralSignInError()));
     }

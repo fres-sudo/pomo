@@ -45,6 +45,8 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
           errorSignIn: (error) => onErrorState(context, error.localizedString(context)),
+          signedInWithGoogle: (user) => context.router.push(const ChooseUsernameRoute(user: user)),
+          signedInWithApple: (user) => context.router.push(const ChooseUsernameRoute(user: user)),
           signedIn: (user) {
             context.read<AuthCubit>().authenticated(user);
             context.router.replace(const RootRoute());

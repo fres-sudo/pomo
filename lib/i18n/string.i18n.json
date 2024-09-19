@@ -1,5 +1,6 @@
 {
   "general": {
+    "loading" : "Loading",
     "search": "Search",
     "save": "Save",
     "apply": "Apply",
@@ -164,6 +165,8 @@
       "terms_and_conditions": "terms & conditions",
       "already_have_an_account" : "Already have an account?",
       "choose_username" : "Just one more step",
+      "available_username" : "Available username",
+      "unavailable_username": "Unavailable username",
       "choose_username_description" : "Choose your username to complete registration. This name will be unique to you, and you can't change it later."
     },
     "forgot_password": {
@@ -199,7 +202,8 @@
     "users" : {
       "updating_user" : "An error occurred while updating your data",
       "updating_user_photo" : "An error occurred while updating your profile image",
-      "deleting_user" : "An error occurred while deleting your account"
+      "deleting_user" : "An error occurred while deleting your account",
+      "searching_username" : "An error occurred while verifying username"
     },
     "tasks": {
       "creating_task": "An error occurred while creating a new task",

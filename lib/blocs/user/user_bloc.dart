@@ -23,23 +23,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
   final AuthenticationRepository authenticationRepository;
 
-  String _otp = "";
-  String _resetToken = "";
-
-  String get resetToken => _resetToken;
-  String get otp => _otp;
-
   /// Create a new instance of [UserBloc].
   UserBloc({required this.userRepository, required this.authenticationRepository}) : super(const UserState()) {
     on<UpdateUserUserEvent>(_onUpdateUser);
     on<UpdateUserPhotoUserEvent>(_onUpdateUserPhoto);
     on<DeleteUserUserEvent>(_onDeleteUser);
+    on<SearchUsernameUserEvent>(_onSearchByUsername);
 
   }
   
   /// Method used to add the [UpdateUserUserEvent] event
   void updateUser({required String id, required User user}) => add(UserEvent.updateUser(user: user, id: id));
   void deleteUser({required String id}) => add(UserEvent.deleteUser(id: id));
+  void searchUsername({required String username}) => add(UserEvent.searchUsername(username:username));
   void updateUserPhoto({required String id, required File photo}) => add(UserEvent.updateUserPhoto(id: id, photo: photo));
 
   FutureOr<void> _onUpdateUser(
@@ -78,6 +74,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updatedImage));
     }catch(_){
       emit(state.copyWith(isLoading: false, error: UpdatingUserImageError()));
+    }
+  }
+
+  FutureOr<void> _onSearchByUsername(
+    SearchUsernameUserEvent event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try{
+      final username = await userRepository.searchUsername(username: event.username);
+      emit(state.copyWith( isLoading: false, error: null, operation: UserOperation.read, searchedUsername: username));
+    }catch(_){
+      emit(state.copyWith(isLoading: false, error: SearchingUsernameError()));
     }
   }
 /*

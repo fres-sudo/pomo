@@ -1,6 +1,6 @@
 part of 'user_bloc.dart';
 
-enum UserOperation { updated , deleted , updatedImage }
+enum UserOperation { updated , deleted , updatedImage, read }
 
 @freezed
 class UserState with _$UserState {
@@ -10,6 +10,7 @@ class UserState with _$UserState {
     @Default(false) bool isLoading,
     LocalizedError? error,
     UserOperation? operation,
+    String? searchedUsername,
   }) = _UserState;
 
   const UserState._();

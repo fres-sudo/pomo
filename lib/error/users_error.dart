@@ -30,3 +30,9 @@ class UpdatingUserImageError extends UserError {
     return context.t.errors.users.updating_user_photo;
   }
 }
+class SearchingUsernameError extends UserError {
+  @override
+  String localizedString(BuildContext context) {
+    return context.t.errors.users.searching_username;
+  }
+}

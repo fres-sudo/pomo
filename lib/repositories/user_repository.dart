@@ -12,6 +12,11 @@ import '../services/network/jto/user/user_jto.dart';
 
 /// Abstract class of UserRepository
 abstract class UserRepository {
+
+  Future<String> searchUsername({
+    required String username
+  });
+
   Future<User> updateUser({
       required String id,
       required User user,
@@ -44,6 +49,11 @@ class UserRepositoryImpl implements UserRepository {
     final UserService userService;
     final DTOMapper<UserJTO, User> userMapper;
 
+  @override
+  Future<String> searchUsername({required String username}) async {
+    final searchedUsername = await userService.searchUsername(username);
+    return searchedUsername;
+  }
 
   @override
   Future<User> updateUser({required String id, required User user}) async {

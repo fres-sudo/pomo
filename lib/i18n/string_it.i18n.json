@@ -1,5 +1,6 @@
 {
   "general": {
+    "loading" : "Caricamento",
     "search": "Cerca",
     "save": "Salva",
     "apply" : "Applica",
@@ -164,6 +165,8 @@
       "terms_and_conditions": "termini e condizioni",
       "already_have_an_account" : "Hai già un account?",
       "choose_username" : "Solo un altro step",
+      "available_username" : "Username disponibile",
+      "unavailable_username": "Username non disponbile",
       "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome unico per il tuo account e non potrai modificarlo in seguito."
     },
     "forgot_password": {
@@ -200,7 +203,8 @@
     "users" : {
       "updating_user" : "Si è verificato un errore durante l'aggionramento dei tuoi dati.",
       "updating_user_photo" : "Si è verificato un errore durante l'aggionramento della tua immagine di profilo.",
-      "deleting_user" : "Si è verificato un errore durante l'eliminazione del tuo account."
+      "deleting_user" : "Si è verificato un errore durante l'eliminazione del tuo account.",
+      "searching_username" : "Si è verificato un errore durante la verifica dell'username."
     },
     "tasks": {
       "creating_task": "Si è verificato un errore durante la creazione di un nuovo task.",
