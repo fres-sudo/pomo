@@ -51,6 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Gap.MD,
                     InkWell(
+                      borderRadius: BorderRadius.circular(16),
                       onTap: () => context.router.push(const EditProfileRoute()),
                       child: Container(
                         padding: const EdgeInsets.all(16),

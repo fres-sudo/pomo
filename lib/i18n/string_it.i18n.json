@@ -1,7 +1,8 @@
 {
   "general": {
     "search": "Cerca",
-    "save": "Salve",
+    "save": "Salva",
+    "apply" : "Applica",
     "confirm": "Conferma",
     "delete": "Elimina",
     "create": "Crea",
@@ -23,14 +24,25 @@
     "pomodoro_done" : "Pomodori completati",
     "done": "Fatto",
     "quick_session":  "Sessione Veloce",
+    "session" : "Sessione",
     "still_dont_have" : "Non hai ancora",
     "no_description" : "Nessuna descrizione",
     "continue_with" : "Continua con",
+    "continue_title" : "Continua",
     "completed_at" : "Completata",
     "created_at" : "Creata",
     "or" : "o",
     "work_session" : "Sessione di lavoro",
-    "hours": "ore"
+    "hours": "ore",
+    "filter_and_sort" : "Filtra e Ordina",
+    "ascending" : "Crescente",
+    "descending" : "Decrescente",
+    "order" : "Ordine",
+    "completed_task" : "Task completate",
+    "week" : "Settimana",
+    "month" : "Mese",
+    "weeks" : "Settimane",
+    "schedule" : "Agenda"
   },
   "projects": {
     "title": "Progetto",
@@ -150,15 +162,19 @@
       "description" : "Crea il tuo account",
       "i_accept" : "Accetto",
       "terms_and_conditions": "termini e condizioni",
-      "already_have_an_account" : "Hai già un account?"
+      "already_have_an_account" : "Hai già un account?",
+      "choose_username" : "Solo un altro step",
+      "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome unico per il tuo account e non potrai modificarlo in seguito."
     },
     "forgot_password": {
       "reset_password" : "Reimposta la tua password",
       "description_forgot" : "Rinnova il tuo accesso con una reimpostazione della password, salvaguardando il tuo account con semplicità e tranquillità",
-      "secure_access" : "Accesso sicuro in un attimo!",
+      "secure_access" : "Assicuraci che sei tu!",
       "description_reset" : "Inserisci il codice monouso che ti abbiamo appena inviato per sbloccare l'accesso al tuo regno digitale. Veloce, facile e super sicuro!",
       "dont_recive_email" : "Non hai ancora ricevuto un'email?",
-      "resend" : "Puoi inviare di nuovo il codice in ",
+      "send_email" : "Invia Email",
+      "you_can" : "Puoi",
+      "resend" : "inviare di nuovo il codice",
       "seconds" : "secondi",
       "change_password" : "Crea il tuo scudo",
       "description_change_password" : "Crea una nuova password robusta per mantenere sicuro il tuo mondo digitale e proteggere le tue informazioni. La tua fortezza, le tue regole.",
@@ -173,6 +189,8 @@
     "please_retry": "Si prega di riprovare",
     "valid_info" : "Perfavore inserisci delle informazioni corrette.",
     "due_date_before_today" : "La data di fine non può essere nel passato.",
+    "sorry" : "Perdonaci.",
+    "available_soon" : "Questa feature sarà disponibile presto!",
     "projects": {
       "fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",
@@ -235,5 +253,16 @@
       "short": "Dom",
       "long" : "Domenica"
     }
+  },
+  "on_boarding": {
+    "page_1" : {
+      "title": "Gestisci il tuo tempo \n come più desideri!",
+      "description" : "Goditi un timer super customizzabile e \n una gestione efficiente delle task."
+    },
+    "page_2" : {
+      "title": "Gestisci le tue task \n come mai hai fatto prima!",
+      "description" : "Organizza le tue giornate, controlla i tuoi progressi \n con la nostra timer app intuitiva \n che ti aiuta a raggiungere i tuoi obiettivi."
+    },
+    "finish_button" : "Sono pronto"
   }
 }

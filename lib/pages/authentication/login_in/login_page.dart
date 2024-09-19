@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
-          errorSignIn: () => onErrorState(context, "signing in"),
+          errorSignIn: (error) => onErrorState(context, error.localizedString(context)),
           signedIn: (user) {
             context.read<AuthCubit>().authenticated(user);
             context.router.replace(const RootRoute());

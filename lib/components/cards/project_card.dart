@@ -57,7 +57,6 @@ class ProjectCard extends StatelessWidget {
         onTap: () => context.router.push(ProjectDetailsRoute(project: project)),
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 15),
@@ -70,7 +69,7 @@ class ProjectCard extends StatelessWidget {
                   ? ClipRRect(
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 7,
+                        height: 100,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                           image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
@@ -81,8 +80,7 @@ class ProjectCard extends StatelessWidget {
                   : ClipRRect(
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 7,
-                        width: MediaQuery.of(context).size.width,
+                        height: 100,
                         child: FancyShimmerImage(
                           imageUrl: project.imageCover!,
                           errorWidget: Image.asset("assets/images/project-placeholder.png", fit: BoxFit.cover),

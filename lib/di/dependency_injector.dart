@@ -43,6 +43,7 @@ import '../blocs/task/task_bloc.dart';
 import '../blocs/user/user_bloc.dart';
 import '../constants/constants.dart';
 import '../cubits/auth/auth_cubit.dart';
+import '../cubits/filter_project/filter_project_cubit.dart';
 import '../cubits/sound_cubit.dart';
 import '../cubits/theme/theme_cubit.dart';
 import '../models/stats/stats.dart';

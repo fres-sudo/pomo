@@ -8,6 +8,8 @@ import 'package:pomo/routes/app_router.gr.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
@@ -60,71 +62,40 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 children: [
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          context.router.maybePop();
-                        },
-                        child: SvgPicture.asset(
-                          'assets/icons/arrow-left.svg',
-                          colorFilter: ColorFilter.mode(
-                              Theme.of(context).iconTheme.color!,
-                              BlendMode.srcIn),
-                        ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () => context.router.maybePop(),
+                        child: const  Icon(Icons.chevron_left_rounded)
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
+                      Gap.XS_H,
                       Text(
-                          "Reset Your Password",
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)
+                          t.authentication.forgot_password.reset_password,
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 4,
-                  ),
+                  Gap.XS,
                   Text(
-                    "Renew your access with a password reset – safeguarding your account with simplicity and peace of mind",
+                    t.authentication.forgot_password.description_forgot,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  Gap.XL,
                   Text(
                       "Email",
                       style: Theme.of(context).textTheme.titleMedium
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  Gap.XS,
                   EmailField(controller: _emailTextController, focusNode: _focusNode,),
                   const Spacer(),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: kPrimary500,
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      width: MediaQuery.sizeOf(context).width,
-                      height: 50,
-                      child: TextButton(
-                        onPressed: () {
-                          context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text ));
-                          //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
-                        },
-                        child: Text("Send Email", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                      ),/*context.read<UserBloc>().state.maybeWhen(
-                        fetchingOTP: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
-                        orElse: () => TextButton(
-                          onPressed: () {
-                            context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text ));
-                            //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
-                          },
-                          child: Text("Send Email", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                        ),)*/
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  ElevatedButton(
+                      onPressed: (){
+                        context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text ));
+                        //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
+                      },
+                      child: Center(
+                        child: Text(t.authentication.forgot_password.send_email, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100,
+                      )))),
+                  Gap.SM,
                 ],
               ),
             ),

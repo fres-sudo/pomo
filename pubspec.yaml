@@ -67,6 +67,7 @@ dependencies:
   audioplayers: ^6.1.0
   table_calendar: ^3.1.2
   share_plus: ^10.0.2
+  pinput: ^5.0.0
   
 
 dev_dependencies:

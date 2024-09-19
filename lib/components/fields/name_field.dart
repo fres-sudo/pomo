@@ -19,7 +19,6 @@ class _NameFieldState extends State<NameField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      cursorColor: kPrimary600,
       autovalidateMode:
       AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(

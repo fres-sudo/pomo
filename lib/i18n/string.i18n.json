@@ -2,6 +2,7 @@
   "general": {
     "search": "Search",
     "save": "Save",
+    "apply": "Apply",
     "confirm": "Confirm",
     "delete": "Delete",
     "create": "Create",
@@ -23,14 +24,25 @@
     "pomodoro_done" : "Pomodoros done",
     "done" : "Done",
     "quick_session" : "Quick Session",
+    "session" : "Session",
     "still_dont_have" : "You still don't have",
     "no_description" : "No description",
     "continue_with" : "Continue with",
+    "continue_title" : "Continue",
     "completed_at" : "Completed at",
     "created_at" : "Created at",
     "or" : "or",
     "work_session" : "Work Session",
-    "hours" : "hours"
+    "hours" : "hours",
+    "filter_and_sort" : "Filter and Sort",
+    "ascending" : "Ascending",
+    "descending" : "Descending",
+    "order" : "Order",
+    "completed_task" : "Completed task",
+    "week" : "Week",
+    "month" : "Month",
+    "weeks" : "Weeks",
+    "schedule" : "Schedule"
   },
   "projects": {
     "title": "Project",
@@ -150,7 +162,9 @@
       "description" : "Create your account",
       "i_accept" : "I accept",
       "terms_and_conditions": "terms & conditions",
-      "already_have_an_account" : "Already have an account?"
+      "already_have_an_account" : "Already have an account?",
+      "choose_username" : "Just one more step",
+      "choose_username_description" : "Choose your username to complete registration. This name will be unique to you, and you can't change it later."
     },
     "forgot_password": {
       "reset_password" : "Reset Your Password",
@@ -158,7 +172,9 @@
       "secure_access" : "Secure Access in a Snap!",
       "description_reset" : "Enter one time code we just sent to yout decide to unlock the door to your digital realm. Fast easy and extra secure!",
       "dont_recive_email" : "Don't recive an email yet?",
-      "resend" : "You can resend code in ",
+      "send_email" : "Send Email",
+      "you_can" : "You can",
+      "resend" : "resend code",
       "seconds" : "seconds",
       "change_password" : "Crafting your shield",
       "description_change_password" : "Create a robust new password to keep your digital world secure and yout information guarded. Your fortress, your rules.",
@@ -172,6 +188,8 @@
     "please_retry" : "Please Retry",
     "valid_info" : "Please enter valid information",
     "due_date_before_today" : "End date cannot be in the past.",
+    "sorry" : "Sorry.",
+    "available_soon" : "This feature will be available soon!",
     "projects": {
       "fetching_project": "An error occurred while fetching your projects.",
       "creating_project": "An error occurred while creating a new project",
@@ -234,5 +252,16 @@
       "short": "Sun",
       "long" : "Sunday"
     }
+  },
+  "on_boarding": {
+    "page_1" : {
+      "title": "Manage your time \n as you wish!",
+      "description" : "Smart and customizable timer that helps you manage your time more effectively."
+    },
+    "page_2" : {
+      "title": "Efficient task managment \n made easy!",
+      "description" : "Plan your day, track your progress \n with our intuitive timer app that \n helps you achieve your goals."
+    },
+    "finish_button" : "I'm ready"
   }
 }

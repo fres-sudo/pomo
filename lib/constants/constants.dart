@@ -38,6 +38,5 @@ var logger = Logger(
       lineLength: 120,
       colors: true,
       printEmojis: false,
-      printTime: true
   ),
 );

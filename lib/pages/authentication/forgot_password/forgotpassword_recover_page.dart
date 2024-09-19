@@ -6,6 +6,8 @@ import '../../../blocs/user/user_bloc.dart';
 import '../../../components/fields/password_field.dart';
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 
 @RoutePage()
 class ForgotPasswordRecoverPage extends StatefulWidget {
@@ -54,52 +56,32 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "Crafting your shield",
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)
+                        t.authentication.forgot_password.change_password,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)
                     ),
-                    const SizedBox(
-                      height: 4,
-                    ),
+                    Gap.XS,
                     Text(
-                      "Create a robust new password to keep your digital world secure and your information guarded. Your fortress, your rules.",
+                      t.authentication.forgot_password.description_change_password,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    Gap.XL,
                     Text(
-                        "New password",
+                        t.authentication.forgot_password.new_password,
                         style: Theme.of(context).textTheme.titleMedium
                     ),
-                    const SizedBox(
-                      height: 6,
-                    ),
+                    Gap.SM,
                     PasswordField(controller: _passwordTextController, focusNode: _focusNode,),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    Gap.MD,
                     Text(
-                        "Confirm new password",
+                        t.authentication.forgot_password.confirm_password,
                         style: Theme.of(context).textTheme.titleMedium
                     ),
-                    const SizedBox(
-                      height: 6,
-                    ),
+                    Gap.XS,
                     PasswordField(controller: _confirmPasswordTextController),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                        decoration: BoxDecoration(
-                            color: kPrimary500,
-                            borderRadius: BorderRadius.circular(12)
-                        ),
-                        width: MediaQuery.sizeOf(context).width,
-                        height: 50,
-                        child:  TextButton(
-                          onPressed: () {
-                            //context.router.push(const LoginRoute());
-                            /*if(_passwordTextController.text == _confirmPasswordTextController.text) {
+                    Gap.XL,
+                    ElevatedButton(onPressed: (){
+                      context.router.push(const LoginRoute());
+                      /*if(_passwordTextController.text == _confirmPasswordTextController.text) {
                                 _formKey.currentState!.validate()
                                     ? context.read<UserBloc>().recoverPassword(
                                     token: context.read<UserBloc>().resetToken,
@@ -108,26 +90,9 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                               } else {
                                 onDoesntMatch(context);
                               }*/
-                          },
-                          child: Text("Done", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                        ),/*context.read<UserBloc>().state.maybeWhen(
-                          recovering: () => const Center(child: SizedBox(height: 20, width:20, child:  CircularProgressIndicator(color: kNeutralWhite,))),
-                          orElse: () => TextButton(
-                            onPressed: () {
-                              //context.router.push(const LoginRoute());
-                              /*if(_passwordTextController.text == _confirmPasswordTextController.text) {
-                                _formKey.currentState!.validate()
-                                    ? context.read<UserBloc>().recoverPassword(
-                                    token: context.read<UserBloc>().resetToken,
-                                    password: _passwordTextController.text,
-                                    passwordConfirm: _confirmPasswordTextController.text) : onInvalidInput(context);
-                              } else {
-                                onDoesntMatch(context);
-                              }*/
-                            },
-                            child: Text("Done", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100),),
-                          ),*/)
-
+                    }, child: Center(
+                      child: Text(t.general.done, style: Theme.of(context).textTheme.titleMedium,),
+                    ))
                   ],
                 ),
               ),

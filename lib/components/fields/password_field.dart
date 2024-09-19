@@ -23,7 +23,6 @@ class _PasswordFieldState extends State<PasswordField> {
       focusNode: widget.focusNode,
       obscureText: obscureText,
       controller: widget.controller,
-      cursorColor: kPrimary600,
       autovalidateMode:
       AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(

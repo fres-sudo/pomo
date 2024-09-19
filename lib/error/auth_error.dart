@@ -13,6 +13,7 @@ abstract class AuthError extends LocalizedError {
       "wrong-password" => WrongPassword(),
       "error-login" => GeneralSignInError(),
       "error-signup" => GeneralSignUpError(),
+      "email-not-verified" => EmailNotVerifiedError(),
       _ => GenericError()
     };
   }
@@ -43,6 +44,13 @@ class UserNotExistError extends AuthError {
   @override
   String localizedString(BuildContext context) {
     return context.t.errors.login.user_not_existing;
+  }
+}
+
+class EmailNotVerifiedError extends AuthError {
+  @override
+  String localizedString(BuildContext context) {
+    return context.t.errors.register.general_error;
   }
 }
 

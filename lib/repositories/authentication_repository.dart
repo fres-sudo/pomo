@@ -62,7 +62,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return user;
     } catch (error) {
       logger.e('Error signing in: $error');
-      throw Exception('Sign-in failed');
+      rethrow;
     }
   }
 
@@ -72,7 +72,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       required String email,
       required String password,
       required String confirmPassword}) async {
-    try {
       final response = await authenticationService.signUp(
         SignUpRequest(
           username: username,
@@ -82,15 +81,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         ),
       );
 
-      final user = signUpMapper.fromDTO(response);
+      final user = userMapper.fromDTO(response);
 
       return user;
-    } catch (error) {
-      logger.e(
-        'Error signing up with name: $username, email $email and password $password',
-      );
-      rethrow;
-    }
+
   }
 
   @override

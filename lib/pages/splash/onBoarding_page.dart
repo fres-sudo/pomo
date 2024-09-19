@@ -6,6 +6,8 @@ import 'package:pomo/routes/app_router.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../../i18n/strings.g.dart';
+
 @RoutePage()
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
@@ -13,21 +15,16 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnBoardingSlider(
-      finishButtonText: "I'm ready",
-        finishButtonTextStyle: GoogleFonts.inter(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: kNeutral50
-        ),
+      finishButtonText: t.on_boarding.finish_button,
+        finishButtonTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite) ?? TextStyle(),
         totalPage: 2,
-          //pageBackgroundColor: kNeutralBackground,
-          headerBackgroundColor: kNeutral900,
+          headerBackgroundColor: Theme.of(context).colorScheme.onSurface,
           finishButtonStyle:  FinishButtonStyle(
             backgroundColor: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))
           ),
           indicatorAbove: true,
-          controllerColor: kNeutral900,
+          controllerColor: Theme.of(context).colorScheme.onSurface,
           background: [
             Container(
               height: MediaQuery.sizeOf(context).height,
@@ -35,7 +32,6 @@ class OnBoardingPage extends StatelessWidget {
             Container(
               height: MediaQuery.sizeOf(context).height,
             ),
-
           ],
           speed: 1.8,
           pageBodies: [
@@ -46,18 +42,17 @@ class OnBoardingPage extends StatelessWidget {
                 Center(child: Image.asset('assets/images/onBoarding1.png')),
                 Column(
                   children: [
-                    Text('Manage your time \n as you wish!',
+                    Text(t.on_boarding.page_1.title,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.displaySmall
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600)
                     ),
                     const SizedBox(
                       height: 12,
                     ),
-                    Text('Smart and customizable timer that helps \n you manage your time more effectively.',
+                    Text(t.on_boarding.page_1.description,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                     ),
-
                   ],
                 )
               ],
@@ -69,16 +64,16 @@ class OnBoardingPage extends StatelessWidget {
                 Center(child: Image.asset('assets/images/onBoarding2.png')),
                 Column(
                   children: [
-                    Text('Efficient Task Management \n Made Easy',
+                    Text(t.on_boarding.page_2.title,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.displaySmall
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600)
                     ),
                     const SizedBox(
                       height: 12,
                     ),
-                    Text('Plan your day, set reminders, and track your \n progress with our intuitive timer app that \n helps you achieve your goals.',
+                    Text(t.on_boarding.page_2.description,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                     ),
                   ],
                 )

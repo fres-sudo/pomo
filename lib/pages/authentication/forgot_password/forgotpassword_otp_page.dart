@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pinput/pinput.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/rounded_button.dart';
 import '../../../constants/colors.dart';
+import '../../../extension/sized_box_extension.dart';
+import '../../../i18n/strings.g.dart';
 
 @RoutePage()
 class ForgotPasswordOTPPage extends StatefulWidget {
@@ -27,12 +30,15 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
   late Timer _timer;
 
   final TextEditingController _otpEditingController = TextEditingController();
-  StreamController<ErrorAnimationType>? errorController;
 
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_seconds > 0) {
@@ -46,9 +52,12 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
 
   @override
   void dispose() {
+    _otpEditingController.dispose();
+    _focusNode.dispose();
     _timer.cancel();
     super.dispose();
   }
+
 
   String _formatTime(int seconds) {
     int minutes = seconds ~/ 60;
@@ -71,36 +80,47 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Secure Access in a Snap!",
+                    t.authentication.forgot_password.secure_access,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)
                   ),
-                  const SizedBox(
-                    height: 4,
-                  ),
+                  Gap.XS,
                   Text(
-                    "Enter the one-time code we just sent to your device to unlock the door to your digital realm. Fast, easy, and extra secure!",
+                    t.authentication.forgot_password.description_reset,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor)
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-
+                  Gap.XL,
+                  Pinput(
+                      controller: _otpEditingController,
+                      focusNode: _focusNode,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textInputAction: TextInputAction.done,
+                      length: 6,
+                      cursor: Container(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
+                        margin: const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      defaultPinTheme: PinTheme(
+                        width: 56,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Theme.of(context).dividerColor),
+                            borderRadius: BorderRadius.circular(12)),
+                      )),
                   //onCompleted: (pin) => pin == context.read<UserBloc>().otp ? context.router.push(const ForgotPasswordRecoverRoute()) : onOTPInvalid(context)
-
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  Gap.XL,
                    Center(
                      child: Column(
                       children: [
-                        Text("Don't recive an email yet?", style: Theme.of(context).textTheme.bodyMedium),
+                        Text(t.authentication.forgot_password.dont_recive_email, style: Theme.of(context).textTheme.bodyMedium),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "You can ",
+                              "${t.authentication.forgot_password.you_can} ",
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).dividerColor,
                               ),
@@ -108,15 +128,13 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                             GestureDetector(
                               onTap: () {}, //_seconds == 0 ? context.read<UserBloc>().forgotPassword(email: widget.email) : null,
                               child: Text(
-                                "resend code",
+                                t.authentication.forgot_password.resend,
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: _seconds == 0
                                       ? Theme.of(context).primaryColor
                                       : Theme.of(context).dividerColor,
                                 ),
-
                               ),
-
                             ),
                             Text(
                               " in ",
@@ -131,7 +149,7 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                               ),
                             ),
                             Text(
-                              " seconds.",
+                              " ${t.authentication.forgot_password.seconds}.",
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).dividerColor,
                               ),
@@ -145,26 +163,12 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
               ),
 
             ),
-            Expanded(
-              child: Container(),
-            ), // Added Expanded to take remaining space
+            const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-              child: RoundedButton(
-                color: kPrimary500,
-                borderColor: Colors.transparent,
-                child: Text(
-                  "Continue",
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: kNeutral50,
-                  ),
-                ),
-                onPressed: () {
-                  context.router.push(const ForgotPasswordRecoverRoute());
-                },
-              ),
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                  onPressed: () => context.router.push(const ForgotPasswordRecoverRoute()),
+                  child: Center(child: Text(t.general.continue_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),))),
             ),
           ],
         ),

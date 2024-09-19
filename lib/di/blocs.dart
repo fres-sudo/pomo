@@ -36,4 +36,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<ScheduleCubit>(
     create: (_) => ScheduleCubit(),
   ),
+  BlocProvider<FilterProjectCubit>(
+    create: (_) => FilterProjectCubit(),
+  ),
 ];
