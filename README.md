@@ -9,71 +9,9 @@
 -->
 
 
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/fres-sudo/pomo">
-    <img src="assets/logo-white.png" alt="Logo" width="251" height="200">
-  </a>
-
-
-  <p align="center">
-    <br />
-    Your Pomodoro Buddy 🫂
-    <br />
-    <br />
-    <a href="#roadmap--usage">View Demo</a>
-    ·
-    <a href="https://github.com/fres-sudo/pomo/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/fres-sudo/pomo/issues">Request Feature</a>
-  </p>
-</div>
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li><a href="#roadmap--usage">Roadmap & Usage</a></li>
-     <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
 ![Preview](assets/thubnail.png)
+
+## About the project
 
 Pomo is an app for managing tasks and projects. Users can log in or register and create new project.
  
@@ -86,10 +24,6 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
  - In the Statistics page the user can access to all the progress about tasks and project.
 
  - There is also a Profile page where user can interact with his account.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -105,22 +39,6 @@ Pomo is an app for managing tasks and projects. Users can log in or register and
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- ROADMAP -->
-## Roadmap & Usage <a name="roadmap--usage"></a>
-
-- [ ] [Projects 📋](lib/pages/projects) - [Tasks 🎯](lib/pages/projects/project_details_page.dart) - [Pomodoro 🍅](lib/pages/projects/views/timer_view.dart)
-   - <img src="assets/gif/createproj.gif" width="300" height="650"/>  <img src="assets/gif/project.gif" width="300" height="650"/> <img src="assets/gif/task.gif" width="300" height="650"/>
-- [ ] [Quick Session ⏰](lib/pages/quick_session/quick_session_page.dart) -  [Statistics 📈](lib/pages/stats/stats_page.dart)
-   - <img src="assets/gif/quicksession.gif" width="300" height="650"/>  <img src="assets/gif/stats.gif" width="300" height="650"/>
-    
-- [ ] [Authentication 🔐](lib/pages/authentication/) - [Theming ☯️](lib/cubits/theme/)
-  - <img src="assets/gif/login.gif" width="300" height="650"/> <img src="assets/gif/theme.gif" width="300" height="650"/>
-
-See the [open issues](https://github.com/fres-sudo/pomo/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Architecture  <a name="architecture"></a>
 
 This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine):
@@ -131,6 +49,7 @@ This project uses the [Pine Architecture](https://github.com/MyLittleSuite/pine)
     <td valign="top"><img src="assets/pine-di.jpeg"/></td>
   </tr>
 </table>
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
