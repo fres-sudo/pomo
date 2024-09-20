@@ -31,6 +31,8 @@
     "continue_with" : "Continua con",
     "continue_title" : "Continua",
     "completed_at" : "Completata",
+    "completed" : "Completate",
+    "uncompleted" : "Incompletate",
     "created_at" : "Creata",
     "or" : "o",
     "work_session" : "Sessione di lavoro",

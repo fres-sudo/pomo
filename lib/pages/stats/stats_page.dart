@@ -166,7 +166,6 @@ class _StatsPageState extends State<StatsPage> {
                                   ],
                                 ),
                                 child: CustomBarChart(
-                                  tasks: tasks,
                                   barBackgroundColor: kNeutral500,
                                   barColor: Theme.of(context).primaryColor,
                                   touchedBarColor: Theme.of(context).primaryColor,

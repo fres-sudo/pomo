@@ -4,22 +4,19 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo/components/utils/utils.dart';
-import 'package:pomo/constants/colors.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 
+import '../../../constants/colors.dart';
 import '../../../i18n/strings.g.dart';
 import '../../../models/stats/stats.dart';
-import '../../../models/task/task.dart';
 
 class CustomBarChart extends StatefulWidget {
-  const CustomBarChart(
-      {super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.tasks, required this.stats});
+  const CustomBarChart({super.key, required this.barBackgroundColor, required this.barColor, required this.touchedBarColor, required this.stats});
 
   final Stats stats;
   final Color barBackgroundColor;
   final Color barColor;
   final Color touchedBarColor;
-  final List<Task> tasks;
 
   @override
   State<StatefulWidget> createState() => CustomBarChartState();
@@ -64,11 +61,80 @@ class CustomBarChartState extends State<CustomBarChart> {
               Text(t.stats.weekly_focus,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
               Gap.XS,
-              Text("${widget.tasks.isEmpty ? "0" : widget.stats.completionPercentage}%", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+              Text("${widget.stats.completionPercentage}%",
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
               Gap.SM,
               Expanded(
                 child: BarChart(
-                  mainBarData(),
+                    BarChartData(
+                      barTouchData: BarTouchData(
+                        touchTooltipData: BarTouchTooltipData(
+                            tooltipHorizontalAlignment: FLHorizontalAlignment.right,
+                            tooltipMargin: -10,
+                            getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                              // Get both completed and uncompleted tasks for the selected group (day)
+                              double completedTasks = widget.stats.completedTasksOfTheWeek[groupIndex].toDouble();
+                              double uncompletedTasks = widget.stats.uncompletedTasksOfTheWeek[groupIndex].toDouble();
+
+                              String weekDay = weekDaysLong[groupIndex];
+
+                              return BarTooltipItem(
+                                '$weekDay\n',
+                                Theme.of(context).textTheme.titleSmall!,
+                                textAlign: TextAlign.start,
+                                children: [
+                                  TextSpan(
+                                    text: '${t.general.completed}: ${completedTasks.round()}\n',
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                  TextSpan(
+                                    text: '${t.general.uncompleted}: ${uncompletedTasks.round()}',
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ],
+                              );
+                            }
+                        ),
+                        touchCallback: (FlTouchEvent event, barTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+
+                            // Get the touched bar index (day)
+                            touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
+                          });
+                        },
+                      ),
+
+                      titlesData: FlTitlesData(
+                        show: true,
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: getTitles,
+                            reservedSize: 38,
+                          ),
+                        ),
+                        leftTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                      ),
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      barGroups: showingGroups(),
+                      gridData: const FlGridData(show: false),
+                    )
                 ),
               ),
             ],
@@ -80,24 +146,41 @@ class CustomBarChartState extends State<CustomBarChart> {
 
   BarChartGroupData makeGroupData(
     int x,
-    double y, {
+    double completedTasks,
+    double uncompletedTasks, {
     bool isTouched = false,
-    Color? barColor,
+    Color? completedBarColor,
+    Color? uncompletedBarColor,
     double width = 10,
     List<int> showTooltips = const [],
   }) {
-    barColor ??= widget.barColor;
+    completedBarColor ??= widget.barColor;
+    uncompletedBarColor ??= Theme.of(context).colorScheme.error;
+
     return BarChartGroupData(
       x: x,
       barRods: [
+        // Uncompleted tasks rod
         BarChartRodData(
-          toY: isTouched ? y + 1 : y,
-          color: isTouched ? widget.touchedBarColor : barColor,
+          toY: isTouched ? uncompletedTasks + 1 : uncompletedTasks,
+          color: uncompletedBarColor,
           width: width,
-          borderSide: isTouched ? BorderSide(color: widget.touchedBarColor.darken(80)) : const BorderSide(color: Colors.white, width: 0),
+          borderSide: isTouched ? BorderSide(color: uncompletedBarColor.darken(80)) : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 20,
+            toY: 10,
+            color: widget.barBackgroundColor.withOpacity(0.1),
+          ),
+        ),
+        // Completed tasks rod
+        BarChartRodData(
+          toY: isTouched ? completedTasks + 1 : completedTasks,
+          color: completedBarColor,
+          width: width,
+          borderSide: isTouched ? BorderSide(color: completedBarColor.darken(80)) : const BorderSide(color: Colors.white, width: 0),
+          backDrawRodData: BackgroundBarChartRodData(
+            show: true,
+            toY: 10,
             color: widget.barBackgroundColor.withOpacity(0.1),
           ),
         ),
@@ -106,64 +189,10 @@ class CustomBarChartState extends State<CustomBarChart> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() =>
-      List.generate(7, (i) => makeGroupData(0, widget.stats.completedTasksOfTheWeek[i].toDouble(), isTouched: i == touchedIndex));
-
-  BarChartData mainBarData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        touchTooltipData: BarTouchTooltipData(
-          tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-          tooltipMargin: -10,
-          getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            String weekDay = weekDaysLong[group.x];
-            return BarTooltipItem(
-              '$weekDay\n',
-              Theme.of(context).textTheme.titleSmall!,
-              children: [
-                TextSpan(text: (rod.toY - 1).toString(), style: Theme.of(context).textTheme.titleSmall),
-              ],
-            );
-          },
-        ),
-        touchCallback: (FlTouchEvent event, barTouchResponse) {
-          setState(() {
-            if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
-              touchedIndex = -1;
-              return;
-            }
-            touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
-          });
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
-        ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: showingGroups(),
-      gridData: const FlGridData(show: false),
-    );
-  }
+  List<BarChartGroupData> showingGroups() => List.generate(
+      7,
+      (i) => makeGroupData(i, widget.stats.completedTasksOfTheWeek[i].toDouble(), widget.stats.uncompletedTasksOfTheWeek[i].toDouble(),
+          isTouched: i == touchedIndex));
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -172,44 +201,6 @@ class CustomBarChartState extends State<CustomBarChart> {
       axisSide: meta.axisSide,
       space: 16,
       child: Text(weekDaysShort[value.toInt()], style: style),
-    );
-  }
-
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
-        ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(7, (i) => makeGroupData(i, Random().nextInt(15).toDouble() + 6, barColor: Theme.of(context).primaryColor)),
-      gridData: const FlGridData(show: false),
     );
   }
 

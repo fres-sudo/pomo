@@ -28,6 +28,7 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
+
   void fetchScheduledTask(BuildContext context) {
     final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "oresle");
     context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
@@ -109,6 +110,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                   selectedDayPredicate: (day) => isSameDay(scheduleState.selectedDay, day),
                                   rangeSelectionMode: RangeSelectionMode.disabled,
                                   calendarStyle: kCalendarStyle(context)),
+                              Gap.XS,
                               const DottedDivider(),
                               Gap.SM,
                               Expanded(
@@ -131,3 +133,4 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 }
+
