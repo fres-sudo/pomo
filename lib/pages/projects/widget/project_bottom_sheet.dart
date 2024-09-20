@@ -87,7 +87,7 @@ class ProjectBottomSheet extends StatelessWidget {
                                 title: t.projects.delete.title,
                                 buttonText: t.general.delete,
                                 description: t.projects.delete.description,
-                                function: () {
+                                onPress: () {
                                   context.read<ProjectBloc>().deleteProjectById(id: project.id!);
                                   context.router.maybePop();
                                   context.router.replace(const ProjectRoute());

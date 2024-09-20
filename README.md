@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/fres-sudo/pomo">
-    <img src="assets/logo-white.png" alt="Logo" width="251" height="208">
+    <img src="assets/logo-white.png" alt="Logo" width="251" height="200">
   </a>
 
 

@@ -97,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            NameField(controller: _usernameTextController, text: "username"),
+                            NameField(controller: _usernameTextController, hintText: "username"),
                             const SizedBox(
                               height: 18,
                             ),

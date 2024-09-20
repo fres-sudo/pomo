@@ -76,7 +76,7 @@ class _TaskCardState extends State<TaskCard> {
                         title: t.tasks.delete.title,
                         buttonText: t.general.delete,
                         description: t.tasks.delete.description,
-                        function: () {
+                        onPress: () {
                           context.read<TaskBloc>().delete(id: widget.task.id!);
                           context.router.maybePop();
                         },

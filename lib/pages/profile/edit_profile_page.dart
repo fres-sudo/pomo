@@ -226,10 +226,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           isDismissible: true,
                           useRootNavigator: true,
                           builder: (BuildContext context) => DestructionBottomSheet(
+                                height: 250,
                                 title:  t.profile.settings.delete_account.title,
                                 buttonText: t.general.delete,
                                 description: t.profile.settings.delete_account.description,
-                                function: () => context.read<UserBloc>().deleteUser(id: state.user?.id ?? ""),
+                                onPress: () => context.read<UserBloc>().deleteUser(id: state.user?.id ?? ""),
                               )),
                       child: state.isLoading ? CustomCircularProgressIndicator(color: Theme.of(context).colorScheme.error,) :Center(
                         child: Text(
