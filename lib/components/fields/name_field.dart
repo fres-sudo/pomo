@@ -4,26 +4,25 @@ import 'package:pomo/components/utils/utils.dart';
 
 import '../../constants/colors.dart';
 
-class NameField extends StatefulWidget {
-  const NameField({super.key, required this.controller, required this.text});
+class NameField extends StatelessWidget {
+  const NameField({super.key, required this.controller, required this.hintText, this.onChanged, this.focusNode});
 
   final TextEditingController controller;
-  final String text;
+  final String hintText;
+  final Function(String?)? onChanged;
+  final FocusNode? focusNode;
 
-  @override
-  State<NameField> createState() => _NameFieldState();
-}
-
-class _NameFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
+      focusNode: focusNode,
+      controller: controller,
       autovalidateMode:
       AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        hintText: widget.text.capitalize(),
+        hintText: hintText.capitalize(),
       ),
+      onChanged: onChanged,
       inputFormatters: [
         FilteringTextInputFormatter.deny(RegExp('[ ]')),
       ],
@@ -32,7 +31,7 @@ class _NameFieldState extends State<NameField> {
         if (value == null ||
             value.isEmpty ||
             value.length < 3) {
-          return 'Please enter a valid ${widget.text}';
+          return 'Please enter a valid $hintText';
         }
         return null;
       },

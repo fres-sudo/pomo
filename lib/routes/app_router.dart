@@ -31,6 +31,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: WorkSessionRoute.page),
     AutoRoute(page: CreateProjectRoute.page,),
     AutoRoute(page: EditProfileRoute.page),
+    AutoRoute(page: ChooseUsernameRoute.page),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SessionCompleteRoute.page),
     CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: PrivacyPolicyRoute.page),
 

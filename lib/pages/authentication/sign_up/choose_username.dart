@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/components/fields/name_field.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/pages/authentication/forgot_password/forgotpassword_otp_page.dart';
-import 'package:pomo/pages/root_page.dart';
 
 import '../../../blocs/user/user_bloc.dart';
 import '../../../components/fields/email_field.dart';
@@ -26,6 +27,17 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
 
   final TextEditingController _usernameTextController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  Timer? _debounce;
+
+  void _onUsernameChanged(String value) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (value.length > 3) {
+        context.read<UserBloc>().searchUsername(username: value);
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -67,29 +79,34 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
                     style: Theme.of(context).textTheme.titleMedium
                 ),
                 Gap.XS,
-                EmailField(
+                NameField(
+                  hintText: t.general.username,
                   controller: _usernameTextController,
                   onChanged: (value) => value != null && value.length > 3 ? context.read<UserBloc>().searchUsername(username: value) : null,
                   focusNode: _focusNode,),
-                if(_usernameTextController.text.length > 3)
+                if(_usernameTextController.text.length > 3)...[
+                  Gap.SM,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      state.isLoading ? CircularProgressIndicator(color: Theme.of(context).dividerColor,) : Icon(Icons.verified_outlined, color: Theme.of(context).primaryColor,),
+                      Gap.SM_H,
+                      state.isLoading ? CircularProgressIndicator(color: Theme.of(context).dividerColor,) : Icon(Icons.verified_outlined, color: Theme.of(context).primaryColor, size: 20,),
+                      Gap.SM_H,
                       Text(state.isLoading ? "${t.general.loading} ..." : state.searchedUsername == _usernameTextController.text ? t.authentication.signup.unavailable_username : t.authentication.signup.available_username,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color:state.isLoading ? Theme.of(context).dividerColor : state.searchedUsername == _usernameTextController.text ? Theme.of(context).colorScheme.error : kGreen500
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color:state.isLoading ? Theme.of(context).dividerColor : state.searchedUsername == _usernameTextController.text ? Theme.of(context).colorScheme.error : Theme.of(context).primaryColor
                         ),
                       )
                     ],
                   ),
+                ],
                 const Spacer(),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: state.isLoading ? Theme.of(context).primaryColor.withOpacity(0.5) : null
                     ),
-                    onPressed: () => _usernameTextController.text.length > 3 && !state.isLoading ? context.read<UserBloc>().updateUser(id: widget.user.id, user: widget.user.copyWith(username: _usernameTextController.text) ) : null,
+                    onPressed: () => _usernameTextController.text.length > 3 && !state.isLoading && state.searchedUsername != _usernameTextController.text? context.read<UserBloc>().updateUser(id: widget.user.id, user: widget.user.copyWith(username: _usernameTextController.text) ) : null,
                     child: state.isLoading ? const CircularProgressIndicator() : Center(
                         child: Text(t.general.continue_title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite,
                         )))),

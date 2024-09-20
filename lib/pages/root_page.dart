@@ -13,11 +13,26 @@ import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
-class RootPage extends StatelessWidget {
+class RootPage extends StatefulWidget {
   const RootPage({super.key});
 
   @override
+  State<RootPage> createState() => _RootPageState();
+}
+
+class _RootPageState extends State<RootPage> {
+
+  @override
+  void initState() {
+    context.read<AuthCubit>().checkAuthentication();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    print("AUTH STATE: ${context.read<AuthCubit>().state}");
+
     return AutoTabsRouter(
       routes: const [
         ScheduleRoute(),

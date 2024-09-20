@@ -19,8 +19,8 @@ abstract class UserService {
   @GET("/users")
   Future<String> searchUsername(@Query('username') String username);
 
-  @PUT('/users/{id}')
-  Future<UserJTO> updateUser(@Path('id') String id ,@Body() UserJTO user);
+  @PATCH('/users/{userId}')
+  Future<UserJTO> updateUser(@Path('userId') String id ,@Body() UserJTO user);
 
  @DELETE('/users/{id}')
   Future<UserJTO> deleteUser(@Path('id') String id);

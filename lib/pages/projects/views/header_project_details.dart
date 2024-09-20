@@ -31,8 +31,7 @@ class HeaderProjectDetails extends StatelessWidget {
           children: [
             BackIconButton(onPress: () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),),
             Gap.SM_H,
-            Text(project.name.capitalize(), overflow: TextOverflow.ellipsis, style: kSerzif(context)),
-            const Spacer(),
+            Expanded(child: Text(project.name.capitalize(), overflow: TextOverflow.ellipsis, style: kSerzif(context))),
             IconButton(onPressed: () => showModalBottomSheet(
               context: context,
               isDismissible: true,

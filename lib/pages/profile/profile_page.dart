@@ -188,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   title: t.profile.account,
                                   buttonText: t.profile.settings.logout.title,
                                   description: t.profile.settings.logout.description,
-                                  function: () {
+                                  onPress: () {
                                     context.read<AuthCubit>().signOut();
                                     Navigator.of(context).pop();
                                     context.router.replace(const RootRoute());

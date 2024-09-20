@@ -26,7 +26,7 @@ extension ProjectExt on ProjectStatus {
   }
 
   Color get backGroundColor {
-    return switch (this) { ProjectStatus.completed => kGreen100.withOpacity(0.15), ProjectStatus.expired => kRed100, ProjectStatus.progress => kYellow100 };
+    return switch (this) { ProjectStatus.completed => kGreen100.withOpacity(0.15), ProjectStatus.expired => kRed100.withOpacity(0.15), ProjectStatus.progress => kYellow100.withOpacity(0.15) };
   }
 }
 
@@ -39,6 +39,7 @@ class ProjectCard extends StatelessWidget {
   final Project project;
 
   ProjectStatus _getStatus(Project project) {
+    return ProjectStatus.progress;
     int completedTask = project.tasks?.map((task) => task.completedAt != null).toList().length ?? 0;
     int totalTasks = project.tasks?.length ?? 0;
     if (completedTask == totalTasks) {
@@ -129,8 +130,10 @@ class ProjectCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
-                            maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                        Expanded(
+                          child: Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
+                              maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                        ),
                         Text("${project.tasks?.length != null ? project.tasks!.length.toString() : "0"} tasks",
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor))
                       ],

@@ -81,7 +81,7 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                       title: t.tasks.reset_timer.title,
                       buttonText: t.general.reset,
                       description: t.tasks.reset_timer.description,
-                      function: () {
+                      onPress: () {
                         _controller.reset();
                         _isRunning = false;
                         setState(() {});
