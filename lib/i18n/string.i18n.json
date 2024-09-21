@@ -73,6 +73,7 @@
   "profile": {
     "title": "Profile",
     "account": "Account",
+    "my_profile" : "My profile",
     "settings": {
       "general": {
         "title": "General",
@@ -86,7 +87,8 @@
       },
       "about_us": {
         "title": "About us",
-        "privacy_policy": "Privacy Policy"
+        "privacy_policy": "Privacy Policy",
+        "find_out_more" : "Scopri di più"
       },
       "delete_account" : {
         "title": "Delete Account",
@@ -184,7 +186,11 @@
       "change_password" : "Crafting your shield",
       "description_change_password" : "Create a robust new password to keep your digital world secure and yout information guarded. Your fortress, your rules.",
       "new_password" : "New password",
-      "confirm_password" : "Confirm new password"
+      "confirm_password" : "Confirm new password",
+      "success": {
+        "email_sent" : "The email has been successfully sended, please check SPAM too!",
+        "success_recover" : "Your password has been successfully changed, please follow with the login"
+      }
     }
   },
   "errors": {
@@ -195,6 +201,8 @@
     "due_date_before_today" : "End date cannot be in the past.",
     "sorry" : "Sorry.",
     "available_soon" : "This feature will be available soon!",
+    "error_processing" : "An error occurred while processing your request",
+    "accept_terms_and_condition" : "To sign up you have to accept Terms and Conditions",
     "projects": {
       "fetching_project": "An error occurred while fetching your projects.",
       "creating_project": "An error occurred while creating a new project",
@@ -219,13 +227,21 @@
     "login" : {
       "general_error" : "An error occurred while logging in",
       "wrong_password" : "You submit the wrong password",
-      "user_not_existing" : "This email is not associated with any user"
+      "user_not_existing" : "This email is not associated with any user",
+      "email_not_verified" : "The email associated to this account is not verified, we send you an email verification, check your inbox!"
     },
     "register" : {
       "general_error" : "An error occurred while registering.",
       "email_already_associated" : "This email is already associated with an account",
       "username_already_in_use" : "This username is already in use",
       "invalid_password" : "The submitted password is not valid"
+    },
+    "forgot_password" : {
+      "forgot_password_email_error" : "An error occurred while sending the email with the OTP code",
+      "verify_token_invalid_error" : "The OTP code is not valid or expired",
+      "verify_token_error" : "An error occurred while checking for the OTP code integrity",
+      "reset_password_error" : "An error occurred while trying to reset your password",
+      "reset_password_not_match_error" : "The passwords does not match"
     }
   },
   "week_days" : {

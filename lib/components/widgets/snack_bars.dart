@@ -6,10 +6,80 @@ import 'package:provider/provider.dart';
 import '../../cubits/theme/theme_cubit.dart';
 import '../../i18n/strings.g.dart';
 
+bool _isSnackBarVisible = false;
+
 onInvalidInput(BuildContext context, {bool isAlert = false, String? text}) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    !isAlert
-        ? ScaffoldMessenger.of(context).showSnackBar(
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      !isAlert
+          ? ScaffoldMessenger.of(context)
+              .showSnackBar(
+                SnackBar(
+                    backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
+                    shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                            color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
+                    duration: const Duration(seconds: 2),
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    content: Text(
+                      '${text ?? t.errors.valid_info}📝',
+                    )),
+              )
+              .closed
+              .then((_) {
+              _isSnackBarVisible = false;
+            })
+          : showDialog(context: context, builder: (BuildContext context) => InvalidInputDialog(text: text));
+    });
+  }
+}
+
+onErrorState(BuildContext context, String text) {
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+                backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kRed800 : kRed200,
+                shape: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kRed500)),
+                duration: const Duration(seconds: 3),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                content: Text('$text🚨')),
+          )
+          .closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
+    });
+  }
+}
+
+onSuccessState(
+  BuildContext context,
+  String text,
+) {
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(duration: const Duration(seconds: 2), padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), content: Text('✅ $text')),
+      );
+    });
+  }
+}
+
+onAvailableSoon(BuildContext context) {
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
             SnackBar(
                 backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
                 shape: OutlineInputBorder(
@@ -18,113 +88,80 @@ onInvalidInput(BuildContext context, {bool isAlert = false, String? text}) {
                         BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
                 duration: const Duration(seconds: 2),
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                content: Text(
-                  '${text ?? t.errors.valid_info}📝',
-                )),
+                content: Text('${t.errors.sorry} 😣${t.errors.available_soon} 👀')),
           )
-        : showDialog(context: context, builder: (BuildContext context) => InvalidInputDialog(text: text));
-  });
+          .closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
+    });
+  }
 }
 
 onAcceptTermsCondition(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          duration: Duration(seconds: 2),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
-            'You have to accept Terms & Conditions to create an account 📍',
-          )),
-    );
-  });
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+                backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
+                duration: const Duration(seconds: 2),
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide:
+                        BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                content: Text(t.errors.accept_terms_and_condition)),
+          )
+          .closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
+    });
+  }
 }
 
-onEmailSent(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          duration: Duration(seconds: 3),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
-            'Your email has been sent 📩, please check your inbox or your SPAM 📬️',
-          )),
-    );
-  });
-}
+onDoesNotMatch(BuildContext context) {
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
 
-onDoesntMatch(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          duration: Duration(seconds: 2),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
-            'The password aren\'t the same ❌',
-          )),
-    );
-  });
-}
-
-onOTPInvalid(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          duration: Duration(seconds: 2),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text(
-            'The OTP you insert may not valid or expired ❌',
-          )),
-    );
-  });
-}
-
-onErrorState(BuildContext context, String text) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kRed800 : kRed200,
-          shape: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kRed500)),
-          duration: const Duration(seconds: 3),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('$text🚨')),
-    );
-  });
-}
-
-onSuccessState(
-  BuildContext context,
-  String text,
-) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          duration: const Duration(seconds: 2),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('Great! ✅ You successfully $text')),
-    );
-  });
-}
-
-onAvailableSoon(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
-          shape: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
-          duration: const Duration(seconds: 2),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          content: Text('${t.errors.sorry} 😣${t.errors.available_soon} 👀')),
-    );
-  });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+                backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
+                duration: const Duration(seconds: 2),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide:
+                        BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
+                content: Text(t.errors.forgot_password.reset_password_not_match_error)),
+          )
+          .closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
+    });
+  }
 }
 
 onFirstProfileSeen(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        duration: Duration(seconds: 3),
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        content: Text('If you want you can update your name and surname up here! ℹ️')));
-  });
+  if (!_isSnackBarVisible) {
+    _isSnackBarVisible = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(
+              duration: Duration(seconds: 3),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              content: Text('If you want you can update your name and surname up here! ℹ️')))
+          .closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
+    });
+  }
 }

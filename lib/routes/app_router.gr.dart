@@ -243,10 +243,20 @@ class ForgotPasswordRoute extends _i22.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.ForgotPasswordRecoverPage]
-class ForgotPasswordRecoverRoute extends _i22.PageRouteInfo<void> {
-  const ForgotPasswordRecoverRoute({List<_i22.PageRouteInfo>? children})
-      : super(
+class ForgotPasswordRecoverRoute
+    extends _i22.PageRouteInfo<ForgotPasswordRecoverRouteArgs> {
+  ForgotPasswordRecoverRoute({
+    _i23.Key? key,
+    required String email,
+    required String token,
+    List<_i22.PageRouteInfo>? children,
+  }) : super(
           ForgotPasswordRecoverRoute.name,
+          args: ForgotPasswordRecoverRouteArgs(
+            key: key,
+            email: email,
+            token: token,
+          ),
           initialChildren: children,
         );
 
@@ -255,9 +265,33 @@ class ForgotPasswordRecoverRoute extends _i22.PageRouteInfo<void> {
   static _i22.PageInfo page = _i22.PageInfo(
     name,
     builder: (data) {
-      return const _i6.ForgotPasswordRecoverPage();
+      final args = data.argsAs<ForgotPasswordRecoverRouteArgs>();
+      return _i6.ForgotPasswordRecoverPage(
+        key: args.key,
+        email: args.email,
+        token: args.token,
+      );
     },
   );
+}
+
+class ForgotPasswordRecoverRouteArgs {
+  const ForgotPasswordRecoverRouteArgs({
+    this.key,
+    required this.email,
+    required this.token,
+  });
+
+  final _i23.Key? key;
+
+  final String email;
+
+  final String token;
+
+  @override
+  String toString() {
+    return 'ForgotPasswordRecoverRouteArgs{key: $key, email: $email, token: $token}';
+  }
 }
 
 /// generated route for

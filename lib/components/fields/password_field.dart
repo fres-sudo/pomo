@@ -23,8 +23,6 @@ class _PasswordFieldState extends State<PasswordField> {
       focusNode: widget.focusNode,
       obscureText: obscureText,
       controller: widget.controller,
-      autovalidateMode:
-      AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
           hintText: "Password",
           suffixIcon: GestureDetector(

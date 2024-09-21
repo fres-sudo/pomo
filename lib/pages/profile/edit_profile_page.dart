@@ -91,7 +91,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                    BackIconButton(onPress: () => context.router.maybePop()),
                     Gap.XS_H,
                     Text(
-                      "My Profile",
+                      t.profile.my_profile,
                       style: kSerzif(context),
                     ),
                   ]),
@@ -103,7 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           image != null ? context.read<UserBloc>().updateUserPhoto(id: state.user?.id ?? "", photo: File(image!.path)) : null;
                         }
                       },
-                      child: Text("Update",
+                      child: Text(t.general.update,
                           style: GoogleFonts.inter(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,

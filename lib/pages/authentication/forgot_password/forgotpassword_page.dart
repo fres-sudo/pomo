@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:pomo/blocs/recover_password/recover_password_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
+import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../blocs/user/user_bloc.dart';
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 import '../../../extension/sized_box_extension.dart';
@@ -41,17 +41,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserBloc, UserState>(
-      listener: (BuildContext context, UserState state) {
-        /*state.whenOrNull(
-          errorFetchingOTP: () => onErrorState(context, "sending recover email"),
-          fetchedOTP: (response) => {
-                  onEmailSent(context),
-                  context.router.push(
-                      ForgotPasswordOTPRoute(email: _emailTextController.text)),
-                });*/
+    return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
+      listener: (BuildContext context, RecoverPasswordState state) {
+        state.whenOrNull(
+            forgottedPassword: () => context.router.push(ForgotPasswordOTPRoute(email: _emailTextController.text)),
+            errorForgottingPassword: (error) => onErrorState(context, error.localizedString(context)));
       },
-      builder: (BuildContext context, UserState state) => Scaffold(
+      builder: (BuildContext context, RecoverPasswordState state) => Scaffold(
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 44.0, left: 16, right: 16),
@@ -63,15 +59,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Row(
                     children: [
                       InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () => context.router.maybePop(),
-                        child: const  Icon(Icons.chevron_left_rounded)
-                      ),
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () => context.router.maybePop(),
+                          child: const Icon(Icons.chevron_left_rounded)),
                       Gap.XS_H,
-                      Text(
-                          t.authentication.forgot_password.reset_password,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)
-                      ),
+                      Text(t.authentication.forgot_password.reset_password,
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
                     ],
                   ),
                   Gap.XS,
@@ -80,21 +73,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
                   ),
                   Gap.XL,
-                  Text(
-                      "Email",
-                      style: Theme.of(context).textTheme.titleMedium
-                  ),
+                  Text("Email", style: Theme.of(context).textTheme.titleMedium),
                   Gap.XS,
-                  EmailField(controller: _emailTextController, focusNode: _focusNode,),
+                  EmailField(
+                    controller: _emailTextController,
+                    focusNode: _focusNode,
+                  ),
                   const Spacer(),
                   ElevatedButton(
-                      onPressed: (){
-                        context.router.push( ForgotPasswordOTPRoute(email: _emailTextController.text ));
-                        //_formKey.currentState!.validate() ? context.read<UserBloc>().forgotPassword(email: _emailTextController.text) : onInvalidInput(context);
+                      onPressed: () {
+                        if(_formKey.currentState!.validate()){
+                          context.read<RecoverPasswordBloc>().forgotPassword(email: _emailTextController.text);
+                        } else {
+                          onInvalidInput(context);
+                        }
                       },
-                      child: Center(
-                        child: Text(t.authentication.forgot_password.send_email, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14,color: kNeutral100,
-                      )))),
+                      child: state.maybeWhen(
+                          orElse: () => Center(
+                              child: Text(t.authentication.forgot_password.send_email,
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        fontSize: 14,
+                                        color: kNeutral100,
+                                      ))),
+                          forgottingPassword: () => const CustomCircularProgressIndicator())),
                   Gap.SM,
                 ],
               ),

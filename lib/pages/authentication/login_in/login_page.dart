@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
                               child: Text(
                                 t.authentication.login.forgot_password,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: kPrimary500),
+                                style: Theme.of(context).textTheme.labelMedium?.copyWith(color: kPrimary500),
                               ),
                             ),
                           ),
@@ -137,14 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Text(
                                   t.authentication.login.dont_have_an_account,
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  style: Theme.of(context).textTheme.labelMedium,
                                 ),
                                 Gap.XS_H,
                                 GestureDetector(
                                   onTap: () => context.pushRoute(const SignUpRoute()),
                                   child: Text(
                                     t.authentication.signup.title,
-                                    style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],
