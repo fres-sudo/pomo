@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../constants/colors.dart';
+import '../../i18n/strings.g.dart';
 
 class EmailField extends StatefulWidget {
   const EmailField({super.key, required this.controller, this.focusNode, this.onChanged});
@@ -36,7 +37,7 @@ class _EmailFieldState extends State<EmailField> {
         if (value == null ||
             value.isEmpty ||
             !EmailValidator.validate(value)) {
-          return 'Please enter a valid email';
+          return t.errors.form.valid_email;
         }
         return null;
       },

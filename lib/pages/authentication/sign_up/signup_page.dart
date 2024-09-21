@@ -44,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocConsumer<SignUpBloc, SignUpState>(
       listener: (BuildContext context, state) => state.whenOrNull(
         errorSignUp: () => onErrorState(context, "signing up"),
-        signedUp: (_) => {context.router.replace(const RootRoute()), onSuccessState(context, "created your account")},
+        signedUp: (_) => {context.router.replace(const RootRoute()), onSuccessState(context, t.authentication.signup.success)},
       ),
       builder: (BuildContext context, SignUpState state) {
         return Scaffold(

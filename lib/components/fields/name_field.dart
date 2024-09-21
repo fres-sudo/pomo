@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:pomo/components/utils/utils.dart';
 
 import '../../constants/colors.dart';
+import '../../i18n/strings.g.dart';
 
 class NameField extends StatelessWidget {
   const NameField({super.key, required this.controller, required this.hintText, this.onChanged, this.focusNode});
@@ -31,7 +32,7 @@ class NameField extends StatelessWidget {
         if (value == null ||
             value.isEmpty ||
             value.length < 3) {
-          return 'Please enter a valid $hintText';
+          return t.errors.form.valid(name: hintText);
         }
         return null;
       },

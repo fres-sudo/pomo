@@ -171,7 +171,8 @@
       "choose_username" : "Solo un altro step",
       "available_username" : "Username disponibile",
       "unavailable_username": "Username non disponbile",
-      "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome unico per il tuo account e non potrai modificarlo in seguito."
+      "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome unico per il tuo account e non potrai modificarlo in seguito.",
+      "success" : "Hai correttamente creato il tuo account! Ora puoi eseguire l'accesso."
     },
     "forgot_password": {
       "reset_password" : "Reimposta la tua password",
@@ -203,6 +204,13 @@
     "available_soon" : "Questa feature sarà disponibile presto!",
     "error_processing" : "Si è verificato un errore processando la tua richiesta, riprova più tardi",
     "accept_terms_and_condition" : "Per iscriverti devi accettare i Termini e le Condizioni",
+    "form" : {
+      "valid_email" : "Inserisci una email valida",
+      "valid_password" : "Inserisci una password valida",
+      "valid_name" : "Inserisci un nome valido",
+      "valid_project_name" : "Inserisci un nome del progetto valido",
+      "valid" : "Inserisci un $name valido"
+    },
     "projects": {
       "fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",

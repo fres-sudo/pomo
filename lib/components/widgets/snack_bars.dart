@@ -68,7 +68,10 @@ onSuccessState(
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(duration: const Duration(seconds: 2), padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), content: Text('✅ $text')),
-      );
+      ).closed
+          .then((_) {
+        _isSnackBarVisible = false;
+      });
     });
   }
 }

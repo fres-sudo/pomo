@@ -171,7 +171,8 @@
       "choose_username" : "Just one more step",
       "available_username" : "Available username",
       "unavailable_username": "Unavailable username",
-      "choose_username_description" : "Choose your username to complete registration. This name will be unique to you, and you can't change it later."
+      "choose_username_description" : "Choose your username to complete registration. This name will be unique to you, and you can't change it later.",
+      "success" : "You seccessfully created your account! Please login."
     },
     "forgot_password": {
       "reset_password" : "Reset Your Password",
@@ -203,6 +204,13 @@
     "available_soon" : "This feature will be available soon!",
     "error_processing" : "An error occurred while processing your request",
     "accept_terms_and_condition" : "To sign up you have to accept Terms and Conditions",
+    "form" : {
+      "valid_email" : "Please enter a valid email",
+      "valid_password" : "Please enter a valid password",
+      "valid_name" : "Please enter a valid name",
+      "valid_project_name" : "Please enter a valid project name",
+      "valid" : "Please enter a valid $name"
+    },
     "projects": {
       "fetching_project": "An error occurred while fetching your projects.",
       "creating_project": "An error occurred while creating a new project",
