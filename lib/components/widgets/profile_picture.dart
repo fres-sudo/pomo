@@ -15,8 +15,9 @@ class ProfilePicture extends StatelessWidget {
     return context.watch<AuthCubit>().state.maybeWhen(
         authenticated: (user) {
           if (user.avatar == null) {
-            return const CircleAvatar(
-              backgroundImage: AssetImage(
+            return  CircleAvatar(
+              radius: width / 2,
+              backgroundImage: const AssetImage(
                   "assets/images/propic-placeholder.jpg"),
             );
           } else {

@@ -17,3 +17,11 @@ class GenericError extends LocalizedError {
   @override
   int get hashCode => runtimeType.hashCode;
 }
+
+class ErrorProcessing extends LocalizedError {
+  @override
+  String localizedString(BuildContext context) {
+    return context.t.errors.error_processing;
+  }
+
+}

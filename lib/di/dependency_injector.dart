@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pine/pine.dart';
+import 'package:pomo/blocs/recover_password/recover_password_bloc.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/blocs/stats/stats_bloc.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';

@@ -73,6 +73,7 @@
   "profile": {
     "title": "Profilo",
     "account": "Account",
+    "my_profile" : "Il mio profilo",
     "settings": {
       "general": {
         "title": "Generali",
@@ -94,7 +95,8 @@
       },
       "about_us": {
         "title": "About us",
-        "privacy_policy": "Privacy Policy"
+        "privacy_policy": "Privacy Policy",
+        "find_out_more" : "Find out more"
       },
       "logout": {
         "title": "Esci",
@@ -184,10 +186,13 @@
       "change_password" : "Crea il tuo scudo",
       "description_change_password" : "Crea una nuova password robusta per mantenere sicuro il tuo mondo digitale e proteggere le tue informazioni. La tua fortezza, le tue regole.",
       "new_password" : "Nuova password",
-      "confirm_password" : "Conferma la nuova password"
+      "confirm_password" : "Conferma la nuova password",
+      "success": {
+        "email_sent" : "E' stata inviata correttamente l'email, perfavore controlla anche gli SPAM",
+        "success_recover" : "La tua password è stata reimpostata con successo, prosegui facendo il login"
+      }
     }
   },
-
   "errors": {
     "general_error": "Si è verificato un errore inaspettato.",
     "please_restart": "Si prega di riavviare l'applicazione.",
@@ -196,6 +201,8 @@
     "due_date_before_today" : "La data di fine non può essere nel passato.",
     "sorry" : "Perdonaci.",
     "available_soon" : "Questa feature sarà disponibile presto!",
+    "error_processing" : "Si è verificato un errore processando la tua richiesta, riprova più tardi",
+    "accept_terms_and_condition" : "Per iscriverti devi accettare i Termini e le Condizioni",
     "projects": {
       "fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
       "creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",
@@ -220,13 +227,21 @@
     "login" : {
       "general_error" : "Si è verificato un errore durante l'accesso.",
       "wrong_password" : "Hai inserito la password sbagliata.",
-      "user_not_existing" : "Questa email non è associata a nessun utente."
+      "user_not_existing" : "Questa email non è associata a nessun utente.",
+      "email_not_verified" : "L'email associata a questo account non è stata verificata, te ne abbiamo mandata un'altra, controlla la tua casella postale!"
     },
     "register" : {
       "general_error" : "Si è verificato un errore durante la registrazione.",
       "email_already_associated" : "Questa email è già associata a un account.",
       "username_already_in_use" : "Questo useraname è già in uso.",
       "invalid_password" : "La password inserita non è valida."
+    },
+    "forgot_password" : {
+      "forgot_password_email_error" : "Si è verificato un errore durante l'invio della email di recupero",
+      "verify_token_invalid_error" : "Il codice OTP inserito non è valido o è scaduto",
+      "verify_token_error" : "Si è verificato un errore durante il controllo della validità del codice OTP",
+      "reset_password_error" : "Si è verificato un errore durante il reset della password",
+      "reset_password_not_match_error" : "Le due password non coincidono"
     }
   },
   "week_days" : {

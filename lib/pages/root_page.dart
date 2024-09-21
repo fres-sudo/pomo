@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pomo/blocs/project/project_bloc.dart';
 import 'package:pomo/blocs/task/task_bloc.dart';
+import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 
@@ -109,15 +110,9 @@ class _RootPageState extends State<RootPage> {
                             ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                       ), label: t.stats.title),
                   BottomNavigationBarItem(
-                      icon: context.read<AuthCubit>().state.maybeWhen(
-                          authenticated: (user) => user.avatar == null
-                              ? const CircleAvatar(
-                                  backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
-                                )
-                              : ClipOval(child: SizedBox(height: 24, width: 24, child: FancyShimmerImage(imageUrl: user.avatar!))),
-                          orElse: () => const CircleAvatar(
-                                backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
-                              )), label: t.profile.title),
+                      icon: const ProfilePicture(
+                        width: 24,
+                      ), label: t.profile.title),
                 ],
               ),
             ),

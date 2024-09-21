@@ -1,6 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
+import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
+import 'package:pomo/services/network/requests/reset_password/reset_password_request.dart';
+import 'package:pomo/services/network/requests/verify_token/verify_token_request.dart';
+
 import '../constants/constants.dart';
 import '../models/user/user.dart';
 import '../services/network/jto/user/user_jto.dart';
@@ -15,11 +19,13 @@ abstract class AuthenticationRepository {
     required String password,
   });
 
-  Future<User> signUp(
-      {required String username,
-      required String email,
-      required String password,
-      required String confirmPassword});
+  Future<User> signUp({required String username, required String email, required String password, required String confirmPassword});
+
+  Future<String> forgotPassword({required String email});
+
+  Future<String> verifyToken({required String token, required String email});
+
+  Future<String> resetPassword({required String email, required String token, required String newPassword, required String confirmNewPassword});
 
   Future<void> signOut();
 
@@ -47,44 +53,37 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    try {
       final request = SignInRequest(email: email, password: password);
-
       final response = await authenticationService.signIn(request);
 
-      final user = userMapper.fromDTO(response);
+    final user = userMapper.fromDTO(response);
 
-      await secureStorage.write(
-        key: 'user_data',
-        value: userStringMapper.from(user),
-      );
+    await secureStorage.write(
+      key: 'user_data',
+      value: userStringMapper.from(user),
+    );
 
-      return user;
-    } catch (error) {
-      logger.e('Error signing in: $error');
-      rethrow;
-    }
+    return user;
   }
 
   @override
-  Future<User> signUp(
-      {required String username,
-      required String email,
-      required String password,
-      required String confirmPassword}) async {
-      final response = await authenticationService.signUp(
-        SignUpRequest(
-          username: username,
-          email: email,
-          password: password,
-          passwordConfirmation: password,
-        ),
-      );
+  Future<User> signUp({required String username, required String email, required String password, required String confirmPassword}) async {
+    final response = await authenticationService.signUp(
+      SignUpRequest(
+        username: username,
+        email: email,
+        password: password,
+        passwordConfirmation: password,
+      ),
+    );
+    final user = userMapper.fromDTO(response);
+    return user;
+  }
 
-      final user = userMapper.fromDTO(response);
-
-      return user;
-
+  @override
+  Future<String> forgotPassword({required String email}) async {
+    final result = await authenticationService.forgotPassword(ForgotPasswordRequest(email: email));
+    return result;
   }
 
   @override
@@ -93,11 +92,23 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<User?> get currentUser async {
     final json = await secureStorage.read(key: 'user_data');
-
     if (json != null) {
       return userStringMapper.to(json);
     }
-
     return null;
+  }
+
+  @override
+  Future<String> resetPassword(
+      {required String email, required String token, required String newPassword, required String confirmNewPassword}) async {
+    final result = await authenticationService.resetPassword(
+        token, ResetPasswordRequest(email: email, newPassword: newPassword, confirmNewPassword: confirmNewPassword));
+    return result;
+  }
+
+  @override
+  Future<String> verifyToken({required String token, required String email}) async {
+    final result = await authenticationService.verifyToken(VerifyTokenRequest(email: email, token: token));
+    return result;
   }
 }

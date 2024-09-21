@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
@@ -11,7 +12,6 @@ import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 
-import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import '../../i18n/strings.g.dart';
@@ -42,13 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        BackIconButton(onPress: context.router.maybePop),
-                        Gap.SM,
-                        Text(t.profile.account, style: kSerzif(context)),
-                      ],
-                    ),
+                    Text(t.profile.title, style: kSerzif(context)),
                     Gap.MD,
                     InkWell(
                       borderRadius: BorderRadius.circular(16),
@@ -169,6 +163,27 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               t.profile.settings.about_us.privacy_policy,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const Icon(Icons.chevron_right_rounded)
+                          ],
+                        )),
+                    Gap.MD,
+                    InkWell(
+                        onTap: () async {
+                          const url = 'https://pomo.fres.space/about';
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              t.profile.settings.about_us.find_out_more,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Icon(Icons.chevron_right_rounded)

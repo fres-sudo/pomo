@@ -18,6 +18,9 @@ final List<BlocProvider> _blocs = [
       authenticationRepository: context.read(),
     )..checkAuthentication(),
   ),
+  BlocProvider<RecoverPasswordBloc>(
+    create: (context) => RecoverPasswordBloc(context.read()),
+  ),
   BlocProvider<TimerCubit>(
     create: (context) => TimerCubit(),
   ),
@@ -39,4 +42,5 @@ final List<BlocProvider> _blocs = [
   BlocProvider<FilterProjectCubit>(
     create: (_) => FilterProjectCubit(),
   ),
+
 ];

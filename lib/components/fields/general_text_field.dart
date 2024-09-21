@@ -29,7 +29,6 @@ class GeneralFieldState extends State<GeneralField> {
         hintText: widget.hintText,
       ),
       style: Theme.of(context).textTheme.titleMedium,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }
