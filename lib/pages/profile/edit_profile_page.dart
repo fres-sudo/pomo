@@ -196,7 +196,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       style: Theme.of(context).textTheme.titleMedium,
                       validator: (value) {
                         if (value == null || value.isEmpty || value.length < 3) {
-                          return 'Please enter a valid name';
+                          return t.errors.form.valid_name;
                         }
                         return null;
                       },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../constants/colors.dart';
+import '../../i18n/strings.g.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({super.key, required this.controller, this.focusNode});
@@ -46,7 +47,7 @@ class _PasswordFieldState extends State<PasswordField> {
         if (value == null ||
             value.isEmpty ||
             value.length < 8) {
-          return 'Please enter a valid password';
+          return t.errors.form.valid_password;
         }
         return null;
       },
