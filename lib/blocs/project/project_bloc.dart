@@ -27,6 +27,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<GetProjectsByUserProjectEvent>(_onGetProjectsByUser);
     on<CreateProjectProjectEvent>(_onCreateProject);
     on<UploadImageCoverProjectEvent>(_onUploadProjectImageCover);
+    on<DeleteImageCoverProjectEvent>(_onDeleteProjectImageCover);
     on<UpdateProjectByIdProjectEvent>(_onUpdateProjectById);
     on<UpdateProjectsTasksProjectEvent>(_onUpdateProjectsTasks);
     on<DeleteProjectByIdProjectEvent>(_onDeleteProjectById);
@@ -54,14 +55,16 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   /// Method used to add the [DeleteProjectByIdProjectEvent] event
   void deleteProjectById({required String id}) => add(ProjectEvent.deleteProjectById(id: id));
 
+  void deleteProjectImageCover({required String id}) => add(ProjectEvent.deleteProjectImageCover(id: id));
+
   FutureOr<void> _onGetProjectsByUser(
     GetProjectsByUserProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try {
       final projects = await projectRepository.getProjectsByUser(userId: event.id);
-      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.read));
+      emit(state.copyWith(isLoading: false, error: null, projects: projects, operation: ProjectOperation.read));
     } catch (_) {
       emit(state.copyWith(isLoading: false, projects: [], error: FetchingProjectsError()));
     }
@@ -71,12 +74,12 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     CreateProjectProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try {
       final project = await projectRepository.createProject(project: event.project);
       final updatedProjects = List<Project>.from(state.projects)..add(project);
       emit(
-        state.copyWith(isLoading: false, projects: updatedProjects, operation: ProjectOperation.create),
+        state.copyWith(isLoading: false, error: null, projects: updatedProjects, operation: ProjectOperation.create),
       );
     } catch (_) {
       emit(state.copyWith(isLoading: false, error: CreatingProjectsError()));
@@ -87,13 +90,29 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     UploadImageCoverProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try {
       final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
       final projects = List<Project>.from(state.projects);
       projects.removeWhere((element) => element.id == project.id);
       projects.add(project);
-      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.update));
+      emit(state.copyWith(isLoading: false, error: null, projects: projects, operation: ProjectOperation.update));
+    } catch (_) {
+      emit(state.copyWith(isLoading: false, projects: [], error: UpdatingProjectsError()));
+    }
+  }
+
+    FutureOr<void> _onDeleteProjectImageCover(
+    DeleteImageCoverProjectEvent event,
+    Emitter<ProjectState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, error: null));
+    try {
+      final project = await projectRepository.deleteProjectImageCover(id: event.id);
+      final projects = List<Project>.from(state.projects);
+      projects.removeWhere((element) => element.id == project.id);
+      projects.add(project);
+      emit(state.copyWith(isLoading: false, error: null, projects: projects, operation: ProjectOperation.update));
     } catch (_) {
       emit(state.copyWith(isLoading: false, projects: [], error: UpdatingProjectsError()));
     }
@@ -121,13 +140,13 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     UpdateProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try {
       final project = await projectRepository.updateProjectById(id: event.id, project: event.project);
       final projects = List<Project>.from(state.projects);
       projects.removeWhere((element) => element.id == project.id);
       projects.add(project);
-      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.update));
+      emit(state.copyWith(isLoading: false, error: null, projects: projects, operation: ProjectOperation.update));
     } catch (_) {
       emit(state.copyWith(isLoading: false, projects: [], error: UpdatingProjectsError()));
     }
@@ -137,12 +156,12 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     DeleteProjectByIdProjectEvent event,
     Emitter<ProjectState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try {
       final project = await projectRepository.deleteProjectById(id: event.id);
       final projects = List<Project>.from(state.projects);
       projects.removeWhere((element) => element.id == project.id);
-      emit(state.copyWith(isLoading: false, projects: projects, operation: ProjectOperation.delete));
+      emit(state.copyWith(isLoading: false, error: null, projects: projects, operation: ProjectOperation.delete));
     } catch (_) {
       emit(state.copyWith(isLoading: false, projects: [], error: DeletingProjectsError()));
     }

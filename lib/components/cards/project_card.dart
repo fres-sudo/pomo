@@ -71,6 +71,7 @@ class ProjectCard extends StatelessWidget {
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: Container(
                         height: 100,
+                        width: MediaQuery.sizeOf(context).width,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                           image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
@@ -82,6 +83,7 @@ class ProjectCard extends StatelessWidget {
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: SizedBox(
                         height: 100,
+                        width: MediaQuery.sizeOf(context).width,
                         child: FancyShimmerImage(
                           imageUrl: project.imageCover!,
                           errorWidget: Image.asset("assets/images/project-placeholder.png", fit: BoxFit.cover),

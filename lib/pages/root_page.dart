@@ -112,6 +112,7 @@ class _RootPageState extends State<RootPage> {
                   BottomNavigationBarItem(
                       icon: const ProfilePicture(
                         width: 24,
+                        height: 24,
                       ), label: t.profile.title),
                 ],
               ),

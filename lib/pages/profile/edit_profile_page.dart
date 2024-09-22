@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
@@ -16,6 +15,7 @@ import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 
 import '../../components/fancy_shimmer/fancy_shimmer_image.dart';
+import '../../components/fields/debounced_user_search.dart';
 import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
@@ -56,6 +56,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       await storage.write(key: "user_data", value: json.encode(userData));
     }
+  }
+
+  @override
+  void initState() {
+    _usernameTextController.text = context.read<AuthCubit>().state.maybeWhen(
+        authenticated: (user) => user.username,
+        orElse: () => ""
+    );
+    super.initState();
   }
 
   @override
@@ -100,7 +109,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         if (_usernameTextController.text == "" && _usernameTextController.text.length < 4) {
                           onInvalidInput(context);
                         } else {
-                          image != null ? context.read<UserBloc>().updateUserPhoto(id: state.user?.id ?? "", photo: File(image!.path)) : null;
+                          if(image != null){
+                            context.read<UserBloc>().updateUserPhoto(id: state.user?.id ?? "", photo: File(image!.path));
+                          } else {
+                            if(state.user != null){
+                              context.read<UserBloc>().updateUser(id: state.user?.id ?? "", user: state.user!.copyWith(
+                                username: _usernameTextController.text
+                              ));
+                            }
+                          }
                         }
                       },
                       child: Text(t.general.update,
@@ -181,25 +198,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Name", style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
-                    TextFormField(
-                      keyboardType: TextInputType.name,
+                    DebouncedUserSearch(
                       controller: _usernameTextController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                        hintText: "Username",
-                      ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                      ],
-                      style: Theme.of(context).textTheme.titleMedium,
-                      validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 3) {
-                          return t.errors.form.valid_name;
-                        }
-                        return null;
-                      },
                     ),
                     Gap.MD,
                     Text("Email", style: Theme.of(context).textTheme.titleMedium),

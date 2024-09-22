@@ -36,11 +36,10 @@ class OAuthRepositoryImpl implements OAuthRepository {
 
   @override
   Future<User> signInWithApple() async {
-    try {
       final googleAccount = await oAuthService.signInWithGoogle();
       final response = await authenticationService.retrieveGoogleUser(
           OAuthRequest(
-              username: "guest-${DateTime.now().millisecondsSinceEpoch.toString()}",
+              username: "guest-apple-${DateTime.now().millisecondsSinceEpoch.toString()}",
               email: googleAccount?.email ?? "",
               avatar: googleAccount?.photoUrl
           ));
@@ -51,19 +50,14 @@ class OAuthRepositoryImpl implements OAuthRepository {
       );
 
       return user;
-    } catch (error) {
-      logger.e('Error signing in: $error');
-      throw Exception('Sign-in failed');
-    }
   }
 
   @override
   Future<User> signInWithGoogle() async {
-    try {
       final googleAccount = await oAuthService.signInWithGoogle();
       final response = await authenticationService.retrieveGoogleUser(
           OAuthRequest(
-              username: googleAccount?.displayName ?? "",
+              username: "guest-pomo-${DateTime.now().millisecondsSinceEpoch.toString()}",
               email: googleAccount?.email ?? "",
               avatar: googleAccount?.photoUrl,
               providerUserId: googleAccount?.id ?? '',
@@ -75,10 +69,6 @@ class OAuthRepositoryImpl implements OAuthRepository {
       );
 
       return user;
-    } catch (error) {
-      logger.e('Error signing in: $error');
-      throw Exception('Sign-in failed');
-    }
   }
 
 }
