@@ -19,11 +19,14 @@ abstract class UserService {
   @PATCH('/users/{userId}')
   Future<UserJTO> updateUser(@Path('userId') String id ,@Body() UserJTO user);
 
- @DELETE('/users/{id}')
-  Future<UserJTO> deleteUser(@Path('id') String id);
+  @DELETE('/users/{userId}')
+  Future<UserJTO> deleteUser(@Path('userId') String id);
 
   @PUT('/users/uploadPhoto/{id}')
   @MultiPart()
   Future<UserJTO> updateUserPhoto(@Path('id') String id, @Part() File photo);
+
+  @DELETE("/users/image/{userId}")
+  Future<UserJTO> deleteUserPhoto(@Path('userId') String userId);
 
 }

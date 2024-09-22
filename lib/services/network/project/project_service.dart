@@ -17,9 +17,12 @@ abstract class ProjectService {
 
   @POST('/projects')
   Future<ProjectJTO> createProject(@Body() ProjectJTO body);
+
   @PUT('/projects/image/{projectId}')
   @MultiPart()
   Future<ProjectJTO> uploadProjectImageCover(@Path('projectId') String id, @Part() File image,);
+  @DELETE('/projects/image/{projectId}')
+  Future<ProjectJTO> deleteProjectImageCover(@Path('projectId') String id,);
 
   @PATCH('/projects/{id}')
   Future<ProjectJTO> updateProjectById(@Path('id') String id, @Body() ProjectJTO body);

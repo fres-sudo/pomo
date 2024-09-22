@@ -25,6 +25,10 @@ abstract class ProjectRepository {
     required File imageCover,
   });
 
+  Future<Project> deleteProjectImageCover({
+    required String id,
+  });
+
   Future<Project> getProjectsById({
     required String id,
   });
@@ -70,115 +74,69 @@ class ProjectRepositoryImpl implements ProjectRepository {
   @override
   Future<Project> addTaskToProject(
       {required String projectId, required Task task}) async {
-    try {
       final project = await projectService.addTaskToProject(
           projectId, taskMapper.toDTO(task));
-
       return projectMapper.fromDTO(project);
-    } catch (error) {
-      logger.e('Error adding task to project in: $error');
-      throw Exception('Adding failed');
-    }
   }
 
   @override
   Future<Project> createProject({required Project project}) async {
-    try {
       final newProject =
       await projectService.createProject(projectMapper.toDTO(project));
-
       return projectMapper.fromDTO(newProject);
-    } catch (error, stack) {
-      logger.e('Error creating new project in: $error. The stack is: \n $stack ');
-      throw Exception('Creation failed');
-    }
   }
 
   @override
   Future<Project> uploadProjectImageCover({required String id, required File imageCover}) async {
-    try {
       final newProject =
       await projectService.uploadProjectImageCover(id, imageCover);
-
       return projectMapper.fromDTO(newProject);
-    } catch (error, stack) {
-      logger.e('Error creating new project in: $error. The stack is: \n $stack ');
-      throw Exception('Creation failed');
-    }
+  }
+
+  @override
+  Future<Project> deleteProjectImageCover({required String id}) async {
+      final project =
+      await projectService.deleteProjectImageCover(id);
+      return projectMapper.fromDTO(project);
   }
 
   @override
   Future<Project> deleteProjectById({required String id}) async {
-    try {
       final project = await projectService.deleteProjectById(id);
       return projectMapper.fromDTO(project);
-
-    } catch (error, stack) {
-      logger.e('Error deleting project in: $error. The stack is: \n $stack');
-      throw Exception('Deleting failed');
-    }
   }
 
   @override
   Future<void> deleteTaskFromProject(
       {required String projectId, required String taskId}) async {
-    try {
       await projectService.deleteTaskFromProject(projectId, taskId);
-    } catch (error) {
-      logger.e('Error deleting task from project in: $error');
-      throw Exception('Deleting task failed');
-    }
   }
 
   @override
   Future<Project> getProjectsById({required String id}) async {
-    try {
       final project = await projectService.getProjectsByUser(id);
-
       return projectMapper.fromDTO(project.first);
-    } catch (error) {
-      logger.e('Error fetching project in: $error');
-      throw Exception('Getter failed');
-    }
   }
 
   @override
   Future<List<Project>> getProjectsByUser({required String userId}) async {
-    try {
       final projects = await projectService.getProjectsByUser(userId);
-
       return projects.map((p) => projectMapper.fromDTO(p)).toList();
-    } catch (error, stack) {
-      logger.e('Error fetching projects in: $error \n the stack was : $stack');
-      throw Exception('Getter failed');
-    }
   }
 
   @override
   Future<Project> updateProjectById(
       {required String id, required Project project}) async {
-    try {
       final updatedProject = await projectService.updateProjectById(
           id, projectMapper.toDTO(project));
-
       return projectMapper.fromDTO(updatedProject);
-    } catch (error) {
-      logger.e('Error updating project in: $error');
-      throw Exception('Update failed');
-    }
   }
 
   @override
   Future<Project> updateTaskInProject(
       {required String projectId, required String taskId, required Task task}) async {
-    try {
       final updatedProject = await projectService.updateTaskInProject(
           projectId, taskId,  taskMapper.toDTO(task));
-
       return projectMapper.fromDTO(updatedProject);
-    } catch (error) {
-      logger.e('Error updating task in project in: $error');
-      throw Exception('Update failed');
-    }
   }
 }

@@ -28,8 +28,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUserUserEvent>(_onUpdateUser);
     on<UpdateUserPhotoUserEvent>(_onUpdateUserPhoto);
     on<DeleteUserUserEvent>(_onDeleteUser);
+    on<DeleteUserPhotoUserEvent>(_onDeleteUserPhoto);
     on<SearchUsernameUserEvent>(_onSearchByUsername);
-
   }
   
   /// Method used to add the [UpdateUserUserEvent] event
@@ -37,12 +37,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void deleteUser({required String id}) => add(UserEvent.deleteUser(id: id));
   void searchUsername({required String username}) => add(UserEvent.searchUsername(username:username));
   void updateUserPhoto({required String id, required File photo}) => add(UserEvent.updateUserPhoto(id: id, photo: photo));
+  void deleteUserPhoto ({required String userId}) => add(UserEvent.deleteUserPhoto(userId: userId));
 
   FutureOr<void> _onUpdateUser(
     UpdateUserUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null,));
     try{
       final user = await userRepository.updateUser(user: event.user, id: event.id,);
       emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updated));
@@ -55,7 +56,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     DeleteUserUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try{
       await userRepository.deleteUser(id: event.id,);
       emit(state.copyWith( isLoading: false, error: null, operation: UserOperation.deleted));
@@ -68,9 +69,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UpdateUserPhotoUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try{
       final user = await userRepository.updateUserPhoto(id: event.id, photo: event.photo);
+      emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updatedImage));
+    }catch(_){
+      emit(state.copyWith(isLoading: false, error: UpdatingUserImageError()));
+    }
+  }
+
+  FutureOr<void> _onDeleteUserPhoto(
+    DeleteUserPhotoUserEvent event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, error: null));
+    try{
+      final user = await userRepository.deleteUserPhoto(userId: event.userId);
       emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updatedImage));
     }catch(_){
       emit(state.copyWith(isLoading: false, error: UpdatingUserImageError()));
@@ -81,7 +95,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     SearchUsernameUserEvent event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try{
       final username = await userRepository.searchUsername(username: event.username);
       emit(state.copyWith( isLoading: false, error: null, operation: UserOperation.read, searchedUsername: username));
@@ -89,33 +103,4 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(isLoading: false, error: SearchingUsernameError()));
     }
   }
-/*
-  FutureOr<void> _onForgotPassword(
-    ForgotPasswordUserEvent event,
-    Emitter<UserState> emit,
-  ) async {
-    emit(const UserState.fetchingOTP());
-    try{
-      final response = await userRepository.forgotPassword(email : event.email);
-      _otp = response.resetOTP;
-      _resetToken = response.resetToken;
-      emit(UserState.fetchedOTP(response));
-    }catch(_){
-      emit(const UserState.errorFetchingOTP());
-    }
-  }
-
-  FutureOr<void> _onRecoverPassword(
-    RecoverPasswordUserEvent event,
-    Emitter<UserState> emit,
-  ) async {
-    emit(const UserState.recovering());
-    try{
-      await userRepository.recoverPassword(token : event.token, password: event.password, passwordConfirm: event.passwordConfirm);
-      emit(const UserState.recovered());
-    }catch(_){
-      emit(const UserState.errorRecovering());
-    }
-  }
-  */
 }

@@ -9,6 +9,8 @@ class ProjectEvent with _$ProjectEvent {
 
   const factory ProjectEvent.uploadProjectImageCover({required String id, required File imageCover}) = UploadImageCoverProjectEvent;
 
+  const factory ProjectEvent.deleteProjectImageCover({required String id}) = DeleteImageCoverProjectEvent;
+
   const factory ProjectEvent.getProjectById({required String id}) = GetProjectByIdProjectEvent;
   
   const factory ProjectEvent.updateProjectById({required String id, required Project project}) = UpdateProjectByIdProjectEvent;
