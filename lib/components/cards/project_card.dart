@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_essentials_kit/extensions/commons.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
@@ -39,13 +41,15 @@ class ProjectCard extends StatelessWidget {
   final Project project;
 
   ProjectStatus _getStatus(Project project) {
-    return ProjectStatus.progress;
     int completedTask = project.tasks?.map((task) => task.completedAt != null).toList().length ?? 0;
     int totalTasks = project.tasks?.length ?? 0;
-    if (completedTask == totalTasks) {
+    if (project.completedAt != null) {
       return ProjectStatus.completed;
     }
-    return completedTask < totalTasks && project.completedAt == null ? ProjectStatus.expired : ProjectStatus.progress;
+    if(!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks){
+      return ProjectStatus.expired;
+    }
+   return ProjectStatus.progress;
  }
 
   @override

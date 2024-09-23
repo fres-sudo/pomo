@@ -32,7 +32,7 @@ onInvalidInput(BuildContext context, {bool isAlert = false, String? text}) {
               .then((_) {
               _isSnackBarVisible = false;
             })
-          : showDialog(context: context, builder: (BuildContext context) => InvalidInputDialog(text: text));
+          : showDialog(context: context, builder: (BuildContext context) => InvalidInputDialog(text: text)).then((_) => _isSnackBarVisible = false);
     });
   }
 }
@@ -77,6 +77,7 @@ onSuccessState(
 }
 
 onAvailableSoon(BuildContext context) {
+  print(_isSnackBarVisible);
   if (!_isSnackBarVisible) {
     _isSnackBarVisible = true;
 

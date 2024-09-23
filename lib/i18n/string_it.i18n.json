@@ -55,6 +55,7 @@
     "any_project" : "nessun progetto",
     "in_progress" : "In corso",
     "already_done" : "Completate",
+    "ending_today" : "In scadenza oggi",
     "create": {
       "title": "Nuovo Progetto",
       "add_cover": "Aggiungi copertina"
@@ -96,7 +97,8 @@
       "about_us": {
         "title": "About us",
         "privacy_policy": "Privacy Policy",
-        "find_out_more" : "Find out more"
+        "terms_and_conditions" : "Termini e Condizioni",
+        "find_out_more" : "Scopri di più"
       },
       "logout": {
         "title": "Esci",

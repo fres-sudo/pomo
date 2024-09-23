@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,11 +108,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         if (_usernameTextController.text == "" && _usernameTextController.text.length < 4) {
                           onInvalidInput(context);
                         } else {
+                          final user =  context.read<AuthCubit>().state.whenOrNull(
+                            authenticated: (user) => user
+                          );
                           if(image != null){
                             context.read<UserBloc>().updateUserPhoto(id: state.user?.id ?? "", photo: File(image!.path));
                           } else {
-                            if(state.user != null){
-                              context.read<UserBloc>().updateUser(id: state.user?.id ?? "", user: state.user!.copyWith(
+                            if(user != null){
+                              context.read<UserBloc>().updateUser(id: user.id, user: user.copyWith(
                                 username: _usernameTextController.text
                               ));
                             }
@@ -160,6 +162,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               radius: 75,
                               backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
                             )),
+                    if(context.read<AuthCubit>().state.maybeWhen(
+                        authenticated: (user) => user.avatar?.contains("s3") ?? true,
+                        orElse: () => false))
                     GestureDetector(
                       onTap: () async {
                         final ImagePicker picker = ImagePicker();

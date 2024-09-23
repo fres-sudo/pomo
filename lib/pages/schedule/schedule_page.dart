@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/components/widgets/dotted_divider.dart';
+import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/enum.dart';
 import 'package:pomo/constants/styles.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:pomo/pages/projects/widget/task_bottom_sheet.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../blocs/project/project_bloc.dart';
 import '../../blocs/task/task_bloc.dart';
 import '../../components/cards/task_card.dart';
 import '../../constants/text.dart';
@@ -28,19 +30,19 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-
   void fetchScheduledTask(BuildContext context) {
     final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "oresle");
     context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) => state.whenOrNull(
-        authenticated: (user) =>
-            context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
+        authenticated: (user) => {
+          context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
+          context.read<ProjectBloc>().getProjectsByUser(userId: user.id)
+        },
       ),
       child: BlocConsumer<TaskBloc, TaskState>(
         listener: (context, state) {
@@ -64,7 +66,9 @@ class _SchedulePageState extends State<SchedulePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Skeletonizer(
-                      enabled: context.watch<AuthCubit>().state.maybeWhen(authenticated: (_) => false, orElse: () => true) && state.isLoading,
+                      enabled: context.watch<AuthCubit>().state.maybeWhen(authenticated: (_) => false, orElse: () => true) &&
+                          state.isLoading &&
+                          context.watch<ProjectBloc>().state.isLoading,
                       child: BlocBuilder<ScheduleCubit, ScheduleState>(
                         builder: (context, scheduleState) {
                           return Column(
@@ -113,6 +117,56 @@ class _SchedulePageState extends State<SchedulePage> {
                               Gap.XS,
                               const DottedDivider(),
                               Gap.SM,
+                              BlocBuilder<ProjectBloc, ProjectState>(
+                                builder: (context, projectState) {
+                                  final endingProjects =
+                                      projectState.projects.where((p) => isSameDay(p.endDate, scheduleState.focusedDay)).toList(growable: false);
+                                  return endingProjects.isNotEmpty
+                                      ? Skeletonizer(
+                                        enabled: projectState.isLoading,
+                                        child: Column(
+                                            children: [
+                                              Container(
+                                                height: 35,
+                                                decoration:
+                                                    BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
+                                                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.playlist_add_check_rounded,
+                                                      color: Colors.white,
+                                                    ),
+                                                    Gap.SM_H,
+                                                    Text(
+                                                      "${t.projects.ending_today}: ",
+                                                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        endingProjects.map((p) => p.name).toList(growable: false).join(', '),
+                                                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                                          color: Colors.white,
+                                                        ),
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Gap.XS,
+                                              const DottedDivider(),
+                                              Gap.XS,
+                                            ],
+                                          ),
+                                      )
+                                      : const SizedBox();
+                                },
+                              ),
                               Expanded(
                                 child: ListView.builder(
                                     shrinkWrap: true,
@@ -133,4 +187,3 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 }
-

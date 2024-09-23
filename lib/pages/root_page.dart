@@ -64,8 +64,6 @@ class _RootPageState extends State<RootPage> {
                   final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
                   if (value == 0) {
                     context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
-                  }
-                  if (value == 1) {
                     context.read<ProjectBloc>().getProjectsByUser(userId: userId);
                   }
                 },

@@ -25,25 +25,11 @@ class TaskView extends StatelessWidget {
     return BlocConsumer<TaskBloc, TaskState>(listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
       return switch(state.operation){
+        TaskOperation.create => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
         TaskOperation.update => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
         TaskOperation.delete => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
         _ => null
       };
-      switch (state.operation) {
-        case TaskOperation.update:
-          () {
-            onSuccessState(context, "updated your task");
-            context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks);
-          return;
-          };
-        case TaskOperation.delete:
-              () {
-                onSuccessState(context, "deleted your task");
-                context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks);
-              return;};
-        default:
-          return;
-      }
     }, builder: (context, state) {
 
       List<Task> completedTasks = state.tasks
