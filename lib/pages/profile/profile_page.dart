@@ -1,16 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
@@ -26,12 +24,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) => state.whenOrNull(
-          notAuthenticated: () => context.router.replace(const RootRoute())),
+      listener: (context, state) => state.whenOrNull(notAuthenticated: () => context.router.replace(const RootRoute())),
       builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -58,7 +54,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         child: Row(children: [
                           const ProfilePicture(height: 56, width: 56),
-                          const SizedBox(width: 12,),
+                          const SizedBox(
+                            width: 12,
+                          ),
                           BlocBuilder<AuthCubit, AuthState>(
                             builder: (context, state) {
                               return Column(
@@ -67,8 +65,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Text(state.maybeWhen(authenticated: (user) => "@${user.username}", orElse: () => "??"),
                                       style: Theme.of(context).textTheme.titleMedium),
                                   Text(
-                                    state.maybeWhen(authenticated: (user) => "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}", orElse: () => "??"),
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                                      state.maybeWhen(
+                                          authenticated: (user) => "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}",
+                                          orElse: () => "??"),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                                 ],
                               );
                             },
@@ -80,7 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
                     ),
-                    Text(t.profile.settings.general.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                    Text(t.profile.settings.general.title,
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                     Gap.SM,
                     InkWell(
                         onTap: () {
@@ -94,10 +95,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               t.profile.settings.general.timer_options,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                           const Icon(Icons.chevron_right_rounded)
+                            const Icon(Icons.chevron_right_rounded)
                           ],
                         )),
-                    Gap.XS,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -119,9 +119,25 @@ class _ProfilePageState extends State<ProfilePage> {
                         })
                       ],
                     ),
-                    Gap.XS,
                     InkWell(
-                        onTap: () => showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const LanguageBottomSheet()),
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Notification",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                            )
+                          ],
+                        )),
+                    Gap.SM,
+                    InkWell(
+                        onTap: () =>
+                            showModalBottomSheet(context: context, useRootNavigator: true, builder: (context) => const LanguageBottomSheet()),
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,26 +153,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Divider(),
                     ),
-                    Text(t.profile.settings.about_us.title, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                    Text(t.profile.settings.about_us.title,
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                     Gap.SM,
                     InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                             "Notification",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                            )
-                          ],
-                        )),
-                    Gap.MD,
-                    InkWell(
-                        onTap: () => context.router.push(const PrivacyPolicyRoute()),
+                        onTap: () async {
+                          const url = 'https://pomo.fres.space/privacy';
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,7 +176,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             const Icon(Icons.chevron_right_rounded)
                           ],
                         )),
-                    Gap.MD,
+                    Gap.SM,
+                    InkWell(
+                        onTap: () async {
+                          const url = 'https://pomo.fres.space/terms';
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              t.profile.settings.about_us.terms_and_conditions,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const Icon(Icons.chevron_right_rounded)
+                          ],
+                        )),
+                    Gap.SM,
                     InkWell(
                         onTap: () async {
                           const url = 'https://pomo.fres.space/about';
@@ -215,10 +244,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(20),
                         child: SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          child: Text(
-                              t.profile.settings.logout.title,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.error)
-                          ),
+                          child: Text(t.profile.settings.logout.title,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.error)),
                         )),
                   ],
                 ),

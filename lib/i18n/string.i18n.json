@@ -55,6 +55,7 @@
     "any_project" : "any project",
     "in_progress" : "In Progress",
     "already_done" : "Already Done",
+    "ending_today" : "Ending Today",
     "create": {
       "title": "New Project",
       "add_cover": "Add Cover"
@@ -88,6 +89,7 @@
       "about_us": {
         "title": "About us",
         "privacy_policy": "Privacy Policy",
+        "terms_and_conditions" : "Terms And Conditions",
         "find_out_more" : "Scopri di più"
       },
       "delete_account" : {

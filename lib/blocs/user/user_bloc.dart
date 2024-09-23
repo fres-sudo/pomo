@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pomo/error/users_error.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
-import 'package:pomo/services/network/response/forgot_pass/forgot_pass_response.dart';
 import 'dart:async';
 
 import '../../error/localized.dart';

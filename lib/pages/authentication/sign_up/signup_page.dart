@@ -8,6 +8,7 @@ import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
@@ -136,7 +137,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                           style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                         GestureDetector(
-                                          onTap: () => context.router.push(const PrivacyPolicyRoute()),
+                                          onTap: () async {
+                                            const url = 'https://pomo.fres.space/terms';
+                                            if (await canLaunchUrl(Uri.parse(url))) {
+                                              await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                                            } else {
+                                              throw 'Could not launch $url';
+                                            }
+                                          },
                                           child: Text(
                                             t.authentication.signup.terms_and_conditions,
                                             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
