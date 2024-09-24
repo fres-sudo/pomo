@@ -9,6 +9,7 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/enum.dart';
 import 'package:pomo/constants/styles.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/cubits/notification/notification_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 import 'package:pomo/pages/projects/widget/task_bottom_sheet.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -20,6 +21,7 @@ import '../../components/cards/task_card.dart';
 import '../../constants/text.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
+import '../../services/notification/notification_service.dart';
 
 @RoutePage()
 class SchedulePage extends StatefulWidget {
@@ -37,18 +39,46 @@ class _SchedulePageState extends State<SchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) => state.whenOrNull(
-        authenticated: (user) => {
-          context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
-          context.read<ProjectBloc>().getProjectsByUser(userId: user.id)
-        },
-      ),
-      child: BlocConsumer<TaskBloc, TaskState>(
-        listener: (context, state) {
-          context.read<ScheduleCubit>().setSelectedTasks(
-              tasks: state.tasks.where((t) => isSameDay(t.dueDate, context.read<ScheduleCubit>().state.selectedDay)).toList(growable: false));
-        },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) => state.whenOrNull(
+            authenticated: (user) => {
+              context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
+              context.read<ProjectBloc>().getProjectsByUser(userId: user.id)
+            },
+          ),
+        ),
+        BlocListener<ProjectBloc, ProjectState>(
+          listener: (context, state) {
+            for (final project in state.projects) {
+              if (project.completedAt != null) {
+                final notificationId = context.read<NotificationCubit>().state.scheduledNotifications[project.id];
+                if (notificationId != null) {
+                  NotificationService.cancelNotification(notificationId);
+                  context.read<NotificationCubit>().removeScheduledNotification(project.id ?? "");
+                }
+              }
+            }
+          },
+        ),
+        BlocListener<TaskBloc, TaskState>(
+          listener: (context, state) {
+            for (final task in state.tasks) {
+              if (task.completedAt != null) {
+                final notificationId = context.read<NotificationCubit>().state.scheduledNotifications[task.id];
+                if (notificationId != null) {
+                  NotificationService.cancelNotification(notificationId);
+                  context.read<NotificationCubit>().removeScheduledNotification(task.id ?? "");
+                }
+              }
+            }
+            context.read<ScheduleCubit>().setSelectedTasks(
+                tasks: state.tasks.where((t) => isSameDay(t.dueDate, context.read<ScheduleCubit>().state.selectedDay)).toList(growable: false));
+          },
+        )
+      ],
+      child: BlocBuilder<TaskBloc, TaskState>(
         builder: (context, state) {
           return Scaffold(
               floatingActionButton: CustomFloatingActionButton(
@@ -123,13 +153,12 @@ class _SchedulePageState extends State<SchedulePage> {
                                       projectState.projects.where((p) => isSameDay(p.endDate, scheduleState.focusedDay)).toList(growable: false);
                                   return endingProjects.isNotEmpty
                                       ? Skeletonizer(
-                                        enabled: projectState.isLoading,
-                                        child: Column(
+                                          enabled: projectState.isLoading,
+                                          child: Column(
                                             children: [
                                               Container(
                                                 height: 35,
-                                                decoration:
-                                                    BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
+                                                decoration: BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
                                                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -143,15 +172,15 @@ class _SchedulePageState extends State<SchedulePage> {
                                                     Text(
                                                       "${t.projects.ending_today}: ",
                                                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                                        color: Colors.white,
-                                                      ),
+                                                            color: Colors.white,
+                                                          ),
                                                     ),
                                                     Expanded(
                                                       child: Text(
                                                         endingProjects.map((p) => p.name).toList(growable: false).join(', '),
                                                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                                          color: Colors.white,
-                                                        ),
+                                                              color: Colors.white,
+                                                            ),
                                                         overflow: TextOverflow.ellipsis,
                                                       ),
                                                     )
@@ -163,7 +192,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                               Gap.XS,
                                             ],
                                           ),
-                                      )
+                                        )
                                       : const SizedBox();
                                 },
                               ),

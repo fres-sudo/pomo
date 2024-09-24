@@ -12,6 +12,7 @@ import 'package:pomo/models/task/task.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
 import 'package:pomo/pages/quick_session/views/quick_break_view.dart';
 import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
+import 'package:pomo/services/notification/notification_service.dart';
 
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/colors.dart';
@@ -106,7 +107,6 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                             final userId = context.read<AuthCubit>().state.maybeWhen(
                                 authenticated: (user) => user.id,
                                 orElse: () => "");
-                            print("USERID: ${userId}");
                             context.read<TaskBloc>().create(
                               task: Task(
                                 name: "${t.general.quick_session} • ${DateFormat("dd-MM", TranslationProvider.of(context).flutterLocale.languageCode).format(DateTime.now())}",
@@ -122,14 +122,7 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                             setState(() {
                               selectedMode = [false, true];
                             });
-                            const NotificationDetails notificationDetails = NotificationDetails();
-                            await flutterLocalNotificationsPlugin.show(
-                              0,
-                              'Great! 🎉',
-                              'You successfully completed your focus session, let\'s take a quick brake ☕️',
-                              notificationDetails,
-                              payload: 'item x',
-                            );
+                            await NotificationService.showInstantNotification("${t.notifications.instant.title} 🎉", "${t.notifications.instant.description} ☕️");
                           },
                         )
                             : QuickBreakView(

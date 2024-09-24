@@ -66,6 +66,9 @@ class _RootPageState extends State<RootPage> {
                     context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
                     context.read<ProjectBloc>().getProjectsByUser(userId: userId);
                   }
+                  if (value == 1 && tabsRouter.activeIndex == 1) {
+                    context.router.replace(const ProjectRoute());
+                  }
                 },
                 items: [
                   BottomNavigationBarItem(

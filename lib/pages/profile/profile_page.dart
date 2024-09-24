@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
@@ -120,13 +124,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          if (Platform.isAndroid) {
+                            const intent = AndroidIntent(
+                              action: 'android.settings.APP_NOTIFICATION_SETTINGS',
+                              arguments: <String, dynamic>{
+                                'android.provider.extra.APP_PACKAGE': 'com.yourpackage.appname',
+                              },
+                            );
+                            intent.launch();
+                          } else if (Platform.isIOS) {
+                            openAppSettings();
+                          }
+                        },
                         borderRadius: BorderRadius.circular(20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Notification",
+                              t.profile.settings.general.notifications,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Icon(
@@ -223,8 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Divider(),
                     ),
                     InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
+                        onTap: () => showModalBottomSheet(
                               context: context,
                               useRootNavigator: true,
                               builder: (BuildContext context) {
@@ -239,8 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   },
                                 );
                               },
-                              isDismissible: true);
-                        },
+                              isDismissible: true),
                         borderRadius: BorderRadius.circular(20),
                         child: SizedBox(
                           width: MediaQuery.sizeOf(context).width,

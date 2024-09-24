@@ -11,7 +11,7 @@ class CountDownTimer extends StatefulWidget {
   final Color lightShadow;
 
   const CountDownTimer({
-    Key? key,
+    super.key,
     required this.durationInMinutes,
     required this.onControllerCreated,
     required this.innerColor,
@@ -19,7 +19,7 @@ class CountDownTimer extends StatefulWidget {
     required this.middleColor,
     required this.darkShadow,
     required this.lightShadow,
-  }) : super(key: key);
+  });
 
   @override
   State<CountDownTimer> createState() => _CountDownTimerState();
