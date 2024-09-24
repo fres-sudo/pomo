@@ -12,6 +12,7 @@ import 'package:pine/pine.dart';
 import 'package:pomo/blocs/recover_password/recover_password_bloc.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/blocs/stats/stats_bloc.dart';
+import 'package:pomo/cubits/notification/notification_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 import 'package:pomo/cubits/timer/timer_cubit.dart';
 import 'package:pomo/i18n/strings.g.dart';

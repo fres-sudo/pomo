@@ -81,6 +81,7 @@
         "timer_options": "Opzioni Timer",
         "set_timer_options": "Imposta il Timer",
         "dark_mode": "Dark Mode",
+        "notifications" : "Notifiche",
         "languages" : {
           "title": "Lingua",
           "select_language" : "Seleziona una lingua"
@@ -252,6 +253,22 @@
       "verify_token_error" : "Si è verificato un errore durante il controllo della validità del codice OTP",
       "reset_password_error" : "Si è verificato un errore durante il reset della password",
       "reset_password_not_match_error" : "Le due password non coincidono"
+    }
+  },
+  "notifications": {
+    "instant" : {
+      "title": "Ottimo!",
+      "description" : "Hai completato la tua sessione, prenditi una breve pausa!"
+    },
+    "scheduled" : {
+      "task" : {
+        "title": "Sbrigati!",
+        "description" : "Ehi, la tua attività sta per scadere! Meglio darsi da fare e finirla in tempo!"
+      },
+      "project" : {
+        "title": "Sbrigati!",
+        "description" : "Attenzione! La scadenza del tuo progetto è vicina. Dai, è l'ultimo sforzo per chiuderlo al meglio!"
+      }
     }
   },
   "week_days" : {

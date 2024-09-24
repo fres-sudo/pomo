@@ -81,6 +81,7 @@
         "timer_options": "Timer Options",
         "set_timer_options": "Set Timer Options",
         "dark_mode": "Dark Mode",
+        "notifications" : "Notifications",
         "languages" : {
           "title": "Languages",
           "select_language" : "Select a language"
@@ -252,6 +253,22 @@
       "verify_token_error" : "An error occurred while checking for the OTP code integrity",
       "reset_password_error" : "An error occurred while trying to reset your password",
       "reset_password_not_match_error" : "The passwords does not match"
+    }
+  },
+  "notifications": {
+    "instant" : {
+      "title": "Great!",
+      "description" : "You successfully completed your focus session, let's take a quick brake"
+    },
+    "scheduled" : {
+      "task" : {
+        "title": "Hurry up!",
+        "description" : "Hey! Your task is almost due. Time to wrap it up and get it done before the clock runs out!"
+      },
+      "project" : {
+        "title": "Hurry up!",
+        "description" : "Heads up! Your project deadline is right around the corner. Let's finish strong and make it count!"
+      }
     }
   },
   "week_days" : {

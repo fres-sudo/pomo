@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,14 +11,16 @@ import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/models/user/user.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../../blocs/project/project_bloc.dart';
 import '../../../blocs/task/task_bloc.dart';
-import '../../../constants/colors.dart';
 import '../../../cubits/auth/auth_cubit.dart';
+import '../../../cubits/notification/notification_cubit.dart';
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 import '../../../models/project/project.dart';
+import '../../../services/notification/notification_service.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   const TaskBottomSheet({super.key, this.project, this.task, this.dueDate});
@@ -73,8 +77,23 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<TaskBloc, TaskState>(
-      listener: (context, state) =>
-          state.operation == TaskOperation.create || state.operation == TaskOperation.update ? context.router.maybePop() : null,
+      listener: (context, state) {
+        if (state.operation == TaskOperation.create) {
+          final currTask = state.tasks.firstWhere((task) => task.name == _nameTextEditingController.text && isSameDay(_selectedDate, task.dueDate) && isSameDay(DateTime.now(), task.createdAt));
+          final int notificationId = Random().nextInt(1000);
+          final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[currTask.id];
+          if(existingNotificationId == null){
+            NotificationService.scheduleNotification(
+                notificationId,
+                "${t.notifications.scheduled.task.title} ⏰",
+                "${t.notifications.scheduled.task.description} 👀",
+                currTask.dueDate
+            );
+            context.read<NotificationCubit>().addScheduledNotification(currTask.id ?? "", notificationId);
+          }
+        }
+        state.operation == TaskOperation.create || state.operation == TaskOperation.update ? context.router.maybePop() : null;
+      },
       child: Container(
         height: MediaQuery.sizeOf(context).height - (widget.dueDate != null ? 60 : 90),
         decoration: BoxDecoration(

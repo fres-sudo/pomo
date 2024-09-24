@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -15,8 +16,10 @@ import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/models/user/user.dart';
+import 'package:pomo/services/notification/notification_service.dart';
 
 import '../../blocs/project/project_bloc.dart';
+import '../../cubits/notification/notification_cubit.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';
@@ -65,9 +68,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProjectBloc, ProjectState>(
-
-        listener: (context, state) {
+    return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
       if (state.operation == ProjectOperation.update) {
         final Project currProj = state.projects.firstWhere((proj) =>
@@ -78,7 +79,13 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
       if (state.operation == ProjectOperation.create) {
         final Project currProj = state.projects.firstWhere((proj) =>
             proj.name == _nameTextController.text && proj.createdAt?.day == DateTime.now().day && proj.createdAt?.month == DateTime.now().month);
-
+        final int notificationId = Random().nextInt(1000);
+        final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[currProj.id];
+        if (existingNotificationId == null) {
+          NotificationService.scheduleNotification(notificationId, "${t.notifications.scheduled.project.title} ⏰",
+              "${t.notifications.scheduled.project.description} 👀", currProj.endDate);
+          context.read<NotificationCubit>().addScheduledNotification(currProj.id ?? "", notificationId);
+        }
         image != null
             ? context.read<ProjectBloc>().uploadProjectImageCover(id: currProj.id ?? '', imageCover: File(image!.path))
             : context.router.push(ProjectDetailsRoute(project: currProj, isCreatedProject: true));
@@ -105,7 +112,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         onPressed: () {
                           final user =
                               context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
-                          if(_endDate == null){
+                          if (_endDate == null) {
                             onInvalidInput(context);
                             return;
                           }
@@ -162,7 +169,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       final ImagePicker picker = ImagePicker();
                       final img = await picker.pickImage(
                         source: ImageSource.gallery,
-                        imageQuality: 50,
+                        imageQuality: 40,
                       );
                       setState(() {
                         image = img;

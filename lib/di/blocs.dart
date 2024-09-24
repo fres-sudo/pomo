@@ -42,5 +42,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<FilterProjectCubit>(
     create: (_) => FilterProjectCubit(),
   ),
-
+  BlocProvider<NotificationCubit>(
+    create: (_) => NotificationCubit(),
+  ),
 ];

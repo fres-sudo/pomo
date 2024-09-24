@@ -12,13 +12,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/di/dependency_injector.dart';
 import 'package:pomo/routes/app_router.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'constants/theme.dart';
 import 'i18n/strings.g.dart';
 import 'local_notification.dart';
+import 'services/notification/notification_service.dart';
 
 /// ----------- [Notification] ---------------
-int id = 0;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -47,18 +49,6 @@ class ReceivedNotification {
 }
 
 String? selectedNotificationPayload;
-
-/// A notification action which triggers a url launch event
-const String urlLaunchActionId = 'id_1';
-
-/// A notification action which triggers a App navigation event
-const String navigationActionId = 'id_3';
-
-/// Defines a iOS/MacOS notification category for text input actions.
-const String darwinNotificationCategoryText = 'textCategory';
-
-/// Defines a iOS/MacOS notification category for plain actions.
-const String darwinNotificationCategoryPlain = 'plainCategory';
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
@@ -92,9 +82,10 @@ void main() async {
     storageDirectory: directory,
   );
 
-  await LocalNotifications.init();
+  await NotificationService.init();
+  tz.initializeTimeZones();
 
-  LocaleSettings.useDeviceLocale(); // and this
+  LocaleSettings.useDeviceLocale();
 
   // Remove splash screen.
   FlutterNativeSplash.remove();

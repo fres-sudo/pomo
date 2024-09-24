@@ -38,7 +38,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     final ImagePicker picker = ImagePicker();
     final img = await picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 50,
+      imageQuality: 40,
     );
     setState(() {
       image = img;
