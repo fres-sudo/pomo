@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_essentials_kit/extensions/commons.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/utils/utils.dart';
@@ -9,7 +8,6 @@ import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 
 enum ProjectStatus {
@@ -41,13 +39,19 @@ class ProjectCard extends StatelessWidget {
   final Project project;
 
   ProjectStatus _getStatus(Project project) {
-    int completedTask = project.tasks?.map((task) => task.completedAt != null).toList().length ?? 0;
+    int completedTask = project.tasks?.map((task) => task.completedAt != null || task.pomodoro == task.pomodoroCompleted).toList().length ?? 0;
     int totalTasks = project.tasks?.length ?? 0;
-    if (project.completedAt != null) {
-      return ProjectStatus.completed;
-    }
+    print("---------------");
+    print("proj: ${project.name}");
+    print("completedTask : ${completedTask}");
+    print("totalTask: ${totalTasks}");
+    print("completedAt : ${project.completedAt}");
+
     if(!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks){
       return ProjectStatus.expired;
+    }
+    if (project.completedAt != null || (completedTask == totalTasks && completedTask != 0 && completedTask != 0)) {
+      return ProjectStatus.completed;
     }
    return ProjectStatus.progress;
  }

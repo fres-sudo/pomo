@@ -22,11 +22,11 @@ abstract class UserService {
   @DELETE('/users/{userId}')
   Future<UserJTO> deleteUser(@Path('userId') String id);
 
-  @PUT('/users/uploadPhoto/{id}')
+  @PUT('/users/image/{id}')
   @MultiPart()
   Future<UserJTO> updateUserPhoto(@Path('id') String id, @Part() File photo);
 
   @DELETE("/users/image/{userId}")
-  Future<UserJTO> deleteUserPhoto(@Path('userId') String userId);
+  Future<UserJTO> deleteUserPhoto(@Path('userId') String userId,);
 
 }

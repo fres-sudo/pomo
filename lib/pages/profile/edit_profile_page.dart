@@ -15,6 +15,7 @@ import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/user/user.dart';
 
+import '../../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../../components/fields/debounced_user_search.dart';
 import '../../components/widgets/snack_bars.dart';
 import '../../constants/colors.dart';
@@ -62,6 +63,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
   }
 
+  User? get user => context.read<AuthCubit>().state.whenOrNull(
+      authenticated: (user) => user,
+  );
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserBloc, UserState>(
@@ -105,8 +110,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           onInvalidInput(context);
                         } else {
                           final user = context.read<AuthCubit>().state.whenOrNull(authenticated: (user) => user);
-                          if (image != null) {
-                            context.read<UserBloc>().updateUserPhoto(id: state.user?.id ?? "", photo: File(image!.path));
+                          if (image != null && user != null) {
+                              context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path));
                           } else {
                             if (user != null) {
                               context.read<UserBloc>().updateUser(id: user.id, user: user.copyWith(username: _usernameTextController.text));
@@ -115,26 +120,47 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         }
                       },
                       child: Text(t.general.update,
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
-                                  ? Theme.of(context).primaryColor
-                                  : kNeutral400))),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
+                                ? Theme.of(context).primaryColor
+                                : kNeutral400
+                          ))),
                 ],
               ),
               Gap.XL,
               Center(
                 child: Stack(
-                  alignment: AlignmentDirectional.bottomEnd,
                   children: [
-                    const ProfilePicture(
-                      height: 150,
-                      width: 150,
-                    ),
-                    if (context
-                        .read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.avatar?.contains("s3") ?? true, orElse: () => false)) ...[
-                      GestureDetector(
+                    context.read<AuthCubit>().state.maybeWhen(
+                        authenticated: (user) {
+                          if (image == null) {
+                            if (user.avatar == null) {
+                              return const CircleAvatar(
+                                maxRadius: 75,
+                                backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                              );
+                            } else {
+                              return ClipOval(
+                                  child: SizedBox(
+                                      height: 150,
+                                      width: 150,
+                                      child: FancyShimmerImage(
+                                        imageUrl: user.avatar!,
+                                        boxFit: BoxFit.cover,
+                                      )));
+                            }
+                          } else {
+                            return CircleAvatar(radius: 75, backgroundImage: FileImage(File(image!.path)));
+                          }
+                        },
+                        orElse: () => const CircleAvatar(
+                          radius: 75,
+                          backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                        )),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
                         onTap: () async {
                           final ImagePicker picker = ImagePicker();
                           final img = await picker.pickImage(
@@ -162,7 +188,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                    ]
+                    ),
+                    if(user?.avatar != null)
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.read<UserBloc>().deleteUserPhoto(
+                          userId: user!.id,);},
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.error,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.delete_forever_outlined,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.onError,
+                          ),
+                        ),
+                      ),
+                    ),
+
                   ],
                 ),
               ),

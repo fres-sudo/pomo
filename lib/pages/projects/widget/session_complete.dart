@@ -95,25 +95,16 @@ class _SessionCompletePageState extends State<SessionCompletePage> {
                             ?.copyWith(color: kNeutral600),
                       ),],
                   ),
-
-                  Column(
-                    children: [
-                      TextButton(
-                        onPressed: () => context.router.push( const ProjectRoute()),
-                        child: Center(child: Text(t.tasks.completed_task.back_home,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor))),
-                      ),
-                      Gap.XS,
-                      ElevatedButton(
-                          onPressed: () => _controllerTopCenter.play(),
-                          child: Center(
-                            child: Text(
-                              "${t.tasks.completed_task.share_this_moment}!",
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface,),
-                            ),
-                          ))
-                    ],
-                  ),
+                  const Spacer(),
+                  ElevatedButton(
+                      onPressed: () => context.router.replace(const ScheduleRoute()),
+                      child: Center(
+                        child: Text(
+                          t.tasks.completed_task.back_home,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,),
+                        ),
+                      )),
                 ],
               ),
             ],

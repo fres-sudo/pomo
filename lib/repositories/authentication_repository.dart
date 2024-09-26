@@ -93,8 +93,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<void> signOut() async {
    await secureStorage.deleteAll();
-   final sharedStorage = SharedPrefStorage();
-   await HydratedBloc.storage.clear();
+   final sharedPref = await SharedPreferences.getInstance();
+   final sharedStorage =  SharedPrefStorage();
+   await HydratedBloc.storage.delete("focusTime");
+   await HydratedBloc.storage.delete("breakTime");
+   await sharedPref.clear();
    await sharedStorage.clear();
   }
 
