@@ -20,9 +20,9 @@ abstract class UserRepository {
     required File photo,
   });
 
-  Future<void> deleteUser({required String id});
+  Future<void> deleteUser({required String id,});
 
-  Future<User> deleteUserPhoto({required String userId});
+  Future<User> deleteUserPhoto({required String userId,});
 }
 
 /// Implementation of the base interface UserRepository
@@ -60,8 +60,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User> deleteUserPhoto({required String userId}) async {
-    final user = await userService.deleteUserPhoto(userId);
+  Future<User> deleteUserPhoto({required String userId, }) async {
+    final user = await userService.deleteUserPhoto(userId,);
     return userMapper.fromDTO(user);
   }
 }

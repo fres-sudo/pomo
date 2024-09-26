@@ -22,7 +22,7 @@ onInvalidInput(BuildContext context, {bool isAlert = false, String? text}) {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(
                             color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
-                    duration: const Duration(seconds: 2),
+                    duration: const Duration(seconds: 5),
                     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     content: Text(
                       '${text ?? t.errors.valid_info}📝',
@@ -46,7 +46,7 @@ onErrorState(BuildContext context, String text) {
             SnackBar(
                 backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kRed800 : kRed200,
                 shape: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: kRed500)),
-                duration: const Duration(seconds: 3),
+                duration: const Duration(seconds: 5),
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 content: Text('$text🚨')),
           )
@@ -67,7 +67,7 @@ onSuccessState(
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(duration: const Duration(seconds: 2), padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), content: Text('✅ $text')),
+        SnackBar(duration: const Duration(seconds: 5), padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), content: Text('✅ $text')),
       ).closed
           .then((_) {
         _isSnackBarVisible = false;
@@ -90,7 +90,7 @@ onAvailableSoon(BuildContext context) {
                     borderRadius: BorderRadius.circular(12),
                     borderSide:
                         BorderSide(color: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow500 : kYellow400)),
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 5),
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 content: Text('${t.errors.sorry} 😣${t.errors.available_soon} 👀')),
           )
@@ -111,7 +111,7 @@ onAcceptTermsCondition(BuildContext context) {
           .showSnackBar(
             SnackBar(
                 backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 5),
                 shape: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide:
@@ -136,7 +136,7 @@ onDoesNotMatch(BuildContext context) {
           .showSnackBar(
             SnackBar(
                 backgroundColor: Provider.of<ThemeCubit>(context, listen: false).state.mode == ThemeMode.dark ? kYellow800 : kYellow200,
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 5),
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 shape: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -159,7 +159,7 @@ onFirstProfileSeen(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               content: Text('If you want you can update your name and surname up here! ℹ️')))
           .closed

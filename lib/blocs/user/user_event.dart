@@ -9,7 +9,7 @@ class UserEvent with _$UserEvent {
 
   const factory UserEvent.deleteUser({required String id}) = DeleteUserUserEvent;
 
-  const factory UserEvent.deleteUserPhoto({required String userId}) = DeleteUserPhotoUserEvent;
+  const factory UserEvent.deleteUserPhoto({required String userId,}) = DeleteUserPhotoUserEvent;
 
   const factory UserEvent.searchUsername({required String username}) = SearchUsernameUserEvent;
 
