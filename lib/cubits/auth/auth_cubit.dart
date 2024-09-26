@@ -31,6 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
   FutureOr<void>  signOut() async {
     await authenticationRepository.signOut();
 
+
     emit(const AuthState.notAuthenticated());
   }
   

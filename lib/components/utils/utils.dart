@@ -18,13 +18,6 @@ String durationToString(int minutes) {
   return '${parts[0].padLeft(2, '')}:${parts[1].padLeft(2, '0')}';
 }
 
-Future<String> getUserId() async {
-  const storage = FlutterSecureStorage();
-  var userData = await storage.read(key: "user_data");
-  final Map<String, dynamic> userMap = json.decode(userData!);
-  return userMap['_id'];
-}
-
 extension DarkMode on BuildContext {
   bool get isDarkMode {
     return watch<ThemeCubit>().state.mode == ThemeMode.dark;

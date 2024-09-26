@@ -17,8 +17,6 @@ class ProfilePicture extends StatelessWidget {
           if (user.avatar == null) {
             return  CircleAvatar(
               radius: width / 2,
-              maxRadius: width/2,
-              minRadius: width/2,
               backgroundImage: const AssetImage(
                   "assets/images/propic-placeholder.jpg"),
             );

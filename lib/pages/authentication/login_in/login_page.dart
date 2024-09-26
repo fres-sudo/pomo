@@ -47,16 +47,23 @@ class _LoginPageState extends State<LoginPage> {
           errorSignIn: (error) => onErrorState(context, error.localizedString(context)),
           signedInWithGoogle: (user) => {
             context.read<AuthCubit>().authenticated(user),
-            context.router.push(ChooseUsernameRoute(user: user))
+            if(user.username.startsWith("guest-google")){
+              context.router.push(ChooseUsernameRoute(user: user))
+            } else {
+              context.router.replace(const RootRoute()),
+            }
           },
           signedInWithApple: (user) => {
             context.read<AuthCubit>().authenticated(user),
-            context.router.push(ChooseUsernameRoute(user: user))
+            if(user.username.startsWith("guest-apple")){
+              context.router.push(ChooseUsernameRoute(user: user))
+            } else {
+              context.router.replace(const RootRoute()),
+            }
           },
-          signedIn: (user) {
-            context.read<AuthCubit>().authenticated(user);
-            context.router.replace(const RootRoute());
-            return null;
+          signedIn: (user) => {
+            context.read<AuthCubit>().authenticated(user),
+            context.router.replace(const RootRoute()),
           }),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
@@ -96,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                           Text("Email", style: Theme.of(context).textTheme.titleMedium),
                           Gap.SM,
                           EmailField(controller: _emailTextController),
-                          Gap.MD,
+                          Gap.SM,
                           Text("Password", style: Theme.of(context).textTheme.titleMedium),
                           Gap.SM,
                           PasswordField(controller: _passwordTextController),

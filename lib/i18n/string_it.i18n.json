@@ -160,14 +160,14 @@
     "login": {
       "title" : "Accedi",
       "welcome" : "Bentornato!",
-      "description" : "Inserisci la tua email e password per accedere",
+      "description" : "Al tuo account per rimetterti in sesto con i tuoi lavori!",
       "forgot_password" : "Hai dimenticato la password?",
       "dont_have_an_account" : "Non hai un account?"
     },
     "signup": {
       "title" : "Registrati",
       "welcome" : "Benvenuto!",
-      "description" : "Crea il tuo account",
+      "description" : "Crea il tuo account e mettiti a lavoro seriamente",
       "i_accept" : "Accetto",
       "terms_and_conditions": "termini e condizioni",
       "already_have_an_account" : "Hai già un account?",

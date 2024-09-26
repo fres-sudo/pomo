@@ -160,14 +160,14 @@
     "login": {
       "title" : "Log in",
       "welcome" : "Welcome back!",
-      "description" : "Enter your email & password for logging in",
+      "description" : "Log in to your account to get your projects back on track.",
       "forgot_password" : "Forgot Password?",
       "dont_have_an_account" : "Don't have an account?"
     },
     "signup": {
       "title" : "Sign up",
       "welcome" : "Welcome!",
-      "description" : "Create your account",
+      "description" : "Create your account and start focusing seriously",
       "i_accept" : "I accept",
       "terms_and_conditions": "terms & conditions",
       "already_have_an_account" : "Already have an account?",
