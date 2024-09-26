@@ -9,7 +9,6 @@ final List<RepositoryProvider> _repositories = [
       userStringMapper: context.read(),
       userMapper: context.read(),
     );
-
     context.read<Dio>().interceptors.insert(
           0,
           AuthInterceptor(

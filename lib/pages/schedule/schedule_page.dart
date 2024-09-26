@@ -42,12 +42,14 @@ class _SchedulePageState extends State<SchedulePage> {
     return MultiBlocListener(
       listeners: [
         BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) => state.whenOrNull(
+          listener: (context, state) {
+            print("AUTH STATE: ${state}");
+            state.whenOrNull(
             authenticated: (user) => {
               context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
               context.read<ProjectBloc>().getProjectsByUser(userId: user.id)
             },
-          ),
+          );}
         ),
         BlocListener<ProjectBloc, ProjectState>(
           listener: (context, state) {
@@ -123,7 +125,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: state.tasks.where((task) => isSameDay(task.dueDate, day)).toList().isNotEmpty
-                                              ? Theme.of(context).primaryColor.withOpacity(0.4)
+                                              ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.6)
                                               : Colors.transparent),
                                     );
                                   }),

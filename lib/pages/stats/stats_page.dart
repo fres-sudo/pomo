@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/routes/app_router.gr.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../blocs/project/project_bloc.dart';
@@ -109,7 +105,11 @@ class _StatsPageState extends State<StatsPage> {
                                           }
                                         });
                                       },
-                                      children: List.generate(3, (index) => TimeSelector(text: days[index], isSelected: selectedMode[index])),
+                                      children: [
+                                        TimeSelector(text: t.general.today, isSelected: selectedMode[0]),
+                                        TimeSelector(text: t.general.yesterday, isSelected: selectedMode[1]),
+                                        TimeSelector(text: t.general.all_times, isSelected: selectedMode[2])
+                                      ],
                                     ),
                                     Gap.MD,
                                     Row(
@@ -119,27 +119,46 @@ class _StatsPageState extends State<StatsPage> {
                                           height: 83,
                                         ),
                                         Gap.MD_H,
-                                        Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: titles
-                                                .map((title) => Text(
-                                                      title,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall
-                                                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                    ))
-                                                .toList(growable: false)),
+                                        Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                          Text(
+                                            t.tasks.focus_time,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                          ),
+                                          Text(
+                                            t.tasks.break_time,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                          ),
+                                          Text(
+                                            t.tasks.total_tasks,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                          )
+                                        ]),
                                         const Spacer(),
                                         Column(
                                           children: [
                                             Text(
-                                              selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, focusTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, focusTime) : _formatTime(state.statistics?.totalTasksAll, focusTime),
+                                              selectedMode[0]
+                                                  ? _formatTime(state.statistics?.totalTasksToday, focusTime)
+                                                  : selectedMode[1]
+                                                      ? _formatTime(state.statistics?.totalTasksYesterday, focusTime)
+                                                      : _formatTime(state.statistics?.totalTasksAll, focusTime),
                                               style: Theme.of(context).textTheme.titleMedium,
                                             ),
                                             Text(
-                                              selectedMode[0] ? _formatTime(state.statistics?.totalTasksToday, breakTime) : selectedMode[1] ? _formatTime(state.statistics?.totalTasksYesterday, breakTime) : _formatTime(state.statistics?.totalTasksAll, breakTime),
+                                              selectedMode[0]
+                                                  ? _formatTime(state.statistics?.totalTasksToday, breakTime)
+                                                  : selectedMode[1]
+                                                      ? _formatTime(state.statistics?.totalTasksYesterday, breakTime)
+                                                      : _formatTime(state.statistics?.totalTasksAll, breakTime),
                                               style: Theme.of(context).textTheme.titleMedium,
                                             ),
                                             Text(

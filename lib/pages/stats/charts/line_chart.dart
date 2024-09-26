@@ -19,18 +19,19 @@ class CustomLineChart extends StatefulWidget {
 
 class _CustomLineChartState extends State<CustomLineChart> {
   bool showAvg = false;
-  List<String> weekDays = [
-    t.week_days.monday.short,
-    t.week_days.tuesday.short,
-    t.week_days.wednesday.short,
-    t.week_days.thursday.short,
-    t.week_days.friday.short,
-    t.week_days.saturday.short,
-    t.week_days.sunday.short
-  ];
+
 
   @override
   Widget build(BuildContext context) {
+    List<String> weekDays = [
+      t.week_days.monday.short,
+      t.week_days.tuesday.short,
+      t.week_days.wednesday.short,
+      t.week_days.thursday.short,
+      t.week_days.friday.short,
+      t.week_days.saturday.short,
+      t.week_days.sunday.short
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -79,6 +80,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
                 lineTouchData: LineTouchData(
                   touchTooltipData: LineTouchTooltipData(
                     tooltipRoundedRadius: 8,  // Rounded corners of the tooltip
+                    getTooltipColor: (_) => Theme.of(context).colorScheme.primaryContainer,
                     getTooltipItems: (touchedSpots) {
                       return touchedSpots.map((touchedSpot) {
                         final textStyle = Theme.of(context).textTheme.bodySmall?.copyWith(

@@ -29,28 +29,31 @@ class CustomBarChartState extends State<CustomBarChart> {
 
   bool isPlaying = false;
 
-  List<String> weekDaysShort = [
-    t.week_days.monday.short,
-    t.week_days.tuesday.short,
-    t.week_days.wednesday.short,
-    t.week_days.thursday.short,
-    t.week_days.friday.short,
-    t.week_days.saturday.short,
-    t.week_days.sunday.short
-  ];
 
-  List<String> weekDaysLong = [
-    t.week_days.monday.long,
-    t.week_days.tuesday.long,
-    t.week_days.wednesday.long,
-    t.week_days.thursday.long,
-    t.week_days.friday.long,
-    t.week_days.saturday.long,
-    t.week_days.sunday.long,
-  ];
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> weekDaysShort = [
+      t.week_days.monday.short,
+      t.week_days.tuesday.short,
+      t.week_days.wednesday.short,
+      t.week_days.thursday.short,
+      t.week_days.friday.short,
+      t.week_days.saturday.short,
+      t.week_days.sunday.short
+    ];
+
+    List<String> weekDaysLong = [
+      t.week_days.monday.long,
+      t.week_days.tuesday.long,
+      t.week_days.wednesday.long,
+      t.week_days.thursday.long,
+      t.week_days.friday.long,
+      t.week_days.saturday.long,
+      t.week_days.sunday.long,
+    ];
+
     return AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -71,6 +74,7 @@ class CustomBarChartState extends State<CustomBarChart> {
                         touchTooltipData: BarTouchTooltipData(
                             tooltipHorizontalAlignment: FLHorizontalAlignment.right,
                             tooltipMargin: -10,
+                            getTooltipColor: (_) => Theme.of(context).colorScheme.primaryContainer,
                             getTooltipItem: (group, groupIndex, rod, rodIndex) {
                               // Get both completed and uncompleted tasks for the selected group (day)
                               double completedTasks = widget.stats.completedTasksOfTheWeek[groupIndex].toDouble();
@@ -119,7 +123,7 @@ class CustomBarChartState extends State<CustomBarChart> {
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
-                            getTitlesWidget: getTitles,
+                            getTitlesWidget: (value, meta) => getTitles(value, meta, weekDaysShort),
                             reservedSize: 38,
                           ),
                         ),
@@ -155,7 +159,7 @@ class CustomBarChartState extends State<CustomBarChart> {
     List<int> showTooltips = const [],
   }) {
     completedBarColor ??= widget.barColor;
-    uncompletedBarColor ??= Theme.of(context).colorScheme.error;
+    uncompletedBarColor ??= kPrimary200;
 
     return BarChartGroupData(
       x: x,
@@ -194,7 +198,7 @@ class CustomBarChartState extends State<CustomBarChart> {
       (i) => makeGroupData(i, widget.stats.completedTasksOfTheWeek[i].toDouble(), widget.stats.uncompletedTasksOfTheWeek[i].toDouble(),
           isTouched: i == touchedIndex));
 
-  Widget getTitles(double value, TitleMeta meta) {
+  Widget getTitles(double value, TitleMeta meta, List<String> weekDaysShort) {
     final style = Theme.of(context).textTheme.titleSmall?.copyWith(
         fontSize: 10, color: DateTime.now().day == value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSecondaryContainer);
     return SideTitleWidget(

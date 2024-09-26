@@ -5,7 +5,7 @@ import '../../models/user/user.dart';
 class UserStringMapper extends Mapper<User, String> {
   const UserStringMapper();
 
-  static const _idField = '_id';
+  static const _idField = 'id';
   static const _usernameField = 'username';
   static const _emailField = 'email';
   static const _avatarField = 'avatar';

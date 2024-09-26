@@ -1,9 +1,13 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pine/pine.dart';
+import 'package:pomo/services/cookies/shared_pref_storage.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
 import 'package:pomo/services/network/requests/reset_password/reset_password_request.dart';
 import 'package:pomo/services/network/requests/verify_token/verify_token_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
 import '../models/user/user.dart';
@@ -87,7 +91,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<void> signOut() => secureStorage.delete(key: 'user_data');
+  Future<void> signOut() async {
+   await secureStorage.deleteAll();
+   final sharedStorage = SharedPrefStorage();
+   await HydratedBloc.storage.clear();
+   await sharedStorage.clear();
+  }
 
   @override
   Future<User?> get currentUser async {
