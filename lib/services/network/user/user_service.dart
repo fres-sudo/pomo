@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:pomo/services/network/response/forgot_pass/forgot_pass_response.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../jto/user/user_jto.dart';

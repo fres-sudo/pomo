@@ -32,6 +32,13 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
+
+  @override
+  void initState() {
+    context.read<AuthCubit>().checkAuthentication();
+    super.initState();
+  }
+
   void fetchScheduledTask(BuildContext context) {
     final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "oresle");
     context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
@@ -43,11 +50,15 @@ class _SchedulePageState extends State<SchedulePage> {
       listeners: [
         BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
-            print("AUTH STATE: ${state}");
+            print("AUTH STATE: ${state.runtimeType}");
+            if(state is AuthenticatedAuthState){
+              print("ENTERED");
+              context.read<TaskBloc>().fetch(userId: state.user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
+              context.read<ProjectBloc>().getProjectsByUser(userId: state.user.id);
+            }
             state.whenOrNull(
-            authenticated: (user) => {
-              context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month),
-              context.read<ProjectBloc>().getProjectsByUser(userId: user.id)
+            authenticated: (user) {
+
             },
           );}
         ),
@@ -118,7 +129,6 @@ class _SchedulePageState extends State<SchedulePage> {
                                       onNoFetch: () => context.read<ScheduleCubit>().setSelectedTasks(
                                           tasks: state.tasks.where((t) => isSameDay(t.dueDate, selectedDay)).toList(growable: false))),
                                   calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
-                                    final tasks = context.watch<ScheduleCubit>().state.tasks;
                                     return Container(
                                       height: 10,
                                       width: 10,

@@ -8,7 +8,6 @@ import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 
-import '../components/fancy_shimmer/fancy_shimmer_image.dart';
 import '../constants/enum.dart';
 import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
@@ -23,17 +22,9 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
 
-  @override
-  void initState() {
-    context.read<AuthCubit>().checkAuthentication();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-
-    print("AUTH STATE: ${context.read<AuthCubit>().state}");
-
     return AutoTabsRouter(
       routes: const [
         ScheduleRoute(),

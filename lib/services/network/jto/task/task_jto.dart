@@ -1,7 +1,6 @@
 import 'package:pine/pine.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../user/user_jto.dart';
 
 
 part 'task_jto.g.dart';

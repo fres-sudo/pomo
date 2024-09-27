@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../pages/projects/widget/filter_project_widget.dart';
 
 part 'filter_project_state.dart';
 part 'filter_project_cubit.freezed.dart';

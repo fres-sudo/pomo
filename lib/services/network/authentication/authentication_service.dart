@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:pomo/services/network/jto/user/user_jto.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import '../requests/forgot_pass/forgot_pass_request.dart';
 import '../requests/o_auth/o_auth_request.dart';
@@ -8,7 +7,6 @@ import '../requests/reset_password/reset_password_request.dart';
 import '../requests/sign_in/sign_in_request.dart';
 import '../requests/sign_up/sign_up_request.dart';
 import '../requests/verify_token/verify_token_request.dart';
-import '../response/sign_up/sign_up_response.dart';
 
 part 'authentication_service.g.dart';
 

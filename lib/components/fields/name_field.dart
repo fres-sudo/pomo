@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pomo/components/utils/utils.dart';
 
-import '../../constants/colors.dart';
 import '../../i18n/strings.g.dart';
 
 class NameField extends StatelessWidget {

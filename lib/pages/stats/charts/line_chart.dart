@@ -83,10 +83,6 @@ class _CustomLineChartState extends State<CustomLineChart> {
                     getTooltipColor: (_) => Theme.of(context).colorScheme.primaryContainer,
                     getTooltipItems: (touchedSpots) {
                       return touchedSpots.map((touchedSpot) {
-                        final textStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.white,  // Customize your tooltip text color here
-                          fontWeight: FontWeight.bold,
-                        );
                         return LineTooltipItem(
                           '${weekDays[touchedSpot.x.toInt()]}: ${touchedSpot.y.toStringAsFixed(1)}',
                           Theme.of(context).textTheme.labelMedium ?? const TextStyle()

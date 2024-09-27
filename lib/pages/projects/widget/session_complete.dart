@@ -3,12 +3,10 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:pomo/components/widgets/rounded_button.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 
 @RoutePage()
