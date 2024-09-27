@@ -13,11 +13,9 @@ import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/di/dependency_injector.dart';
 import 'package:pomo/routes/app_router.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 import 'constants/theme.dart';
 import 'i18n/strings.g.dart';
-import 'local_notification.dart';
 import 'services/notification/notification_service.dart';
 
 /// ----------- [Notification] ---------------

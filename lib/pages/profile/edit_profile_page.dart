@@ -5,13 +5,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/components/widgets/back_icon_button.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
-import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/models/user/user.dart';
 

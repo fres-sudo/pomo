@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../jto/task/task_jto.dart';

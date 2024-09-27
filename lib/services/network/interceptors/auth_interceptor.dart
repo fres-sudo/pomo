@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 

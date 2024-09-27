@@ -28,7 +28,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _usernameTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final bool _obscureText = false;
 
   bool _checkedValue = false;
 

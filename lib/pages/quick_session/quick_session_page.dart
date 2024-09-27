@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/sound_player.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
@@ -19,8 +18,6 @@ import '../../constants/colors.dart';
 import '../../constants/constants.dart';
 import '../../constants/text.dart';
 import '../../i18n/strings.g.dart';
-import '../../main.dart';
-import '../../models/user/user.dart';
 
 @RoutePage()
 class QuickSessionPage extends StatefulWidget {

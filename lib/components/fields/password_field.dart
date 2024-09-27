@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/colors.dart';
 import '../../i18n/strings.g.dart';
 
 class PasswordField extends StatefulWidget {

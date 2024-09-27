@@ -1,8 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../components/widgets/rounded_button.dart';
-import '../../constants/colors.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';

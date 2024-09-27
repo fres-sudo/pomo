@@ -13,11 +13,9 @@ import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
-import '../../../services/network/authentication/oauth_service.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {

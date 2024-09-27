@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
-import 'package:pomo/constants/colors.dart';
 
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';

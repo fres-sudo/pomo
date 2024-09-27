@@ -2,7 +2,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/colors.dart';
 import '../../i18n/strings.g.dart';
 
 class EmailField extends StatefulWidget {

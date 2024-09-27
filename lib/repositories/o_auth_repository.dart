@@ -2,13 +2,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/requests/o_auth/o_auth_request.dart';
-import '../constants/constants.dart';
 import '../models/user/user.dart';
 import '../services/network/authentication/oauth_service.dart';
 import '../services/network/jto/user/user_jto.dart';
-import '../services/network/requests/sign_in/sign_in_request.dart';
-import '../services/network/requests/sign_up/sign_up_request.dart';
-import '../services/network/response/sign_up/sign_up_response.dart';
 
 /// Abstract class of AuthenticationRepository
 abstract class OAuthRepository {

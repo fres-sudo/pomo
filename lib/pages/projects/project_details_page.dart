@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/blocs/project/project_bloc.dart';
 import 'package:pomo/pages/projects/views/header_project_details.dart';
 
 import '../../blocs/task/task_bloc.dart';
-import '../../components/widgets/snack_bars.dart';
 import '../../models/project/project.dart';
-import '../../models/task/task.dart';
 import 'views/task_view.dart';
 
 @RoutePage()

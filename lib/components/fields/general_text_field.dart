@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pomo/components/utils/utils.dart';
-import '../../constants/colors.dart';
 
 class GeneralField extends StatefulWidget {
   GeneralField(

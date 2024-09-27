@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/services/cookies/shared_pref_storage.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
@@ -9,7 +8,6 @@ import 'package:pomo/services/network/requests/reset_password/reset_password_req
 import 'package:pomo/services/network/requests/verify_token/verify_token_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants/constants.dart';
 import '../models/user/user.dart';
 import '../services/network/jto/user/user_jto.dart';
 import '../services/network/requests/sign_in/sign_in_request.dart';
