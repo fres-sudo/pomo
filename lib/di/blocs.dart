@@ -16,7 +16,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<AuthCubit>(
     create: (context) => AuthCubit(
       authenticationRepository: context.read(),
-    )..checkAuthentication(),
+    ),
   ),
   BlocProvider<RecoverPasswordBloc>(
     create: (context) => RecoverPasswordBloc(context.read()),

@@ -59,7 +59,9 @@ mixin _$SignUpEvent {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignUpEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SignUpEventCopyWith<SignUpEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -84,6 +86,8 @@ class _$SignUpEventCopyWithImpl<$Res, $Val extends SignUpEvent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SignUpEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,6 +137,8 @@ class __$$PerformSignUpEventImplCopyWithImpl<$Res>
       $Res Function(_$PerformSignUpEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignUpEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -203,7 +209,9 @@ class _$PerformSignUpEventImpl implements PerformSignUpEvent {
   int get hashCode =>
       Object.hash(runtimeType, username, email, password, confirmPassword);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignUpEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PerformSignUpEventImplCopyWith<_$PerformSignUpEventImpl> get copyWith =>
@@ -288,8 +296,11 @@ abstract class PerformSignUpEvent implements SignUpEvent {
   String get password;
   @override
   String get confirmPassword;
+
+  /// Create a copy of SignUpEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PerformSignUpEventImplCopyWith<_$PerformSignUpEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -364,6 +375,9 @@ class _$SignUpStateCopyWithImpl<$Res, $Val extends SignUpState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -382,6 +396,9 @@ class __$$NotSignedUpSignUpStateImplCopyWithImpl<$Res>
       _$NotSignedUpSignUpStateImpl _value,
       $Res Function(_$NotSignedUpSignUpStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -497,6 +514,9 @@ class __$$SigningUpSignUpStateImplCopyWithImpl<$Res>
   __$$SigningUpSignUpStateImplCopyWithImpl(_$SigningUpSignUpStateImpl _value,
       $Res Function(_$SigningUpSignUpStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -617,6 +637,8 @@ class __$$SignedUpSignUpStateImplCopyWithImpl<$Res>
       $Res Function(_$SignedUpSignUpStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -630,6 +652,8 @@ class __$$SignedUpSignUpStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -663,7 +687,9 @@ class _$SignedUpSignUpStateImpl implements SignedUpSignUpState {
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignedUpSignUpStateImplCopyWith<_$SignedUpSignUpStateImpl> get copyWith =>
@@ -750,7 +776,10 @@ abstract class SignedUpSignUpState implements SignUpState {
       _$SignedUpSignUpStateImpl;
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignedUpSignUpStateImplCopyWith<_$SignedUpSignUpStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -771,6 +800,9 @@ class __$$ErrorSignUpSignUpStateImplCopyWithImpl<$Res>
       _$ErrorSignUpSignUpStateImpl _value,
       $Res Function(_$ErrorSignUpSignUpStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

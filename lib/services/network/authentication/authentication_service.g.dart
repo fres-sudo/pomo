@@ -190,6 +190,39 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
+  Future<RefreshTokenResponse> refreshToken(String token) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = token;
+    final _options = _setStreamType<RefreshTokenResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/auth/refresh-token',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late RefreshTokenResponse _value;
+    try {
+      _value = RefreshTokenResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<UserJTO> retrieveGoogleUser(OAuthRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
