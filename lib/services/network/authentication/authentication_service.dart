@@ -7,6 +7,7 @@ import '../requests/reset_password/reset_password_request.dart';
 import '../requests/sign_in/sign_in_request.dart';
 import '../requests/sign_up/sign_up_request.dart';
 import '../requests/verify_token/verify_token_request.dart';
+import '../response/refresh_token/refresh_token_response.dart';
 
 part 'authentication_service.g.dart';
 
@@ -30,6 +31,9 @@ abstract class AuthenticationService {
 
   @POST('/auth/resetpassword/{token}')
   Future<String> resetPassword(@Path('token') String token, @Body() ResetPasswordRequest request);
+
+  @POST('/auth/refresh-token')
+  Future<RefreshTokenResponse> refreshToken(@Body() String token);
 
   @POST('/auth/google')
   Future<UserJTO> retrieveGoogleUser(@Body() OAuthRequest request);

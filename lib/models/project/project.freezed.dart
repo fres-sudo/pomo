@@ -28,7 +28,9 @@ mixin _$Project {
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<User>? get contributors => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProjectCopyWith<Project> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -61,6 +63,8 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -154,6 +158,8 @@ class __$$ProjectImplCopyWithImpl<$Res>
       _$ProjectImpl _value, $Res Function(_$ProjectImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -319,7 +325,9 @@ class _$ProjectImpl extends _Project {
       const DeepCollectionEquality().hash(_tasks),
       const DeepCollectionEquality().hash(_contributors));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
@@ -363,8 +371,11 @@ abstract class _Project extends Project {
   List<Task>? get tasks;
   @override
   List<User>? get contributors;
+
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

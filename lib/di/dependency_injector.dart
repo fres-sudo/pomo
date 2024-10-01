@@ -28,6 +28,7 @@ import 'package:pomo/repositories/user_repository.dart';
 import 'package:pomo/services/cookies/shared_pref_storage.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/authentication/oauth_service.dart';
+import 'package:pomo/services/network/interceptors/cookie_interceptor.dart';
 import 'package:pomo/services/network/jto/stats/stats_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
 import 'package:pomo/services/network/response/sign_up/sign_up_response.dart';

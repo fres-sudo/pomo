@@ -18,50 +18,6 @@ import 'constants/theme.dart';
 import 'i18n/strings.g.dart';
 import 'services/notification/notification_service.dart';
 
-/// ----------- [Notification] ---------------
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-/// Streams are created so that app can respond to notification-related events
-/// since the plugin is initialised in the `main` function
-final StreamController<ReceivedNotification> didReceiveLocalNotificationStream = StreamController<ReceivedNotification>.broadcast();
-
-final StreamController<String?> selectNotificationStream = StreamController<String?>.broadcast();
-
-const MethodChannel platform = MethodChannel('dexterx.dev/flutter_local_notifications_example');
-
-const String portName = 'notification_send_port';
-
-class ReceivedNotification {
-  ReceivedNotification({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.payload,
-  });
-
-  final int id;
-  final String? title;
-  final String? body;
-  final String? payload;
-}
-
-String? selectedNotificationPayload;
-
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  // ignore: avoid_print
-  print('notification(${notificationResponse.id}) action tapped: '
-      '${notificationResponse.actionId} with'
-      ' payload: ${notificationResponse.payload}');
-  if (notificationResponse.input?.isNotEmpty ?? false) {
-    // ignore: avoid_print
-    print('notification action tapped with input: ${notificationResponse.input}');
-  }
-}
-
-/// ----------- [Notification] ---------------
-
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
@@ -85,6 +41,7 @@ void main() async {
 
   LocaleSettings.useDeviceLocale();
 
+
   // Remove splash screen.
   FlutterNativeSplash.remove();
 
@@ -94,14 +51,13 @@ void main() async {
 class PomoApp extends StatelessWidget {
   PomoApp({super.key});
 
-  // Initialize router.
   final appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
     return DependencyInjector(
       child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (BuildContext context, state) {
+        builder: (context, state) {
               return MaterialApp.router(
                 title: "Pomo",
                 debugShowCheckedModeBanner: false,

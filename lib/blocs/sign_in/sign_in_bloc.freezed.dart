@@ -78,6 +78,9 @@ class _$SignInEventCopyWithImpl<$Res, $Val extends SignInEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,6 +100,8 @@ class __$$PerformSignInEventImplCopyWithImpl<$Res>
       $Res Function(_$PerformSignInEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,7 +149,9 @@ class _$PerformSignInEventImpl implements PerformSignInEvent {
   @override
   int get hashCode => Object.hash(runtimeType, email, password);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PerformSignInEventImplCopyWith<_$PerformSignInEventImpl> get copyWith =>
@@ -227,7 +234,10 @@ abstract class PerformSignInEvent implements SignInEvent {
 
   String get email;
   String get password;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PerformSignInEventImplCopyWith<_$PerformSignInEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -246,6 +256,9 @@ class __$$GoogleSignInEventImplCopyWithImpl<$Res>
   __$$GoogleSignInEventImplCopyWithImpl(_$GoogleSignInEventImpl _value,
       $Res Function(_$GoogleSignInEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -354,6 +367,9 @@ class __$$AppleSignInEventImplCopyWithImpl<$Res>
   __$$AppleSignInEventImplCopyWithImpl(_$AppleSignInEventImpl _value,
       $Res Function(_$AppleSignInEventImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -532,6 +548,9 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -550,6 +569,9 @@ class __$$NotSignedInSignInStateImplCopyWithImpl<$Res>
       _$NotSignedInSignInStateImpl _value,
       $Res Function(_$NotSignedInSignInStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -679,6 +701,9 @@ class __$$SigningInSignInStateImplCopyWithImpl<$Res>
   __$$SigningInSignInStateImplCopyWithImpl(_$SigningInSignInStateImpl _value,
       $Res Function(_$SigningInSignInStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -813,6 +838,8 @@ class __$$SignedInSignInStateImplCopyWithImpl<$Res>
       $Res Function(_$SignedInSignInStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -826,6 +853,8 @@ class __$$SignedInSignInStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -859,7 +888,9 @@ class _$SignedInSignInStateImpl implements SignedInSignInState {
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignedInSignInStateImplCopyWith<_$SignedInSignInStateImpl> get copyWith =>
@@ -960,7 +991,10 @@ abstract class SignedInSignInState implements SignInState {
       _$SignedInSignInStateImpl;
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignedInSignInStateImplCopyWith<_$SignedInSignInStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -986,6 +1020,8 @@ class __$$SignedInWithGoogleSignInStateImplCopyWithImpl<$Res>
       $Res Function(_$SignedInWithGoogleSignInStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -999,6 +1035,8 @@ class __$$SignedInWithGoogleSignInStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -1033,7 +1071,9 @@ class _$SignedInWithGoogleSignInStateImpl
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignedInWithGoogleSignInStateImplCopyWith<
@@ -1135,7 +1175,10 @@ abstract class SignedInWithGoogleSignInState implements SignInState {
       _$SignedInWithGoogleSignInStateImpl;
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignedInWithGoogleSignInStateImplCopyWith<
           _$SignedInWithGoogleSignInStateImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1162,6 +1205,8 @@ class __$$SignedInWithAppleSignInStateImplCopyWithImpl<$Res>
       $Res Function(_$SignedInWithAppleSignInStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1175,6 +1220,8 @@ class __$$SignedInWithAppleSignInStateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -1209,7 +1256,9 @@ class _$SignedInWithAppleSignInStateImpl
   @override
   int get hashCode => Object.hash(runtimeType, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignedInWithAppleSignInStateImplCopyWith<
@@ -1311,7 +1360,10 @@ abstract class SignedInWithAppleSignInState implements SignInState {
       _$SignedInWithAppleSignInStateImpl;
 
   User get user;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignedInWithAppleSignInStateImplCopyWith<
           _$SignedInWithAppleSignInStateImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1336,6 +1388,8 @@ class __$$ErrorSignInSignInStateImplCopyWithImpl<$Res>
       $Res Function(_$ErrorSignInSignInStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1374,7 +1428,9 @@ class _$ErrorSignInSignInStateImpl implements ErrorSignInSignInState {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorSignInSignInStateImplCopyWith<_$ErrorSignInSignInStateImpl>
@@ -1475,7 +1531,10 @@ abstract class ErrorSignInSignInState implements SignInState {
       _$ErrorSignInSignInStateImpl;
 
   LocalizedError get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorSignInSignInStateImplCopyWith<_$ErrorSignInSignInStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

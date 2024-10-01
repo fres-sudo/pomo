@@ -6,6 +6,7 @@ import 'package:pomo/services/network/authentication/authentication_service.dart
 import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
 import 'package:pomo/services/network/requests/reset_password/reset_password_request.dart';
 import 'package:pomo/services/network/requests/verify_token/verify_token_request.dart';
+import 'package:pomo/services/network/response/refresh_token/refresh_token_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user/user.dart';
@@ -32,6 +33,12 @@ abstract class AuthenticationRepository {
   Future<void> signOut();
 
   Future<User?> get currentUser;
+
+  Future<RefreshTokenResponse> refreshToken({required String refreshToken});
+
+  Future<String?> get getRefreshToken;
+
+  Future<String?> get getAccessToken;
 }
 
 /// Implementation of the base interface AuthenticationRepository
@@ -106,6 +113,19 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return userStringMapper.to(json);
     }
     return null;
+  }
+
+
+  @override
+  Future<String?> get getAccessToken async => await secureStorage.read(key: 'access_token');
+
+  @override
+  Future<String?> get getRefreshToken async => await secureStorage.read(key: 'refresh_token');
+
+  @override
+  Future<RefreshTokenResponse> refreshToken({required String refreshToken}) async {
+    final response = await authenticationService.refreshToken(refreshToken);
+    return response;
   }
 
   @override

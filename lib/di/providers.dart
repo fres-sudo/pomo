@@ -1,12 +1,6 @@
 part of 'dependency_injector.dart';
 
 final List<SingleChildWidget> _providers = [
-  Provider<PersistCookieJar>(
-    create: (_) => PersistCookieJar(storage: SharedPrefStorage())
-  ),
-  Provider<CookieManager>(
-    create: (context) => CookieManager(context.read<PersistCookieJar>()),
-  ),
   if (kDebugMode)
     Provider<PrettyDioLogger>(
       create: (_) => PrettyDioLogger(
@@ -20,7 +14,7 @@ final List<SingleChildWidget> _providers = [
       BaseOptions(contentType: 'application/json'),
     )..interceptors.addAll([
         if (kDebugMode) context.read<PrettyDioLogger>(),
-        context.read<CookieManager>(),
+        CookieInterceptor()
       ]),
   ),
   Provider<AuthenticationService>(

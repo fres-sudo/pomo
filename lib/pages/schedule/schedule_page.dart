@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/components/widgets/dotted_divider.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/enum.dart';
 import 'package:pomo/constants/styles.dart';
@@ -85,6 +86,9 @@ class _SchedulePageState extends State<SchedulePage> {
                   context.read<NotificationCubit>().removeScheduledNotification(task.id ?? "");
                 }
               }
+            }
+            if(state.error != null){
+              onErrorState(context, state.error!.localizedString(context));
             }
             context.read<ScheduleCubit>().setSelectedTasks(
                 tasks: state.tasks.where((t) => isSameDay(t.dueDate, context.read<ScheduleCubit>().state.selectedDay)).toList(growable: false));

@@ -32,6 +32,7 @@ const kServerConnectionIP =
     //"https://pomo-fres-sudos-projects.vercel.app/api/v1";
     //"https://pomo.fres.space/api/v1";
 const maxTimeExceedRequest = 10;
+
 var logger = Logger(
   printer: PrettyPrinter(
       errorMethodCount: 8,

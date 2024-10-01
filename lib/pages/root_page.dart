@@ -13,15 +13,8 @@ import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
 
 @RoutePage()
-class RootPage extends StatefulWidget {
+class RootPage extends StatelessWidget {
   const RootPage({super.key});
-
-  @override
-  State<RootPage> createState() => _RootPageState();
-}
-
-class _RootPageState extends State<RootPage> {
-
 
   @override
   Widget build(BuildContext context) {
