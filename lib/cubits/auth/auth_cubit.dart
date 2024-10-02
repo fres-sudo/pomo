@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:async';
 
+import '../../constants/constants.dart';
 import '../../models/user/user.dart';
 import '../../repositories/authentication_repository.dart';
 
@@ -19,6 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   /// Method used to perform the [checkAuthentication] action
   FutureOr<void> checkAuthentication() async {
     final user = await authenticationRepository.currentUser;
+
     emit(user != null
         ? AuthState.authenticated(user)
         : const AuthState.notAuthenticated());

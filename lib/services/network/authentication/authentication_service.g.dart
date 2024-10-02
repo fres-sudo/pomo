@@ -22,12 +22,12 @@ class _AuthenticationService implements AuthenticationService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<UserJTO> signIn(SignInRequest request) async {
+  Future<SignInResponse> signIn(SignInRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<UserJTO>(Options(
+    final _options = _setStreamType<SignInResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -44,9 +44,9 @@ class _AuthenticationService implements AuthenticationService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserJTO _value;
+    late SignInResponse _value;
     try {
-      _value = UserJTO.fromJson(_result.data!);
+      _value = SignInResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -190,11 +190,12 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<RefreshTokenResponse> refreshToken(String token) async {
+  Future<RefreshTokenResponse> refreshToken(
+      RefreshTokenRequest refreshToken) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = token;
+    final _data = refreshToken;
     final _options = _setStreamType<RefreshTokenResponse>(Options(
       method: 'POST',
       headers: _headers,
@@ -223,12 +224,12 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<UserJTO> retrieveGoogleUser(OAuthRequest request) async {
+  Future<SignInResponse> retrieveGoogleUser(OAuthRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<UserJTO>(Options(
+    final _options = _setStreamType<SignInResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -245,9 +246,9 @@ class _AuthenticationService implements AuthenticationService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserJTO _value;
+    late SignInResponse _value;
     try {
-      _value = UserJTO.fromJson(_result.data!);
+      _value = SignInResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -256,12 +257,12 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<UserJTO> retrieveAppleUser(OAuthRequest request) async {
+  Future<SignInResponse> retrieveAppleUser(OAuthRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = request;
-    final _options = _setStreamType<UserJTO>(Options(
+    final _options = _setStreamType<SignInResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -278,9 +279,9 @@ class _AuthenticationService implements AuthenticationService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserJTO _value;
+    late SignInResponse _value;
     try {
-      _value = UserJTO.fromJson(_result.data!);
+      _value = SignInResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

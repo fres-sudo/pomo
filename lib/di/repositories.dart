@@ -4,14 +4,14 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<AuthenticationRepository>(create: (context) {
     final authenticationRepository = AuthenticationRepositoryImpl(
       signUpMapper: context.read(),
-      secureStorage: context.read(),
       authenticationService: context.read(),
-      userStringMapper: context.read(),
       userMapper: context.read(),
+      storageService: context.read()
     );
     context.read<Dio>().interceptors.insert(
           0,
           AuthInterceptor(
+            dio: context.read<Dio>(),
             authenticationRepository: authenticationRepository,
           ),
         );
@@ -32,7 +32,7 @@ final List<RepositoryProvider> _repositories = [
       authenticationService: context.read(),
       oAuthService: context.read(),
       userStringMapper: context.read(),
-      secureStorage: context.read(),
+      storageService: context.read(),
     );
     return oAuthRepository;
   }),

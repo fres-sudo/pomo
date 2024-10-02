@@ -51,15 +51,10 @@ class _SchedulePageState extends State<SchedulePage> {
       listeners: [
         BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
-            print("AUTH STATE: ${state.runtimeType}");
-            if(state is AuthenticatedAuthState){
-              print("ENTERED");
-              context.read<TaskBloc>().fetch(userId: state.user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
-              context.read<ProjectBloc>().getProjectsByUser(userId: state.user.id);
-            }
             state.whenOrNull(
             authenticated: (user) {
-
+              context.read<TaskBloc>().fetch(userId: user.id, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
+              context.read<ProjectBloc>().getProjectsByUser(userId: user.id);
             },
           );}
         ),

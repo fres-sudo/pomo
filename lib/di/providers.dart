@@ -14,8 +14,13 @@ final List<SingleChildWidget> _providers = [
       BaseOptions(contentType: 'application/json'),
     )..interceptors.addAll([
         if (kDebugMode) context.read<PrettyDioLogger>(),
-        CookieInterceptor()
       ]),
+  ),
+  Provider<FlutterSecureStorage>(
+    create: (_) => const FlutterSecureStorage(),
+  ),
+  Provider<StorageService>(
+    create: (context) => StorageService(userStringMapper: context.read(), secureStorage: context.read()),
   ),
   Provider<AuthenticationService>(
     create: (context) => AuthenticationService(
@@ -25,11 +30,10 @@ final List<SingleChildWidget> _providers = [
   ),
   Provider<OAuthService>(
     create: (context) => OAuthServiceImpl(
-      appleSignInFactory: ({required scopes, nonce}) =>
-          SignInWithApple.getAppleIDCredential(
-            scopes: scopes,
-            nonce: nonce,
-          ),
+      appleSignInFactory: ({required scopes, nonce}) => SignInWithApple.getAppleIDCredential(
+        scopes: scopes,
+        nonce: nonce,
+      ),
       googleSignInFactory: (scopes) => GoogleSignIn(
         clientId: Platform.isIOS ? googleClientId : null,
         scopes: scopes,
@@ -60,25 +64,4 @@ final List<SingleChildWidget> _providers = [
       baseUrl: kServerConnectionIP,
     ),
   ),
-  Provider<FlutterSecureStorage>(
-    create: (_) => const FlutterSecureStorage(),
-  ),
-
 ];
-
-Future<PersistCookieJar> createPersistCookieJar() async {
-  try {
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
-    final String cookiePath = path.join(appDocPath, "/.cookies");
-
-    await Directory(cookiePath).create(recursive: true);
-
-    return PersistCookieJar(
-      ignoreExpires: true,
-      storage: FileStorage(cookiePath),
-    );
-  } catch (e) {
-    throw Exception('Failed to create PersistCookieJar: $e');
-  }
-}
