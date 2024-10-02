@@ -41,11 +41,6 @@ class ProjectCard extends StatelessWidget {
   ProjectStatus _getStatus(Project project) {
     int completedTask = project.tasks?.map((task) => task.completedAt != null || task.pomodoro == task.pomodoroCompleted).toList().length ?? 0;
     int totalTasks = project.tasks?.length ?? 0;
-    print("---------------");
-    print("proj: ${project.name}");
-    print("completedTask : ${completedTask}");
-    print("totalTask: ${totalTasks}");
-    print("completedAt : ${project.completedAt}");
 
     if(!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks){
       return ProjectStatus.expired;

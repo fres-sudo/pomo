@@ -31,6 +31,13 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> {
   final TextEditingController searchController = TextEditingController();
 
+  @override
+  initState(){
+    final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+    context.read<ProjectBloc>().getProjectsByUser(userId: userId);
+    super.initState();
+  }
+
   List<Project> _getFilteredProjects(List<Project> projects, String searchQuery, FilterProjectState filterState) {
     List<Project> filteredProjects = projects.where((project) => project.name.toLowerCase().contains(searchQuery.toLowerCase())).toList();
 

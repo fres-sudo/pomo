@@ -5,6 +5,7 @@ import 'package:pomo/services/network/requests/o_auth/o_auth_request.dart';
 import '../models/user/user.dart';
 import '../services/network/authentication/oauth_service.dart';
 import '../services/network/jto/user/user_jto.dart';
+import '../services/storage/storage_service.dart';
 
 /// Abstract class of AuthenticationRepository
 abstract class OAuthRepository {
@@ -21,14 +22,14 @@ class OAuthRepositoryImpl implements OAuthRepository {
     required this.userMapper,
     required this.oAuthService,
     required this.userStringMapper,
-    required this.secureStorage,
+    required this.storageService
   });
 
   final OAuthService oAuthService;
   final AuthenticationService authenticationService;
   final Mapper<User, String> userStringMapper;
   final DTOMapper<UserJTO, User> userMapper;
-  final FlutterSecureStorage secureStorage;
+  final StorageService storageService;
 
   @override
   Future<User> signInWithApple() async {
@@ -39,11 +40,11 @@ class OAuthRepositoryImpl implements OAuthRepository {
               email: googleAccount?.email ?? "",
               avatar: googleAccount?.photoUrl
           ));
-      final user = userMapper.fromDTO(response);
-      await secureStorage.write(
-        key: 'user_data',
-        value: userStringMapper.from(user),
-      );
+      final user = userMapper.fromDTO(response.user);
+
+      await storageService.storeRefreshToken(response.refreshToken);
+      await storageService.storeAccessToken(response.accessToken);
+      await storageService.storeUserData(user: user);
 
       return user;
   }
@@ -58,11 +59,11 @@ class OAuthRepositoryImpl implements OAuthRepository {
               avatar: googleAccount?.photoUrl,
               providerUserId: googleAccount?.id ?? '',
           ));
-      final user = userMapper.fromDTO(response);
-      await secureStorage.write(
-        key: 'user_data',
-        value: userStringMapper.from(user),
-      );
+      final user = userMapper.fromDTO(response.user);
+
+      await storageService.storeRefreshToken(response.refreshToken);
+      await storageService.storeAccessToken(response.accessToken);
+      await storageService.storeUserData(user: user);
 
       return user;
   }

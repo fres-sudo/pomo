@@ -1,12 +1,13 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:pine/pine.dart';
-import 'package:pomo/services/cookies/shared_pref_storage.dart';
+import 'package:pomo/constants/constants.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
+import 'package:pomo/services/network/requests/refresh_token/refresh_token_request.dart';
 import 'package:pomo/services/network/requests/reset_password/reset_password_request.dart';
 import 'package:pomo/services/network/requests/verify_token/verify_token_request.dart';
 import 'package:pomo/services/network/response/refresh_token/refresh_token_response.dart';
+import 'package:pomo/services/storage/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user/user.dart';
@@ -47,30 +48,29 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required this.userMapper,
     required this.authenticationService,
     required this.signUpMapper,
-    required this.userStringMapper,
-    required this.secureStorage,
+    required this.storageService,
   });
 
   final AuthenticationService authenticationService;
   final DTOMapper<SignUpResponse, User> signUpMapper;
-  final Mapper<User, String> userStringMapper;
   final DTOMapper<UserJTO, User> userMapper;
-  final FlutterSecureStorage secureStorage;
+  final StorageService storageService;
 
   @override
   Future<User> signIn({
     required String email,
     required String password,
   }) async {
-      final request = SignInRequest(email: email, password: password);
-      final response = await authenticationService.signIn(request);
+    final request = SignInRequest(email: email, password: password);
+    final response = await authenticationService.signIn(request);
 
-    final user = userMapper.fromDTO(response);
+    final user = userMapper.fromDTO(response.user);
 
-    await secureStorage.write(
-      key: 'user_data',
-      value: userStringMapper.from(user),
-    );
+    logger.i(response);
+
+    await storageService.storeRefreshToken(response.refreshToken);
+    await storageService.storeAccessToken(response.accessToken);
+    await storageService.storeUserData(user: user);
 
     return user;
   }
@@ -97,34 +97,27 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<void> signOut() async {
-   await secureStorage.deleteAll();
-   final sharedPref = await SharedPreferences.getInstance();
-   final sharedStorage =  SharedPrefStorage();
-   await HydratedBloc.storage.delete("focusTime");
-   await HydratedBloc.storage.delete("breakTime");
-   await sharedPref.clear();
-   await sharedStorage.clear();
+    await storageService.clearStorageWithoutFirstSeen();
+    final sharedPref = await SharedPreferences.getInstance();
+    await HydratedBloc.storage.delete("focusTime");
+    await HydratedBloc.storage.delete("breakTime");
+    await sharedPref.clear();
   }
 
   @override
-  Future<User?> get currentUser async {
-    final json = await secureStorage.read(key: 'user_data');
-    if (json != null) {
-      return userStringMapper.to(json);
-    }
-    return null;
-  }
-
+  Future<User?> get currentUser async => await storageService.userData;
 
   @override
-  Future<String?> get getAccessToken async => await secureStorage.read(key: 'access_token');
+  Future<String?> get getAccessToken async => await storageService.accessToken;
 
   @override
-  Future<String?> get getRefreshToken async => await secureStorage.read(key: 'refresh_token');
+  Future<String?> get getRefreshToken async => await storageService.refreshToken;
 
   @override
   Future<RefreshTokenResponse> refreshToken({required String refreshToken}) async {
-    final response = await authenticationService.refreshToken(refreshToken);
+    final response = await authenticationService.refreshToken(RefreshTokenRequest(refreshToken: refreshToken));
+    await storageService.storeAccessToken(response.accessToken);
+    await storageService.storeRefreshToken(response.refreshToken);
     return response;
   }
 

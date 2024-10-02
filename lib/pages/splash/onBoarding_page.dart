@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/routes/app_router.gr.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pomo/services/storage/storage_service.dart';
 import 'package:auto_route/auto_route.dart';
 
 import '../../i18n/strings.g.dart';
@@ -97,11 +98,7 @@ class OnBoardingPage extends StatelessWidget {
               ],
             ),
           ],
-          onFinish: () async {
-            var storage = await SharedPreferences.getInstance();
-            await storage.setBool("is_not_first_log", true).whenComplete(
-                    () => context.pushRoute(const LoginRoute()));
-          },
+          onFinish: () async => await context.read<StorageService>().setFirstAccess().whenComplete(() => context.router.push(const LoginRoute()))
       );
   }
 }

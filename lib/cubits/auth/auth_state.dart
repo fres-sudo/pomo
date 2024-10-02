@@ -9,5 +9,4 @@ class AuthState with _$AuthState {
   
   const factory AuthState.checkingAuthentication() = CheckingAuthenticationAuthState;
 
-
 }

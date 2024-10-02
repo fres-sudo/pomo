@@ -31,7 +31,8 @@ class ProfilePicture extends StatelessWidget {
                     )));
           }
         },
-        orElse: () => const CircleAvatar(
+        orElse: () => CircleAvatar(
+          radius: width / 2,
           backgroundImage: AssetImage(
               "assets/images/propic-placeholder.jpg"),
         ));

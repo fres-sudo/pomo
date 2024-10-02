@@ -43,17 +43,7 @@ class RootPage extends StatelessWidget {
               ),
               child: BottomNavigationBar(
                 currentIndex: tabsRouter.activeIndex,
-                onTap: (value) {
-                  tabsRouter.setActiveIndex(value);
-                  final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-                  if (value == 0) {
-                    context.read<TaskBloc>().fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, type: FetchType.month);
-                    context.read<ProjectBloc>().getProjectsByUser(userId: userId);
-                  }
-                  if (value == 1 && tabsRouter.activeIndex == 1) {
-                    context.router.replace(const ProjectRoute());
-                  }
-                },
+                onTap: (value) => tabsRouter.setActiveIndex(value),
                 items: [
                   BottomNavigationBarItem(
                       activeIcon: const Icon(Icons.edit_calendar_rounded),
