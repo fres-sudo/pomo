@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/constants/constants.dart';
@@ -40,6 +42,9 @@ abstract class AuthenticationRepository {
   Future<String?> get getRefreshToken;
 
   Future<String?> get getAccessToken;
+
+  Stream<bool> get authStatusStream;
+
 }
 
 /// Implementation of the base interface AuthenticationRepository
@@ -50,6 +55,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required this.signUpMapper,
     required this.storageService,
   });
+
+  final _authController = StreamController<bool>.broadcast();
+
+  void notifySignedOut() => _authController.add(false); // false == not authenticated
 
   final AuthenticationService authenticationService;
   final DTOMapper<SignUpResponse, User> signUpMapper;
@@ -65,8 +74,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     final response = await authenticationService.signIn(request);
 
     final user = userMapper.fromDTO(response.user);
-
-    logger.i(response);
 
     await storageService.storeRefreshToken(response.refreshToken);
     await storageService.storeAccessToken(response.accessToken);
@@ -102,6 +109,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     await HydratedBloc.storage.delete("focusTime");
     await HydratedBloc.storage.delete("breakTime");
     await sharedPref.clear();
+    _authController.add(false); // Notify listeners that the user is signed out
   }
 
   @override
@@ -133,5 +141,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<String> verifyToken({required String token, required String email}) async {
     final result = await authenticationService.verifyToken(VerifyTokenRequest(email: email, token: token));
     return result;
+  }
+
+  @override
+  Stream<bool> get authStatusStream => _authController.stream;
+
+  void dispose() {
+    _authController.close();
   }
 }
