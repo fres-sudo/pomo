@@ -8,10 +8,9 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
+        initial: true,
         page: RootRoute.page,
         guards: [ OnBoardingGuard(), AuthGuard() ],
-        initial: true,
-        fullscreenDialog: true,
         children: [
           AutoRoute(page: ProjectNavigation.page, fullscreenDialog: true,children: [
             CustomRoute(page: ProjectRoute.page, transitionsBuilder: TransitionsBuilders.fadeIn, initial: true, fullscreenDialog: true),

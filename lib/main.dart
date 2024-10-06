@@ -4,9 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
@@ -21,8 +19,7 @@ import 'services/notification/notification_service.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
-  // Preserving splash screen.
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   SystemChrome.setPreferredOrientations([
@@ -43,7 +40,7 @@ void main() async {
 
 
   // Remove splash screen.
-  FlutterNativeSplash.remove();
+  //FlutterNativeSplash.remove();
 
   runApp(TranslationProvider(child: PomoApp()));
 }

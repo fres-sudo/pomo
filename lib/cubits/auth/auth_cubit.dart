@@ -14,8 +14,18 @@ part 'auth_cubit.freezed.dart';
 class AuthCubit extends Cubit<AuthState> {
 
   final AuthenticationRepository authenticationRepository;
-  /// Create a new instance of [AuthCubit].
-  AuthCubit({required this.authenticationRepository}) : super(const AuthState.notAuthenticated());
+  late final StreamSubscription<bool> _authStatusSubscription;
+
+  AuthCubit({required this.authenticationRepository})
+      : super(const AuthState.notAuthenticated()) {
+    _authStatusSubscription = authenticationRepository.authStatusStream.listen((isAuthenticated) {
+      print("skilla1");
+      if (!isAuthenticated) {
+        print("skilla2");
+        emit(const AuthState.notAuthenticated());
+      }
+    });
+  }
 
   /// Method used to perform the [checkAuthentication] action
   FutureOr<void> checkAuthentication() async {
@@ -32,9 +42,11 @@ class AuthCubit extends Cubit<AuthState> {
   /// Method used to perform the [signOut] action
   FutureOr<void>  signOut() async {
     await authenticationRepository.signOut();
-
-
-    emit(const AuthState.notAuthenticated());
   }
-  
+
+  @override
+  Future<void> close() {
+    _authStatusSubscription.cancel();
+    return super.close();
+  }
 }

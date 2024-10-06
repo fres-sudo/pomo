@@ -1,12 +1,13 @@
 
 import 'package:dio/dio.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
   final AuthenticationRepository authenticationRepository;
   final Dio dio;
 
-  AuthInterceptor({required this.authenticationRepository, required this.dio});
+  AuthInterceptor({required this.authenticationRepository, required this.dio,});
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
@@ -22,23 +23,14 @@ class AuthInterceptor extends QueuedInterceptor {
     // Check if the error is due to an expired access token (401 Unauthorized)
     if (err.response?.statusCode == 401) {
       try {
-        // Attempt to refresh the token
         final refreshToken = await authenticationRepository.getRefreshToken;
-        if (refreshToken != null) {
-          final tokenResponse = await authenticationRepository.refreshToken(refreshToken: refreshToken);
-          // Retry the failed request with the new access token
-          final clonedRequest = await _retryRequest(err.requestOptions, tokenResponse.accessToken);
-          return handler.resolve(clonedRequest);
-        }
-      } catch (e) {
-        // Handle refresh token failure (e.g., logging out the user)
-        handler.reject(DioException(
-          requestOptions: err.requestOptions,
-          error: "failed-to-refresh-token",
-        ));
+        final tokenResponse = await authenticationRepository.refreshToken(refreshToken: refreshToken ?? "");
+        final clonedRequest = await _retryRequest(err.requestOptions, tokenResponse.accessToken);
+        return handler.resolve(clonedRequest);
+      } catch (_) {
+        authenticationRepository.signOut();
       }
     }
-    // For all other errors, pass the error to the next handler
     return super.onError(err, handler);
   }
 

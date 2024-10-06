@@ -27,7 +27,6 @@ import 'package:pomo/repositories/task_repository.dart';
 import 'package:pomo/repositories/user_repository.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/authentication/oauth_service.dart';
-import 'package:pomo/services/network/interceptors/cookie_interceptor.dart';
 import 'package:pomo/services/network/jto/stats/stats_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
 import 'package:pomo/services/network/response/sign_up/sign_up_response.dart';
@@ -59,7 +58,6 @@ import '../services/network/jto/project/project_jto.dart';
 import '../services/network/jto/user/user_jto.dart';
 import '../services/network/project/project_service.dart';
 import '../services/network/task/task_service.dart';
-import 'package:path/path.dart' as path;
 
 part 'blocs.dart';
 

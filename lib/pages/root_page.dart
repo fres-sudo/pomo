@@ -18,83 +18,122 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter(
-      routes: const [
-        ScheduleRoute(),
-        ProjectNavigation(),
-        QuickSessionRoute(),
-        StatsRoute(),
-        ProfileRoute()
-      ],
-      builder: (context, child) {
-        final tabsRouter = AutoTabsRouter.of(context);
-        return Scaffold(
-          body: child,
-          bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(color: Colors.black12, spreadRadius: 10, blurRadius: 50),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-              child: BottomNavigationBar(
-                currentIndex: tabsRouter.activeIndex,
-                onTap: (value) => tabsRouter.setActiveIndex(value),
-                items: [
-                  BottomNavigationBarItem(
-                      activeIcon: const Icon(Icons.edit_calendar_rounded),
-                      icon: Icon(
-                        Icons.edit_calendar_rounded,
-                        color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
-                      ),label: t.general.schedule),
-                  BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset(
-                      'assets/icons/nav-bar/Light/Document.svg',
-                      colorFilter:
-                          ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                    ),
-                    icon: SvgPicture.asset(
-                      'assets/icons/nav-bar/Light/Document.svg',
-                      colorFilter:
-                          ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                    ),
-                    label: t.projects.title
-                  ),
-                  BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset('assets/icons/nav-bar/Light/Play.svg',  colorFilter:
-                      ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      icon: SvgPicture.asset(
-                        'assets/icons/nav-bar/Light/Play.svg',
-                        colorFilter:
-                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ), label: t.general.session),
-                  BottomNavigationBarItem(
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/nav-bar/Light/Graph.svg',
-                        colorFilter:
-                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ),
-                      icon: SvgPicture.asset(
-                        'assets/icons/nav-bar/Light/Graph.svg',
-                        colorFilter:
-                            ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
-                      ), label: t.stats.title),
-                  BottomNavigationBarItem(
-                      icon: const ProfilePicture(
-                        width: 24,
-                        height: 24,
-                      ), label: t.profile.title),
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        state.whenOrNull(authenticated: (user) {
+          print("AUTHENTICATED");
+          context.router.replace(RootRoute());
+        }, notAuthenticated: () {
+          print("skilla3");
+          context.router.replace(RootRoute());
+        });
+      },
+      child: AutoTabsRouter(
+        routes: const [
+          ScheduleRoute(),
+          ProjectNavigation(),
+          QuickSessionRoute(),
+          StatsRoute(),
+          ProfileRoute()
+        ],
+        builder: (context, child) {
+          final tabsRouter = AutoTabsRouter.of(context);
+          return Scaffold(
+            body: child,
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(color: Colors.black12, spreadRadius: 10, blurRadius: 50),
                 ],
               ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+                child: BottomNavigationBar(
+                  currentIndex: tabsRouter.activeIndex,
+                  onTap: (value) => tabsRouter.setActiveIndex(value),
+                  items: [
+                    BottomNavigationBarItem(
+                        activeIcon: const Icon(Icons.edit_calendar_rounded),
+                        icon: Icon(
+                          Icons.edit_calendar_rounded,
+                          color: Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .unselectedIconTheme
+                              ?.color ?? Colors.white,
+                        ), label: t.general.schedule),
+                    BottomNavigationBarItem(
+                        activeIcon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Document.svg',
+                          colorFilter:
+                          ColorFilter.mode(Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .selectedIconTheme
+                              ?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        icon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Document.svg',
+                          colorFilter:
+                          ColorFilter.mode(Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .unselectedIconTheme
+                              ?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        label: t.projects.title
+                    ),
+                    BottomNavigationBarItem(
+                        activeIcon: SvgPicture.asset('assets/icons/nav-bar/Light/Play.svg', colorFilter:
+                        ColorFilter.mode(Theme
+                            .of(context)
+                            .bottomNavigationBarTheme
+                            .selectedIconTheme
+                            ?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        icon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Play.svg',
+                          colorFilter:
+                          ColorFilter.mode(Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .unselectedIconTheme
+                              ?.color ?? Colors.white, BlendMode.srcIn),
+                        ), label: t.general.session),
+                    BottomNavigationBarItem(
+                        activeIcon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Graph.svg',
+                          colorFilter:
+                          ColorFilter.mode(Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .selectedIconTheme
+                              ?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        icon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Graph.svg',
+                          colorFilter:
+                          ColorFilter.mode(Theme
+                              .of(context)
+                              .bottomNavigationBarTheme
+                              .unselectedIconTheme
+                              ?.color ?? Colors.white, BlendMode.srcIn),
+                        ), label: t.stats.title),
+                    BottomNavigationBarItem(
+                        icon: const ProfilePicture(
+                          width: 24,
+                          height: 24,
+                        ), label: t.profile.title),
+                  ],
+                ),
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
