@@ -1,7 +1,5 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:pomo/constants/constants.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
@@ -41,7 +39,7 @@ class AuthInterceptor extends QueuedInterceptor {
       }
     }
     // For all other errors, pass the error to the next handler
-    handler.next(err);
+    return super.onError(err, handler);
   }
 
   Future<Response> _retryRequest(RequestOptions requestOptions, String accessToken) async {
@@ -49,7 +47,7 @@ class AuthInterceptor extends QueuedInterceptor {
     headers['Authorization'] = 'Bearer $accessToken';
 
     return dio.request(
-      requestOptions.path,
+      '${requestOptions.baseUrl}${requestOptions.path}',
       options: Options(
         method: requestOptions.method,
         headers: headers,

@@ -92,6 +92,7 @@ class _TaskCardState extends State<TaskCard> {
           ],
         ),
         child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             showModalBottomSheet(
                 useRootNavigator: true,
