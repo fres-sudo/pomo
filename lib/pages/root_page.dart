@@ -21,10 +21,8 @@ class RootPage extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         state.whenOrNull(authenticated: (user) {
-          print("AUTHENTICATED");
           context.router.replace(RootRoute());
         }, notAuthenticated: () {
-          print("skilla3");
           context.router.replace(RootRoute());
         });
       },

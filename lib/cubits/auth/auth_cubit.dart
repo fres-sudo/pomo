@@ -19,9 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.authenticationRepository})
       : super(const AuthState.notAuthenticated()) {
     _authStatusSubscription = authenticationRepository.authStatusStream.listen((isAuthenticated) {
-      print("skilla1");
       if (!isAuthenticated) {
-        print("skilla2");
         emit(const AuthState.notAuthenticated());
       }
     });
