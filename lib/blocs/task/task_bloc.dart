@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pomo/constants/constants.dart';
-import 'package:pomo/constants/enum.dart';
-import 'package:pomo/error/tasks_error.dart';
+import 'package:table_calendar/table_calendar.dart';
 
+import '../../constants/constants.dart';
 import '../../error/localized.dart';
+import '../../error/tasks_error.dart';
 import '../../models/task/task.dart';
 import '../../repositories/task_repository.dart';
 
@@ -27,7 +27,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<DeleteTaskByIdTaskEvent>(_onDeleteTaskById);
     on<SetTasksTaskEvent>(_onSetTasks);
     on<GetTasksByProjectTaskEvent>(_onGetTasksByProject);
-    on<GetTasksByDayTaskEvent>(_onGetTasksByDay);
+    on<FetchTasksEvent>(_onFetchTasks);
   }
 
   /// Method used to add the [SetTasksTaskEvent] event
@@ -46,7 +46,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   void getByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
 
   /// Method used to add the [GetTasksByDayTaskEvent] event
-  void fetch({required String userId, required DateTime date, required FetchType type}) => add(TaskEvent.fetchTasks(userId: userId, date: date, type: type));
+  void fetch({required String userId, required DateTime date, required CalendarFormat format}) => add(TaskEvent.fetchTasks(userId: userId, date: date, format: format));
 
   FutureOr<void> _onSetTasks(
       SetTasksTaskEvent event,
@@ -65,7 +65,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final tasks = List<Task>.from(state.tasks);
       tasks.add(newTask);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.create, tasks: tasks));
-    } catch (_) {
+    }  catch (error, stack) {
+      logger.e("_onCreateTask", error: error, stackTrace: stack);
       emit(state.copyWith(isLoading: false, error: CreatingTasksError()));
     }
   }
@@ -81,8 +82,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       tasks.removeWhere((t) => t.id == event.id);
       tasks.add(updatedTask);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.update, tasks: tasks));
-      logger.i(state.tasks);
-    } catch (_) {
+    }  catch (error, stack) {
+      logger.e("_onUpdateTaskById", error: error, stackTrace: stack);
       emit(state.copyWith(isLoading: false, error: UpdatingTasksError()));
     }
   }
@@ -97,7 +98,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final tasks = List<Task>.from(state.tasks);
       tasks.removeWhere((t) => t.id == event.id);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.delete, tasks: tasks));
-    } catch (_) {
+    } catch (error, stack) {
+      logger.e("_onDeleteTaskById", error: error, stackTrace: stack);
       emit(state.copyWith(isLoading: false, error: DeletingTasksError()));
     }
   }
@@ -110,20 +112,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     try {
       final tasks = await taskRepository.getTasksByProject(projectId: event.projectId);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.read, tasks:tasks));
-    } catch (_) {
+    } catch (error, stack) {
+      logger.e("_onGetTasksByProject", error: error, stackTrace: stack);
       emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
     }
   }
 
-  FutureOr<void> _onGetTasksByDay(
-    GetTasksByDayTaskEvent event,
+  FutureOr<void> _onFetchTasks(
+    FetchTasksEvent event,
     Emitter<TaskState> emit,
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, type: event.type);
+      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, format: event.format);
       emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.readByDay, tasks:tasks));
-    } catch (_) {
+    } catch (error, stack) {
+      logger.e("_onFetchTasks", error: error, stackTrace: stack);
       emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
     }
   }

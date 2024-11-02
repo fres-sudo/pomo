@@ -31,7 +31,7 @@ class NameField extends StatelessWidget {
         if (value == null ||
             value.isEmpty ||
             value.length < 3) {
-          return t.errors.form.valid(name: hintText);
+          return t.errors.form.valid(name: hintText.toLowerCase());
         }
         return null;
       },

@@ -162,7 +162,9 @@
       "welcome" : "Bentornato!",
       "description" : "Al tuo account per rimetterti in sesto con i tuoi lavori!",
       "forgot_password" : "Hai dimenticato la password?",
-      "dont_have_an_account" : "Non hai un account?"
+      "dont_have_an_account" : "Non hai un account?",
+      "google" : "Continua con Google",
+      "apple" : "Continua con Apple"
     },
     "signup": {
       "title" : "Registrati",

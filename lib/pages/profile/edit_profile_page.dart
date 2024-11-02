@@ -21,6 +21,7 @@ import '../../constants/text.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
 import '../../routes/app_router.gr.dart';
+import '../../services/storage/storage_service.dart';
 
 @RoutePage()
 class EditProfilePage extends StatefulWidget {
@@ -35,25 +36,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
   XFile? image;
-
-  Future<void> updateUserSecureStorage({String? username, String? photo}) async {
-    const storage = FlutterSecureStorage();
-    final String? userDataString = await storage.read(key: "user_data");
-
-    if (userDataString != null) {
-      Map<String, dynamic> userData = json.decode(userDataString);
-
-      if (username != null) {
-        userData['username'] = username;
-      }
-
-      if (photo != null && photo.isNotEmpty) {
-        userData['avatar'] = photo;
-      }
-
-      await storage.write(key: "user_data", value: json.encode(userData));
-    }
-  }
 
   @override
   void initState() {
@@ -77,8 +59,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           context.router.replace(const RootRoute());
         }
         if(state.operation == UserOperation.updated || state.operation == UserOperation.updatedImage){
-          updateUserSecureStorage(photo: state.user!.avatar);
-          print("USER 1STATE: ${state.user!}");
+          context.read<StorageService>().updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
           onSuccessState(context, state.operation == UserOperation.updatedImage ? t.profile.settings.update.updated_photo : t.profile.settings.update.updated_info);
           context.read<AuthCubit>().authenticated(state.user!);
         }
@@ -251,7 +232,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           isDismissible: true,
                           useRootNavigator: true,
                           builder: (BuildContext context) => DestructionBottomSheet(
-                                height: 250,
                                 title: t.profile.settings.delete_account.title,
                                 buttonText: t.general.delete,
                                 description: t.profile.settings.delete_account.description,

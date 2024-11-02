@@ -224,7 +224,7 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<SignInResponse> retrieveGoogleUser(OAuthRequest request) async {
+  Future<SignInResponse> retrieveGoogleUser(OAuthGoogleRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -257,7 +257,7 @@ class _AuthenticationService implements AuthenticationService {
   }
 
   @override
-  Future<SignInResponse> retrieveAppleUser(OAuthRequest request) async {
+  Future<SignInResponse> retrieveAppleUser(OAuthAppleRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

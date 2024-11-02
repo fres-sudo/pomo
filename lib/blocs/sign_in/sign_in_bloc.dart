@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pomo/constants/constants.dart';
 import 'package:pomo/error/auth_error.dart';
 import 'package:pomo/error/localized.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
@@ -56,9 +57,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         password: event.password,
       );
       emit(SignInState.signedIn(user));
-    } on DioException catch (error) {
+    } on DioException catch (error, stack) {
+      logger.e("_onPerform", error: error, stackTrace: stack);
       emit(SignInState.errorSignIn(AuthError.fromMessage(error.response?.data)));
-    } catch (e) {
+    } catch (e, stack) {
+      logger.e("_onPerform", error: e, stackTrace: stack);
       emit(SignInState.errorSignIn(GeneralSignInError()));
     }
   }
@@ -71,7 +74,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     try {
       final user = await oAuthRepository.signInWithGoogle();
       emit(SignInState.signedInWithGoogle(user));
-    } catch (_) {
+    } catch (e, stack) {
+      logger.e("_onGoogleSignIn", error: e, stackTrace: stack);
       emit(SignInState.errorSignIn(GeneralSignInError()));
     }
   }
@@ -82,9 +86,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) async {
     emit(const SignInState.signingIn());
     try {
-      final user = await oAuthRepository.signInWithGoogle();
+      final user = await oAuthRepository.signInWithApple();
       emit(SignInState.signedInWithApple(user));
-    } catch (_) {
+    } catch (e, stack) {
+      logger.e("_onAppleSignIn", error: e.toString(), stackTrace: stack);
       emit(SignInState.errorSignIn(GeneralSignInError()));
     }
   }

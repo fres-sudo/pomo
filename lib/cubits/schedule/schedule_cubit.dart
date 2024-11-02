@@ -14,15 +14,14 @@ part 'schedule_state.dart';
 class ScheduleCubit extends Cubit<ScheduleState> {
   ScheduleCubit() : super(ScheduleState.initial());
 
-  void onDaySelected({required DateTime selectedDay, required DateTime focusedDay, required VoidCallback onFetch, required VoidCallback onNoFetch}) {
-    final bool isSameMonth = selectedDay.month == state.selectedDay.month;
+  void onDaySelected({required DateTime selectedDay, required DateTime focusedDay, VoidCallback? onPress}) {
     if (!isSameDay(state.selectedDay, selectedDay)) {
       emit(state.copyWith(
         selectedDay: selectedDay,
         focusedDay: focusedDay,
       ));
     }
-    isSameMonth ? onNoFetch() : onFetch();
+    onPress?.call();
  }
 
   void changeCalendarFormat({required CalendarFormat format}) => emit(state.copyWith(calendarFormat: format));

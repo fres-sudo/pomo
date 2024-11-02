@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../jto/task/task_jto.dart';
 
@@ -21,7 +22,7 @@ abstract class TaskService {
   Future<TaskJTO> deleteTaskById(@Path('taskId') String id);
 
   @GET('/tasks/user')
-  Future<List<TaskJTO>> getTasksByDay(@Query('userId') String userId, @Query('date') String date, @Query('type') String type);
+  Future<List<TaskJTO>> getScheduledTask(@Query('userId') String userId, @Query('date') String date, @Query('format') CalendarFormat format);
 
   @GET('/tasks/project/{projectId}')
   Future<List<TaskJTO>> getTasksByProject(@Path('projectId') String id);

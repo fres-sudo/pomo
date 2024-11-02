@@ -84,7 +84,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.copyWith(isLoading: true, error: null));
     try{
       final user = await userRepository.deleteUserPhoto(userId: event.userId);
-      emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.updatedImage));
+      emit(state.copyWith(user: user, isLoading: false, error: null, operation: UserOperation.deletedPhoto));
     }catch(_){
       emit(state.copyWith(isLoading: false, error: UpdatingUserImageError()));
     }

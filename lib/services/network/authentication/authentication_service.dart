@@ -3,7 +3,8 @@ import 'package:pomo/services/network/jto/user/user_jto.dart';
 import 'package:pomo/services/network/response/sign_in/sign_in_response.dart';
 import 'package:retrofit/retrofit.dart';
 import '../requests/forgot_pass/forgot_pass_request.dart';
-import '../requests/o_auth/o_auth_request.dart';
+import '../requests/o_auth/o_auth_apple_request.dart';
+import '../requests/o_auth/o_auth_google_request.dart';
 import '../requests/refresh_token/refresh_token_request.dart';
 import '../requests/reset_password/reset_password_request.dart';
 import '../requests/sign_in/sign_in_request.dart';
@@ -38,9 +39,9 @@ abstract class AuthenticationService {
   Future<RefreshTokenResponse> refreshToken(@Body() RefreshTokenRequest refreshToken);
 
   @POST('/auth/google')
-  Future<SignInResponse> retrieveGoogleUser(@Body() OAuthRequest request);
+  Future<SignInResponse> retrieveGoogleUser(@Body() OAuthGoogleRequest request);
 
   @POST('/auth/apple')
-  Future<SignInResponse> retrieveAppleUser(@Body() OAuthRequest request);
+  Future<SignInResponse> retrieveAppleUser(@Body() OAuthAppleRequest request);
 }
 

@@ -1,6 +1,6 @@
 part of 'user_bloc.dart';
 
-enum UserOperation { updated , deleted , updatedImage, read }
+enum UserOperation { updated , deleted , updatedImage, read, deletedPhoto }
 
 @freezed
 class UserState with _$UserState {

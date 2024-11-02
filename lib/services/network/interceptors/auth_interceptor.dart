@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:pomo/constants/constants.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 
@@ -29,12 +30,14 @@ class AuthInterceptor extends QueuedInterceptor {
         return handler.resolve(clonedRequest);
       } catch (_) {
         authenticationRepository.signOut();
+        handler.reject(err);
       }
     }
     return super.onError(err, handler);
   }
 
-  Future<Response> _retryRequest(RequestOptions requestOptions, String accessToken) async {
+
+  Future<Response> _retryRequest(RequestOptions requestOptions, String accessToken) {
     final headers = Map<String, dynamic>.from(requestOptions.headers);
     headers['Authorization'] = 'Bearer $accessToken';
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +8,6 @@ import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
 import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
-import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/or_separator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
@@ -30,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final List<String> oAuthButtons = ["google", "apple"];
   @override
   void dispose() {
     _emailTextController.dispose();
@@ -44,25 +44,27 @@ class _LoginPageState extends State<LoginPage> {
       listener: (BuildContext context, state) => state.whenOrNull(
           errorSignIn: (error) => onErrorState(context, error.localizedString(context)),
           signedInWithGoogle: (user) => {
-            context.read<AuthCubit>().authenticated(user),
-            if(user.username.startsWith("guest-google")){
-              context.router.push(ChooseUsernameRoute(user: user))
-            } else {
-              context.router.replace(const RootRoute()),
-            }
-          },
+                context.read<AuthCubit>().authenticated(user),
+                if (user.username.startsWith("guest-google"))
+                  {context.router.push(ChooseUsernameRoute(user: user))}
+                else
+                  {
+                    context.router.replace(const RootRoute()),
+                  }
+              },
           signedInWithApple: (user) => {
-            context.read<AuthCubit>().authenticated(user),
-            if(user.username.startsWith("guest-apple")){
-              context.router.push(ChooseUsernameRoute(user: user))
-            } else {
-              context.router.replace(const RootRoute()),
-            }
-          },
+                context.read<AuthCubit>().authenticated(user),
+                if (user.username.startsWith("guest-apple"))
+                  {context.router.push(ChooseUsernameRoute(user: user))}
+                else
+                  {
+                    context.router.replace(const RootRoute()),
+                  }
+              },
           signedIn: (user) => {
-            context.read<AuthCubit>().authenticated(user),
-            context.router.replace(const RootRoute()),
-          }),
+                context.read<AuthCubit>().authenticated(user),
+                context.router.replace(const RootRoute()),
+              }),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -74,8 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                     Container(
                         height: MediaQuery.sizeOf(context).height / 4,
                         decoration: const BoxDecoration(
-                          gradient: kGradientPurple2,)
-                    ),
+                          gradient: kGradientPurple2,
+                        )),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
                       child: Column(
@@ -159,25 +161,53 @@ class _LoginPageState extends State<LoginPage> {
                         Gap.MD,
                         const OrSeparator(),
                         Gap.MD,
-                        ...oAuthButtons.map((e) => Padding(
+                        Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextButton(
-                              onPressed: () => e == "google" ? context.read<SignInBloc>().google() : context.read<SignInBloc>().apple(),
-                              style: TextButton.styleFrom(
-                                  side: BorderSide(color: Theme.of(context).dividerColor),
-                                  backgroundColor: Colors.transparent),
+                              onPressed: () => context.read<SignInBloc>().google(),
+                              style:
+                                  TextButton.styleFrom(side: BorderSide(color: Theme.of(context).dividerColor), backgroundColor: Colors.transparent),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/icons/$e-logo.svg", width: 19, height: 19,),
+                                  SvgPicture.asset(
+                                    "assets/icons/google-logo.svg",
+                                    width: 19,
+                                    height: 19,
+                                  ),
                                   Gap.SM_H,
-                                  Text("Continue with ${e.capitalize()}", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),)
+                                  Text(
+                                    t.authentication.login.google,
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                  )
                                 ],
                               )),
-                        ),),
-
-
+                        ),
+                        if (Platform.isIOS)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: TextButton(
+                                onPressed: () => context.read<SignInBloc>().apple(),
+                                style: TextButton.styleFrom(
+                                    side: BorderSide(color: Theme.of(context).dividerColor), backgroundColor: Colors.transparent),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/apple-logo.svg",
+                                      width: 19,
+                                      height: 19,
+                                    ),
+                                    Gap.SM_H,
+                                    Text(
+                                      t.authentication.login.apple,
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                    )
+                                  ],
+                                )),
+                          ),
                       ],
                     ),
                   ),

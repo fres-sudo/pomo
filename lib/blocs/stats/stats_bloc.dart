@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pomo/error/stats_error.dart';
 import 'dart:async';
 
+import '../../constants/constants.dart';
 import '../../error/localized.dart';
 import '../../models/stats/stats.dart';
 import '../../repositories/stats_repository.dart';
@@ -31,11 +32,12 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     FetchStatsStatsEvent event,
     Emitter<StatsState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     try{
       final stats = await statsRepository.fetchStats(userId: event.userId);
-      emit(state.copyWith(statistics: stats, isLoading: false));
-    }catch(_) {
+      emit(state.copyWith(statistics: stats, isLoading: false, error: null));
+    }catch(e, stack) {
+      logger.e("_onFetchStats", error: e, stackTrace: stack);
       emit(StatsState(error: FetchingStatsError(), isLoading: false));
     }
   }
