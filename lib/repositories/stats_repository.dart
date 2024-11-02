@@ -19,12 +19,7 @@ class StatsRepositoryImpl implements StatsRepository {
 
   @override
   Future<Stats> fetchStats({required String userId}) async {
-    try {
       final dto = await statsService.getStatsByUser(userId);
       return statsMapper.fromDTO(dto);
-    } catch (error, stack) {
-      logger.e('Error fetching statistics  in: $error, this is the stack: \n $stack');
-      throw Exception('Fetch failed');
-    }
   }
 }

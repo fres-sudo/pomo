@@ -162,7 +162,9 @@
       "welcome" : "Welcome back!",
       "description" : "Log in to your account to get your projects back on track.",
       "forgot_password" : "Forgot Password?",
-      "dont_have_an_account" : "Don't have an account?"
+      "dont_have_an_account" : "Don't have an account?",
+      "google" : "Continue with Google",
+      "apple" : "Continue with Apple"
     },
     "signup": {
       "title" : "Sign up",

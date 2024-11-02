@@ -2,13 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/components/fields/debounced_user_search.dart';
+import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
+import 'package:pomo/components/widgets/snack_bars.dart';
 import 'package:pomo/constants/colors.dart';
 
 import '../../../blocs/user/user_bloc.dart';
+import '../../../cubits/auth/auth_cubit.dart';
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 import '../../../models/user/user.dart';
 import '../../../routes/app_router.gr.dart';
+import '../../../services/storage/storage_service.dart';
 
 @RoutePage()
 class ChooseUsernamePage extends StatefulWidget {
@@ -42,10 +46,16 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserBloc, UserState>(
-      listener: (BuildContext context, UserState state) =>
-      !state.isLoading && state.operation == UserOperation.updated
-          ? context.router.replace(const RootRoute())
-          : null,
+      listener: (BuildContext context, UserState state) {
+        if (!state.isLoading && state.operation == UserOperation.updated) {
+          context.read<StorageService>().updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
+          context.read<AuthCubit>().authenticated(state.user!);
+          context.router.replace(const RootRoute());
+        }
+        if(state.error != null){
+          onErrorState(context, state.error!.localizedString(context));
+        }
+      },
       builder: (BuildContext context, UserState state) => Scaffold(
         body: SafeArea(
           child: Padding(
@@ -55,18 +65,12 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
               children: [
                 Text(
                   t.authentication.signup.choose_username,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 Gap.XS,
                 Text(
                   t.authentication.signup.choose_username_description,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Theme.of(context).dividerColor),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
                 ),
                 Gap.XL,
                 DebouncedUserSearch(
@@ -76,29 +80,21 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: state.isLoading
-                        ? Theme.of(context).primaryColor.withOpacity(0.5)
-                        : null,
+                    backgroundColor: state.isLoading ? Theme.of(context).primaryColor.withOpacity(0.5) : null,
                   ),
                   onPressed: () => _usernameTextController.text.length > 3 &&
-                      !state.isLoading &&
-                      state.searchedUsername != _usernameTextController.text
-                      ? context.read<UserBloc>().updateUser(
-                      id: widget.user.id,
-                      user: widget.user.copyWith(
-                          username: _usernameTextController.text))
+                          !state.isLoading &&
+                          state.searchedUsername != _usernameTextController.text
+                      ? context.read<UserBloc>().updateUser(id: widget.user.id, user: widget.user.copyWith(username: _usernameTextController.text))
                       : null,
                   child: state.isLoading
-                      ? const CircularProgressIndicator()
+                      ? const CustomCircularProgressIndicator()
                       : Center(
-                    child: Text(
-                      t.general.continue_title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: kNeutralWhite),
-                    ),
-                  ),
+                          child: Text(
+                            t.general.continue_title,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),
+                          ),
+                        ),
                 ),
                 Gap.SM,
               ],

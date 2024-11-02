@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/components/fields/name_field.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
+import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/i18n/strings.g.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 class DebouncedUserSearch extends StatefulWidget {
@@ -66,23 +67,17 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
           onChanged: _onSearchChanged,
           focusNode: widget.focusNode,
         ),
-        // Show feedback only if user has typed enough characters and debounce completed
         if (_showFeedback && widget.controller.text.length > 3) ...[
           Gap.SM,
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
-
-              print("state.searchedUsername == widget.controller.text : ${state.searchedUsername?.replaceAll('"', '') == widget.controller.text}");
-              print("state.searchedUsername  : ${state.searchedUsername?.replaceAll('"', '')}");
-              print("widget.controller.text  : ${widget.controller.text}");
-
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Gap.SM_H,
                   state.isLoading
-                      ? CircularProgressIndicator(
+                      ? CustomCircularProgressIndicator(
                     color: Theme.of(context).dividerColor,
                   )
                       : Icon(

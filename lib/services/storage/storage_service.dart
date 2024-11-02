@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pine/utils/mapper.dart';
 
@@ -38,6 +40,23 @@ class StorageService {
       key: userDataKey,
       value: userStringMapper.from(user),
     );
+  }
+
+  Future<void> updateUserSecureStorage({String? username, String? photo}) async {
+    final String? userDataString = await secureStorage.read(key: userDataKey);
+
+    if (userDataString != null) {
+      Map<String, dynamic> userData = json.decode(userDataString);
+
+      if (username != null) {
+        userData['username'] = username;
+      }
+      if (photo != null && photo.isNotEmpty) {
+        userData['avatar'] = photo;
+      }
+
+      await secureStorage.write(key: userDataKey, value: json.encode(userData));
+    }
   }
 
   Future<void> storeAccessToken(String accessToken) async => await secureStorage.write(key: accessTokenKey, value: accessToken);

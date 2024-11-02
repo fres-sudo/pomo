@@ -4,18 +4,16 @@ import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
 import '../../extension/sized_box_extension.dart';
 
 class DestructionBottomSheet extends StatelessWidget {
-  const DestructionBottomSheet({super.key, required this.title, required this.buttonText, required this.description, required this.onPress, this.height = 220});
+  const DestructionBottomSheet({super.key, required this.title, required this.buttonText, required this.description, required this.onPress,});
 
   final String title;
   final String buttonText;
   final String description;
   final void Function() onPress;
-  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
@@ -26,8 +24,9 @@ class DestructionBottomSheet extends StatelessWidget {
         ],
         color: Theme.of(context).bottomSheetTheme.backgroundColor,
       ),
-      padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+      padding: const EdgeInsets.only(left: 16, bottom: 36, right: 16),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const TopBottomSheetWidget(),

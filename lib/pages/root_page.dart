@@ -20,9 +20,7 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        state.whenOrNull(authenticated: (user) {
-          context.router.replace(RootRoute());
-        }, notAuthenticated: () {
+        state.whenOrNull( notAuthenticated: () {
           context.router.replace(RootRoute());
         });
       },
