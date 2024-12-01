@@ -257,7 +257,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           Gap.XS,
                           DateField(
                               firstDate: DateTime.now(),
-                              lastDate: widget.project?.endDate,
+                              lastDate: widget.project != null && widget.project!.endDate.isAfter(DateTime.now()) ? widget.project?.endDate : DateTime.now().add(const Duration(days: 365)),
                               borderRadius: 12,
                               borderColor: Theme.of(context).dividerColor,
                               hintText: t.tasks.create.end_in,

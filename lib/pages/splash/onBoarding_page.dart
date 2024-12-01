@@ -40,9 +40,10 @@ class OnBoardingPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            spreadRadius: 1,
-                            blurRadius: 100
+                            color: Theme.of(context).primaryColor.withOpacity(0.5),
+                            spreadRadius: 30,
+                            blurRadius: 100,
+
                         )
                       ]
                   ),
@@ -73,8 +74,8 @@ class OnBoardingPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            spreadRadius: 1,
+                            color: Theme.of(context).primaryColor.withOpacity(0.5),
+                            spreadRadius: 10,
                             blurRadius: 100
                         )
                       ]
