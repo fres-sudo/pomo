@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               )),
                         ),
-                        if (Platform.isIOS)
+                        if (false)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: TextButton(

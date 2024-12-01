@@ -24,23 +24,22 @@ class TaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(listener: (context, state) {
       state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
-      return switch(state.operation){
-        TaskOperation.create => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
-        TaskOperation.update => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
-        TaskOperation.delete => context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
+      return switch (state.operation) {
+        TaskOperation.create ||
+        TaskOperation.update ||
+        TaskOperation.delete =>
+            context.read<ProjectBloc>().updateProjectsTasks(projectId: project.id ?? "", tasks: state.tasks),
         _ => null
       };
     }, builder: (context, state) {
-
-      List<Task> completedTasks = state.tasks
-          .where((task) => task.pomodoro == task.pomodoroCompleted)
-          .toList()
+      List<Task> completedTasks = state.tasks.where((task) => task.pomodoro == task.pomodoroCompleted).toList()
         ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
 
-      List<Task> inProgressTasks = state.tasks
-          .where((task) => task.pomodoro != task.pomodoroCompleted)
-          .toList()
+      List<Task> inProgressTasks = state.tasks.where((task) => task.pomodoro != task.pomodoroCompleted).toList()
         ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
+      print("completed TASK => ${completedTasks.length}");
+      print("in progress task => ${inProgressTasks.length}");
 
       return state.tasks.isEmpty
           ? NoTaskView(project: project)
@@ -60,9 +59,7 @@ class TaskView extends StatelessWidget {
                               useRootNavigator: true,
                               isScrollControlled: true,
                               context: context,
-                              builder: (context) {
-                                return TaskBottomSheet(project: project);
-                              }),
+                              builder: (context) => TaskBottomSheet(project: project)),
                           child: const Icon(Icons.add_circle_outline_rounded))
                     ],
                   ),
@@ -76,7 +73,7 @@ class TaskView extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: completedTasks.length,
-                      itemBuilder: (context, index) => TaskCard(task: completedTasks[index],)),
+                      itemBuilder: (context, index) => TaskCard(task: completedTasks[index])),
                 ],
               ),
             );

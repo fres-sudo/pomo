@@ -125,6 +125,15 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     final projects = List<Project>.from(state.projects);
     final projectIndex = projects.indexWhere((proj) => proj.id == event.projectId);
     if (projectIndex != -1) {
+      List<Task> completedTasks = event.tasks.where((task) => task.pomodoro == task.pomodoroCompleted).toList()
+        ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
+      List<Task> inProgressTasks = event.tasks.where((task) => task.pomodoro != task.pomodoroCompleted).toList()
+        ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
+      print("BLOC completed TASK => ${completedTasks.length}");
+      print("BLOC in progress task => ${inProgressTasks.length}");
+
       final updatedProject = projects[projectIndex].copyWith(
         tasks: List.from(event.tasks),
       );

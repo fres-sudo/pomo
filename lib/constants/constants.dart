@@ -28,9 +28,9 @@ const List<String> kBackgroundsImages = [
 
 const googleClientId = "446557214930-ko2r5pjdb94jk2gcv83l8te8rvk8jbmk.apps.googleusercontent.com";
 const kServerConnectionIP =
-    "http://localhost:9000/api";
+    //"http://localhost:9000/api";
     //"https://pomo-fres-sudos-projects.vercel.app/api/v1";
-    //"https://pomo.fres.space/api/v1";
+    "https://pomo.fres.space/api";
 const maxTimeExceedRequest = 10;
 
 var logger = Logger(
