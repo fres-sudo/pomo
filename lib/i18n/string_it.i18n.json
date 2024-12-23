@@ -45,7 +45,9 @@
     "week" : "Settimana",
     "month" : "Mese",
     "weeks" : "Settimane",
-    "schedule" : "Agenda"
+    "schedule" : "Agenda",
+    "warning" : "Attenzione",
+    "success" : "Ottimo"
   },
   "projects": {
     "title": "Progetto",
@@ -176,8 +178,9 @@
       "choose_username" : "Solo un altro step",
       "available_username" : "Username disponibile",
       "unavailable_username": "Username non disponbile",
-      "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome unico per il tuo account e non potrai modificarlo in seguito.",
-      "success" : "Hai correttamente creato il tuo account! Ora puoi eseguire l'accesso."
+      "choose_username_description" : "Scegli il tuo username per completare la registrazione. Questo nome è unico per il tuo account e non potrai modificarlo in seguito.",
+      "success_title" : "Benvenuto! Un ultimo step!",
+      "success" : "Hai correttamente creato il tuo account! Ti abbiamo inviato una mail alla tua casella postale per confermare il tuo indirizzo email. Controlla anche la cartella SPAM!"
     },
     "forgot_password": {
       "reset_password" : "Reimposta la tua password",
@@ -200,6 +203,7 @@
     }
   },
   "errors": {
+    "error": "Errore",
     "general_error": "Si è verificato un errore inaspettato.",
     "please_restart": "Si prega di riavviare l'applicazione.",
     "please_retry": "Si prega di riprovare",
@@ -241,7 +245,7 @@
       "general_error" : "Si è verificato un errore durante l'accesso.",
       "wrong_password" : "Hai inserito la password sbagliata.",
       "user_not_existing" : "Questa email non è associata a nessun utente.",
-      "email_not_verified" : "L'email associata a questo account non è stata verificata, te ne abbiamo mandata un'altra, controlla la tua casella postale!"
+      "email_not_verified" : "L'email associata a questo account non è stata verificata, ne abbiamo inviata un'altra, controlla la tua casella postale!"
     },
     "register" : {
       "general_error" : "Si è verificato un errore durante la registrazione.",

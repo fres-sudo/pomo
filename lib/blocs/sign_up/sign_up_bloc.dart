@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pomo/error/localized.dart';
 import 'dart:async';
 
+import '../../constants/constants.dart';
+import '../../error/auth_error.dart';
 import '../../models/user/user.dart';
 import '../../repositories/authentication_repository.dart';
 
@@ -48,8 +52,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           confirmPassword: event.confirmPassword);
 
       emit(SignUpState.signedUp(user));
-    } catch (_) {
-      emit(const SignUpState.errorSignUp());
+    } on DioException catch (error, stack) {
+      logger.e("_onPerform", error: error, stackTrace: stack);
+      emit(SignUpState.errorSignUp(AuthError.fromMessage(error.response?.data)));
+    } catch (e, stack) {
+      logger.e("_onPerform", error: e, stackTrace: stack);
+      emit(SignUpState.errorSignUp(GeneralSignUpError()));
     }
   }
 

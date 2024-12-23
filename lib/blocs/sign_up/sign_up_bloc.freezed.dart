@@ -312,7 +312,7 @@ mixin _$SignUpState {
     required TResult Function() notSignedUp,
     required TResult Function() signingUp,
     required TResult Function(User user) signedUp,
-    required TResult Function() errorSignUp,
+    required TResult Function(LocalizedError error) errorSignUp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -320,7 +320,7 @@ mixin _$SignUpState {
     TResult? Function()? notSignedUp,
     TResult? Function()? signingUp,
     TResult? Function(User user)? signedUp,
-    TResult? Function()? errorSignUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -328,7 +328,7 @@ mixin _$SignUpState {
     TResult Function()? notSignedUp,
     TResult Function()? signingUp,
     TResult Function(User user)? signedUp,
-    TResult Function()? errorSignUp,
+    TResult Function(LocalizedError error)? errorSignUp,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -427,7 +427,7 @@ class _$NotSignedUpSignUpStateImpl implements NotSignedUpSignUpState {
     required TResult Function() notSignedUp,
     required TResult Function() signingUp,
     required TResult Function(User user) signedUp,
-    required TResult Function() errorSignUp,
+    required TResult Function(LocalizedError error) errorSignUp,
   }) {
     return notSignedUp();
   }
@@ -438,7 +438,7 @@ class _$NotSignedUpSignUpStateImpl implements NotSignedUpSignUpState {
     TResult? Function()? notSignedUp,
     TResult? Function()? signingUp,
     TResult? Function(User user)? signedUp,
-    TResult? Function()? errorSignUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
   }) {
     return notSignedUp?.call();
   }
@@ -449,7 +449,7 @@ class _$NotSignedUpSignUpStateImpl implements NotSignedUpSignUpState {
     TResult Function()? notSignedUp,
     TResult Function()? signingUp,
     TResult Function(User user)? signedUp,
-    TResult Function()? errorSignUp,
+    TResult Function(LocalizedError error)? errorSignUp,
     required TResult orElse(),
   }) {
     if (notSignedUp != null) {
@@ -545,7 +545,7 @@ class _$SigningUpSignUpStateImpl implements SigningUpSignUpState {
     required TResult Function() notSignedUp,
     required TResult Function() signingUp,
     required TResult Function(User user) signedUp,
-    required TResult Function() errorSignUp,
+    required TResult Function(LocalizedError error) errorSignUp,
   }) {
     return signingUp();
   }
@@ -556,7 +556,7 @@ class _$SigningUpSignUpStateImpl implements SigningUpSignUpState {
     TResult? Function()? notSignedUp,
     TResult? Function()? signingUp,
     TResult? Function(User user)? signedUp,
-    TResult? Function()? errorSignUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
   }) {
     return signingUp?.call();
   }
@@ -567,7 +567,7 @@ class _$SigningUpSignUpStateImpl implements SigningUpSignUpState {
     TResult Function()? notSignedUp,
     TResult Function()? signingUp,
     TResult Function(User user)? signedUp,
-    TResult Function()? errorSignUp,
+    TResult Function(LocalizedError error)? errorSignUp,
     required TResult orElse(),
   }) {
     if (signingUp != null) {
@@ -702,7 +702,7 @@ class _$SignedUpSignUpStateImpl implements SignedUpSignUpState {
     required TResult Function() notSignedUp,
     required TResult Function() signingUp,
     required TResult Function(User user) signedUp,
-    required TResult Function() errorSignUp,
+    required TResult Function(LocalizedError error) errorSignUp,
   }) {
     return signedUp(user);
   }
@@ -713,7 +713,7 @@ class _$SignedUpSignUpStateImpl implements SignedUpSignUpState {
     TResult? Function()? notSignedUp,
     TResult? Function()? signingUp,
     TResult? Function(User user)? signedUp,
-    TResult? Function()? errorSignUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
   }) {
     return signedUp?.call(user);
   }
@@ -724,7 +724,7 @@ class _$SignedUpSignUpStateImpl implements SignedUpSignUpState {
     TResult Function()? notSignedUp,
     TResult Function()? signingUp,
     TResult Function(User user)? signedUp,
-    TResult Function()? errorSignUp,
+    TResult Function(LocalizedError error)? errorSignUp,
     required TResult orElse(),
   }) {
     if (signedUp != null) {
@@ -790,6 +790,8 @@ abstract class _$$ErrorSignUpSignUpStateImplCopyWith<$Res> {
           _$ErrorSignUpSignUpStateImpl value,
           $Res Function(_$ErrorSignUpSignUpStateImpl) then) =
       __$$ErrorSignUpSignUpStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({LocalizedError error});
 }
 
 /// @nodoc
@@ -803,27 +805,52 @@ class __$$ErrorSignUpSignUpStateImplCopyWithImpl<$Res>
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$ErrorSignUpSignUpStateImpl(
+      null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as LocalizedError,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ErrorSignUpSignUpStateImpl implements ErrorSignUpSignUpState {
-  const _$ErrorSignUpSignUpStateImpl();
+  const _$ErrorSignUpSignUpStateImpl(this.error);
+
+  @override
+  final LocalizedError error;
 
   @override
   String toString() {
-    return 'SignUpState.errorSignUp()';
+    return 'SignUpState.errorSignUp(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorSignUpSignUpStateImpl);
+            other is _$ErrorSignUpSignUpStateImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorSignUpSignUpStateImplCopyWith<_$ErrorSignUpSignUpStateImpl>
+      get copyWith => __$$ErrorSignUpSignUpStateImplCopyWithImpl<
+          _$ErrorSignUpSignUpStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -831,9 +858,9 @@ class _$ErrorSignUpSignUpStateImpl implements ErrorSignUpSignUpState {
     required TResult Function() notSignedUp,
     required TResult Function() signingUp,
     required TResult Function(User user) signedUp,
-    required TResult Function() errorSignUp,
+    required TResult Function(LocalizedError error) errorSignUp,
   }) {
-    return errorSignUp();
+    return errorSignUp(error);
   }
 
   @override
@@ -842,9 +869,9 @@ class _$ErrorSignUpSignUpStateImpl implements ErrorSignUpSignUpState {
     TResult? Function()? notSignedUp,
     TResult? Function()? signingUp,
     TResult? Function(User user)? signedUp,
-    TResult? Function()? errorSignUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
   }) {
-    return errorSignUp?.call();
+    return errorSignUp?.call(error);
   }
 
   @override
@@ -853,11 +880,11 @@ class _$ErrorSignUpSignUpStateImpl implements ErrorSignUpSignUpState {
     TResult Function()? notSignedUp,
     TResult Function()? signingUp,
     TResult Function(User user)? signedUp,
-    TResult Function()? errorSignUp,
+    TResult Function(LocalizedError error)? errorSignUp,
     required TResult orElse(),
   }) {
     if (errorSignUp != null) {
-      return errorSignUp();
+      return errorSignUp(error);
     }
     return orElse();
   }
@@ -901,5 +928,14 @@ class _$ErrorSignUpSignUpStateImpl implements ErrorSignUpSignUpState {
 }
 
 abstract class ErrorSignUpSignUpState implements SignUpState {
-  const factory ErrorSignUpSignUpState() = _$ErrorSignUpSignUpStateImpl;
+  const factory ErrorSignUpSignUpState(final LocalizedError error) =
+      _$ErrorSignUpSignUpStateImpl;
+
+  LocalizedError get error;
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ErrorSignUpSignUpStateImplCopyWith<_$ErrorSignUpSignUpStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

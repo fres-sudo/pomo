@@ -70,7 +70,7 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
                 Gap.XS,
                 Text(
                   t.authentication.signup.choose_username_description,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                 ),
                 Gap.XL,
                 DebouncedUserSearch(
