@@ -15,6 +15,7 @@ import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
+import '../../../components/widgets/alert.dart';
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 
@@ -42,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => state.whenOrNull(
-          errorSignIn: (error) => onErrorState(context, error.localizedString(context)),
           signedInWithGoogle: (user) => {
                 context.read<AuthCubit>().authenticated(user),
                 if (user.username.startsWith("guest-google"))
@@ -118,6 +118,13 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+                          Gap.SM,
+                          state.maybeWhen(
+                              errorSignIn: (error) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: CustomAlert.error(message: error.localizedString(context)),
+                              ),
+                              orElse: () => const SizedBox()),
                           Gap.SM,
                         ]),
                         Column(

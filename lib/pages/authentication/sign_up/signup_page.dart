@@ -10,6 +10,7 @@ import 'package:pomo/constants/text.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../components/widgets/alert.dart';
 import '../../../components/widgets/snack_bars.dart';
 import '../../../constants/colors.dart';
 import '../../../extension/sized_box_extension.dart';
@@ -41,11 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignUpBloc, SignUpState>(
-      listener: (BuildContext context, state) => state.whenOrNull(
-        errorSignUp: () => onErrorState(context, "signing up"),
-        signedUp: (_) => {context.router.replace(const RootRoute()), onSuccessState(context, t.authentication.signup.success)},
-      ),
+    return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (BuildContext context, SignUpState state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -94,29 +91,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Username", style: Theme.of(context).textTheme.titleMedium),
-                            const SizedBox(
-                              height: 6,
-                            ),
+                            Gap.SM,
                             NameField(controller: _usernameTextController, hintText: "username"),
-                            const SizedBox(
-                              height: 18,
-                            ),
+                            Gap.SM,
                             Text("Email", style: Theme.of(context).textTheme.titleMedium),
-                            const SizedBox(
-                              height: 6,
-                            ),
+                            Gap.SM,
                             EmailField(controller: _emailTextController),
-                            const SizedBox(
-                              height: 18,
-                            ),
+                            Gap.SM,
                             Text("Password", style: Theme.of(context).textTheme.titleMedium),
-                            const SizedBox(
-                              height: 6,
-                            ),
+                            Gap.SM,
                             PasswordField(controller: _passwordTextController),
-                            const SizedBox(
-                              height: 24,
-                            ),
+                            Gap.SM,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -157,7 +142,16 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             Gap.SM,
                             const Divider(),
-                            Gap.MD,
+                            state.maybeWhen(
+                                errorSignUp: (error) => Padding(
+                                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                                  child: CustomAlert.error(message: error.localizedString(context)),
+                                ),
+                                signedUp: (_) => Padding(
+                                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                                  child: CustomAlert.success(title: t.authentication.signup.success_title, message: t.authentication.signup.success),
+                                ),
+                                orElse: () => Gap.MD),
                             ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate() && _checkedValue) {

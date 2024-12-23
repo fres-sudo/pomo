@@ -9,6 +9,6 @@ class SignUpState with _$SignUpState {
   
   const factory SignUpState.signedUp(User user) = SignedUpSignUpState;
   
-  const factory SignUpState.errorSignUp() = ErrorSignUpSignUpState;
+  const factory SignUpState.errorSignUp(LocalizedError error) = ErrorSignUpSignUpState;
   
 }

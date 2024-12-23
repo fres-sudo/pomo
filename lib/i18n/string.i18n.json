@@ -45,7 +45,9 @@
     "week" : "Week",
     "month" : "Month",
     "weeks" : "Weeks",
-    "schedule" : "Schedule"
+    "schedule" : "Schedule",
+    "warning" : "Warning",
+    "success" : "Success"
   },
   "projects": {
     "title": "Project",
@@ -177,7 +179,8 @@
       "available_username" : "Available username",
       "unavailable_username": "Unavailable username",
       "choose_username_description" : "Choose your username to complete registration. This name will be unique to you, and you can't change it later.",
-      "success" : "You seccessfully created your account! Please login."
+      "success_title": "Welcome! One last step!",
+      "success": "You have successfully created your account! We have sent you an email to your mailbox to confirm your email address. Also check the SPAM folder!"
     },
     "forgot_password": {
       "reset_password" : "Reset Your Password",
@@ -200,6 +203,7 @@
     }
   },
   "errors": {
+    "error": "Error",
     "general_error": "A very bad error occurred.",
     "please_restart": "Please restart the application.",
     "please_retry" : "Please Retry",
