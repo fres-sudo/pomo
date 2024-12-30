@@ -20,6 +20,7 @@ mixin _$Project {
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $ProjectCopyWith<$Res> {
       String name,
       String? description,
       DateTime? createdAt,
+      DateTime? updatedAt,
       DateTime startDate,
       DateTime endDate,
       DateTime? completedAt,
@@ -72,6 +74,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? name = null,
     Object? description = freezed,
     Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? completedAt = freezed,
@@ -96,6 +99,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       startDate: null == startDate
           ? _value.startDate
@@ -141,6 +148,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       String name,
       String? description,
       DateTime? createdAt,
+      DateTime? updatedAt,
       DateTime startDate,
       DateTime endDate,
       DateTime? completedAt,
@@ -167,6 +175,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? name = null,
     Object? description = freezed,
     Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? completedAt = freezed,
@@ -191,6 +200,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       startDate: null == startDate
           ? _value.startDate
@@ -232,6 +245,7 @@ class _$ProjectImpl extends _Project {
       required this.name,
       this.description,
       this.createdAt,
+      this.updatedAt,
       required this.startDate,
       required this.endDate,
       this.completedAt,
@@ -251,6 +265,8 @@ class _$ProjectImpl extends _Project {
   final String? description;
   @override
   final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
   @override
   final DateTime startDate;
   @override
@@ -283,7 +299,7 @@ class _$ProjectImpl extends _Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
   }
 
   @override
@@ -297,6 +313,8 @@ class _$ProjectImpl extends _Project {
                 other.description == description) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
@@ -317,6 +335,7 @@ class _$ProjectImpl extends _Project {
       name,
       description,
       createdAt,
+      updatedAt,
       startDate,
       endDate,
       completedAt,
@@ -340,6 +359,7 @@ abstract class _Project extends Project {
       required final String name,
       final String? description,
       final DateTime? createdAt,
+      final DateTime? updatedAt,
       required final DateTime startDate,
       required final DateTime endDate,
       final DateTime? completedAt,
@@ -357,6 +377,8 @@ abstract class _Project extends Project {
   String? get description;
   @override
   DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   DateTime get startDate;
   @override

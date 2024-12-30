@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
@@ -44,23 +42,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   User? get user => context.read<AuthCubit>().state.whenOrNull(
-      authenticated: (user) => user,
-  );
+        authenticated: (user) => user,
+      );
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
-        if(state.error != null) {
+        if (state.error != null) {
           onErrorState(context, state.error!.localizedString(context));
         }
-        if(state.operation == UserOperation.deleted){
+        if (state.operation == UserOperation.deleted) {
           context.read<AuthCubit>().signOut();
           context.router.replace(const RootRoute());
         }
-        if(state.operation == UserOperation.updated || state.operation == UserOperation.updatedImage){
+        if (state.operation == UserOperation.updated || state.operation == UserOperation.updatedImage) {
           context.read<StorageService>().updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
-          onSuccessState(context, state.operation == UserOperation.updatedImage ? t.profile.settings.update.updated_photo : t.profile.settings.update.updated_info);
+          onSuccessState(context,
+              state.operation == UserOperation.updatedImage ? t.profile.settings.update.updated_photo : t.profile.settings.update.updated_info);
           context.read<AuthCubit>().authenticated(state.user!);
         }
       },
@@ -90,7 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         } else {
                           final user = context.read<AuthCubit>().state.whenOrNull(authenticated: (user) => user);
                           if (image != null && user != null) {
-                              context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path));
+                            context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path));
                           } else {
                             if (user != null) {
                               context.read<UserBloc>().updateUser(id: user.id, user: user.copyWith(username: _usernameTextController.text));
@@ -100,10 +99,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                       child: Text(t.general.update,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
-                                ? Theme.of(context).primaryColor
-                                : kNeutral400
-                          ))),
+                              color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
+                                  ? Theme.of(context).primaryColor
+                                  : kNeutral400))),
                 ],
               ),
               Gap.XL,
@@ -133,9 +131,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           }
                         },
                         orElse: () => const CircleAvatar(
-                          radius: 75,
-                          backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
-                        )),
+                              radius: 75,
+                              backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                            )),
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -168,31 +166,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                     ),
-                    if(user?.avatar != null)
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          context.read<UserBloc>().deleteUserPhoto(
-                          userId: user!.id,);},
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.error,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.delete_forever_outlined,
-                            size: 20,
-                            color: Theme.of(context).colorScheme.onError,
+                    if (user?.avatar != null)
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<UserBloc>().deleteUserPhoto(
+                                  userId: user!.id,
+                                );
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.error,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.delete_forever_outlined,
+                              size: 20,
+                              color: Theme.of(context).colorScheme.onError,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-
                   ],
                 ),
               ),
@@ -232,13 +231,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           isDismissible: true,
                           useRootNavigator: true,
                           builder: (BuildContext context) => DestructionBottomSheet(
-                                title: t.profile.settings.delete_account.title,
-                                buttonText: t.general.delete,
-                                description: t.profile.settings.delete_account.description,
-                                onPress: () => context.read<UserBloc>().deleteUser(id: context.read<AuthCubit>().state.maybeWhen(
-                                    authenticated: (user) => user.id,
-                                    orElse: () => "")),
-                              )),
+                              title: t.profile.settings.delete_account.title,
+                              buttonText: t.general.delete,
+                              description: t.profile.settings.delete_account.description,
+                              onPress: () {
+                                context
+                                    .read<UserBloc>()
+                                    .deleteUser(id: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
+                                context.router.maybePop();
+                              })),
                       child: state.isLoading
                           ? CustomCircularProgressIndicator(
                               color: Theme.of(context).colorScheme.error,

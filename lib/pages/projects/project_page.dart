@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/components/utils/responsive.dart';
 import 'package:pomo/components/widgets/custom_floating_button.dart';
+import 'package:pomo/components/widgets/title_page.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
@@ -88,7 +89,7 @@ class _ProjectPageState extends State<ProjectPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(t.projects.header_project_page, style: kSerzif(context)),
+                        TitlePage(title: t.projects.plural, subtitle: t.projects.subtitle),
                         Gap.MD,
                         Row(
                           children: [

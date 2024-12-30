@@ -29,7 +29,7 @@ class NoStatsPage extends StatelessWidget {
         Gap.MD,
         ElevatedButton(
             style: ElevatedButton.styleFrom(minimumSize: const Size(220, 48)),
-            onPressed: () => context.router.push(const QuickSessionRoute()),
+            onPressed: () => AutoTabsRouter.of(context).setActiveIndex(2),
             child: Text(
               t.tasks.start_quick_session,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),

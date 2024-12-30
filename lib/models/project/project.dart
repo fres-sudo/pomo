@@ -14,6 +14,7 @@ class Project with _$Project {
     required String name,
     String? description,
     DateTime? createdAt,
+    DateTime? updatedAt,
     required DateTime startDate,
     required DateTime endDate,
     DateTime? completedAt,

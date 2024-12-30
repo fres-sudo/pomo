@@ -18,6 +18,7 @@ class Task with _$Task {
     String? projectId,
     required DateTime dueDate,
     required DateTime createdAt,
+    DateTime? updatedAt,
     required bool highPriority,
     DateTime? completedAt,
 }) = _Task;

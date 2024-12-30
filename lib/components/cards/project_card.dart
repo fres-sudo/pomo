@@ -26,7 +26,11 @@ extension ProjectExt on ProjectStatus {
   }
 
   Color get backGroundColor {
-    return switch (this) { ProjectStatus.completed => kGreen100.withOpacity(0.15), ProjectStatus.expired => kRed100.withOpacity(0.15), ProjectStatus.progress => kYellow100.withOpacity(0.15) };
+    return switch (this) {
+      ProjectStatus.completed => kGreen100.withOpacity(0.15),
+      ProjectStatus.expired => kRed100.withOpacity(0.15),
+      ProjectStatus.progress => kYellow100.withOpacity(0.15)
+    };
   }
 }
 
@@ -39,17 +43,19 @@ class ProjectCard extends StatelessWidget {
   final Project project;
 
   ProjectStatus _getStatus(Project project) {
-    int completedTask = project.tasks?.map((task) => task.completedAt != null || task.pomodoro == task.pomodoroCompleted).toList().length ?? 0;
+    int completedTask = project.tasks?.map((task) => task.completedAt != null && task.pomodoro == task.pomodoroCompleted).toList().length ?? 0;
     int totalTasks = project.tasks?.length ?? 0;
 
-    if(!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks){
+    print("completedTask: ${completedTask}, totalTasks: ${totalTasks}");
+
+    if (!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks) {
       return ProjectStatus.expired;
     }
     if (project.completedAt != null || (completedTask == totalTasks && completedTask != 0 && completedTask != 0)) {
       return ProjectStatus.completed;
     }
-   return ProjectStatus.progress;
- }
+    return ProjectStatus.progress;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +122,10 @@ class ProjectCard extends StatelessWidget {
                                     .textTheme
                                     .displaySmall
                                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
-                            const SizedBox(height: 2,),
-                            Text(DateFormat('MMM dd, yyyy',TranslationProvider.of(context).flutterLocale.languageCode).format(project.endDate),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            Text(DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode).format(project.endDate),
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary))
                           ],
                         ),
@@ -137,7 +145,9 @@ class ProjectCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
-                              maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                         ),
                         Text("${project.tasks?.length != null ? project.tasks!.length.toString() : "0"} tasks",
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor))

@@ -15,6 +15,8 @@ import 'package:pomo/blocs/stats/stats_bloc.dart';
 import 'package:pomo/cubits/notification/notification_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
 import 'package:pomo/cubits/timer/timer_cubit.dart';
+import 'package:pomo/cubits/timer_session_cubit.dart';
+import 'package:pomo/cubits/work_session_cubit.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/repositories/authentication_repository.dart';
 import 'package:pomo/repositories/mappers/project_mapper.dart';

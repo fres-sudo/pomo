@@ -155,17 +155,14 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                       ))
                                   : context.read<TaskBloc>().update(
                                       id: widget.task!.id!,
-                                      task: Task(
-                                          id: widget.task!.id!,
-                                          name: _nameTextEditingController.text,
-                                          pomodoro: _currentPomodoroValue,
-                                          pomodoroCompleted: widget.task?.pomodoroCompleted,
-                                          userId: user.id,
-                                          projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
-                                          highPriority: highPriority,
-                                          dueDate: _selectedDate ?? widget.task!.dueDate,
-                                          createdAt: widget.task!.createdAt,
-                                          completedAt: widget.task?.completedAt));
+                                      task: widget.task!.copyWith(
+                                        name: _nameTextEditingController.text,
+                                        description: _descriptionTextEditingController.text,
+                                        pomodoro: _currentPomodoroValue,
+                                        highPriority: highPriority,
+                                        dueDate: _selectedDate ?? widget.task!.dueDate,
+                                        projectId: _selectedProject != null ? _selectedProject?.id : widget.project?.id,
+                                      ));
                             }
                           },
                           child: Text(widget.task == null ? t.general.create : t.general.edit, style: Theme.of(context).textTheme.titleMedium),

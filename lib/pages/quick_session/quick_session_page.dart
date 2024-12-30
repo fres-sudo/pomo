@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:pomo/components/widgets/sound_player.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/sound_cubit.dart';
-import 'package:pomo/extension/sized_box_extension.dart';
+import 'package:pomo/cubits/work_session_cubit.dart';
 import 'package:pomo/models/task/task.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
 import 'package:pomo/pages/quick_session/views/quick_break_view.dart';
 import 'package:pomo/pages/quick_session/views/quick_timer_view.dart';
+import 'package:pomo/pages/quick_session/widgets/current_task_widget.dart';
 import 'package:pomo/services/notification/notification_service.dart';
 
 import '../../blocs/task/task_bloc.dart';
@@ -30,11 +32,15 @@ class QuickSessionPage extends StatefulWidget {
 class _QuickSessionPageState extends State<QuickSessionPage> {
   var selectedMode = [true, false];
 
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state.operation == TaskOperation.update){
+          final updatedTask = state.tasks.firstWhere((task) => task.id == context.read<WorkSessionCubit>().state?.id);
+          context.read<WorkSessionCubit>().set(updatedTask);
+        }
+      },
       builder: (context, state) => Scaffold(
         body: BlocBuilder<SoundCubit, int>(
           builder: (context, index) {
@@ -69,7 +75,13 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(t.general.quick_session, style: kSerzif(context)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Pomodoro", style: kSerzif(context)),
+                                    Text(t.general.quick_session_description, style: Theme.of(context).textTheme.labelMedium),
+                                  ],
+                                ),
                                 SoundPlayer(),
                               ],
                             ),
@@ -100,36 +112,48 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                         ),
                         selectedMode[0]
                             ? QuickTimerView(
-                          onComplete: () async {
-                            final userId = context.read<AuthCubit>().state.maybeWhen(
-                                authenticated: (user) => user.id,
-                                orElse: () => "");
-                            context.read<TaskBloc>().create(
-                              task: Task(
-                                name: "${t.general.quick_session} • ${DateFormat("dd-MM", TranslationProvider.of(context).flutterLocale.languageCode).format(DateTime.now())}",
-                                pomodoro: 1,
-                                pomodoroCompleted: 1,
-                                userId: userId,
-                                highPriority: false,
-                                dueDate: DateTime.now(),
-                                createdAt: DateTime.now(),
-                                completedAt: DateTime.now(),
-                              ),
-                            );
-                            setState(() {
-                              selectedMode = [false, true];
-                            });
-                            await NotificationService.showInstantNotification("${t.notifications.instant.title} 🎉", "${t.notifications.instant.description} ☕️");
-                          },
-                        )
+                                isQuickSession: true,
+                                onComplete: () async {
+                                  final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                                  final task = context.read<WorkSessionCubit>().state;
+                                  if (task != null) {
+                                    context.read<TaskBloc>().update(
+                                          id: task.id!,
+                                          task: task.copyWith(
+                                            pomodoroCompleted: (task.pomodoroCompleted ?? 0) + 1,
+                                            completedAt: (task.pomodoroCompleted ?? 0) + 1 == task.pomodoro ? DateTime.now() : null,
+                                          ),
+                                        );
+                                  } else {
+                                    context.read<TaskBloc>().create(
+                                          task: Task(
+                                            name:
+                                                "${t.general.quick_session} • ${DateFormat("dd-MM", TranslationProvider.of(context).flutterLocale.languageCode).format(DateTime.now())}",
+                                            pomodoro: 1,
+                                            pomodoroCompleted: 1,
+                                            userId: userId,
+                                            highPriority: false,
+                                            dueDate: DateTime.now(),
+                                            createdAt: DateTime.now(),
+                                            completedAt: DateTime.now(),
+                                          ),
+                                        );
+                                  }
+                                  setState(() {
+                                    selectedMode = [false, true];
+                                  });
+                                  await NotificationService.showInstantNotification(
+                                      "${t.notifications.instant.title} 🎉", "${t.notifications.instant.description} ☕️");
+                                },
+                              )
                             : QuickBreakView(
-                          onComplete: () {
-                            setState(() {
-                              selectedMode = [true, false];
-                            });
-                          },
-                        ),
-                        Gap.MD,
+                                onComplete: () {
+                                  setState(() {
+                                    selectedMode = [true, false];
+                                  });
+                                },
+                              ),
+                        CurrentTaskWidget()
                       ],
                     ),
                   ),

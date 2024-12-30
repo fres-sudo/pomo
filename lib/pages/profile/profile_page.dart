@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
+import 'package:pomo/components/widgets/title_page.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
 import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
@@ -43,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(t.profile.title, style: kSerzif(context)),
+                    Text(t.profile.subtitle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                     Gap.MD,
                     InkWell(
                       borderRadius: BorderRadius.circular(16),

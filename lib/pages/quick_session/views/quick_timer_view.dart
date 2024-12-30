@@ -8,12 +8,14 @@ import 'package:pomo/extension/sized_box_extension.dart';
 import '../../../components/widgets/count_down_timer.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/timer/timer_cubit.dart';
+import '../../../cubits/timer_session_cubit.dart';
 import '../../../i18n/strings.g.dart';
 
 class QuickTimerView extends StatefulWidget {
-  QuickTimerView({super.key, required this.onComplete});
+  const QuickTimerView({super.key, required this.onComplete, required this.isQuickSession});
 
   final VoidCallback? onComplete;
+  final bool isQuickSession;
 
   @override
   State<QuickTimerView> createState() => _QuickTimerViewState();
@@ -27,11 +29,11 @@ class _QuickTimerViewState extends State<QuickTimerView> {
     _controller = controller;
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        context.read<TimerSessionCubit>().stopTimer(true);
         widget.onComplete?.call();
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +66,14 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                     setState(() {
                       if (!_isRunning) {
                         _controller.forward();
+                        context.read<TimerSessionCubit>().resumeTimer(widget.isQuickSession);
                       } else {
                         if (_controller.isAnimating) {
                           _controller.stop();
+                          context.read<TimerSessionCubit>().pauseTimer(widget.isQuickSession);
                         } else {
                           _controller.forward();
+                          context.read<TimerSessionCubit>().resumeTimer(widget.isQuickSession);
                         }
                       }
                       _isRunning = !_isRunning;

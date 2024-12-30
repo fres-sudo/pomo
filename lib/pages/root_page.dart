@@ -98,7 +98,7 @@ class RootPage extends StatelessWidget {
                               .bottomNavigationBarTheme
                               .unselectedIconTheme
                               ?.color ?? Colors.white, BlendMode.srcIn),
-                        ), label: t.general.session),
+                        ), label: "Pomodoro"),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',

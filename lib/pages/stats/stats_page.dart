@@ -7,6 +7,7 @@ import '../../blocs/project/project_bloc.dart';
 import '../../blocs/stats/stats_bloc.dart';
 import '../../components/widgets/profile_picture.dart';
 import '../../components/widgets/snack_bars.dart';
+import '../../components/widgets/title_page.dart';
 import '../../constants/colors.dart';
 import '../../constants/text.dart';
 import '../../cubits/auth/auth_cubit.dart';
@@ -75,7 +76,7 @@ class _StatsPageState extends State<StatsPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Align(alignment: Alignment.topLeft, child: Text(t.stats.title, style: kSerzif(context))),
+                  Align(alignment: Alignment.topLeft, child: TitlePage(title: t.stats.title, subtitle: t.stats.subtitle)),
                   Gap.MD,
                   Skeletonizer(
                     enabled: state.isLoading,

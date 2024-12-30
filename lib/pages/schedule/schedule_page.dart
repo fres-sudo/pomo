@@ -5,11 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/custom_floating_button.dart';
 import 'package:pomo/components/widgets/dotted_divider.dart';
+import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/components/widgets/title_page.dart';
 import 'package:pomo/constants/styles.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/notification/notification_cubit.dart';
 import 'package:pomo/pages/projects/widget/task_bottom_sheet.dart';
+import 'package:pomo/pages/schedule/widget/session_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -20,6 +23,7 @@ import '../../constants/text.dart';
 import '../../cubits/schedule/schedule_cubit.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
+import '../../routes/app_router.gr.dart';
 import '../../services/notification/notification_service.dart';
 import 'widget/ending_project_widget.dart';
 
@@ -106,7 +110,9 @@ class _SchedulePageState extends State<SchedulePage> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(t.general.schedule, style: kSerzif(context)),
+                              TitlePage(
+                                  title: "Hi ${context.read<AuthCubit>().state.maybeWhen(authenticated:(user) => user.username, orElse: () => "")}",
+                                  subtitle: t.schedule.subtitle),
                               TableCalendar(
                                   focusedDay: scheduleState.focusedDay,
                                   firstDay: DateTime.now().subtract(const Duration(days: 365)),
