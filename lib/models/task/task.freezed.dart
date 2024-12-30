@@ -25,6 +25,7 @@ mixin _$Task {
   String? get projectId => throw _privateConstructorUsedError;
   DateTime get dueDate => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   bool get highPriority => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
 
@@ -49,6 +50,7 @@ abstract class $TaskCopyWith<$Res> {
       String? projectId,
       DateTime dueDate,
       DateTime createdAt,
+      DateTime? updatedAt,
       bool highPriority,
       DateTime? completedAt});
 }
@@ -77,6 +79,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? projectId = freezed,
     Object? dueDate = null,
     Object? createdAt = null,
+    Object? updatedAt = freezed,
     Object? highPriority = null,
     Object? completedAt = freezed,
   }) {
@@ -117,6 +120,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       highPriority: null == highPriority
           ? _value.highPriority
           : highPriority // ignore: cast_nullable_to_non_nullable
@@ -146,6 +153,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String? projectId,
       DateTime dueDate,
       DateTime createdAt,
+      DateTime? updatedAt,
       bool highPriority,
       DateTime? completedAt});
 }
@@ -171,6 +179,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? projectId = freezed,
     Object? dueDate = null,
     Object? createdAt = null,
+    Object? updatedAt = freezed,
     Object? highPriority = null,
     Object? completedAt = freezed,
   }) {
@@ -211,6 +220,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       highPriority: null == highPriority
           ? _value.highPriority
           : highPriority // ignore: cast_nullable_to_non_nullable
@@ -236,6 +249,7 @@ class _$TaskImpl extends _Task {
       this.projectId,
       required this.dueDate,
       required this.createdAt,
+      this.updatedAt,
       required this.highPriority,
       this.completedAt})
       : super._();
@@ -259,13 +273,15 @@ class _$TaskImpl extends _Task {
   @override
   final DateTime createdAt;
   @override
+  final DateTime? updatedAt;
+  @override
   final bool highPriority;
   @override
   final DateTime? completedAt;
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, projectId: $projectId, dueDate: $dueDate, createdAt: $createdAt, highPriority: $highPriority, completedAt: $completedAt)';
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, projectId: $projectId, dueDate: $dueDate, createdAt: $createdAt, updatedAt: $updatedAt, highPriority: $highPriority, completedAt: $completedAt)';
   }
 
   @override
@@ -287,6 +303,8 @@ class _$TaskImpl extends _Task {
             (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.highPriority, highPriority) ||
                 other.highPriority == highPriority) &&
             (identical(other.completedAt, completedAt) ||
@@ -305,6 +323,7 @@ class _$TaskImpl extends _Task {
       projectId,
       dueDate,
       createdAt,
+      updatedAt,
       highPriority,
       completedAt);
 
@@ -328,6 +347,7 @@ abstract class _Task extends Task {
       final String? projectId,
       required final DateTime dueDate,
       required final DateTime createdAt,
+      final DateTime? updatedAt,
       required final bool highPriority,
       final DateTime? completedAt}) = _$TaskImpl;
   const _Task._() : super._();
@@ -350,6 +370,8 @@ abstract class _Task extends Task {
   DateTime get dueDate;
   @override
   DateTime get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   bool get highPriority;
   @override

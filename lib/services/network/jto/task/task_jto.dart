@@ -19,6 +19,7 @@ class TaskJTO extends DTO with _$TaskJTO {
     String? projectId,
     required DateTime dueDate,
     required DateTime createdAt,
+    DateTime? updatedAt,
     required bool highPriority,
     DateTime? completedAt,
 }) = _TaskJTO;

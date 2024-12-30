@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/cubits/timer_session_cubit.dart';
 import 'package:pomo/components/utils/utils.dart';
 
 class CountDownTimer extends StatefulWidget {
@@ -40,21 +42,23 @@ class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStat
       duration: Duration(minutes: widget.durationInMinutes),
     );
     widget.onControllerCreated(_controller);
+    context.read<TimerSessionCubit>().startTimer(_controller.duration!);
+    _controller.addListener(() {
+      context.read<TimerSessionCubit>().updateRemainingTime(_controller.duration! * (1 - _controller.value));
+    });
   }
 
   @override
   void didUpdateWidget(CountDownTimer oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.durationInMinutes != oldWidget.durationInMinutes) {
-      // If the duration has changed, update the controller
       _controller.duration = Duration(minutes: widget.durationInMinutes);
-      // If the timer was running, restart it with the new duration
       if (_controller.isAnimating) {
         _controller.forward(from: 0);
       } else {
-        // If it wasn't running, just reset it
         _controller.reset();
       }
+      context.read<TimerSessionCubit>().startTimer(_controller.duration!);
     }
   }
 

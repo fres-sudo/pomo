@@ -160,9 +160,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                         email: _emailTextController.text,
                                         password: _passwordTextController.text,
                                         confirmPassword: _passwordTextController.text);
+                                    _formKey.currentState?.reset();
                                   } else if (!_checkedValue) {
                                     onAcceptTermsCondition(context);
                                   } else {
+                                    _formKey.currentState?.reset();
                                     onInvalidInput(context);
                                   }
                                 },
@@ -170,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     signingUp: () => const CustomCircularProgressIndicator(),
                                     orElse: () => Center(
                                           child: Text(
-                                            t.authentication.login.title,
+                                            t.authentication.signup.title,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),
                                           ),
                                         )))

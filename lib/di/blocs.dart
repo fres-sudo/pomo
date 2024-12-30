@@ -45,4 +45,10 @@ final List<BlocProvider> _blocs = [
   BlocProvider<NotificationCubit>(
     create: (_) => NotificationCubit(),
   ),
+  BlocProvider<TimerSessionCubit>(
+    create: (_) => TimerSessionCubit(),
+  ),
+  BlocProvider<WorkSessionCubit>(
+    create: (_) => WorkSessionCubit(null)
+  ),
 ];

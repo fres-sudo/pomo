@@ -81,7 +81,9 @@ class _WorkSessionPageState extends State<WorkSessionPage> {
                   ],
                 ),
                 selectedMode[0]
-                    ? QuickTimerView(onComplete: () {
+                    ? QuickTimerView(
+                    isQuickSession: false,
+                    onComplete: () {
                   final isTaskCompleted = (task.pomodoroCompleted ?? 0) + 1 == task.pomodoro;
                   context.read<TaskBloc>().update(
                       id: task.id!,

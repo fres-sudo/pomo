@@ -15,6 +15,7 @@ class ProjectJTO extends DTO with _$ProjectJTO {
     required String name,
     String? description,
     DateTime? createdAt,
+    DateTime? updatedAt,
     required DateTime startDate,
     required DateTime endDate,
     DateTime? completedAt,

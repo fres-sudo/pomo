@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/routes/app_router.gr.dart';
+import 'package:pomo/cubits/work_session_cubit.dart';
 
 import '../../blocs/task/task_bloc.dart';
 import '../../i18n/strings.g.dart';
@@ -13,14 +13,13 @@ import '../../pages/projects/widget/info_task_bottom_sheet.dart';
 import '../../pages/projects/widget/task_bottom_sheet.dart';
 import '../widgets/destruction_bottomsheet.dart';
 
-enum TaskCardSize { small , large }
+enum TaskCardSize { small, large }
 
 class TaskCard extends StatefulWidget {
   TaskCard({super.key, required this.task, this.size = TaskCardSize.large});
 
   Task task;
   TaskCardSize size;
-
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -40,7 +39,6 @@ class _TaskCardState extends State<TaskCard> {
     checkBox = widget.task.pomodoro == widget.task.pomodoroCompleted;
     super.didChangeDependencies();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,10 +100,13 @@ class _TaskCardState extends State<TaskCard> {
                 });
           },
           child: Container(
-            padding:widget.size == TaskCardSize.small ? const EdgeInsets.symmetric(vertical: 8, horizontal: 5) : const EdgeInsets.symmetric(vertical: 16, horizontal: 5),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).cardColor, border: Border(
-              left: widget.task.highPriority ? BorderSide(color: Theme.of(context).colorScheme.error, width: 3) : BorderSide.none
-            )),
+            padding: widget.size == TaskCardSize.small
+                ? const EdgeInsets.symmetric(vertical: 8, horizontal: 5)
+                : const EdgeInsets.symmetric(vertical: 16, horizontal: 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context).cardColor,
+                border: Border(left: widget.task.highPriority ? BorderSide(color: Theme.of(context).colorScheme.error, width: 3) : BorderSide.none)),
             child: Row(
               children: [
                 Checkbox(
@@ -149,10 +150,14 @@ class _TaskCardState extends State<TaskCard> {
                               text: widget.task.pomodoro > 1
                                   ? "${durationToString(widget.task.pomodoro * 30)} hours "
                                   : "${widget.task.pomodoro * 30} mins",
-                              style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.labelSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary) : Theme.of(context).textTheme.titleSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary)),
+                              style: widget.size == TaskCardSize.small
+                                  ? Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
+                                  : Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                           TextSpan(
                               text: " • ${widget.task.pomodoro} pomodoro",
-                              style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.labelSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary) : Theme.of(context).textTheme.titleSmall?.copyWith(color:Theme.of(context).colorScheme.onSecondary)),
+                              style: widget.size == TaskCardSize.small
+                                  ? Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
+                                  : Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                         ],
                       ),
                     ),
@@ -163,10 +168,13 @@ class _TaskCardState extends State<TaskCard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: InkWell(
-                        onTap: () => context.router.push(WorkSessionRoute(task: widget.task)),
+                        onTap: () {
+                          context.read<WorkSessionCubit>().set(widget.task);
+                          AutoTabsRouter.of(context).setActiveIndex(2);
+                        },
                         child: Icon(
                           Icons.play_arrow_rounded,
-                          size: widget.size == TaskCardSize.small ? 28 :  32,
+                          size: widget.size == TaskCardSize.small ? 28 : 32,
                           color: Theme.of(context).primaryColor,
                         )),
                   )
