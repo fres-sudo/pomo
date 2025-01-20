@@ -21,17 +21,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository taskRepository;
 
   /// Create a new instance of [TaskBloc].
-  TaskBloc({required this.taskRepository}) : super(const TaskState()) {
+  TaskBloc({required this.taskRepository}) : super(const TaskState.initial()) {
+    on<FetchTasksEvent>(_onFetchTasks);
     on<CreateTaskTaskEvent>(_onCreateTask);
     on<UpdateTaskByIdTaskEvent>(_onUpdateTaskById);
     on<DeleteTaskByIdTaskEvent>(_onDeleteTaskById);
-    on<SetTasksTaskEvent>(_onSetTasks);
     on<GetTasksByProjectTaskEvent>(_onGetTasksByProject);
-    on<FetchTasksEvent>(_onFetchTasks);
+    on<GetByIdTaskEvent>(_onGetTaskById);
   }
-
-  /// Method used to add the [SetTasksTaskEvent] event
-  void setTasks({required List<Task> tasks}) => add(TaskEvent.setTasks(tasks: tasks));
 
   /// Method used to add the [CreateTaskTaskEvent] event
   void create({required Task task}) => add(TaskEvent.createTask(task: task));
@@ -46,28 +43,36 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   void getByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
 
   /// Method used to add the [GetTasksByDayTaskEvent] event
-  void fetch({required String userId, required DateTime date, required CalendarFormat format}) => add(TaskEvent.fetchTasks(userId: userId, date: date, format: format));
+  void fetch({required String userId, required DateTime date, required CalendarFormat format}) =>
+      add(TaskEvent.fetchTasks(userId: userId, date: date, format: format));
 
-  FutureOr<void> _onSetTasks(
-      SetTasksTaskEvent event,
-      Emitter<TaskState> emit,
-      ) async {
-    emit(state.copyWith(tasks: event.tasks));
+  void getOneById({required String id}) => add(TaskEvent.getTaskById(id: id));
+
+  FutureOr<void> _onFetchTasks(
+    FetchTasksEvent event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(TaskState.fetching());
+    try {
+      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, format: event.format);
+      emit(TaskState.fetched(tasks));
+    } catch (error, stack) {
+      logger.e("_onFetchTasks", error: error, stackTrace: stack);
+      emit(TaskState.errorFetching(FetchingTasksError()));
+    }
   }
 
   FutureOr<void> _onCreateTask(
     CreateTaskTaskEvent event,
     Emitter<TaskState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(TaskState.creating());
     try {
       final newTask = await taskRepository.createTask(task: event.task);
-      final tasks = List<Task>.from(state.tasks);
-      tasks.add(newTask);
-      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.create, tasks: tasks));
-    }  catch (error, stack) {
+      emit(TaskState.created(newTask));
+    } catch (error, stack) {
       logger.e("_onCreateTask", error: error, stackTrace: stack);
-      emit(state.copyWith(isLoading: false, error: CreatingTasksError()));
+      emit(TaskState.errorCreating(CreatingTasksError()));
     }
   }
 
@@ -75,16 +80,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     UpdateTaskByIdTaskEvent event,
     Emitter<TaskState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(TaskState.updating());
     try {
-      final updatedTask= await taskRepository.updateTaskById(task: event.task, id: event.id);
-      final tasks = List<Task>.from(state.tasks);
-      tasks.removeWhere((t) => t.id == event.id);
-      tasks.add(updatedTask);
-      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.update, tasks: tasks));
-    }  catch (error, stack) {
+      final updatedTask = await taskRepository.updateTaskById(task: event.task, id: event.id);
+      emit(TaskState.updated(updatedTask));
+    } catch (error, stack) {
       logger.e("_onUpdateTaskById", error: error, stackTrace: stack);
-      emit(state.copyWith(isLoading: false, error: UpdatingTasksError()));
+      emit(TaskState.errorUpdating(UpdatingTasksError()));
     }
   }
 
@@ -92,44 +94,38 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     DeleteTaskByIdTaskEvent event,
     Emitter<TaskState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(TaskState.deleting());
     try {
       await taskRepository.deleteTaskById(id: event.id);
-      final tasks = List<Task>.from(state.tasks);
-      tasks.removeWhere((t) => t.id == event.id);
-      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.delete, tasks: tasks));
+      emit(TaskState.deleted());
     } catch (error, stack) {
       logger.e("_onDeleteTaskById", error: error, stackTrace: stack);
-      emit(state.copyWith(isLoading: false, error: DeletingTasksError()));
+      emit(TaskState.errorDeleting(DeletingTasksError()));
     }
   }
 
   FutureOr<void> _onGetTasksByProject(
-      GetTasksByProjectTaskEvent event,
-      Emitter<TaskState> emit,
-      ) async {
-    emit(state.copyWith(isLoading: true));
-    try {
-      final tasks = await taskRepository.getTasksByProject(projectId: event.projectId);
-      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.read, tasks:tasks));
-    } catch (error, stack) {
-      logger.e("_onGetTasksByProject", error: error, stackTrace: stack);
-      emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
-    }
-  }
-
-  FutureOr<void> _onFetchTasks(
-    FetchTasksEvent event,
+    GetTasksByProjectTaskEvent event,
     Emitter<TaskState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(TaskState.fetchingByProject());
     try {
-      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, format: event.format);
-      emit(state.copyWith(isLoading: false, error: null, operation: TaskOperation.readByDay, tasks:tasks));
+      final tasks = await taskRepository.getTasksByProject(projectId: event.projectId);
+      emit(TaskState.fetchedByProject(tasks));
     } catch (error, stack) {
-      logger.e("_onFetchTasks", error: error, stackTrace: stack);
-      emit(state.copyWith(isLoading: false, error: FetchingTasksError()));
+      logger.e("_onGetTasksByProject", error: error, stackTrace: stack);
+      emit(TaskState.errorFetchingByProject(FetchingTasksError()));
     }
   }
 
+  FutureOr<void> _onGetTaskById(GetByIdTaskEvent event, Emitter<TaskState> emit) async {
+    emit(TaskState.getting());
+    try {
+      final task = await taskRepository.getTaskById(id: event.id);
+      emit(TaskState.got(task));
+    } catch (error, stack) {
+      logger.e("_onGetTask", error: error, stackTrace: stack);
+      emit(TaskState.errorGetting(FetchingTasksError()));
+    }
+  }
 }

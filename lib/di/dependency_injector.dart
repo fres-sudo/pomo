@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pine/pine.dart';
 import 'package:pomo/blocs/recover_password/recover_password_bloc.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';

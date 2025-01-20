@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pomo/blocs/project/project_bloc.dart';
 import 'package:pomo/components/widgets/top_bottom_sheet_widget.dart';
-import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/fields/date_field.dart';
@@ -58,12 +57,11 @@ class _EditProjectViewState extends State<EditProjectView> {
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
-        if (state.operation == ProjectOperation.update) {
-          context.read<ProjectBloc>().updateProjectById(
-              id: widget.project.id ?? "",
-              project: widget.project.copyWith(
-                  name: _nameTextController.text, description: _descriptionTextController.text, startDate: _startDate!, endDate: _endDate!));
-        }
+        state.whenOrNull(
+            updated: (project) => context.read<ProjectBloc>().updateProjectById(
+                id: widget.project.id ?? "",
+                project: widget.project.copyWith(
+                    name: _nameTextController.text, description: _descriptionTextController.text, startDate: _startDate!, endDate: _endDate!)));
       },
       child: Container(
         height: MediaQuery.of(context).size.height - 100,
@@ -87,15 +85,12 @@ class _EditProjectViewState extends State<EditProjectView> {
                       onInvalidInput(context, isAlert: true);
                       return;
                     }
-                    if (_endDate != null && _endDate!.isBeforeDay(DateTime.now())) {
-                      onInvalidInput(context, text: t.errors.due_date_before_today, isAlert: true);
-                      return;
-                    }
+                    //if (_endDate != null && _endDate!.isBeforeDay(DateTime.now())) {
+                    //  onInvalidInput(context, text: t.errors.due_date_before_today, isAlert: true);
+                    //  return;
+                    //}
                     if (image != null) {
-                      context.read<ProjectBloc>().uploadProjectImageCover(
-                        id: widget.project.id ?? "",
-                        imageCover: File(image!.path)
-                      );
+                      context.read<ProjectBloc>().uploadProjectImageCover(id: widget.project.id ?? "", imageCover: File(image!.path));
                     } else {
                       context.read<ProjectBloc>().updateProjectById(
                           id: widget.project.id ?? "",
@@ -106,7 +101,7 @@ class _EditProjectViewState extends State<EditProjectView> {
                               endDate: _endDate!));
                     }
                     context.router.maybePop();
-                    context.router.replace(const ProjectRoute());
+                    context.router.replaceAll([const ProjectRoute()]);
                   },
                   child: Text(t.general.edit, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor)),
                 ),

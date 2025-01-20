@@ -18,50 +18,51 @@ class EndingProjectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, projectState) {
-        final endingProjects =
-        projectState.projects.where((p) => isSameDay(p.endDate, focusedDay)).toList(growable: false);
+        final endingProjects = projectState.maybeWhen(
+            fetched: (projects) => projects.where((p) => isSameDay(p.endDate, focusedDay)).toList(growable: false),
+            orElse: () => []);
         return endingProjects.isNotEmpty
             ? Skeletonizer(
-          enabled: projectState.isLoading,
-          child: Column(
-            children: [
-              Container(
-                height: 35,
-                decoration: BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                enabled: projectState.maybeWhen(fetching: () => true, orElse: () => false),
+                child: Column(
                   children: [
-                    const Icon(
-                      Icons.playlist_add_check_rounded,
-                      color: Colors.white,
-                    ),
-                    Gap.SM_H,
-                    Text(
-                      "${t.projects.ending_today}: ",
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Colors.white,
+                    Container(
+                      height: 35,
+                      decoration: BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.playlist_add_check_rounded,
+                            color: Colors.white,
+                          ),
+                          Gap.SM_H,
+                          Text(
+                            "${t.projects.ending_today}: ",
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              endingProjects.map((p) => p.name).toList(growable: false).join(', '),
+                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        endingProjects.map((p) => p.name).toList(growable: false).join(', '),
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.white,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
+                    Gap.XS,
+                    const DottedDivider(),
+                    Gap.XS,
                   ],
                 ),
-              ),
-              Gap.XS,
-              const DottedDivider(),
-              Gap.XS,
-            ],
-          ),
-        )
+              )
             : const SizedBox();
       },
     );

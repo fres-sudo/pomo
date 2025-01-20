@@ -5,6 +5,7 @@
     "save": "Salva",
     "apply": "Applica",
     "confirm": "Conferma",
+    "archive": "Archivia",
     "delete": "Elimina",
     "create": "Crea",
     "name": "Nome",
@@ -25,7 +26,7 @@
     "pomodoro_done": "Pomodori completati",
     "done": "Fatto",
     "quick_session": "Sessione Veloce",
-    "quick_session_description" : "Inizia a concentrarti su cosa stai facendo ora.",
+    "quick_session_description": "Inizia a concentrarti su cosa stai facendo ora.",
     "session": "Sessione",
     "still_dont_have": "Non hai ancora",
     "no_description": "Nessuna descrizione",
@@ -61,6 +62,7 @@
     "header_project_page": "Mettiti a Lavoro",
     "invite_friends": "Invita i tuoi amici",
     "any_project": "nessun progetto",
+    "has_been_found": "è stato trovato",
     "in_progress": "In corso",
     "already_done": "Completate",
     "ending_today": "In scadenza oggi",
@@ -77,6 +79,18 @@
     "delete": {
       "title": "Elimina progetto",
       "description": "Sei sicuro di voler elminare questo progetto?"
+    },
+    "archive": {
+      "action": "Archivia",
+      "title": "Archivia progetto",
+      "projects": "Progetti archiviati",
+      "description": "Sei sicuro di voler archiviare questo progetto? Non sarà più visibile nella tua lista dei progetti.",
+      "no_project": "Nessun progetto archiviato"
+    },
+    "unarchive": {
+      "action": "Ripristina",
+      "title": "Ripristina progetto",
+      "description": "Sei sicuro di voler ripristinare questo progetto? Sarà nuovamente visibile nella tua lista dei progetti."
     }
   },
   "profile": {

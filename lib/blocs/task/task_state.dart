@@ -6,54 +6,29 @@ enum TaskOperation { read, create, update, delete, readByDay }
 @freezed
 class TaskState with _$TaskState {
 
-  const factory TaskState({
-    @Default([]) List<Task> tasks,
-    @Default(false) bool isLoading,
-    LocalizedError? error,
-    TaskOperation? operation
-  }) = _TaskState;
+  const factory TaskState.initial() = InitialTaskState;
 
-  const TaskState._();
-
-  /*
-  const factory TaskState.creating() = CreatingTaskState;
-  
-  const factory TaskState.created(Task task) = CreatedTaskState;
-  
-  const factory TaskState.errorCreating() = ErrorCreatingTaskState;
-  
-  const factory TaskState.updating() = UpdatingTaskState;
-  
-  const factory TaskState.updated(Task task) = UpdatedTaskState;
-  
-  const factory TaskState.errorUpdating() = ErrorUpdatingTaskState;
-  
-  const factory TaskState.deleting() = DeletingTaskState;
-  
-  const factory TaskState.deleted(Task task) = DeletedTaskState;
-  
-  const factory TaskState.errorDeleting() = ErrorDeletingTaskState;
-
-  const factory TaskState.none() = NoneTaskState;
-  
   const factory TaskState.fetching() = FetchingTaskState;
-  
   const factory TaskState.fetched(List<Task> tasks) = FetchedTaskState;
-  
-  const factory TaskState.errorFetching() = ErrorFetchingTaskState;
+  const factory TaskState.errorFetching(LocalizedError error) = ErrorFetchingTaskState;
 
-  const factory TaskState.noneUsers() = NoneUsersTaskState;
+  const factory TaskState.creating() = CreatingTaskState;
+  const factory TaskState.created(Task task) = CreatedTaskState;
+  const factory TaskState.errorCreating(LocalizedError error) = ErrorCreatingTaskState;
 
-  const factory TaskState.fetchingByUser() = FetchingByUserTaskState;
+  const factory TaskState.updating() = UpdatingTaskState;
+  const factory TaskState.updated(Task task) = UpdatedTaskState;
+  const factory TaskState.errorUpdating(LocalizedError error) = ErrorUpdatingTaskState;
 
-  const factory TaskState.fetchedByUser(List<Task> tasks) = FetchedByUserTaskState;
+  const factory TaskState.deleting() = DeletingTaskState;
+  const factory TaskState.deleted() = DeletedTaskState;
+  const factory TaskState.errorDeleting(LocalizedError error) = ErrorDeletingTaskState;
 
-  const factory TaskState.errorFetchingByUser() = ErrorFetchingByUserTaskState;
-  
+  const factory TaskState.fetchingByProject() = FetchingByProjectTaskState;
+  const factory TaskState.fetchedByProject(List<Task> tasks) = FetchedByProjectTaskState;
+  const factory TaskState.errorFetchingByProject(LocalizedError error) = ErrorFetchingByProjectTaskState;
+
   const factory TaskState.getting() = GettingTaskState;
-  
   const factory TaskState.got(Task task) = GotTaskState;
-  
-  const factory TaskState.errorGetting() = ErrorGettingTaskState;
-  */
+  const factory TaskState.errorGetting(LocalizedError error) = ErrorGettingTaskState;
 }

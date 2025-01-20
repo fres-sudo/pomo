@@ -37,7 +37,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
-    _usernameTextController.text = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.username, orElse: () => "");
+    _usernameTextController.text =
+        context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.username, orElse: () => "");
     super.initState();
   }
 
@@ -54,12 +55,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         }
         if (state.operation == UserOperation.deleted) {
           context.read<AuthCubit>().signOut();
-          context.router.replace(const RootRoute());
+          context.router.replaceAll([const RootRoute()]);
         }
         if (state.operation == UserOperation.updated || state.operation == UserOperation.updatedImage) {
-          context.read<StorageService>().updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
-          onSuccessState(context,
-              state.operation == UserOperation.updatedImage ? t.profile.settings.update.updated_photo : t.profile.settings.update.updated_info);
+          context
+              .read<StorageService>()
+              .updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
+          onSuccessState(
+              context,
+              state.operation == UserOperation.updatedImage
+                  ? t.profile.settings.update.updated_photo
+                  : t.profile.settings.update.updated_info);
           context.read<AuthCubit>().authenticated(state.user!);
         }
       },
@@ -92,16 +98,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path));
                           } else {
                             if (user != null) {
-                              context.read<UserBloc>().updateUser(id: user.id, user: user.copyWith(username: _usernameTextController.text));
+                              context
+                                  .read<UserBloc>()
+                                  .updateUser(id: user.id, user: user.copyWith(username: _usernameTextController.text));
                             }
                           }
                         }
                       },
-                      child: Text(t.general.update,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
-                                  ? Theme.of(context).primaryColor
-                                  : kNeutral400))),
+                      child: state.isLoading
+                          ? CustomCircularProgressIndicator(color: Theme.of(context).primaryColor)
+                          : Text(t.general.update,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
+                                      ? Theme.of(context).primaryColor
+                                      : kNeutral400))),
                 ],
               ),
               Gap.XL,
@@ -210,12 +220,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Text("Email", style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextFormField(
-                      initialValue: context.watch<AuthCubit>().state.maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.como"),
+                      initialValue: context
+                          .watch<AuthCubit>()
+                          .state
+                          .maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.como"),
                       readOnly: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.lock, size: 20, color: kNeutral500),
-                        hintText: context.watch<AuthCubit>().state.maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.com"),
+                        hintText: context
+                            .watch<AuthCubit>()
+                            .state
+                            .maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.com"),
                         hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red),
                       ),
                     ),
@@ -224,7 +240,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Gap.MD,
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: kRed500.withOpacity(0.15),
+                        backgroundColor: kRed500.withValues(alpha: 0.15),
                       ),
                       onPressed: () => showModalBottomSheet(
                           context: context,
@@ -235,9 +251,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               buttonText: t.general.delete,
                               description: t.profile.settings.delete_account.description,
                               onPress: () {
-                                context
-                                    .read<UserBloc>()
-                                    .deleteUser(id: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
+                                context.read<UserBloc>().deleteUser(
+                                    id: context
+                                        .read<AuthCubit>()
+                                        .state
+                                        .maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
                                 context.router.maybePop();
                               })),
                       child: state.isLoading
@@ -247,7 +265,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           : Center(
                               child: Text(
                                 t.profile.settings.delete_account.title,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.error),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: Theme.of(context).colorScheme.error),
                               ),
                             ),
                     )

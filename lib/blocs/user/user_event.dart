@@ -12,9 +12,4 @@ class UserEvent with _$UserEvent {
   const factory UserEvent.deleteUserPhoto({required String userId,}) = DeleteUserPhotoUserEvent;
 
   const factory UserEvent.searchUsername({required String username}) = SearchUsernameUserEvent;
-
-  //const factory UserEvent.forgotPassword({required String email}) = ForgotPasswordUserEvent;
-
-  //const factory UserEvent.recoverPassword({required String token, required String password, required String passwordConfirm}) = RecoverPasswordUserEvent;
-
 }

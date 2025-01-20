@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) => state.whenOrNull(notAuthenticated: () => context.router.replace(const RootRoute())),
+      listener: (context, state) => state.whenOrNull(notAuthenticated: () => context.router.replaceAll([const RootRoute()])),
       builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -252,7 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPress: () {
                                     context.read<AuthCubit>().signOut();
                                     Navigator.of(context).pop();
-                                    context.router.replace(const RootRoute());
+                                    context.router.replaceAll([const RootRoute()]);
                                   },
                                 );
                               },

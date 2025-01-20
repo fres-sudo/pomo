@@ -3,7 +3,7 @@ part of 'project_bloc.dart';
 @freezed
 class ProjectEvent with _$ProjectEvent {
   
-  const factory ProjectEvent.getProjectsByUser({required String id}) = GetProjectsByUserProjectEvent;
+  const factory ProjectEvent.fetch({required String id}) = FetchProjectEvent;
   
   const factory ProjectEvent.createProject({required Project project}) = CreateProjectProjectEvent;
 

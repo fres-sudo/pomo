@@ -31,4 +31,19 @@ class Task with _$Task {
     // If highPriority is the same, sort by dueDate in ascending order
     return dueDate.compareTo(other.dueDate);
   }
+
+  static Task fake() => Task(
+    id: '1',
+    name: 'Task 1',
+    description: 'Description of task 1',
+    pomodoro: 4,
+    pomodoroCompleted: 2,
+    userId: '1',
+    projectId: '1',
+    dueDate: DateTime.now(),
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+    highPriority: false,
+    completedAt: DateTime.now(),
+  );
 }

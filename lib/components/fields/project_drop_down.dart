@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../blocs/project/project_bloc.dart';
 import '../../extension/sized_box_extension.dart';
@@ -8,14 +9,7 @@ import '../../models/project/project.dart';
 import '../../models/task/task.dart';
 
 class ProjectDropDown extends StatefulWidget {
-  const ProjectDropDown({
-    super.key,
-    required this.onChanged,
-    required this.onDelete,
-    this.selectedProject,
-    required this.visible,
-    this.task
-  });
+  const ProjectDropDown({super.key, required this.onChanged, required this.onDelete, this.selectedProject, required this.visible, this.task});
 
   final Task? task;
   final Function(Project? project) onChanged;
@@ -65,57 +59,59 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
                 Expanded(
                   child: DropdownButtonHideUnderline(
                     child: DropdownButtonFormField<Project>(
-                      value: _selectedProject,
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Theme.of(context).colorScheme.secondary,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).dividerColor,
-                              width: 1,
+                        value: _selectedProject,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.secondary,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                                width: 1,
+                              ),
                             ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).dividerColor,
-                              width: 1,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                                width: 1,
+                              ),
                             ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).dividerColor,
-                              width: 1,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                                width: 1,
+                              ),
                             ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                          ),
-                          constraints: BoxConstraints()),
-                      hint: Text(t.tasks.create.select_a_project),
-                      dropdownColor: Theme.of(context).colorScheme.secondary,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      alignment: Alignment.centerLeft,
-                      // Aligns the dropdown under the button
-                      onChanged: (Project? newValue) {
-                        setState(() {
-                          _selectedProject = newValue;
-                        });
-                        widget.onChanged(newValue);
-                      },
-                      items: state.projects.map((Project project) {
-                        return DropdownMenuItem<Project>(
-                          value: project,
-                          child: Text(
-                            project.name,
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                            ),
+                            constraints: BoxConstraints()),
+                        hint: Text(t.tasks.create.select_a_project),
+                        dropdownColor: Theme.of(context).colorScheme.secondary,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        alignment: Alignment.centerLeft,
+                        // Aligns the dropdown under the button
+                        onChanged: (Project? newValue) {
+                          setState(() {
+                            _selectedProject = newValue;
+                          });
+                          widget.onChanged(newValue);
+                        },
+                        items: state.maybeWhen(
+                            fetching: () => [],
+                            fetched: (projects) => projects.map((Project project) {
+                                  return DropdownMenuItem<Project>(
+                                    value: project,
+                                    child: Text(
+                                      project.name,
+                                      style: Theme.of(context).textTheme.labelMedium,
+                                    ),
+                                  );
+                                }).toList(),
+                            orElse: () => [])),
                   ),
                 ),
                 if (_selectedProject != null)

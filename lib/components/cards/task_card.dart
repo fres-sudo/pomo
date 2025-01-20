@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/work_session_cubit.dart';
+import 'package:pomo/routes/app_router.gr.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../blocs/task/task_bloc.dart';
 import '../../i18n/strings.g.dart';
@@ -16,10 +19,10 @@ import '../widgets/destruction_bottomsheet.dart';
 enum TaskCardSize { small, large }
 
 class TaskCard extends StatefulWidget {
-  TaskCard({super.key, required this.task, this.size = TaskCardSize.large});
+  const TaskCard({super.key, required this.task, this.size = TaskCardSize.large});
 
-  Task task;
-  TaskCardSize size;
+  final Task task;
+  final TaskCardSize size;
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -106,7 +109,10 @@ class _TaskCardState extends State<TaskCard> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Theme.of(context).cardColor,
-                border: Border(left: widget.task.highPriority ? BorderSide(color: Theme.of(context).colorScheme.error, width: 3) : BorderSide.none)),
+                border: Border(
+                    left: widget.task.highPriority
+                        ? BorderSide(color: Theme.of(context).colorScheme.error, width: 3)
+                        : BorderSide.none)),
             child: Row(
               children: [
                 Checkbox(
@@ -120,18 +126,9 @@ class _TaskCardState extends State<TaskCard> {
                     onChanged: (value) {
                       context.read<TaskBloc>().update(
                           id: widget.task.id ?? "",
-                          task: Task(
-                            id: widget.task.id ?? "",
-                            name: widget.task.name,
-                            description: widget.task.description,
-                            pomodoro: widget.task.pomodoro,
+                          task: widget.task.copyWith(
                             pomodoroCompleted: value! ? widget.task.pomodoro : 0,
-                            userId: widget.task.userId,
-                            highPriority: widget.task.highPriority,
-                            createdAt: widget.task.createdAt,
-                            projectId: widget.task.projectId,
                             completedAt: value ? DateTime.now() : null,
-                            dueDate: widget.task.dueDate,
                           ));
                     }),
                 Column(
@@ -141,7 +138,9 @@ class _TaskCardState extends State<TaskCard> {
                       widget.task.name.capitalize(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: widget.size == TaskCardSize.small ? Theme.of(context).textTheme.bodyMedium : Theme.of(context).textTheme.titleMedium,
+                      style: widget.size == TaskCardSize.small
+                          ? Theme.of(context).textTheme.bodyMedium
+                          : Theme.of(context).textTheme.titleMedium,
                     ),
                     RichText(
                       text: TextSpan(
@@ -151,13 +150,25 @@ class _TaskCardState extends State<TaskCard> {
                                   ? "${durationToString(widget.task.pomodoro * 30)} hours "
                                   : "${widget.task.pomodoro * 30} mins",
                               style: widget.size == TaskCardSize.small
-                                  ? Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
-                                  : Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                           TextSpan(
                               text: " • ${widget.task.pomodoro} pomodoro",
                               style: widget.size == TaskCardSize.small
-                                  ? Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
-                                  : Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                         ],
                       ),
                     ),
@@ -170,7 +181,9 @@ class _TaskCardState extends State<TaskCard> {
                     child: InkWell(
                         onTap: () {
                           context.read<WorkSessionCubit>().set(widget.task);
-                          AutoTabsRouter.of(context).setActiveIndex(2);
+                          widget.size == TaskCardSize.small
+                              ? AutoTabsRouter.of(context).setActiveIndex(2)
+                              : context.router.replace(QuickSessionRoute());
                         },
                         child: Icon(
                           Icons.play_arrow_rounded,

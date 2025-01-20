@@ -19,9 +19,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   final StatsRepository statsRepository;
   /// Create a new instance of [StatsBloc].
-  StatsBloc({ required this.statsRepository}) : super(StatsState(statistics: Stats.fake())) {
+  StatsBloc({ required this.statsRepository}) : super(StatsState.initial()) {
     on<FetchStatsStatsEvent>(_onFetchStats);
-    
   }
   
   /// Method used to add the [FetchStatsStatsEvent] event
@@ -32,13 +31,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     FetchStatsStatsEvent event,
     Emitter<StatsState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(StatsState.fetching());
     try{
       final stats = await statsRepository.fetchStats(userId: event.userId);
-      emit(state.copyWith(statistics: stats, isLoading: false, error: null));
+      emit(StatsState.fetched(stats));
     }catch(e, stack) {
       logger.e("_onFetchStats", error: e, stackTrace: stack);
-      emit(StatsState(error: FetchingStatsError(), isLoading: false));
+      emit(StatsState.error(FetchingStatsError()));
     }
   }
   

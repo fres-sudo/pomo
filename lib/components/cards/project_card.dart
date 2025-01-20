@@ -10,26 +10,33 @@ import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../i18n/strings.g.dart';
 
-enum ProjectStatus {
-  progress,
-  completed,
-  expired,
-}
+enum ProjectStatus { progress, completed, expired, archived }
 
 extension ProjectExt on ProjectStatus {
   String get label {
-    return switch (this) { ProjectStatus.completed => "COMPLETED", ProjectStatus.expired => "EXPIRED", ProjectStatus.progress => "IN PROGRESS" };
+    return switch (this) {
+      ProjectStatus.completed => "COMPLETED",
+      ProjectStatus.expired => "EXPIRED",
+      ProjectStatus.progress => "IN PROGRESS",
+      ProjectStatus.archived => "ARCHIVED"
+    };
   }
 
   Color get foregroundColor {
-    return switch (this) { ProjectStatus.completed => kGreen300, ProjectStatus.expired => kRed300, ProjectStatus.progress => kYellow300 };
+    return switch (this) {
+      ProjectStatus.completed => kGreen300,
+      ProjectStatus.expired => kRed300,
+      ProjectStatus.progress => kYellow300,
+      ProjectStatus.archived => kNeutral300
+    };
   }
 
   Color get backGroundColor {
     return switch (this) {
-      ProjectStatus.completed => kGreen100.withOpacity(0.15),
-      ProjectStatus.expired => kRed100.withOpacity(0.15),
-      ProjectStatus.progress => kYellow100.withOpacity(0.15)
+      ProjectStatus.completed => kGreen100.withValues(alpha: 0.15),
+      ProjectStatus.expired => kRed100.withValues(alpha: 0.15),
+      ProjectStatus.progress => kYellow100.withValues(alpha: 0.15),
+      ProjectStatus.archived => kNeutral100.withValues(alpha: 0.15)
     };
   }
 }
@@ -42,25 +49,8 @@ class ProjectCard extends StatelessWidget {
 
   final Project project;
 
-  ProjectStatus _getStatus(Project project) {
-    int completedTask = project.tasks?.map((task) => task.completedAt != null && task.pomodoro == task.pomodoroCompleted).toList().length ?? 0;
-    int totalTasks = project.tasks?.length ?? 0;
-
-    print("completedTask: ${completedTask}, totalTasks: ${totalTasks}");
-
-    if (!project.endDate.isBeforeDay(DateTime.now()) && completedTask != totalTasks) {
-      return ProjectStatus.expired;
-    }
-    if (project.completedAt != null || (completedTask == totalTasks && completedTask != 0 && completedTask != 0)) {
-      return ProjectStatus.completed;
-    }
-    return ProjectStatus.progress;
-  }
-
   @override
   Widget build(BuildContext context) {
-    ProjectStatus status = _getStatus(project);
-
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, bottom: 16),
       child: InkWell(
@@ -77,19 +67,21 @@ class ProjectCard extends StatelessWidget {
             children: [
               project.imageCover == null
                   ? ClipRRect(
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                      borderRadius:
+                          const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: Container(
                         height: 100,
                         width: MediaQuery.sizeOf(context).width,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                          image: AssetImage("assets/images/project-placeholder.png"), // Replace with your placeholder image path
+                          image: AssetImage("assets/images/project-placeholder.png"),
                           fit: BoxFit.cover,
                         )),
                       ),
                     )
                   : ClipRRect(
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                      borderRadius:
+                          const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       child: SizedBox(
                         height: 100,
                         width: MediaQuery.sizeOf(context).width,
@@ -102,7 +94,8 @@ class ProjectCard extends StatelessWidget {
                     ),
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                    borderRadius:
+                        const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                     color: Theme.of(context).cardColor),
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -118,39 +111,52 @@ class ProjectCard extends StatelessWidget {
                           children: [
                             Text(project.name.capitalize(),
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall
-                                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).colorScheme.onSurface)),
                             const SizedBox(
                               height: 2,
                             ),
-                            Text(DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode).format(project.endDate),
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary))
+                            Text(
+                                DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode)
+                                    .format(project.endDate),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: Theme.of(context).colorScheme.onSecondary))
                           ],
                         ),
                         Chip(
                             side: BorderSide(
-                              color: status.foregroundColor,
+                              color: project.status.foregroundColor,
                             ),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             labelPadding: EdgeInsets.zero,
-                            labelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(color: status.foregroundColor),
-                            backgroundColor: status.backGroundColor,
-                            label: Text(status.label)),
+                            labelStyle:
+                                Theme.of(context).textTheme.labelSmall?.copyWith(color: project.status.foregroundColor),
+                            backgroundColor: project.status.backGroundColor,
+                            label: Text(project.status.label)),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
+                          child: Text(
+                              project.description == null || project.description!.isEmpty
+                                  ? t.general.no_description
+                                  : project.description!,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                         ),
                         Text("${project.tasks?.length != null ? project.tasks!.length.toString() : "0"} tasks",
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor))
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ],

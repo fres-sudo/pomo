@@ -28,21 +28,32 @@ class HeaderProjectDetails extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BackIconButton(onPress: () => isProjectCreated ? context.router.replace(const ProjectRoute()) : context.router.maybePop(),),
+            BackIconButton(onPress: () {
+              if (isProjectCreated) {
+                context.router.replaceAll([const ProjectRoute()]);
+              } else {
+                context.router.maybePop();
+              }
+            }),
             Gap.SM_H,
             Expanded(child: Text(project.name.capitalize(), overflow: TextOverflow.ellipsis, style: kSerzif(context))),
-            IconButton(onPressed: () => showModalBottomSheet(
-              context: context,
-              isDismissible: true,
-              useRootNavigator: true,
-              builder: (BuildContext context) {
-                return ProjectBottomSheet(project: project);
-              },
-            ),  icon: const Icon(Icons.more_horiz_rounded)),
+            IconButton(
+                onPressed: () => showModalBottomSheet(
+                      context: context,
+                      isDismissible: true,
+                      useRootNavigator: true,
+                      builder: (BuildContext context) {
+                        return ProjectBottomSheet(project: project);
+                      },
+                    ),
+                icon: const Icon(Icons.more_horiz_rounded)),
           ],
         ),
         Gap.SM,
-        Text(project.description == null || project.description!.isEmpty ? t.general.no_description : project.description!,
+        Text(
+            project.description == null || project.description!.isEmpty
+                ? t.general.no_description
+                : project.description!,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: kNeutral600)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +65,8 @@ class HeaderProjectDetails extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   t.projects.invite_friends,
-                  style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Theme.of(context).primaryColor),
+                  style: GoogleFonts.inter(
+                      fontSize: 12, fontWeight: FontWeight.w500, color: Theme.of(context).primaryColor),
                 ),
               ),
             ),

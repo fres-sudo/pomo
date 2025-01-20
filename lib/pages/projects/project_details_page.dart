@@ -14,7 +14,7 @@ class ProjectDetailsPage extends StatelessWidget implements AutoRouteWrapper{
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    context.read<TaskBloc>().setTasks(tasks: project.tasks ?? []);
+    context.read<TaskBloc>().getByProject(projectId: project.id ?? "");
     return this;
   }
 

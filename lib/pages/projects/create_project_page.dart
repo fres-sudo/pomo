@@ -19,6 +19,7 @@ import 'package:pomo/models/user/user.dart';
 import 'package:pomo/services/notification/notification_service.dart';
 
 import '../../blocs/project/project_bloc.dart';
+import '../../components/cards/project_card.dart';
 import '../../cubits/notification/notification_cubit.dart';
 import '../../extension/sized_box_extension.dart';
 import '../../i18n/strings.g.dart';
@@ -41,8 +42,6 @@ class CreateProjectPage extends StatefulWidget {
 class _CreateProjectPageState extends State<CreateProjectPage> {
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _descriptionTextController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
 
   XFile? image;
 
@@ -69,27 +68,22 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
-      state.error != null ? onErrorState(context, state.error!.localizedString(context)) : null;
-      if (state.operation == ProjectOperation.update) {
-        final Project currProj = state.projects.firstWhere((proj) =>
-            proj.name == _nameTextController.text && proj.createdAt?.day == DateTime.now().day && proj.createdAt?.month == DateTime.now().month);
-
-        context.router.push(ProjectDetailsRoute(project: currProj, isCreatedProject: true));
-      }
-      if (state.operation == ProjectOperation.create) {
-        final Project currProj = state.projects.firstWhere((proj) =>
-            proj.name == _nameTextController.text && proj.createdAt?.day == DateTime.now().day && proj.createdAt?.month == DateTime.now().month);
-        final int notificationId = Random().nextInt(1000);
-        final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[currProj.id];
-        if (existingNotificationId == null) {
-          NotificationService.scheduleNotification(notificationId, "${t.notifications.scheduled.project.title} ⏰",
-              "${t.notifications.scheduled.project.description} 👀", currProj.endDate);
-          context.read<NotificationCubit>().addScheduledNotification(currProj.id ?? "", notificationId);
-        }
-        image != null
-            ? context.read<ProjectBloc>().uploadProjectImageCover(id: currProj.id ?? '', imageCover: File(image!.path))
-            : context.router.push(ProjectDetailsRoute(project: currProj, isCreatedProject: true));
-      }
+      state.whenOrNull(
+        errorCreating: (error) => onErrorState(context, error.localizedString(context)),
+        updated: (project) => context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
+        created: (project) {
+          final int notificationId = Random().nextInt(1000);
+          final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[project.id];
+          if (existingNotificationId == null) {
+            NotificationService.scheduleNotification(notificationId, "${t.notifications.scheduled.project.title} ⏰",
+                "${t.notifications.scheduled.project.description} 👀", project.endDate);
+            context.read<NotificationCubit>().addScheduledNotification(project.id ?? "", notificationId);
+          }
+          image != null
+              ? context.read<ProjectBloc>().uploadProjectImageCover(id: project.id ?? '', imageCover: File(image!.path))
+              : context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true));
+        },
+      );
     }, builder: (context, state) {
       return Scaffold(
         body: SingleChildScrollView(
@@ -110,9 +104,11 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                     const Spacer(),
                     TextButton(
                         onPressed: () {
-                          final user =
-                              context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
-                          if (_endDate == null) {
+                          final user = context
+                              .read<AuthCubit>()
+                              .state
+                              .maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                          if (_endDate == null || _nameTextController.text.length < 3) {
                             onInvalidInput(context);
                             return;
                           }
@@ -120,24 +116,23 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                             onInvalidInput(context, text: t.errors.due_date_before_today);
                             return;
                           }
-                          _formKey.currentState!.validate()
-                              ? context.read<ProjectBloc>().createProject(
-                                      project: Project(
-                                    name: _nameTextController.text,
-                                    description: _descriptionTextController.text,
-                                    startDate: _startDate ?? DateTime.now(),
-                                    endDate: _endDate ?? DateTime.now(),
-                                    userId: user.id,
-                                  ))
-                              : onInvalidInput(context);
+                          context.read<ProjectBloc>().createProject(
+                                  project: Project(
+                                name: _nameTextController.text,
+                                description: _descriptionTextController.text,
+                                startDate: _startDate ?? DateTime.now(),
+                                endDate: _endDate ?? DateTime.now(),
+                                userId: user.id,
+                                status: ProjectStatus.progress,
+                              ));
                         },
-                        child: state.isLoading
-                            ? const CustomCircularProgressIndicator()
-                            : Text(t.general.create,
+                        child: state.maybeWhen(
+                            creating: () => const CustomCircularProgressIndicator(),
+                            orElse: () => Text(t.general.create,
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: _nameTextController.text.length >= 3 && _endDate != null
                                         ? Theme.of(context).primaryColor
-                                        : Theme.of(context).colorScheme.onSecondary)))
+                                        : Theme.of(context).colorScheme.onSecondary))))
                   ],
                 ),
                 Gap.MD,
@@ -219,41 +214,46 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   ),
                 ),
                 Gap.MD,
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${t.general.name}*", style: Theme.of(context).textTheme.titleMedium),
-                        Gap.XS,
-                        TextFormField(
-                          controller: _nameTextController,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          decoration: InputDecoration(
-                            hintText: t.general.name,
-                          ),
-                          onChanged: (_) => setState(() {}),
-                          validator: (value) {
-                            if (value == null || value.isEmpty || value.length < 3) {
-                              return 'Please enter a valid project name';
-                            }
-                            return null;
-                          },
-                        ),
-                        Gap.MD,
-                        Text(t.general.description, style: Theme.of(context).textTheme.titleMedium),
-                        Gap.XS,
-                        TextFormField(
-                          controller: _descriptionTextController,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            hintText: t.general.description,
-                          ),
-                        ),
-                      ],
-                    )),
-                Gap.MD,
+                Text("${t.general.name}*", style: Theme.of(context).textTheme.titleMedium),
+                Gap.XS,
+                TextFormField(
+                  controller: _nameTextController,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    hintText: t.general.name,
+                  ),
+                  onChanged: (_) => setState(() {}),
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value.length < 3) {
+                      return 'Please enter a valid project name';
+                    }
+                    return null;
+                  },
+                ),
+                Gap.SM,
+                Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
+                Gap.XS,
+                DateField(
+                    selectedDate: _startDate,
+                    onPress: (date) => setState(() {
+                          _startDate = date;
+                        }),
+                    onDelete: () => setState(() {
+                          _startDate = null;
+                        })),
+                Gap.SM,
+                Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
+                Gap.XS,
+                DateField(
+                    firstDate: _startDate,
+                    selectedDate: _endDate,
+                    onPress: (date) => setState(() {
+                          _endDate = date;
+                        }),
+                    onDelete: () => setState(() {
+                          _endDate = null;
+                        })),
+                Gap.SM,
                 Text(t.general.collaborator, style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
                 TextButton(
@@ -266,35 +266,24 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.projects.collaborator.invite_collaborator, style: Theme.of(context).inputDecorationTheme.hintStyle),
+                        Text(t.projects.collaborator.invite_collaborator,
+                            style: Theme.of(context).inputDecorationTheme.hintStyle),
                         Icon(Icons.keyboard_arrow_down_rounded, color: Theme.of(context).colorScheme.onSecondary)
                       ],
                     ),
                   ),
                 ),
-                Gap.MD,
-                Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
+                Gap.SM,
+                Text(t.general.description, style: Theme.of(context).textTheme.titleMedium),
                 Gap.XS,
-                DateField(
-                    selectedDate: _startDate,
-                    onPress: (date) => setState(() {
-                          _startDate = date;
-                        }),
-                    onDelete: () => setState(() {
-                          _startDate = null;
-                        })),
-                Gap.MD,
-                Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
-                Gap.XS,
-                DateField(
-                    firstDate: _startDate,
-                    selectedDate: _endDate,
-                    onPress: (date) => setState(() {
-                          _endDate = date;
-                        }),
-                    onDelete: () => setState(() {
-                          _endDate = null;
-                        }))
+                TextFormField(
+                  controller: _descriptionTextController,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: t.general.description,
+                  ),
+                ),
               ],
             ),
           ),
