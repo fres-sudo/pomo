@@ -15,4 +15,6 @@ class TaskEvent with _$TaskEvent {
 
   const factory TaskEvent.setTasks({required List<Task> tasks}) = SetTasksTaskEvent;
 
+  const factory TaskEvent.getTaskById({required String id}) = GetByIdTaskEvent;
+
 }

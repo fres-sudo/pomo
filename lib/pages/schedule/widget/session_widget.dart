@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/constants/colors.dart';
 import 'package:pomo/cubits/timer_session_cubit.dart';
-import 'package:pomo/routes/app_router.gr.dart';
 
 class SessionWidget extends StatelessWidget {
   const SessionWidget({super.key});

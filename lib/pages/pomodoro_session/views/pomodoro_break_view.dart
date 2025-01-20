@@ -1,27 +1,27 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
-import 'package:pomo/components/widgets/pulsing_wrapper.dart';
-import 'package:pomo/extension/sized_box_extension.dart';
 
 import '../../../components/widgets/count_down_timer.dart';
+import '../../../components/widgets/destruction_bottomsheet.dart';
+import '../../../components/widgets/pulsing_wrapper.dart';
 import '../../../constants/colors.dart';
 import '../../../cubits/timer/timer_cubit.dart';
-import '../../../cubits/timer_session_cubit.dart';
 import '../../../i18n/strings.g.dart';
 
-class QuickTimerView extends StatefulWidget {
-  const QuickTimerView({super.key, required this.onComplete, required this.isQuickSession});
+class PomodoroBreakView extends StatefulWidget {
+  const PomodoroBreakView({
+    super.key,
+    required this.onComplete,
+  });
 
   final VoidCallback? onComplete;
-  final bool isQuickSession;
 
   @override
-  State<QuickTimerView> createState() => _QuickTimerViewState();
+  State<PomodoroBreakView> createState() => _PomodoroBreakViewState();
 }
 
-class _QuickTimerViewState extends State<QuickTimerView> {
+class _PomodoroBreakViewState extends State<PomodoroBreakView> {
   late AnimationController _controller;
   bool _isRunning = false;
 
@@ -29,7 +29,6 @@ class _QuickTimerViewState extends State<QuickTimerView> {
     _controller = controller;
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        context.read<TimerSessionCubit>().stopTimer(true);
         widget.onComplete?.call();
       }
     });
@@ -43,22 +42,24 @@ class _QuickTimerViewState extends State<QuickTimerView> {
         children: [
           PulsingWrapper(
             shape: BoxShape.circle,
-            pulseColor: kPrimary300,
+            pulseColor: kGreen400,
             pulseFactor: 2,
             disabled: !_isRunning,
             child: CountDownTimer(
-              innerColor: kPrimary900,
-              middleColor: kPrimary300,
-              outerColor: kPrimary400,
-              darkShadow: kPrimary500,
-              lightShadow: kPrimary600.withOpacity(0.8),
-              durationInMinutes: state.focusTime,
+              innerColor: kGreen600,
+              middleColor: kGreen400,
+              outerColor: kGreen200,
+              darkShadow: kGreen200.withValues(alpha: 0.51),
+              lightShadow: kGreen300.withValues(alpha: 0.8),
+              durationInMinutes: state.breakTime,
               onControllerCreated: _onControllerCreated,
             ),
           ),
           Column(
             children: [
-              Gap.XL,
+              const SizedBox(
+                height: 30,
+              ),
               Center(
                 child: InkWell(
                   borderRadius: BorderRadius.circular(100),
@@ -66,14 +67,11 @@ class _QuickTimerViewState extends State<QuickTimerView> {
                     setState(() {
                       if (!_isRunning) {
                         _controller.forward();
-                        context.read<TimerSessionCubit>().resumeTimer(widget.isQuickSession);
                       } else {
                         if (_controller.isAnimating) {
                           _controller.stop();
-                          context.read<TimerSessionCubit>().pauseTimer(widget.isQuickSession);
                         } else {
                           _controller.forward();
-                          context.read<TimerSessionCubit>().resumeTimer(widget.isQuickSession);
                         }
                       }
                       _isRunning = !_isRunning;

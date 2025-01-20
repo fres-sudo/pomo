@@ -11,8 +11,11 @@ class LightTheme {
         indicatorColor: kPrimary500,
         dividerColor: kNeutral200,
         textTheme: textTheme,
-    textSelectionTheme: TextSelectionThemeData(cursorColor: kPrimary500, selectionHandleColor: kPrimary500, selectionColor: kPrimary500.withOpacity(0.3)),
-    colorScheme: const ColorScheme.light(
+        textSelectionTheme: TextSelectionThemeData(
+            cursorColor: kPrimary500,
+            selectionHandleColor: kPrimary500,
+            selectionColor: kPrimary500.withValues(alpha: 0.3)),
+        colorScheme: const ColorScheme.light(
             onSurface: kNeutral900,
             surface: kNeutral1000,
             error: kRed500,
@@ -130,25 +133,33 @@ class LightTheme {
           dividerColor: kNeutral200,
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          dayForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
-          dayBackgroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : Colors.white),
-          dayOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
-          yearForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
-          yearOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+          dayForegroundColor: WidgetStateColor.resolveWith(
+              (states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
+          dayBackgroundColor: WidgetStateColor.resolveWith(
+              (states) => states.contains(WidgetState.selected) ? kPrimary500 : Colors.white),
+          dayOverlayColor: WidgetStateColor.resolveWith(
+              (states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+          yearForegroundColor: WidgetStateColor.resolveWith(
+              (states) => states.contains(WidgetState.selected) ? Colors.white : kNeutral700),
+          yearOverlayColor: WidgetStateColor.resolveWith(
+              (states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
           todayForegroundColor: WidgetStateColor.resolveWith((states) => kNeutral700),
           confirmButtonStyle: ButtonStyle(
               foregroundColor: WidgetStateColor.resolveWith((states) => Colors.white),
               backgroundColor: WidgetStateColor.resolveWith((_) => kPrimary500),
               padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-              textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
+              textStyle: WidgetStateTextStyle.resolveWith(
+                  (_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
           cancelButtonStyle: ButtonStyle(
-              foregroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+              foregroundColor: WidgetStateColor.resolveWith(
+                  (states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
               side: WidgetStateBorderSide.resolveWith((states) => const BorderSide(color: kNeutral300)),
               overlayColor: WidgetStateColor.resolveWith((states) => kNeutral300),
               padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-              textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))),
+              textStyle: WidgetStateTextStyle.resolveWith(
+                  (_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))),
         ),
         toggleButtonsTheme: ToggleButtonsThemeData(
           splashColor: Colors.transparent,
@@ -171,7 +182,10 @@ class DarkTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.grey[900],
       ),
-      textSelectionTheme: TextSelectionThemeData(cursorColor: kPrimary500, selectionHandleColor: kPrimary500, selectionColor: kPrimary500.withOpacity(0.3)),
+      textSelectionTheme: TextSelectionThemeData(
+          cursorColor: kPrimary500,
+          selectionHandleColor: kPrimary500,
+          selectionColor: kPrimary500.withValues(alpha: 0.3)),
       dividerTheme: const DividerThemeData(color: kNeutral800),
       iconTheme: const IconThemeData(color: Colors.white),
       cardTheme: const CardTheme(color: kNeutral900, surfaceTintColor: kNeutral100),
@@ -291,25 +305,34 @@ class DarkTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         dayForegroundColor: const WidgetStatePropertyAll(Colors.white),
-        dayBackgroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : Colors.transparent),
-        dayOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
-        yearForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kNeutral900 : kNeutral700),
-        yearOverlayColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
-        todayForegroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? Colors.white : kPrimary500),
-        todayBackgroundColor: WidgetStateProperty.resolveWith((state) => state.contains(WidgetState.selected) ? kPrimary500 : Colors.transparent),
+        dayBackgroundColor: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.selected) ? kPrimary500 : Colors.transparent),
+        dayOverlayColor:
+            WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+        yearForegroundColor:
+            WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kNeutral900 : kNeutral700),
+        yearOverlayColor:
+            WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral700),
+        todayForegroundColor: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.selected) ? Colors.white : kPrimary500),
+        todayBackgroundColor: WidgetStateProperty.resolveWith(
+            (state) => state.contains(WidgetState.selected) ? kPrimary500 : Colors.transparent),
         confirmButtonStyle: ButtonStyle(
             foregroundColor: WidgetStateColor.resolveWith((states) => Colors.white),
             shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             backgroundColor: WidgetStateColor.resolveWith((_) => kPrimary500),
             padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
-            textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
+            textStyle: WidgetStateTextStyle.resolveWith(
+                (_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
         cancelButtonStyle: ButtonStyle(
-            foregroundColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral200),
+            foregroundColor: WidgetStateColor.resolveWith(
+                (states) => states.contains(WidgetState.selected) ? kPrimary500 : kNeutral200),
             side: WidgetStateBorderSide.resolveWith((states) => const BorderSide(color: kNeutral300)),
             shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             overlayColor: WidgetStateColor.resolveWith((states) => kNeutral300),
             padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
-            textStyle: WidgetStateTextStyle.resolveWith((_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))),
+            textStyle: WidgetStateTextStyle.resolveWith(
+                (_) => GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400, color: kNeutral500))),
       ),
       toggleButtonsTheme: ToggleButtonsThemeData(
         splashColor: Colors.transparent,
@@ -318,7 +341,10 @@ class DarkTheme {
         selectedColor: Colors.transparent,
         fillColor: Colors.transparent,
       ),
-      chipTheme: const ChipThemeData(backgroundColor: kNeutral900, selectedColor: kPrimary500,));
+      chipTheme: const ChipThemeData(
+        backgroundColor: kNeutral900,
+        selectedColor: kPrimary500,
+      ));
 }
 
 TextTheme textTheme = GoogleFonts.interTightTextTheme();

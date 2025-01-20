@@ -2,11 +2,11 @@ part of 'stats_bloc.dart';
 
 @freezed
 class StatsState with _$StatsState {
-  const factory StatsState({
-    Stats? statistics,
-    LocalizedError? error,
-    @Default(false) isLoading,
-  }) = _StatsState;
 
-  const StatsState._();
+  const factory StatsState.initial() = InitialStatsState;
+
+  const factory StatsState.fetching() = FetchingStatsState;
+  const factory StatsState.fetched(Stats statistics) = FetchedStatsState;
+  const factory StatsState.error(LocalizedError error) = ErrorStatsState;
+
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   {context.router.push(ChooseUsernameRoute(user: user))}
                 else
                   {
-                    context.router.replace(const RootRoute()),
+                    context.router.replaceAll([const RootRoute()]),
                   }
               },
           signedInWithApple: (user) => {
@@ -58,12 +56,12 @@ class _LoginPageState extends State<LoginPage> {
                   {context.router.push(ChooseUsernameRoute(user: user))}
                 else
                   {
-                    context.router.replace(const RootRoute()),
+                    context.router.replaceAll([const RootRoute()]),
                   }
               },
           signedIn: (user) => {
                 context.read<AuthCubit>().authenticated(user),
-                context.router.replace(const RootRoute()),
+                context.router.replaceAll([const RootRoute()]),
               }),
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
@@ -121,9 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                           Gap.SM,
                           state.maybeWhen(
                               errorSignIn: (error) => Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: CustomAlert.error(message: error.localizedString(context)),
-                              ),
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: CustomAlert.error(message: error.localizedString(context)),
+                                  ),
                               orElse: () => const SizedBox()),
                           Gap.SM,
                         ]),

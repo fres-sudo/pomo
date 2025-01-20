@@ -28,6 +28,7 @@ mixin _$Project {
   String? get imageCover => throw _privateConstructorUsedError;
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<User>? get contributors => throw _privateConstructorUsedError;
+  ProjectStatus get status => throw _privateConstructorUsedError;
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
@@ -52,7 +53,8 @@ abstract class $ProjectCopyWith<$Res> {
       String userId,
       String? imageCover,
       List<Task>? tasks,
-      List<User>? contributors});
+      List<User>? contributors,
+      ProjectStatus status});
 }
 
 /// @nodoc
@@ -82,6 +84,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? imageCover = freezed,
     Object? tasks = freezed,
     Object? contributors = freezed,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -132,6 +135,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.contributors
           : contributors // ignore: cast_nullable_to_non_nullable
               as List<User>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProjectStatus,
     ) as $Val);
   }
 }
@@ -155,7 +162,8 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       String userId,
       String? imageCover,
       List<Task>? tasks,
-      List<User>? contributors});
+      List<User>? contributors,
+      ProjectStatus status});
 }
 
 /// @nodoc
@@ -183,6 +191,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? imageCover = freezed,
     Object? tasks = freezed,
     Object? contributors = freezed,
+    Object? status = null,
   }) {
     return _then(_$ProjectImpl(
       id: freezed == id
@@ -233,6 +242,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value._contributors
           : contributors // ignore: cast_nullable_to_non_nullable
               as List<User>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProjectStatus,
     ));
   }
 }
@@ -252,7 +265,8 @@ class _$ProjectImpl extends _Project {
       required this.userId,
       this.imageCover,
       final List<Task>? tasks,
-      final List<User>? contributors})
+      final List<User>? contributors,
+      required this.status})
       : _tasks = tasks,
         _contributors = contributors,
         super._();
@@ -298,8 +312,11 @@ class _$ProjectImpl extends _Project {
   }
 
   @override
+  final ProjectStatus status;
+
+  @override
   String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors)';
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors, status: $status)';
   }
 
   @override
@@ -325,7 +342,8 @@ class _$ProjectImpl extends _Project {
                 other.imageCover == imageCover) &&
             const DeepCollectionEquality().equals(other._tasks, _tasks) &&
             const DeepCollectionEquality()
-                .equals(other._contributors, _contributors));
+                .equals(other._contributors, _contributors) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
@@ -342,7 +360,8 @@ class _$ProjectImpl extends _Project {
       userId,
       imageCover,
       const DeepCollectionEquality().hash(_tasks),
-      const DeepCollectionEquality().hash(_contributors));
+      const DeepCollectionEquality().hash(_contributors),
+      status);
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
@@ -366,7 +385,8 @@ abstract class _Project extends Project {
       required final String userId,
       final String? imageCover,
       final List<Task>? tasks,
-      final List<User>? contributors}) = _$ProjectImpl;
+      final List<User>? contributors,
+      required final ProjectStatus status}) = _$ProjectImpl;
   const _Project._() : super._();
 
   @override
@@ -393,6 +413,8 @@ abstract class _Project extends Project {
   List<Task>? get tasks;
   @override
   List<User>? get contributors;
+  @override
+  ProjectStatus get status;
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.

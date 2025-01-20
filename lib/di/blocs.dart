@@ -50,5 +50,5 @@ final List<BlocProvider> _blocs = [
   ),
   BlocProvider<WorkSessionCubit>(
     create: (_) => WorkSessionCubit(null)
-  ),
+  )
 ];

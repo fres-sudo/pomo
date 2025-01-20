@@ -37,7 +37,7 @@ class _SoundPlayerState extends State<SoundPlayer> {
         onLongPress: () => context.read<SoundCubit>().stopSound(),
         onTap: () => context.read<SoundCubit>().nextSound(),
         disabled: currentIndex == kSounds.length,
-        pulseColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.2),
+        pulseColor: Theme.of(context).colorScheme.onSecondary.withValues(alpha: 0.2),
         child: Container(
           height: 40,
           width: 40,
@@ -46,13 +46,9 @@ class _SoundPlayerState extends State<SoundPlayer> {
             border: Border.all(color: kNeutralWhite),
             image: currentIndex == kSounds.length
                 ? null
-                : DecorationImage(
-                image: Image.asset(kBackgroundsImages[currentIndex]).image,
-                fit: BoxFit.cover),
+                : DecorationImage(image: Image.asset(kBackgroundsImages[currentIndex]).image, fit: BoxFit.cover),
           ),
-          child: currentIndex != kSounds.length
-              ? const SizedBox()
-              : const Icon(Icons.music_note_outlined),
+          child: currentIndex != kSounds.length ? const SizedBox() : const Icon(Icons.music_note_outlined),
         ),
       ),
     );

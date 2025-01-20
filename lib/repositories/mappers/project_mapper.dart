@@ -28,7 +28,8 @@ class ProjectMapper extends DTOMapper<ProjectJTO, Project> {
         contributors: dto.contributors?.map((userDto) => userMapper.fromDTO(userDto)).toList() ?? [],
         imageCover: dto.imageCover,
         completedAt: dto.completedAt,
-        createdAt: dto.createdAt
+        createdAt: dto.createdAt,
+        status: dto.status,
       );
 
   @override
@@ -43,6 +44,7 @@ class ProjectMapper extends DTOMapper<ProjectJTO, Project> {
         contributors: model.contributors?.map((userDto) => userMapper.toDTO(userDto)).toList() ?? [],
         imageCover: model.imageCover,
         completedAt: model.completedAt,
-        createdAt: model.createdAt
+        createdAt: model.createdAt,
+        status: model.status,
       );
 }

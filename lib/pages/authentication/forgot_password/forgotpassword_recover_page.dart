@@ -49,10 +49,10 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
       listener: (BuildContext context, RecoverPasswordState state) {
         state.whenOrNull(resettedPassword: () {
           onSuccessState(context, t.authentication.forgot_password.success.success_recover);
-          context.router.replace(const LoginRoute());
+          context.router.replaceAll([const LoginRoute()]);
         }, errorResettingPassword: (error) {
           onErrorState(context, error.localizedString(context));
-          context.router.replace(const LoginRoute());
+          context.router.replaceAll([const LoginRoute()]);
         });
       },
       builder: (BuildContext context, state) => Scaffold(

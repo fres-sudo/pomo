@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../components/cards/project_card.dart';
 import '../task/task.dart';
 import '../user/user.dart';
 
@@ -22,7 +23,10 @@ class Project with _$Project {
     String? imageCover,
     List<Task>? tasks,
     List<User>? contributors,
+    required ProjectStatus status,
 }) = _Project;
 
-  static Project fake() => Project(name: "name", startDate: DateTime.now(), endDate: DateTime.now(), userId: "");
+
+
+  static Project fake() => Project(name: "name", startDate: DateTime.now(), endDate: DateTime.now(), userId: "", status: ProjectStatus.progress);
 }

@@ -88,14 +88,14 @@ class CustomAlert extends StatelessWidget {
     final theme = Theme.of(context);
     switch (type) {
       case AlertType.warning:
-        return theme.colorScheme.error.withOpacity(0.1);
+        return theme.colorScheme.error.withValues(alpha: 0.1);
       case AlertType.success:
-        return Colors.green.withOpacity(0.1);
+        return Colors.green.withValues(alpha: 0.1);
       case AlertType.error:
-        return theme.colorScheme.error.withOpacity(0.1);
+        return theme.colorScheme.error.withValues(alpha: 0.1);
       case AlertType.normal:
       default:
-        return theme.colorScheme.surface.withOpacity(0.1);
+        return theme.colorScheme.surface.withValues(alpha: 0.1);
     }
   }
 
@@ -153,20 +153,16 @@ class CustomAlert extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: textColor,
-                    fontWeight: FontWeight.bold,
-                  )
-                ),
+                Text(title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        )),
                 const SizedBox(height: 4),
-                Text(
-                  message,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: textColor,
-                  )
-                ),
+                Text(message,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: textColor,
+                        )),
               ],
             ),
           ),

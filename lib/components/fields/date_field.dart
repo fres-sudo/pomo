@@ -35,7 +35,9 @@ class DateField extends StatelessWidget {
           child: TextButton(
               style: TextButton.styleFrom(
                   side: borderColor != null ? BorderSide(color: borderColor!) : null,
-                  shape: borderRadius != null ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius ?? 0)) : null,
+                  shape: borderRadius != null
+                      ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius ?? 0))
+                      : null,
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.secondary),
               onPressed: () async {
@@ -56,7 +58,9 @@ class DateField extends StatelessWidget {
                       ? DateFormat.yMMMMd(Localizations.localeOf(context).toString()).format(selectedDate!)
                       : hintText ?? t.general.select_date,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: selectedDate != null ? Theme.of(context).colorScheme.onSecondary : Theme.of(context).colorScheme.onSecondary,
+                        color: selectedDate != null
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : Theme.of(context).colorScheme.onSecondary,
                       ),
                 ),
               )),
@@ -66,6 +70,7 @@ class DateField extends StatelessWidget {
               onPressed: onDelete,
               icon: Icon(
                 Icons.clear_rounded,
+                size: 20,
                 color: Theme.of(context).colorScheme.onSecondary,
               ))
       ],

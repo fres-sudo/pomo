@@ -6,6 +6,7 @@
     "apply": "Apply",
     "confirm": "Confirm",
     "delete": "Delete",
+    "archive": "Archive",
     "create": "Create",
     "name": "Name",
     "description": "Description",
@@ -61,6 +62,7 @@
     "header_project_page": "Let's work",
     "invite_friends": "Invite friends",
     "any_project": "any project",
+    "has_been_found": "has been found",
     "in_progress": "In Progress",
     "already_done": "Already Done",
     "ending_today": "Ending Today",
@@ -77,6 +79,18 @@
       "project_code": "Ho un codice di invito",
       "join": "Partecipa",
       "code_invitation": "Codice di invito"
+    },
+    "archive": {
+      "action": "Archive",
+      "title": "Archive project",
+      "projects": "Archived projects",
+      "description": "Are you sure you want to archive this project? It will no longer be visible in your project list.",
+      "no_project": "No archived projects"
+    },
+    "unarchive": {
+      "action": "Unarchive",
+      "title": "Unarchive project",
+      "description": "Are you sure you want to unarchive this project? It will be visible in your project list."
     }
   },
   "profile": {

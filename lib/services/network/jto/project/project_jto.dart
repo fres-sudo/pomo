@@ -1,5 +1,6 @@
 import 'package:pine/pine.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pomo/components/cards/project_card.dart';
 
 import '../task/task_jto.dart';
 import '../user/user_jto.dart';
@@ -23,6 +24,7 @@ class ProjectJTO extends DTO with _$ProjectJTO {
     String? imageCover,
     List<TaskJTO>? tasks,
     List<UserJTO>? contributors,
+    required ProjectStatus status,
 }) = _ProjectJTO;
 
   factory ProjectJTO.fromJson(Map<String, dynamic> json) =>

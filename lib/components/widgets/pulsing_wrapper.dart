@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PulsingWrapper extends StatefulWidget {
-  const PulsingWrapper({
-    super.key,
-    required this.child,
-    this.shape = BoxShape.rectangle,
-    this.borderRadius,
-    required this.pulseColor,
-    this.disabled = false,
-    this.backgroundColor,
-    this.pulseFactor = 0.5
-  });
+  const PulsingWrapper(
+      {super.key,
+      required this.child,
+      this.shape = BoxShape.rectangle,
+      this.borderRadius,
+      required this.pulseColor,
+      this.disabled = false,
+      this.backgroundColor,
+      this.pulseFactor = 0.5});
 
   final Widget child;
   final BoxShape shape;
@@ -25,7 +24,6 @@ class PulsingWrapper extends StatefulWidget {
 }
 
 class _PulsingWrapperState extends State<PulsingWrapper> with SingleTickerProviderStateMixin {
-
   late AnimationController _animationController;
   late Animation _animation;
 
@@ -58,10 +56,10 @@ class _PulsingWrapperState extends State<PulsingWrapper> with SingleTickerProvid
             boxShadow: [
               for (int i = 1; i <= 2; i++)
                 BoxShadow(
-                color: widget.disabled
-                    ? Colors.transparent
-                    : widget.pulseColor.withOpacity(_animationController.value / 2),
-                  spreadRadius: _animation.value * widget.pulseFactor * i ,
+                  color: widget.disabled
+                      ? Colors.transparent
+                      : widget.pulseColor.withValues(alpha: _animationController.value / 2),
+                  spreadRadius: _animation.value * widget.pulseFactor * i,
                 )
             ],
           ),

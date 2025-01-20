@@ -7,8 +7,8 @@ import 'package:pomo/blocs/task/task_bloc.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
 import 'package:pomo/cubits/schedule/schedule_cubit.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-import '../constants/enum.dart';
 import '../i18n/strings.g.dart';
 import '../routes/app_router.gr.dart';
 
@@ -20,18 +20,12 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        state.whenOrNull( notAuthenticated: () {
-          context.router.replace(RootRoute());
+        state.whenOrNull(notAuthenticated: () {
+          context.router.replaceAll([RootRoute()]);
         });
       },
       child: AutoTabsRouter(
-        routes: const [
-          ScheduleRoute(),
-          ProjectNavigation(),
-          QuickSessionRoute(),
-          StatsRoute(),
-          ProfileRoute()
-        ],
+        routes: const [ScheduleRoute(), ProjectNavigation(), QuickSessionRoute(), StatsRoute(), ProfileRoute()],
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
@@ -49,80 +43,68 @@ class RootPage extends StatelessWidget {
                 ),
                 child: BottomNavigationBar(
                   currentIndex: tabsRouter.activeIndex,
-                  onTap: (value) => tabsRouter.setActiveIndex(value),
+                  onTap: (value) {
+                    final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                    if (value == 0 && context.read<TaskBloc>().state is! FetchedTaskState) {
+                      context
+                          .read<TaskBloc>()
+                          .fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, format: CalendarFormat.month);
+                    }
+                    if (value == 1 && context.read<ProjectBloc>().state is! FetchedProjectState) {
+                      context.read<ProjectBloc>().fetch(userId: userId);
+                    }
+                    tabsRouter.setActiveIndex(value);
+                  },
                   items: [
                     BottomNavigationBarItem(
                         activeIcon: const Icon(Icons.edit_calendar_rounded),
                         icon: Icon(
                           Icons.edit_calendar_rounded,
-                          color: Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .unselectedIconTheme
-                              ?.color ?? Colors.white,
-                        ), label: t.general.schedule),
+                          color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                        ),
+                        label: t.general.schedule),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
                           colorFilter:
-                          ColorFilter.mode(Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .selectedIconTheme
-                              ?.color ?? Colors.white, BlendMode.srcIn),
+                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
-                          colorFilter:
-                          ColorFilter.mode(Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .unselectedIconTheme
-                              ?.color ?? Colors.white, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                         ),
-                        label: t.projects.title
-                    ),
+                        label: t.projects.title),
                     BottomNavigationBarItem(
-                        activeIcon: SvgPicture.asset('assets/icons/nav-bar/Light/Play.svg', colorFilter:
-                        ColorFilter.mode(Theme
-                            .of(context)
-                            .bottomNavigationBarTheme
-                            .selectedIconTheme
-                            ?.color ?? Colors.white, BlendMode.srcIn),
+                        activeIcon: SvgPicture.asset(
+                          'assets/icons/nav-bar/Light/Play.svg',
+                          colorFilter:
+                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Play.svg',
-                          colorFilter:
-                          ColorFilter.mode(Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .unselectedIconTheme
-                              ?.color ?? Colors.white, BlendMode.srcIn),
-                        ), label: "Pomodoro"),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        label: "Pomodoro"),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
                           colorFilter:
-                          ColorFilter.mode(Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .selectedIconTheme
-                              ?.color ?? Colors.white, BlendMode.srcIn),
+                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
-                          colorFilter:
-                          ColorFilter.mode(Theme
-                              .of(context)
-                              .bottomNavigationBarTheme
-                              .unselectedIconTheme
-                              ?.color ?? Colors.white, BlendMode.srcIn),
-                        ), label: t.stats.title),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                        ),
+                        label: t.stats.title),
                     BottomNavigationBarItem(
                         icon: const ProfilePicture(
                           width: 24,
                           height: 24,
-                        ), label: t.profile.title),
+                        ),
+                        label: t.profile.title),
                   ],
                 ),
               ),

@@ -48,11 +48,13 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
     return BlocConsumer<UserBloc, UserState>(
       listener: (BuildContext context, UserState state) {
         if (!state.isLoading && state.operation == UserOperation.updated) {
-          context.read<StorageService>().updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
+          context
+              .read<StorageService>()
+              .updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
           context.read<AuthCubit>().authenticated(state.user!);
-          context.router.replace(const RootRoute());
+          context.router.replaceAll([const RootRoute()]);
         }
-        if(state.error != null){
+        if (state.error != null) {
           onErrorState(context, state.error!.localizedString(context));
         }
       },
@@ -70,7 +72,10 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
                 Gap.XS,
                 Text(
                   t.authentication.signup.choose_username_description,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                 ),
                 Gap.XL,
                 DebouncedUserSearch(
@@ -80,12 +85,13 @@ class _ChooseUsernamePageState extends State<ChooseUsernamePage> {
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: state.isLoading ? Theme.of(context).primaryColor.withOpacity(0.5) : null,
+                    backgroundColor: state.isLoading ? Theme.of(context).primaryColor.withValues(alpha: 0.5) : null,
                   ),
                   onPressed: () => _usernameTextController.text.length > 3 &&
                           !state.isLoading &&
                           state.searchedUsername != _usernameTextController.text
-                      ? context.read<UserBloc>().updateUser(id: widget.user.id, user: widget.user.copyWith(username: _usernameTextController.text))
+                      ? context.read<UserBloc>().updateUser(
+                          id: widget.user.id, user: widget.user.copyWith(username: _usernameTextController.text))
                       : null,
                   child: state.isLoading
                       ? const CustomCircularProgressIndicator()

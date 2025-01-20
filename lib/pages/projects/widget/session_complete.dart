@@ -95,7 +95,7 @@ class _SessionCompletePageState extends State<SessionCompletePage> {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                      onPressed: () => context.router.replace(const ScheduleRoute()),
+                      onPressed: () => context.router.replaceAll([const ScheduleRoute()]),
                       child: Center(
                         child: Text(
                           t.tasks.completed_task.back_home,
