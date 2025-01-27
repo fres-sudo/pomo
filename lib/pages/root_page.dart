@@ -44,13 +44,15 @@ class RootPage extends StatelessWidget {
                 child: BottomNavigationBar(
                   currentIndex: tabsRouter.activeIndex,
                   onTap: (value) {
-                    final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-                    if (value == 0 && context.read<TaskBloc>().state is! FetchedTaskState) {
-                      context
-                          .read<TaskBloc>()
-                          .fetch(userId: userId, date: context.read<ScheduleCubit>().state.selectedDay, format: CalendarFormat.month);
+                    final userId =
+                        context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                    if (value == 0 /* && context.read<TaskBloc>().state is! FetchedTaskState */) {
+                      context.read<TaskBloc>().fetch(
+                          userId: userId,
+                          date: context.read<ScheduleCubit>().state.selectedDay,
+                          format: CalendarFormat.month);
                     }
-                    if (value == 1 && context.read<ProjectBloc>().state is! FetchedProjectState) {
+                    if (value == 1 /* && context.read<ProjectBloc>().state is! FetchedProjectState */) {
                       context.read<ProjectBloc>().fetch(userId: userId);
                     }
                     tabsRouter.setActiveIndex(value);
@@ -66,37 +68,43 @@ class RootPage extends StatelessWidget {
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
-                          colorFilter:
-                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         label: t.projects.title),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Play.svg',
-                          colorFilter:
-                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Play.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         label: "Pomodoro"),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
-                          colorFilter:
-                              ColorFilter.mode(Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white, BlendMode.srcIn),
+                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              BlendMode.srcIn),
                         ),
                         label: t.stats.title),
                     BottomNavigationBarItem(

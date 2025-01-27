@@ -62,9 +62,10 @@ class _StatsPageState extends State<StatsPage> {
       listener: (BuildContext context, StatsState state) {
         print(state);
         state.whenOrNull(
-        error: (error) => onErrorState(context, error.localizedString(context)),
-      );},
-      buildWhen: (_, next) => next.maybeWhen(error: (_) => true, orElse: () => false),
+          error: (error) => onErrorState(context, error.localizedString(context)),
+        );
+      },
+      buildWhen: (_, next) => next.maybeWhen(error: (_) => false, orElse: () => true),
       builder: (BuildContext context, state) => Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
@@ -76,11 +77,12 @@ class _StatsPageState extends State<StatsPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Align(alignment: Alignment.topLeft, child: TitlePage(title: t.stats.title, subtitle: t.stats.subtitle)),
+                  Align(
+                      alignment: Alignment.topLeft, child: TitlePage(title: t.stats.title, subtitle: t.stats.subtitle)),
                   Gap.MD,
                   state.maybeWhen(
                       fetching: () => StatsLoading(),
-                      fetched: (statistics) => (statistics.totalTasksAll ?? 0) == 0
+                      fetched: (statistics) => (statistics.totalTasksAll) == 0
                           ? const NoStatsPage()
                           : Column(
                               children: [
@@ -101,7 +103,9 @@ class _StatsPageState extends State<StatsPage> {
                                         isSelected: selectedMode,
                                         onPressed: (int index) {
                                           setState(() {
-                                            for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
+                                            for (int buttonIndex = 0;
+                                                buttonIndex < selectedMode.length;
+                                                buttonIndex++) {
                                               selectedMode[buttonIndex] = buttonIndex == index;
                                             }
                                           });
@@ -120,29 +124,26 @@ class _StatsPageState extends State<StatsPage> {
                                             height: 83,
                                           ),
                                           Gap.MD_H,
-                                          Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            Text(
-                                              t.tasks.focus_time,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                            ),
-                                            Text(
-                                              t.tasks.break_time,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                            ),
-                                            Text(
-                                              t.tasks.total_tasks,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                            )
-                                          ]),
+                                          Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  t.tasks.focus_time,
+                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                                ),
+                                                Text(
+                                                  t.tasks.break_time,
+                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                                ),
+                                                Text(
+                                                  t.tasks.total_tasks,
+                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
+                                                )
+                                              ]),
                                           const Spacer(),
                                           Column(
                                             children: [

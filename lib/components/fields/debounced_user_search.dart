@@ -6,6 +6,9 @@ import 'package:pomo/blocs/user/user_bloc.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/i18n/strings.g.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
+
+enum DebounceState { idle, loading, success, error }
+
 class DebouncedUserSearch extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
@@ -22,7 +25,7 @@ class DebouncedUserSearch extends StatefulWidget {
 
 class DebouncedUserSearchState extends State<DebouncedUserSearch> {
   Timer? _debounce;
-  bool _showFeedback = false; // Track if feedback should be shown
+  DebounceState _debounceState = DebounceState.idle;
 
   @override
   void dispose() {
@@ -31,22 +34,32 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
   }
 
   void _onSearchChanged(String? query) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-
-    // Only show feedback after typing starts
-    if (query != null && query.isNotEmpty) {
-      setState(() {
-        _showFeedback = false;
-      });
-    }
-
-    // Set debounce for username search
+    _debounce?.cancel();
+    setState(() {
+      _debounceState = DebounceState.loading;
+    });
     _debounce = Timer(const Duration(seconds: 1), () {
       if (query != null && query.length > 3) {
         context.read<UserBloc>().searchUsername(username: query);
+      } else {
         setState(() {
-          _showFeedback = true; // Show feedback once debounce completes
+          _debounceState = DebounceState.idle;
         });
+      }
+    });
+  }
+
+  void _updateValidationState(BuildContext context, UserState state) {
+    final isUsernameAvailable =
+        state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() != widget.controller.text.trim().toLowerCase();
+
+    setState(() {
+      if (state.isLoading) {
+        _debounceState = DebounceState.loading;
+      } else if (isUsernameAvailable || widget.controller.text != state.user?.username) {
+        _debounceState = DebounceState.success;
+      } else {
+        _debounceState = DebounceState.error;
       }
     });
   }
@@ -67,49 +80,51 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
           onChanged: _onSearchChanged,
           focusNode: widget.focusNode,
         ),
-        if (_showFeedback && widget.controller.text.length > 3) ...[
+        if (widget.controller.text.length > 3) ...[
           Gap.SM,
-          BlocBuilder<UserBloc, UserState>(
-            builder: (context, state) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Gap.SM_H,
-                  state.isLoading
-                      ? CustomCircularProgressIndicator(
-                    color: Theme.of(context).dividerColor,
-                  )
-                      : Icon(
-                    Icons.verified_outlined,
-                    color: state.isLoading
-                        ? Theme.of(context).dividerColor
-                        : state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() == widget.controller.text.trim().toLowerCase()
-                        ? Theme.of(context).colorScheme.error
-                        : Theme.of(context).primaryColor,
-                    size: 20,
-                  ),
-                  Gap.SM_H,
-                  Text(
-                    state.isLoading
-                        ? "${t.general.loading} ..."
-                        : state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() == widget.controller.text.trim().toLowerCase()
-                        ? t.authentication.signup.unavailable_username
-                        : t.authentication.signup.available_username,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: state.isLoading
-                          ? Theme.of(context).dividerColor
-                          : state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() == widget.controller.text.trim().toLowerCase()
-                          ? Theme.of(context).colorScheme.error
-                          : Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+          _buildSearchResult(context),
         ],
       ],
+    );
+  }
+
+  Widget _buildSearchResult(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _updateValidationState(context, state);
+        });
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Gap.SM_H,
+            _debounceState == DebounceState.loading || _debounceState == DebounceState.idle
+                ? CustomCircularProgressIndicator(color: Theme.of(context).dividerColor)
+                : Icon(
+                    Icons.verified_outlined,
+                    color: _debounceState == DebounceState.success
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).colorScheme.error,
+                    size: 20,
+                  ),
+            Gap.SM_H,
+            Text(
+              _debounceState == DebounceState.loading || _debounceState == DebounceState.idle
+                  ? "${t.general.loading} ..."
+                  : _debounceState == DebounceState.success
+                      ? t.authentication.signup.available_username
+                      : t.authentication.signup.unavailable_username,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: _debounceState == DebounceState.success
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).colorScheme.error,
+                  ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

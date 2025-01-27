@@ -41,9 +41,15 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(
         listener: (BuildContext context, ProjectState state) => state.whenOrNull(
-              created: (_) => context.read<ProjectBloc>().fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
-              updated: (_) => context.read<ProjectBloc>().fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
-              deleted: () => context.read<ProjectBloc>().fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
+              created: (_) => context.read<ProjectBloc>().fetch(
+                  userId:
+                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
+              updated: (_) => context.read<ProjectBloc>().fetch(
+                  userId:
+                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
+              deleted: () => context.read<ProjectBloc>().fetch(
+                  userId:
+                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
               errorFetching: (error) => onErrorState(context, error.localizedString(context)),
             ),
         builder: (context, projectState) => Scaffold(
@@ -58,7 +64,9 @@ class _ProjectPageState extends State<ProjectPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitlePage(title: showArchivedProjects ? t.projects.archive.projects : t.projects.plural, subtitle: t.projects.subtitle),
+                      TitlePage(
+                          title: showArchivedProjects ? t.projects.archive.projects : t.projects.plural,
+                          subtitle: t.projects.subtitle),
                       Gap.MD,
                       Row(children: [
                         Expanded(
@@ -75,10 +83,12 @@ class _ProjectPageState extends State<ProjectPage> {
                         Gap.XS_H,
                         IconButton(
                             style: IconButton.styleFrom(
-                              backgroundColor:
-                                  showArchivedProjects ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onPrimary,
-                              foregroundColor:
-                                  showArchivedProjects ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+                              backgroundColor: showArchivedProjects
+                                  ? Theme.of(context).colorScheme.onSurface
+                                  : Theme.of(context).colorScheme.onPrimary,
+                              foregroundColor: showArchivedProjects
+                                  ? Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context).colorScheme.onSurface,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 side: BorderSide(color: Theme.of(context).dividerColor),
@@ -103,23 +113,30 @@ class _ProjectPageState extends State<ProjectPage> {
                               .toList();
                           List<Project> archivedProjects = projects
                               .where((project) =>
-                          (showArchivedProjects ? project.status == ProjectStatus.archived : true) &&
-                              project.name.toLowerCase().contains(searchController.text.toLowerCase()))
+                                  (showArchivedProjects ? project.status == ProjectStatus.archived : true) &&
+                                  project.name.toLowerCase().contains(searchController.text.toLowerCase()))
                               .toList();
 
                           return projects.isEmpty
                               ? Center(child: const NoProjectView())
-                              : filteredProjects.isEmpty
-                                  ? EmptySearchProjectView(text: showArchivedProjects ? t.projects.archive.no_project : null)
+                              : filteredProjects.isEmpty || (showArchivedProjects && archivedProjects.isEmpty)
+                                  ? EmptySearchProjectView(
+                                      text: showArchivedProjects ? t.projects.archive.no_project : null)
                                   : SizedBox(
-                                      height:
-                                          Platform.isAndroid ? MediaQuery.of(context).size.height - 210 : MediaQuery.of(context).size.height - 300,
+                                      height: Platform.isAndroid
+                                          ? MediaQuery.of(context).size.height - 210
+                                          : MediaQuery.of(context).size.height - 300,
                                       child: RefreshIndicator.adaptive(
                                         onRefresh: _onRefresh,
                                         child: Responsive.isMobile(context)
                                             ? ListView.builder(
-                                                itemCount: showArchivedProjects ? archivedProjects.length : filteredProjects.length,
-                                                itemBuilder: (context, index) => ProjectCard(project: showArchivedProjects ? archivedProjects[index] :  filteredProjects[index]),
+                                                itemCount: showArchivedProjects
+                                                    ? archivedProjects.length
+                                                    : filteredProjects.length,
+                                                itemBuilder: (context, index) => ProjectCard(
+                                                    project: showArchivedProjects
+                                                        ? archivedProjects[index]
+                                                        : filteredProjects[index]),
                                               )
                                             : GridView.builder(
                                                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -127,8 +144,13 @@ class _ProjectPageState extends State<ProjectPage> {
                                                   crossAxisSpacing: 20,
                                                 ),
                                                 shrinkWrap: false,
-                                                itemCount: showArchivedProjects ? archivedProjects.length : filteredProjects.length,
-                                                itemBuilder: (context, index) => ProjectCard(project: showArchivedProjects ? archivedProjects[index] : filteredProjects[index]),
+                                                itemCount: showArchivedProjects
+                                                    ? archivedProjects.length
+                                                    : filteredProjects.length,
+                                                itemBuilder: (context, index) => ProjectCard(
+                                                    project: showArchivedProjects
+                                                        ? archivedProjects[index]
+                                                        : filteredProjects[index]),
                                               ),
                                       ),
                                     );
@@ -158,6 +180,9 @@ class LoadingProjects extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
         enabled: true,
-        child: Column(children: [Project.fake(), Project.fake(), Project.fake()].map((p) => ProjectCard(project: p)).toList(growable: false)));
+        child: Column(
+            children: [Project.fake(), Project.fake(), Project.fake()]
+                .map((p) => ProjectCard(project: p))
+                .toList(growable: false)));
   }
 }

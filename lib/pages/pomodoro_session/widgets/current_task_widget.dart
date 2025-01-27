@@ -36,8 +36,13 @@ class CurrentTaskWidget extends StatelessWidget {
                         Text(
                           task.pomodoro > 1
                               ? "${durationToString(task.pomodoro * (context.watch<TimerCubit>().state.focusTime + context.watch<TimerCubit>().state.breakTime))} ${t.general.hours} "
-                              : "${task.pomodoro * (context.watch<TimerCubit>().state.focusTime + context.watch<TimerCubit>().state.breakTime)} min",
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                              : durationToString(task.pomodoro *
+                                  (context.watch<TimerCubit>().state.focusTime +
+                                      context.watch<TimerCubit>().state.breakTime)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                         ),
                       ],
                     ),
@@ -49,11 +54,11 @@ class CurrentTaskWidget extends StatelessWidget {
                         ),
                         Text(
                           "${task.pomodoroCompleted}/${task.pomodoro}",
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor),
                         )
                       ],
                     )
-
                   ],
                 ),
               )

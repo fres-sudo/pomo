@@ -85,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                           Text("${t.authentication.login.welcome} 🍅", style: kSerzif(context)),
                           Gap.XS,
                           Text(t.authentication.login.description,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
                         ],
                       ),
                     )
@@ -97,40 +100,44 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
                     child: Column(
                       children: [
-                        Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text("Email", style: Theme.of(context).textTheme.titleMedium),
-                          Gap.SM,
-                          EmailField(controller: _emailTextController),
-                          Gap.SM,
-                          Text("Password", style: Theme.of(context).textTheme.titleMedium),
-                          Gap.SM,
-                          PasswordField(controller: _passwordTextController),
-                          Gap.SM,
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
-                              child: Text(
-                                t.authentication.login.forgot_password,
-                                style: Theme.of(context).textTheme.labelMedium?.copyWith(color: kPrimary500),
-                              ),
-                            ),
-                          ),
-                          Gap.SM,
-                          state.maybeWhen(
-                              errorSignIn: (error) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: CustomAlert.error(message: error.localizedString(context)),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Email", style: Theme.of(context).textTheme.titleMedium),
+                              Gap.SM,
+                              EmailField(controller: _emailTextController),
+                              Gap.SM,
+                              Text("Password", style: Theme.of(context).textTheme.titleMedium),
+                              Gap.SM,
+                              PasswordField(controller: _passwordTextController),
+                              Gap.SM,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
+                                  child: Text(
+                                    t.authentication.login.forgot_password,
+                                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: kPrimary500),
                                   ),
-                              orElse: () => const SizedBox()),
-                          Gap.SM,
-                        ]),
+                                ),
+                              ),
+                              Gap.SM,
+                              state.maybeWhen(
+                                  errorSignIn: (error) => Padding(
+                                        padding: const EdgeInsets.only(bottom: 8.0),
+                                        child: CustomAlert.error(message: error.localizedString(context)),
+                                      ),
+                                  orElse: () => const SizedBox()),
+                              Gap.SM,
+                            ]),
                         Column(
                           children: [
                             ElevatedButton(
                               onPressed: () {
                                 _formKey.currentState!.validate()
-                                    ? context.read<SignInBloc>().perform(email: _emailTextController.text, password: _passwordTextController.text)
+                                    ? context.read<SignInBloc>().perform(
+                                        email: _emailTextController.text, password: _passwordTextController.text)
                                     : onInvalidInput(context);
                               },
                               child: state.maybeWhen(
@@ -138,7 +145,10 @@ class _LoginPageState extends State<LoginPage> {
                                 orElse: () => Center(
                                   child: Text(
                                     t.authentication.login.title,
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14, color: kNeutral100),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontSize: 14, color: kNeutral100),
                                   ),
                                 ),
                               ),
@@ -156,7 +166,10 @@ class _LoginPageState extends State<LoginPage> {
                                   onTap: () => context.pushRoute(const SignUpRoute()),
                                   child: Text(
                                     t.authentication.signup.title,
-                                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).primaryColor),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],
@@ -170,8 +183,9 @@ class _LoginPageState extends State<LoginPage> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextButton(
                               onPressed: () => context.read<SignInBloc>().google(),
-                              style:
-                                  TextButton.styleFrom(side: BorderSide(color: Theme.of(context).dividerColor), backgroundColor: Colors.transparent),
+                              style: TextButton.styleFrom(
+                                  side: BorderSide(color: Theme.of(context).dividerColor),
+                                  backgroundColor: Colors.transparent),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -184,7 +198,10 @@ class _LoginPageState extends State<LoginPage> {
                                   Gap.SM_H,
                                   Text(
                                     t.authentication.login.google,
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                                   )
                                 ],
                               )),
@@ -195,7 +212,8 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextButton(
                                 onPressed: () => context.read<SignInBloc>().apple(),
                                 style: TextButton.styleFrom(
-                                    side: BorderSide(color: Theme.of(context).dividerColor), backgroundColor: Colors.transparent),
+                                    side: BorderSide(color: Theme.of(context).dividerColor),
+                                    backgroundColor: Colors.transparent),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -208,7 +226,10 @@ class _LoginPageState extends State<LoginPage> {
                                     Gap.SM_H,
                                     Text(
                                       t.authentication.login.apple,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                                     )
                                   ],
                                 )),
