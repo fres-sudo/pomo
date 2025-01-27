@@ -114,117 +114,117 @@ class _SchedulePageState extends State<SchedulePage> {
               body: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Skeletonizer(
-                      enabled:
-                          context.watch<AuthCubit>().state.maybeWhen(authenticated: (_) => false, orElse: () => true) &&
-                              state.maybeWhen(fetching: () => true, orElse: () => false) &&
-                              context.watch<ProjectBloc>().state.maybeWhen(fetching: () => true, orElse: () => false),
-                      child: BlocBuilder<ScheduleCubit, ScheduleState>(
-                        builder: (context, scheduleState) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TitlePage(
-                                  title:
-                                      "${t.schedule.title} ${context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.username, orElse: () => "")}",
-                                  subtitle: t.schedule.subtitle),
-                              TableCalendar(
-                                  focusedDay: scheduleState.focusedDay,
-                                  firstDay: DateTime.now().subtract(const Duration(days: 365)),
-                                  lastDay: DateTime.now().add(const Duration(days: 365)),
-                                  onDaySelected: (selectedDay, focusedDay) => context
-                                      .read<ScheduleCubit>()
-                                      .onDaySelected(
-                                          selectedDay: selectedDay,
-                                          focusedDay: focusedDay,
-                                          onPress: () => context.read<ScheduleCubit>().setSelectedTasks(
-                                              tasks: state.maybeWhen(
-                                                  fetched: (tasks) => tasks
-                                                      .where((t) => isSameDay(t.dueDate, selectedDay))
-                                                      .toList(growable: false),
-                                                  orElse: () => []))),
-                                  calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
-                                    return Container(
-                                      height: 10,
-                                      width: 10,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: state.maybeWhen(
-                                                  fetched: (tasks) =>
-                                                      tasks
-                                                          .where((task) => isSameDay(task.dueDate, day))
-                                                          .toList()
-                                                          .isNotEmpty ||
-                                                      context.watch<ProjectBloc>().state.maybeWhen(
-                                                          fetched: (projects) => projects
-                                                              .where((project) => isSameDay(project.endDate, day))
-                                                              .toList()
-                                                              .isNotEmpty,
-                                                          orElse: () => false),
-                                                  orElse: () => false)
-                                              ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .6)
-                                              : Colors.transparent),
-                                    );
-                                  }),
-                                  headerStyle: HeaderStyle(
-                                    formatButtonDecoration: const BoxDecoration(),
-                                    titleCentered: true,
-                                    titleTextFormatter: (date, locale) =>
-                                        "${DateFormat.MMMM(locale).format(date).capitalize()} ${DateFormat.y(locale).format(date)}",
-                                  ),
-                                  availableCalendarFormats: {
-                                    CalendarFormat.month: t.general.month,
-                                  },
-                                  onPageChanged: (date) {
-                                    context.read<ScheduleCubit>().onDaySelected(
-                                          selectedDay: date,
-                                          focusedDay: date,
-                                        );
-                                    context.read<TaskBloc>().fetch(
-                                        userId: context
-                                                .read<AuthCubit>()
-                                                .state
-                                                .whenOrNull(authenticated: (user) => user.id) ??
-                                            "",
-                                        date: date,
-                                        format: context.read<ScheduleCubit>().state.calendarFormat);
-                                  },
-                                  calendarFormat: scheduleState.calendarFormat,
-                                  onFormatChanged: (format) {
-                                    context.read<TaskBloc>().fetch(
-                                        userId: context
-                                                .read<AuthCubit>()
-                                                .state
-                                                .whenOrNull(authenticated: (user) => user.id) ??
-                                            "",
-                                        date: scheduleState.selectedDay,
-                                        format: format);
-                                    context.read<ScheduleCubit>().changeCalendarFormat(format: format);
-                                  },
-                                  locale: TranslationProvider.of(context).flutterLocale.languageCode,
-                                  startingDayOfWeek: StartingDayOfWeek.monday,
-                                  selectedDayPredicate: (day) => isSameDay(scheduleState.selectedDay, day),
-                                  rangeSelectionMode: RangeSelectionMode.disabled,
-                                  calendarStyle: kCalendarStyle(context)),
-                              Gap.XS,
-                              const DottedDivider(),
-                              Gap.SM,
-                              EndingProjectWidget(
+                  child: BlocBuilder<ScheduleCubit, ScheduleState>(
+                    builder: (context, scheduleState) {
+                      final isLoading =
+                          context.watch<AuthCubit>().state.maybeWhen(authenticated: (_) => false, orElse: () => true) ||
+                              state.maybeWhen(fetching: () => true, orElse: () => false) ||
+                              context.watch<ProjectBloc>().state.maybeWhen(fetching: () => true, orElse: () => false);
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitlePage(
+                              title:
+                                  "${t.schedule.title} ${context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.username, orElse: () => "")} 👋",
+                              subtitle: t.schedule.subtitle),
+                          Skeletonizer(
+                            enabled: isLoading,
+                            child: TableCalendar(
                                 focusedDay: scheduleState.focusedDay,
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: scheduleState.tasks.length,
-                                    itemBuilder: (context, index) => TaskCard(
-                                          task: scheduleState.tasks[index],
-                                          size: TaskCardSize.small,
-                                        )),
-                              ),
-                            ],
-                          );
-                        },
-                      )),
+                                firstDay: DateTime.now().subtract(const Duration(days: 365)),
+                                lastDay: DateTime.now().add(const Duration(days: 365)),
+                                onDaySelected: (selectedDay, focusedDay) => context.read<ScheduleCubit>().onDaySelected(
+                                    selectedDay: selectedDay,
+                                    focusedDay: focusedDay,
+                                    onPress: () => context.read<ScheduleCubit>().setSelectedTasks(
+                                        tasks: state.maybeWhen(
+                                            fetched: (tasks) => tasks
+                                                .where((t) => isSameDay(t.dueDate, selectedDay))
+                                                .toList(growable: false),
+                                            orElse: () => []))),
+                                calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
+                                  return Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: state.maybeWhen(
+                                                fetched: (tasks) =>
+                                                    tasks
+                                                        .where((task) => isSameDay(task.dueDate, day))
+                                                        .toList()
+                                                        .isNotEmpty ||
+                                                    context.watch<ProjectBloc>().state.maybeWhen(
+                                                        fetched: (projects) => projects
+                                                            .where((project) => isSameDay(project.endDate, day))
+                                                            .toList()
+                                                            .isNotEmpty,
+                                                        orElse: () => false),
+                                                orElse: () => false)
+                                            ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .6)
+                                            : Colors.transparent),
+                                  );
+                                }),
+                                headerStyle: HeaderStyle(
+                                  formatButtonDecoration: const BoxDecoration(),
+                                  titleCentered: true,
+                                  titleTextFormatter: (date, locale) =>
+                                      "${DateFormat.MMMM(locale).format(date).capitalize()} ${DateFormat.y(locale).format(date)}",
+                                ),
+                                availableCalendarFormats: {
+                                  CalendarFormat.month: t.general.month,
+                                },
+                                onPageChanged: (date) {
+                                  context.read<ScheduleCubit>().onDaySelected(
+                                        selectedDay: date,
+                                        focusedDay: date,
+                                      );
+                                  context.read<TaskBloc>().fetch(
+                                      userId: context
+                                              .read<AuthCubit>()
+                                              .state
+                                              .whenOrNull(authenticated: (user) => user.id) ??
+                                          "",
+                                      date: date,
+                                      format: context.read<ScheduleCubit>().state.calendarFormat);
+                                },
+                                calendarFormat: scheduleState.calendarFormat,
+                                onFormatChanged: (format) {
+                                  context.read<TaskBloc>().fetch(
+                                      userId: context
+                                              .read<AuthCubit>()
+                                              .state
+                                              .whenOrNull(authenticated: (user) => user.id) ??
+                                          "",
+                                      date: scheduleState.selectedDay,
+                                      format: format);
+                                  context.read<ScheduleCubit>().changeCalendarFormat(format: format);
+                                },
+                                locale: TranslationProvider.of(context).flutterLocale.languageCode,
+                                startingDayOfWeek: StartingDayOfWeek.monday,
+                                selectedDayPredicate: (day) => isSameDay(scheduleState.selectedDay, day),
+                                rangeSelectionMode: RangeSelectionMode.disabled,
+                                calendarStyle: kCalendarStyle(context)),
+                          ),
+                          Gap.XS,
+                          const DottedDivider(),
+                          Gap.SM,
+                          EndingProjectWidget(
+                            focusedDay: scheduleState.focusedDay,
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: scheduleState.tasks.length,
+                                itemBuilder: (context, index) => TaskCard(
+                                      task: scheduleState.tasks[index],
+                                      size: TaskCardSize.small,
+                                    )),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ));
         },

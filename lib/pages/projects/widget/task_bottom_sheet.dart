@@ -51,7 +51,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     });
     if (widget.dueDate != null) {
       _selectedDate = widget.dueDate;
-      context.read<ProjectBloc>().fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
+      context
+          .read<ProjectBloc>()
+          .fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
     }
     if (widget.task != null) {
       _nameTextEditingController.text = widget.task!.name;
@@ -80,15 +82,15 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               final int notificationId = Random().nextInt(1000);
               final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[task.id];
               if (existingNotificationId == null) {
-                NotificationService.scheduleNotification(
-                    notificationId, "${t.notifications.scheduled.task.title} ⏰", "${t.notifications.scheduled.task.description} 👀", task.dueDate);
+                NotificationService.scheduleNotification(notificationId, "${t.notifications.scheduled.task.title} ⏰",
+                    "${t.notifications.scheduled.task.description} 👀", task.dueDate);
                 context.read<NotificationCubit>().addScheduledNotification(task.id ?? "", notificationId);
               }
               context.router.maybePop();
             },
             updated: (_) => context.router.maybePop());
       },
-      builder: (context, state) =>  Container(
+      builder: (context, state) => Container(
         height: MediaQuery.sizeOf(context).height - (widget.dueDate != null ? 60 : 90),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
@@ -124,45 +126,53 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                         const Spacer(),
                         InkWell(
                           onTap: () async {
-                            if (state.maybeWhen(creating: () => true, orElse: () => false)){
+                            if (state.maybeWhen(creating: () => true, orElse: () => false)) {
                               return;
                             }
-                            final User user = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
+                            final User user = context
+                                .read<AuthCubit>()
+                                .state
+                                .maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
                             if (_selectedDate != null && _selectedDate!.isBeforeDay(DateTime.now())) {
                               onInvalidInput(context, text: t.errors.due_date_before_today, isAlert: true);
                               return;
                             }
-                            if (_nameTextEditingController.text.isEmpty || _currentPomodoroValue == 0 || _selectedDate == null) {
+                            if (_nameTextEditingController.text.isEmpty ||
+                                _currentPomodoroValue == 0 ||
+                                _selectedDate == null) {
                               onInvalidInput(context, isAlert: true);
                               return;
                             } else {
                               widget.task == null
                                   ? context.read<TaskBloc>().create(
-                                  task: Task(
-                                    name: _nameTextEditingController.text,
-                                    description: _descriptionTextEditingController.text,
-                                    pomodoro: _currentPomodoroValue,
-                                    pomodoroCompleted: 0,
-                                    highPriority: highPriority,
-                                    userId: user.id,
-                                    projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
-                                    createdAt: DateTime.now(),
-                                    completedAt: null,
-                                    dueDate: _selectedDate ?? DateTime.now(),
-                                  ))
+                                          task: Task(
+                                        name: _nameTextEditingController.text,
+                                        description: _descriptionTextEditingController.text,
+                                        pomodoro: _currentPomodoroValue,
+                                        pomodoroCompleted: 0,
+                                        highPriority: highPriority,
+                                        userId: user.id,
+                                        projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
+                                        createdAt: DateTime.now(),
+                                        completedAt: null,
+                                        dueDate: _selectedDate ?? DateTime.now(),
+                                      ))
                                   : context.read<TaskBloc>().update(
-                                  id: widget.task!.id!,
-                                  task: widget.task!.copyWith(
-                                    name: _nameTextEditingController.text,
-                                    description: _descriptionTextEditingController.text,
-                                    pomodoro: _currentPomodoroValue,
-                                    highPriority: highPriority,
-                                    dueDate: _selectedDate ?? widget.task!.dueDate,
-                                    projectId: _selectedProject != null ? _selectedProject?.id : widget.project?.id,
-                                  ));
+                                      id: widget.task!.id!,
+                                      task: widget.task!.copyWith(
+                                        name: _nameTextEditingController.text,
+                                        description: _descriptionTextEditingController.text,
+                                        pomodoro: _currentPomodoroValue,
+                                        highPriority: highPriority,
+                                        dueDate: _selectedDate ?? widget.task!.dueDate,
+                                        projectId: _selectedProject != null
+                                            ? _selectedProject?.id
+                                            : (widget.project?.id ?? widget.task?.projectId),
+                                      ));
                             }
                           },
-                          child: Text(widget.task == null ? t.general.create : t.general.edit, style: Theme.of(context).textTheme.titleMedium),
+                          child: Text(widget.task == null ? t.general.create : t.general.edit,
+                              style: Theme.of(context).textTheme.titleMedium),
                         ),
                       ],
                     ),
@@ -189,7 +199,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                       style: Theme.of(context).textTheme.titleSmall,
                       decoration: InputDecoration(
                           hintText: t.tasks.create.description,
-                          hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                           errorBorder: InputBorder.none,
                           border: InputBorder.none),
                     ),
@@ -203,7 +216,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(t.tasks.create.high_priority,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
                               Transform.scale(
                                 scale: 0.8,
                                 child: Switch.adaptive(
@@ -220,7 +236,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                             children: [
                               Text(
                                 "${t.tasks.create.pomodoros} | ",
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                               ),
                               NumberPicker(
                                 value: _currentPomodoroValue,
@@ -246,7 +265,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           Gap.SM,
                           Text(
                             t.tasks.create.due_date,
-                            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
                           ),
                           Gap.XS,
                           DateField(
@@ -259,21 +281,21 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                               hintText: t.tasks.create.end_in,
                               selectedDate: _selectedDate,
                               onPress: (date) => setState(() {
-                                _selectedDate = date;
-                              }),
+                                    _selectedDate = date;
+                                  }),
                               onDelete: () => setState(() {
-                                _selectedDate = null;
-                              })),
+                                    _selectedDate = null;
+                                  })),
                           Gap.SM,
                           ProjectDropDown(
                               selectedProject: _selectedProject,
                               visible: widget.dueDate != null,
                               onChanged: (proj) => setState(() {
-                                _selectedProject = proj;
-                              }),
+                                    _selectedProject = proj;
+                                  }),
                               onDelete: () => setState(() {
-                                _selectedProject = null;
-                              }))
+                                    _selectedProject = null;
+                                  }))
                         ],
                       ),
                     )

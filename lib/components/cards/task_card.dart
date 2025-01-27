@@ -52,7 +52,7 @@ class _TaskCardState extends State<TaskCard> {
         endActionPane: ActionPane(
           motion: const DrawerMotion(),
           children: [
-            SlidableAction(
+            CustomSlidableAction(
               onPressed: (context) {
                 showModalBottomSheet(
                     useRootNavigator: true,
@@ -65,9 +65,13 @@ class _TaskCardState extends State<TaskCard> {
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
               backgroundColor: kYellow500,
               foregroundColor: Colors.white,
-              icon: Icons.edit_note_rounded,
+              child: Icon(
+                Icons.edit_note_rounded,
+                color: kNeutralWhite,
+                size: 25,
+              ),
             ),
-            SlidableAction(
+            CustomSlidableAction(
               onPressed: (context) {
                 showModalBottomSheet(
                     useRootNavigator: true,
@@ -88,7 +92,11 @@ class _TaskCardState extends State<TaskCard> {
               borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
               backgroundColor: kRed500,
               foregroundColor: Colors.white,
-              icon: Icons.delete_forever,
+              child: Icon(
+                Icons.delete_forever,
+                color: kNeutralWhite,
+                size: 25,
+              ),
             ),
           ],
         ),

@@ -78,7 +78,7 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Pomodoro", style: kSerzif(context)),
+                                    Text("Pomodoro 🍅", style: kSerzif(context)),
                                     Text(t.general.quick_session_description,
                                         style: Theme.of(context).textTheme.labelMedium),
                                   ],

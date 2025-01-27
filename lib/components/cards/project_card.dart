@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:pomo/components/fancy_shimmer/fancy_shimmer_image.dart';
 import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/constants/colors.dart';
-import 'package:pomo/extension/date_extension.dart';
 import 'package:pomo/models/project/project.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
@@ -120,7 +119,8 @@ class ProjectCard extends StatelessWidget {
                             ),
                             Text(
                                 DateFormat('MMM dd, yyyy', TranslationProvider.of(context).flutterLocale.languageCode)
-                                    .format(project.endDate),
+                                    .format(project.endDate)
+                                    .capitalize(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
