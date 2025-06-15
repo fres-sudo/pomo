@@ -20,10 +20,10 @@ abstract class AuthenticationService {
   factory AuthenticationService(Dio dio, {String baseUrl}) =
       _AuthenticationService;
 
-  @POST('/auth/login')
+  @POST('/auth/sing-in/email')
   Future<SignInResponse> signIn(@Body() SignInRequest request);
 
-  @POST('/auth/signup')
+  @POST('/auth/sign-up/email')
   Future<UserJTO> signUp(@Body() SignUpRequest request);
 
   @POST("/auth/forgotpassword")
@@ -33,10 +33,12 @@ abstract class AuthenticationService {
   Future<String> verifyToken(@Body() VerifyTokenRequest request);
 
   @POST('/auth/resetpassword/{token}')
-  Future<String> resetPassword(@Path('token') String token, @Body() ResetPasswordRequest request);
+  Future<String> resetPassword(
+      @Path('token') String token, @Body() ResetPasswordRequest request);
 
   @POST('/auth/refresh-token')
-  Future<RefreshTokenResponse> refreshToken(@Body() RefreshTokenRequest refreshToken);
+  Future<RefreshTokenResponse> refreshToken(
+      @Body() RefreshTokenRequest refreshToken);
 
   @POST('/auth/google')
   Future<SignInResponse> retrieveGoogleUser(@Body() OAuthGoogleRequest request);
@@ -44,4 +46,3 @@ abstract class AuthenticationService {
   @POST('/auth/apple')
   Future<SignInResponse> retrieveAppleUser(@Body() OAuthAppleRequest request);
 }
-

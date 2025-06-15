@@ -71,10 +71,13 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
-      listener: (context, state) {
-        state.whenOrNull(
-            verifiedToken: () => context.router.push(ForgotPasswordRecoverRoute(email: widget.email, token: _otpEditingController.text)),
-            errorVerifyingToken: (error) => onErrorState(context, error.localizedString(context)));
+      listener: (context, state) => switch (state) {
+        VerifiedTokenRecoverPasswordState() => context.router.push(
+            ForgotPasswordRecoverRoute(email: widget.email, token: _otpEditingController.text),
+          ),
+        ErrorVerifyingTokenRecoverPasswordState(error: final error) =>
+          onErrorState(context, error.localizedString(context)),
+        _ => {}
       },
       builder: (context, state) {
         return Scaffold(
@@ -90,10 +93,16 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                       Text(t.authentication.forgot_password.secure_access,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontWeight: FontWeight.w700)),
                       Gap.XS,
                       Text(t.authentication.forgot_password.description_reset,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).dividerColor)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: Theme.of(context).dividerColor)),
                       Gap.XL,
                       Pinput(
                           controller: _otpEditingController,
@@ -106,7 +115,9 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                             color: Theme.of(context).primaryColor,
                             margin: const EdgeInsets.symmetric(vertical: 15),
                           ),
-                          onCompleted: (value) => context.read<RecoverPasswordBloc>().verifyToken(email: widget.email, token: value),
+                          onCompleted: (value) => context
+                              .read<RecoverPasswordBloc>()
+                              .verifyToken(email: widget.email, token: value),
                           defaultPinTheme: PinTheme(
                             width: 56,
                             height: 60,
@@ -121,7 +132,8 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                       Center(
                         child: Column(
                           children: [
-                            Text(t.authentication.forgot_password.dont_recive_email, style: Theme.of(context).textTheme.bodyMedium),
+                            Text(t.authentication.forgot_password.dont_recive_email,
+                                style: Theme.of(context).textTheme.bodyMedium),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -132,11 +144,17 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                                       ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => _seconds == 0 ? context.read<RecoverPasswordBloc>().forgotPassword(email: widget.email) : null,
+                                  onTap: () => _seconds == 0
+                                      ? context
+                                          .read<RecoverPasswordBloc>()
+                                          .forgotPassword(email: widget.email)
+                                      : null,
                                   child: Text(
                                     t.authentication.forgot_password.resend,
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: _seconds == 0 ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
+                                          color: _seconds == 0
+                                              ? Theme.of(context).primaryColor
+                                              : Theme.of(context).dividerColor,
                                         ),
                                   ),
                                 ),
@@ -174,16 +192,23 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                         if (_otpEditingController.text.length < 6) {
                           onInvalidInput(context);
                         } else {
-                          context.read<RecoverPasswordBloc>().verifyToken(email: widget.email, token: _otpEditingController.text);
+                          context
+                              .read<RecoverPasswordBloc>()
+                              .verifyToken(email: widget.email, token: _otpEditingController.text);
                         }
                       },
-                      child: state.maybeWhen(
-                          verifyingToken: () => const CustomCircularProgressIndicator(),
-                          orElse: () => Center(
-                                  child: Text(
-                                t.general.continue_title,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),
-                              )))),
+                      child: switch (state) {
+                        VerifyingTokenRecoverPasswordState() =>
+                          const CustomCircularProgressIndicator(),
+                        _ => Center(
+                              child: Text(
+                            t.general.continue_title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: kNeutralWhite),
+                          ))
+                      }),
                 ),
               ],
             ),

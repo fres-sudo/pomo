@@ -25,13 +25,21 @@ abstract class AuthenticationRepository {
     required String password,
   });
 
-  Future<User> signUp({required String username, required String email, required String password, required String confirmPassword});
+  Future<User> signUp(
+      {required String username,
+      required String email,
+      required String password,
+      required String confirmPassword});
 
   Future<String> forgotPassword({required String email});
 
   Future<String> verifyToken({required String token, required String email});
 
-  Future<String> resetPassword({required String email, required String token, required String newPassword, required String confirmNewPassword});
+  Future<String> resetPassword(
+      {required String email,
+      required String token,
+      required String newPassword,
+      required String confirmNewPassword});
 
   Future<void> signOut();
 
@@ -44,7 +52,6 @@ abstract class AuthenticationRepository {
   Future<String?> get getAccessToken;
 
   Stream<bool> get authStatusStream;
-
 }
 
 /// Implementation of the base interface AuthenticationRepository
@@ -58,7 +65,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   final _authController = StreamController<bool>.broadcast();
 
-  void notifySignedOut() => _authController.add(false); // false == not authenticated
+  void notifySignedOut() =>
+      _authController.add(false); // false == not authenticated
 
   final AuthenticationService authenticationService;
   final DTOMapper<SignUpResponse, User> signUpMapper;
@@ -83,13 +91,16 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<User> signUp({required String username, required String email, required String password, required String confirmPassword}) async {
+  Future<User> signUp(
+      {required String username,
+      required String email,
+      required String password,
+      required String confirmPassword}) async {
     final response = await authenticationService.signUp(
       SignUpRequest(
-        username: username,
+        name: username,
         email: email,
         password: password,
-        passwordConfirmation: password,
       ),
     );
     final user = userMapper.fromDTO(response);
@@ -98,7 +109,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<String> forgotPassword({required String email}) async {
-    final result = await authenticationService.forgotPassword(ForgotPasswordRequest(email: email));
+    final result = await authenticationService
+        .forgotPassword(ForgotPasswordRequest(email: email));
     return result;
   }
 
@@ -119,11 +131,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<String?> get getAccessToken async => await storageService.accessToken;
 
   @override
-  Future<String?> get getRefreshToken async => await storageService.refreshToken;
+  Future<String?> get getRefreshToken async =>
+      await storageService.refreshToken;
 
   @override
-  Future<RefreshTokenResponse> refreshToken({required String refreshToken}) async {
-    final response = await authenticationService.refreshToken(RefreshTokenRequest(refreshToken: refreshToken));
+  Future<RefreshTokenResponse> refreshToken(
+      {required String refreshToken}) async {
+    final response = await authenticationService
+        .refreshToken(RefreshTokenRequest(refreshToken: refreshToken));
     await storageService.storeAccessToken(response.accessToken);
     await storageService.storeRefreshToken(response.refreshToken);
     return response;
@@ -131,15 +146,24 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<String> resetPassword(
-      {required String email, required String token, required String newPassword, required String confirmNewPassword}) async {
+      {required String email,
+      required String token,
+      required String newPassword,
+      required String confirmNewPassword}) async {
     final result = await authenticationService.resetPassword(
-        token, ResetPasswordRequest(email: email, newPassword: newPassword, confirmNewPassword: confirmNewPassword));
+        token,
+        ResetPasswordRequest(
+            email: email,
+            newPassword: newPassword,
+            confirmNewPassword: confirmNewPassword));
     return result;
   }
 
   @override
-  Future<String> verifyToken({required String token, required String email}) async {
-    final result = await authenticationService.verifyToken(VerifyTokenRequest(email: email, token: token));
+  Future<String> verifyToken(
+      {required String token, required String email}) async {
+    final result = await authenticationService
+        .verifyToken(VerifyTokenRequest(email: email, token: token));
     return result;
   }
 

@@ -6,12 +6,12 @@ part 'refresh_token_response.g.dart';
 part 'refresh_token_response.freezed.dart';
 
 @freezed
-class RefreshTokenResponse extends DTO with _$RefreshTokenResponse {
-  const factory RefreshTokenResponse({
-    required String accessToken,
-    required String refreshToken
-}) = _RefreshTokenResponse;
+sealed class RefreshTokenResponse extends DTO with _$RefreshTokenResponse {
+  const RefreshTokenResponse._();
+  const factory RefreshTokenResponse(
+      {required String accessToken,
+      required String refreshToken}) = _RefreshTokenResponse;
 
   factory RefreshTokenResponse.fromJson(Map<String, dynamic> json) =>
-    _$RefreshTokenResponseFromJson(json);
+      _$RefreshTokenResponseFromJson(json);
 }

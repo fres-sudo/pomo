@@ -40,29 +40,31 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
-      listener: (BuildContext context, state) => state.whenOrNull(
-          signedInWithGoogle: (user) => {
-                context.read<AuthCubit>().authenticated(user),
-                if (user.username.startsWith("guest-google"))
-                  {context.router.push(ChooseUsernameRoute(user: user))}
-                else
-                  {
-                    context.router.replaceAll([const RootRoute()]),
-                  }
-              },
-          signedInWithApple: (user) => {
-                context.read<AuthCubit>().authenticated(user),
-                if (user.username.startsWith("guest-apple"))
-                  {context.router.push(ChooseUsernameRoute(user: user))}
-                else
-                  {
-                    context.router.replaceAll([const RootRoute()]),
-                  }
-              },
-          signedIn: (user) => {
-                context.read<AuthCubit>().authenticated(user),
+      listener: (BuildContext context, state) => switch (state) {
+        SignedInWithAppleSignInState(user: final user) => {
+            context.read<AuthCubit>().authenticated(user),
+            if (user.username.startsWith("guest-apple"))
+              {context.router.push(ChooseUsernameRoute(user: user))}
+            else
+              {
                 context.router.replaceAll([const RootRoute()]),
-              }),
+              }
+          },
+        SignedInWithGoogleSignInState(user: final user) => {
+            context.read<AuthCubit>().authenticated(user),
+            if (user.username.startsWith("guest-google"))
+              {context.router.push(ChooseUsernameRoute(user: user))}
+            else
+              {
+                context.router.replaceAll([const RootRoute()]),
+              }
+          },
+        SignedInSignInState(user: final user) => {
+            context.read<AuthCubit>().authenticated(user),
+            context.router.replaceAll([const RootRoute()]),
+          },
+        _ => {}
+      },
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -85,10 +87,8 @@ class _LoginPageState extends State<LoginPage> {
                           Text("${t.authentication.login.welcome} 🍅", style: kSerzif(context)),
                           Gap.XS,
                           Text(t.authentication.login.description,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSecondaryContainer)),
                         ],
                       ),
                     )
@@ -118,17 +118,22 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
                                   child: Text(
                                     t.authentication.login.forgot_password,
-                                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: kPrimary500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(color: kPrimary500),
                                   ),
                                 ),
                               ),
                               Gap.SM,
-                              state.maybeWhen(
-                                  errorSignIn: (error) => Padding(
-                                        padding: const EdgeInsets.only(bottom: 8.0),
-                                        child: CustomAlert.error(message: error.localizedString(context)),
-                                      ),
-                                  orElse: () => const SizedBox()),
+                              switch (state) {
+                                ErrorSignInSignInState(:final error) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child:
+                                        CustomAlert.error(message: error.localizedString(context)),
+                                  ),
+                                _ => const SizedBox(),
+                              },
                               Gap.SM,
                             ]),
                         Column(
@@ -137,21 +142,21 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 _formKey.currentState!.validate()
                                     ? context.read<SignInBloc>().perform(
-                                        email: _emailTextController.text, password: _passwordTextController.text)
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text)
                                     : onInvalidInput(context);
                               },
-                              child: state.maybeWhen(
-                                signingIn: () => const CustomCircularProgressIndicator(),
-                                orElse: () => Center(
-                                  child: Text(
+                              child: switch (state) {
+                                SigningInSignInState() => const CustomCircularProgressIndicator(),
+                                _ => Center(
+                                      child: Text(
                                     t.authentication.login.title,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(fontSize: 14, color: kNeutral100),
-                                  ),
-                                ),
-                              ),
+                                  )),
+                              },
                             ),
                             Gap.MD,
                             Row(
@@ -198,10 +203,8 @@ class _LoginPageState extends State<LoginPage> {
                                   Gap.SM_H,
                                   Text(
                                     t.authentication.login.google,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        color: Theme.of(context).colorScheme.onSecondary),
                                   )
                                 ],
                               )),
@@ -226,10 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                                     Gap.SM_H,
                                     Text(
                                       t.authentication.login.apple,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          color: Theme.of(context).colorScheme.onSecondary),
                                     )
                                   ],
                                 )),

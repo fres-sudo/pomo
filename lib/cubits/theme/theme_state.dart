@@ -1,7 +1,7 @@
 part of 'theme_cubit.dart';
 
 @freezed
-class ThemeState with _$ThemeState {
+sealed class ThemeState with _$ThemeState {
   const ThemeState._();
 
   const factory ThemeState({

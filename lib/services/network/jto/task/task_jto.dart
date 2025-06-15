@@ -1,14 +1,13 @@
 import 'package:pine/pine.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
-
 part 'task_jto.g.dart';
 
 part 'task_jto.freezed.dart';
 
 @freezed
-class TaskJTO extends DTO with _$TaskJTO {
+sealed class TaskJTO extends DTO with _$TaskJTO {
+  const TaskJTO._() : super();
   const factory TaskJTO({
     String? id,
     required String name,
@@ -22,8 +21,8 @@ class TaskJTO extends DTO with _$TaskJTO {
     DateTime? updatedAt,
     required bool highPriority,
     DateTime? completedAt,
-}) = _TaskJTO;
+  }) = _TaskJTO;
 
   factory TaskJTO.fromJson(Map<String, dynamic> json) =>
-    _$TaskJTOFromJson(json);
+      _$TaskJTOFromJson(json);
 }

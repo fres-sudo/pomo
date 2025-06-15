@@ -7,8 +7,8 @@ import '../user/user.dart';
 part 'project.freezed.dart';
 
 @freezed
-class Project with _$Project {
-  const Project._();
+sealed class Project with _$Project {
+  const Project._() : super();
 
   const factory Project({
     String? id,
@@ -24,9 +24,12 @@ class Project with _$Project {
     List<Task>? tasks,
     List<User>? contributors,
     required ProjectStatus status,
-}) = _Project;
+  }) = _Project;
 
-
-
-  static Project fake() => Project(name: "name", startDate: DateTime.now(), endDate: DateTime.now(), userId: "", status: ProjectStatus.progress);
+  static Project fake() => Project(
+      name: "name",
+      startDate: DateTime.now(),
+      endDate: DateTime.now(),
+      userId: "",
+      status: ProjectStatus.progress);
 }

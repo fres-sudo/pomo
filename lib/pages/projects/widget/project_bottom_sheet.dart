@@ -21,11 +21,10 @@ class ProjectBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          updated: (_) => context.router.maybePop(),
-          deleted: () => context.router.maybePop(),
-        );
+      listener: (context, state) => switch (state) {
+        UpdatedProjectState() => context.router.maybePop(),
+        DeletedProjectState() => context.router.maybePop(),
+        _ => null,
       },
       child: Container(
         height: 320,
@@ -77,7 +76,10 @@ class ProjectBottomSheet extends StatelessWidget {
                               Gap.SM_H,
                               Text(
                                 t.general.edit,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kGreen500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: kGreen500),
                               ),
                             ],
                           )),
@@ -91,10 +93,15 @@ class ProjectBottomSheet extends StatelessWidget {
                             builder: (BuildContext context) {
                               final bool isArchived = project.status == ProjectStatus.archived;
                               return DestructionBottomSheet(
-                                title: isArchived ? t.projects.unarchive.title : t.projects.archive.title,
-                                buttonText: isArchived ? t.projects.unarchive.action : t.projects.archive.action,
-                                description:
-                                    isArchived ? t.projects.unarchive.description : t.projects.archive.description,
+                                title: isArchived
+                                    ? t.projects.unarchive.title
+                                    : t.projects.archive.title,
+                                buttonText: isArchived
+                                    ? t.projects.unarchive.action
+                                    : t.projects.archive.action,
+                                description: isArchived
+                                    ? t.projects.unarchive.description
+                                    : t.projects.archive.description,
                                 onPress: () {
                                   context.read<ProjectBloc>().updateProjectById(
                                       id: project.id!,
@@ -129,7 +136,10 @@ class ProjectBottomSheet extends StatelessWidget {
                                 project.status == ProjectStatus.archived
                                     ? t.projects.unarchive.action
                                     : t.general.archive,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kYellow500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: kYellow500),
                               )
                             ],
                           )),
@@ -169,7 +179,10 @@ class ProjectBottomSheet extends StatelessWidget {
                               Gap.SM_H,
                               Text(
                                 t.general.delete,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kRed500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: kRed500),
                               )
                             ],
                           )),

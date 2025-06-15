@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'stats.freezed.dart';
 
 @freezed
-class Stats with _$Stats {
-  const Stats._();
+sealed class Stats with _$Stats {
+  const Stats._() : super();
 
   const factory Stats({
     required int totalTasksToday,
@@ -13,7 +13,13 @@ class Stats with _$Stats {
     required List<int> completedTasksOfTheWeek,
     required List<int> uncompletedTasksOfTheWeek,
     required double completionPercentage,
-}) = _Stats;
+  }) = _Stats;
 
-  static Stats fake() => const Stats(totalTasksToday: 0, totalTasksYesterday: 0, totalTasksAll: 1, completedTasksOfTheWeek: [0,0,0,0,0,0,0], uncompletedTasksOfTheWeek: [0,0,0,0,0,0,0], completionPercentage: 0);
+  static Stats fake() => const Stats(
+      totalTasksToday: 0,
+      totalTasksYesterday: 0,
+      totalTasksAll: 1,
+      completedTasksOfTheWeek: [0, 0, 0, 0, 0, 0, 0],
+      uncompletedTasksOfTheWeek: [0, 0, 0, 0, 0, 0, 0],
+      completionPercentage: 0);
 }

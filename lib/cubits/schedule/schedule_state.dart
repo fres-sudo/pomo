@@ -1,8 +1,7 @@
 part of 'schedule_cubit.dart';
 
-
 @freezed
-class ScheduleState with _$ScheduleState {
+sealed class ScheduleState with _$ScheduleState {
   const factory ScheduleState({
     @Default([]) List<Task> tasks,
     required DateTime focusedDay,

@@ -6,7 +6,8 @@ part 'user_jto.g.dart';
 part 'user_jto.freezed.dart';
 
 @freezed
-class UserJTO extends DTO with _$UserJTO {
+sealed class UserJTO extends DTO with _$UserJTO {
+  const UserJTO._() : super();
   const factory UserJTO({
     required String id,
     required String username,

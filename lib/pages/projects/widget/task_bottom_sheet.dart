@@ -19,7 +19,6 @@ import '../../../cubits/notification/notification_cubit.dart';
 import '../../../extension/sized_box_extension.dart';
 import '../../../i18n/strings.g.dart';
 import '../../../models/project/project.dart';
-import '../../../services/notification/notification_service.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   const TaskBottomSheet({super.key, this.project, this.task, this.dueDate});
@@ -51,9 +50,11 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     });
     if (widget.dueDate != null) {
       _selectedDate = widget.dueDate;
-      context
-          .read<ProjectBloc>()
-          .fetch(userId: context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
+      final userId = switch (context.read<AuthCubit>().state) {
+        AuthenticatedAuthState(:final user) => user.id,
+        _ => ""
+      };
+      context.read<ProjectBloc>().fetch(userId: userId);
     }
     if (widget.task != null) {
       _nameTextEditingController.text = widget.task!.name;
@@ -76,19 +77,25 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
-      listener: (context, state) {
-        state.whenOrNull(
-            created: (task) {
-              final int notificationId = Random().nextInt(1000);
-              final existingNotificationId = context.read<NotificationCubit>().state.scheduledNotifications[task.id];
-              if (existingNotificationId == null) {
-                NotificationService.scheduleNotification(notificationId, "${t.notifications.scheduled.task.title} ⏰",
-                    "${t.notifications.scheduled.task.description} 👀", task.dueDate);
-                context.read<NotificationCubit>().addScheduledNotification(task.id ?? "", notificationId);
-              }
-              context.router.maybePop();
-            },
-            updated: (_) => context.router.maybePop());
+      listener: (context, state) => switch (state) {
+        CreatedTaskState(:final task) => () {
+            final int notificationId = Random().nextInt(1000);
+            final existingNotificationId =
+                context.read<NotificationCubit>().state.scheduledNotifications[task.id];
+            if (existingNotificationId == null) {
+              // NotificationService.scheduleNotification(
+              //     notificationId,
+              //     "${t.notifications.scheduled.task.title} ⏰",
+              //     "${t.notifications.scheduled.task.description} 👀",
+              //     task.dueDate);
+              context
+                  .read<NotificationCubit>()
+                  .addScheduledNotification(task.id ?? "", notificationId);
+            }
+            context.router.maybePop();
+          },
+        UpdatedTaskState() => context.router.maybePop(),
+        _ => null
       },
       builder: (context, state) => Container(
         height: MediaQuery.sizeOf(context).height - (widget.dueDate != null ? 60 : 90),
@@ -102,7 +109,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
           ],
           color: Theme.of(context).bottomSheetTheme.backgroundColor,
         ),
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
+        padding: EdgeInsets.only(
+            left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
         child: SingleChildScrollView(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Center(
@@ -121,20 +129,23 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                         Gap.LG_H,
                         Align(
                             alignment: Alignment.center,
-                            child: Text(widget.task == null ? t.tasks.create.title : t.tasks.update.edit,
+                            child: Text(
+                                widget.task == null ? t.tasks.create.title : t.tasks.update.edit,
                                 style: Theme.of(context).textTheme.titleMedium)),
                         const Spacer(),
                         InkWell(
                           onTap: () async {
-                            if (state.maybeWhen(creating: () => true, orElse: () => false)) {
+                            if (switch (state) { CreatingTaskState() => true, _ => false }) {
                               return;
                             }
-                            final User user = context
-                                .read<AuthCubit>()
-                                .state
-                                .maybeWhen(authenticated: (user) => user, orElse: () => User.generateFakeData());
-                            if (_selectedDate != null && _selectedDate!.isBeforeDay(DateTime.now())) {
-                              onInvalidInput(context, text: t.errors.due_date_before_today, isAlert: true);
+                            final user = switch (context.read<AuthCubit>().state) {
+                              AuthenticatedAuthState(:final user) => user,
+                              _ => User.fake()
+                            };
+                            if (_selectedDate != null &&
+                                _selectedDate!.isBeforeDay(DateTime.now())) {
+                              onInvalidInput(context,
+                                  text: t.errors.due_date_before_today, isAlert: true);
                               return;
                             }
                             if (_nameTextEditingController.text.isEmpty ||
@@ -152,7 +163,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                         pomodoroCompleted: 0,
                                         highPriority: highPriority,
                                         userId: user.id,
-                                        projectId: widget.dueDate != null ? _selectedProject?.id : widget.project?.id,
+                                        projectId: widget.dueDate != null
+                                            ? _selectedProject?.id
+                                            : widget.project?.id,
                                         createdAt: DateTime.now(),
                                         completedAt: null,
                                         dueDate: _selectedDate ?? DateTime.now(),
@@ -183,13 +196,15 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                     TextFormField(
                       controller: _nameTextEditingController,
                       focusNode: _focusNode,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         hintText: t.tasks.create.working_on,
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSecondary),
+                        hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSecondary),
                         border: InputBorder.none,
                         errorBorder: InputBorder.none,
                       ),
@@ -273,7 +288,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                           Gap.XS,
                           DateField(
                               firstDate: DateTime.now(),
-                              lastDate: widget.project != null && widget.project!.endDate.isAfter(DateTime.now())
+                              lastDate: widget.project != null &&
+                                      widget.project!.endDate.isAfter(DateTime.now())
                                   ? widget.project?.endDate
                                   : DateTime.now().add(const Duration(days: 365)),
                               borderRadius: 12,

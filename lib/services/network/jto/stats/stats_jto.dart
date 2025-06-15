@@ -6,7 +6,8 @@ part 'stats_jto.g.dart';
 part 'stats_jto.freezed.dart';
 
 @freezed
-class StatsJTO extends DTO with _$StatsJTO {
+sealed class StatsJTO extends DTO with _$StatsJTO {
+  const StatsJTO._() : super();
   const factory StatsJTO({
     required int totalTasksToday,
     required int totalTasksYesterday,
@@ -14,8 +15,8 @@ class StatsJTO extends DTO with _$StatsJTO {
     required List<int> completedTasksOfTheWeek,
     required List<int> uncompletedTasksOfTheWeek,
     required double completionPercentage,
-}) = _StatsJTO;
+  }) = _StatsJTO;
 
   factory StatsJTO.fromJson(Map<String, dynamic> json) =>
-    _$StatsJTOFromJson(json);
+      _$StatsJTOFromJson(json);
 }

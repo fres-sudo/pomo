@@ -1,8 +1,7 @@
-
 part of 'filter_project_cubit.dart';
 
 @freezed
-class FilterProjectState with _$FilterProjectState {
+sealed class FilterProjectState with _$FilterProjectState {
   const factory FilterProjectState({
     @Default(SortOption.endDate) SortOption sortOption,
     @Default(true) bool isAscending,

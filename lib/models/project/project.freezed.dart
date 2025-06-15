@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,146 +10,86 @@ part of 'project.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Project {
-  String? get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-  DateTime get startDate => throw _privateConstructorUsedError;
-  DateTime get endDate => throw _privateConstructorUsedError;
-  DateTime? get completedAt => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  String? get imageCover => throw _privateConstructorUsedError;
-  List<Task>? get tasks => throw _privateConstructorUsedError;
-  List<User>? get contributors => throw _privateConstructorUsedError;
-  ProjectStatus get status => throw _privateConstructorUsedError;
+  String? get id;
+  String get name;
+  String? get description;
+  DateTime? get createdAt;
+  DateTime? get updatedAt;
+  DateTime get startDate;
+  DateTime get endDate;
+  DateTime? get completedAt;
+  String get userId;
+  String? get imageCover;
+  List<Task>? get tasks;
+  List<User>? get contributors;
+  ProjectStatus get status;
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProjectCopyWith<Project> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProjectCopyWith<$Res> {
-  factory $ProjectCopyWith(Project value, $Res Function(Project) then) =
-      _$ProjectCopyWithImpl<$Res, Project>;
-  @useResult
-  $Res call(
-      {String? id,
-      String name,
-      String? description,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      DateTime startDate,
-      DateTime endDate,
-      DateTime? completedAt,
-      String userId,
-      String? imageCover,
-      List<Task>? tasks,
-      List<User>? contributors,
-      ProjectStatus status});
-}
-
-/// @nodoc
-class _$ProjectCopyWithImpl<$Res, $Val extends Project>
-    implements $ProjectCopyWith<$Res> {
-  _$ProjectCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Project
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ProjectCopyWith<Project> get copyWith =>
+      _$ProjectCopyWithImpl<Project>(this as Project, _$identity);
+
   @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = null,
-    Object? description = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-    Object? startDate = null,
-    Object? endDate = null,
-    Object? completedAt = freezed,
-    Object? userId = null,
-    Object? imageCover = freezed,
-    Object? tasks = freezed,
-    Object? contributors = freezed,
-    Object? status = null,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      completedAt: freezed == completedAt
-          ? _value.completedAt
-          : completedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageCover: freezed == imageCover
-          ? _value.imageCover
-          : imageCover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tasks: freezed == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>?,
-      contributors: freezed == contributors
-          ? _value.contributors
-          : contributors // ignore: cast_nullable_to_non_nullable
-              as List<User>?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ProjectStatus,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Project &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.imageCover, imageCover) ||
+                other.imageCover == imageCover) &&
+            const DeepCollectionEquality().equals(other.tasks, tasks) &&
+            const DeepCollectionEquality()
+                .equals(other.contributors, contributors) &&
+            (identical(other.status, status) || other.status == status));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      createdAt,
+      updatedAt,
+      startDate,
+      endDate,
+      completedAt,
+      userId,
+      imageCover,
+      const DeepCollectionEquality().hash(tasks),
+      const DeepCollectionEquality().hash(contributors),
+      status);
+
+  @override
+  String toString() {
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors, status: $status)';
   }
 }
 
 /// @nodoc
-abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
-  factory _$$ProjectImplCopyWith(
-          _$ProjectImpl value, $Res Function(_$ProjectImpl) then) =
-      __$$ProjectImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ProjectCopyWith<$Res> {
+  factory $ProjectCopyWith(Project value, $Res Function(Project) _then) =
+      _$ProjectCopyWithImpl;
   @useResult
   $Res call(
       {String? id,
@@ -167,12 +108,11 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ProjectImplCopyWithImpl<$Res>
-    extends _$ProjectCopyWithImpl<$Res, _$ProjectImpl>
-    implements _$$ProjectImplCopyWith<$Res> {
-  __$$ProjectImplCopyWithImpl(
-      _$ProjectImpl _value, $Res Function(_$ProjectImpl) _then)
-      : super(_value, _then);
+class _$ProjectCopyWithImpl<$Res> implements $ProjectCopyWith<$Res> {
+  _$ProjectCopyWithImpl(this._self, this._then);
+
+  final Project _self;
+  final $Res Function(Project) _then;
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
@@ -193,57 +133,57 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? contributors = freezed,
     Object? status = null,
   }) {
-    return _then(_$ProjectImpl(
+    return _then(_self.copyWith(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       updatedAt: freezed == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       startDate: null == startDate
-          ? _value.startDate
+          ? _self.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       endDate: null == endDate
-          ? _value.endDate
+          ? _self.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       completedAt: freezed == completedAt
-          ? _value.completedAt
+          ? _self.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
       imageCover: freezed == imageCover
-          ? _value.imageCover
+          ? _self.imageCover
           : imageCover // ignore: cast_nullable_to_non_nullable
               as String?,
       tasks: freezed == tasks
-          ? _value._tasks
+          ? _self.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
               as List<Task>?,
       contributors: freezed == contributors
-          ? _value._contributors
+          ? _self.contributors
           : contributors // ignore: cast_nullable_to_non_nullable
               as List<User>?,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProjectStatus,
     ));
@@ -252,8 +192,8 @@ class __$$ProjectImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProjectImpl extends _Project {
-  const _$ProjectImpl(
+class _Project extends Project {
+  const _Project(
       {this.id,
       required this.name,
       this.description,
@@ -314,16 +254,19 @@ class _$ProjectImpl extends _Project {
   @override
   final ProjectStatus status;
 
+  /// Create a copy of Project
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors, status: $status)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ProjectCopyWith<_Project> get copyWith =>
+      __$ProjectCopyWithImpl<_Project>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProjectImpl &&
+            other is _Project &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -363,63 +306,115 @@ class _$ProjectImpl extends _Project {
       const DeepCollectionEquality().hash(_contributors),
       status);
 
+  @override
+  String toString() {
+    return 'Project(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, startDate: $startDate, endDate: $endDate, completedAt: $completedAt, userId: $userId, imageCover: $imageCover, tasks: $tasks, contributors: $contributors, status: $status)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ProjectCopyWith<$Res> implements $ProjectCopyWith<$Res> {
+  factory _$ProjectCopyWith(_Project value, $Res Function(_Project) _then) =
+      __$ProjectCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? id,
+      String name,
+      String? description,
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      DateTime startDate,
+      DateTime endDate,
+      DateTime? completedAt,
+      String userId,
+      String? imageCover,
+      List<Task>? tasks,
+      List<User>? contributors,
+      ProjectStatus status});
+}
+
+/// @nodoc
+class __$ProjectCopyWithImpl<$Res> implements _$ProjectCopyWith<$Res> {
+  __$ProjectCopyWithImpl(this._self, this._then);
+
+  final _Project _self;
+  final $Res Function(_Project) _then;
+
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
-      __$$ProjectImplCopyWithImpl<_$ProjectImpl>(this, _$identity);
+  $Res call({
+    Object? id = freezed,
+    Object? name = null,
+    Object? description = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? completedAt = freezed,
+    Object? userId = null,
+    Object? imageCover = freezed,
+    Object? tasks = freezed,
+    Object? contributors = freezed,
+    Object? status = null,
+  }) {
+    return _then(_Project(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startDate: null == startDate
+          ? _self.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endDate: null == endDate
+          ? _self.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageCover: freezed == imageCover
+          ? _self.imageCover
+          : imageCover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tasks: freezed == tasks
+          ? _self._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<Task>?,
+      contributors: freezed == contributors
+          ? _self._contributors
+          : contributors // ignore: cast_nullable_to_non_nullable
+              as List<User>?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProjectStatus,
+    ));
+  }
 }
 
-abstract class _Project extends Project {
-  const factory _Project(
-      {final String? id,
-      required final String name,
-      final String? description,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
-      required final DateTime startDate,
-      required final DateTime endDate,
-      final DateTime? completedAt,
-      required final String userId,
-      final String? imageCover,
-      final List<Task>? tasks,
-      final List<User>? contributors,
-      required final ProjectStatus status}) = _$ProjectImpl;
-  const _Project._() : super._();
-
-  @override
-  String? get id;
-  @override
-  String get name;
-  @override
-  String? get description;
-  @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
-  @override
-  DateTime get startDate;
-  @override
-  DateTime get endDate;
-  @override
-  DateTime? get completedAt;
-  @override
-  String get userId;
-  @override
-  String? get imageCover;
-  @override
-  List<Task>? get tasks;
-  @override
-  List<User>? get contributors;
-  @override
-  ProjectStatus get status;
-
-  /// Create a copy of Project
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
