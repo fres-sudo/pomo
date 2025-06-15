@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../blocs/project/project_bloc.dart';
 import '../../extension/sized_box_extension.dart';
@@ -9,7 +8,13 @@ import '../../models/project/project.dart';
 import '../../models/task/task.dart';
 
 class ProjectDropDown extends StatefulWidget {
-  const ProjectDropDown({super.key, required this.onChanged, required this.onDelete, this.selectedProject, required this.visible, this.task});
+  const ProjectDropDown(
+      {super.key,
+      required this.onChanged,
+      required this.onDelete,
+      this.selectedProject,
+      required this.visible,
+      this.task});
 
   final Task? task;
   final Function(Project? project) onChanged;
@@ -51,7 +56,10 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
           children: [
             Text(
               t.tasks.create.project,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
             ),
             Gap.XS,
             Row(
@@ -100,18 +108,20 @@ class _ProjectDropDownState extends State<ProjectDropDown> {
                           });
                           widget.onChanged(newValue);
                         },
-                        items: state.maybeWhen(
-                            fetching: () => [],
-                            fetched: (projects) => projects.map((Project project) {
-                                  return DropdownMenuItem<Project>(
-                                    value: project,
-                                    child: Text(
-                                      project.name,
-                                      style: Theme.of(context).textTheme.labelMedium,
-                                    ),
-                                  );
-                                }).toList(),
-                            orElse: () => [])),
+                        items: switch (state) {
+                          FetchingProjectState() => [],
+                          FetchedProjectState(projects: final projects) =>
+                            projects.map((Project project) {
+                              return DropdownMenuItem<Project>(
+                                value: project,
+                                child: Text(
+                                  project.name,
+                                  style: Theme.of(context).textTheme.labelMedium,
+                                ),
+                              );
+                            }).toList(),
+                          _ => []
+                        }),
                   ),
                 ),
                 if (_selectedProject != null)

@@ -11,30 +11,23 @@ class ProfilePicture extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
-    return context.watch<AuthCubit>().state.maybeWhen(
-        authenticated: (user) {
-          if (user.avatar == null) {
-            return  CircleAvatar(
-              radius: width / 2,
-              backgroundImage: const AssetImage(
-                  "assets/images/propic-placeholder.jpg"),
-            );
-          } else {
-            return ClipOval(
+  Widget build(BuildContext context) => switch (context.watch<AuthCubit>().state) {
+        AuthenticatedAuthState(:final user) => user.avatar == null
+            ? CircleAvatar(
+                radius: width / 2,
+                backgroundImage: const AssetImage("assets/images/propic-placeholder.jpg"),
+              )
+            : ClipOval(
                 child: SizedBox(
                     height: height,
                     width: width,
                     child: FancyShimmerImage(
                       imageUrl: user.avatar!,
                       boxFit: BoxFit.cover,
-                    )));
-          }
-        },
-        orElse: () => CircleAvatar(
-          radius: width / 2,
-          backgroundImage: AssetImage(
-              "assets/images/propic-placeholder.jpg"),
-        ));
-  }
+                    ))),
+        _ => CircleAvatar(
+            radius: width / 2,
+            backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+          )
+      };
 }

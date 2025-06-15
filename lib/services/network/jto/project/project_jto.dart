@@ -10,7 +10,8 @@ part 'project_jto.g.dart';
 part 'project_jto.freezed.dart';
 
 @freezed
-class ProjectJTO extends DTO with _$ProjectJTO {
+sealed class ProjectJTO extends DTO with _$ProjectJTO {
+  const ProjectJTO._() : super();
   const factory ProjectJTO({
     String? id,
     required String name,
@@ -25,8 +26,8 @@ class ProjectJTO extends DTO with _$ProjectJTO {
     List<TaskJTO>? tasks,
     List<UserJTO>? contributors,
     required ProjectStatus status,
-}) = _ProjectJTO;
+  }) = _ProjectJTO;
 
   factory ProjectJTO.fromJson(Map<String, dynamic> json) =>
-    _$ProjectJTOFromJson(json);
+      _$ProjectJTOFromJson(json);
 }

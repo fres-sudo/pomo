@@ -6,11 +6,13 @@ part 'forgot_pass_request.g.dart';
 part 'forgot_pass_request.freezed.dart';
 
 @freezed
-class ForgotPasswordRequest extends DTO with _$ForgotPasswordRequest {
+sealed class ForgotPasswordRequest extends DTO with _$ForgotPasswordRequest {
+  const ForgotPasswordRequest._() : super();
+
   const factory ForgotPasswordRequest({
     required String email,
-}) = _ForgotPassRequest;
+  }) = _ForgotPassRequest;
 
   factory ForgotPasswordRequest.fromJson(Map<String, dynamic> json) =>
-    _$ForgotPasswordRequestFromJson(json);
+      _$ForgotPasswordRequestFromJson(json);
 }

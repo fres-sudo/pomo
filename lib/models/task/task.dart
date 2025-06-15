@@ -1,12 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
-
 part 'task.freezed.dart';
 
 @freezed
-class Task with _$Task {
-  const Task._();
+sealed class Task with _$Task {
+  const Task._() : super();
 
   const factory Task({
     String? id,
@@ -21,29 +19,31 @@ class Task with _$Task {
     DateTime? updatedAt,
     required bool highPriority,
     DateTime? completedAt,
-}) = _Task;
+  }) = _Task;
 
   int compareTo(Task other) {
     // First, compare by highPriority (highPriority tasks first)
     if (highPriority != other.highPriority) {
-      return other.highPriority ? 1 : -1; // High priority (true) tasks come first
+      return other.highPriority
+          ? 1
+          : -1; // High priority (true) tasks come first
     }
     // If highPriority is the same, sort by dueDate in ascending order
     return dueDate.compareTo(other.dueDate);
   }
 
   static Task fake() => Task(
-    id: '1',
-    name: 'Task 1',
-    description: 'Description of task 1',
-    pomodoro: 4,
-    pomodoroCompleted: 2,
-    userId: '1',
-    projectId: '1',
-    dueDate: DateTime.now(),
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    highPriority: false,
-    completedAt: DateTime.now(),
-  );
+        id: '1',
+        name: 'Task 1',
+        description: 'Description of task 1',
+        pomodoro: 4,
+        pomodoroCompleted: 2,
+        userId: '1',
+        projectId: '1',
+        dueDate: DateTime.now(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        highPriority: false,
+        completedAt: DateTime.now(),
+      );
 }

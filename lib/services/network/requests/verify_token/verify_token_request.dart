@@ -6,12 +6,11 @@ part 'verify_token_request.g.dart';
 part 'verify_token_request.freezed.dart';
 
 @freezed
-class VerifyTokenRequest extends DTO with _$VerifyTokenRequest {
-  const factory VerifyTokenRequest({
-    required String email,
-    required String token
-}) = _VerifyTokenRequest;
+sealed class VerifyTokenRequest extends DTO with _$VerifyTokenRequest {
+  const VerifyTokenRequest._() : super();
+  const factory VerifyTokenRequest(
+      {required String email, required String token}) = _VerifyTokenRequest;
 
   factory VerifyTokenRequest.fromJson(Map<String, dynamic> json) =>
-    _$VerifyTokenRequestFromJson(json);
+      _$VerifyTokenRequestFromJson(json);
 }

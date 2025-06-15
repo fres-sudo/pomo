@@ -19,82 +19,90 @@ class TaskView extends StatelessWidget {
 
   final Project project;
 
-  _fetchTasks(BuildContext context) => context.read<TaskBloc>().getByProject(projectId: project.id ?? "");
+  _fetchTasks(BuildContext context) =>
+      context.read<TaskBloc>().getByProject(projectId: project.id ?? "");
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            errorCreating: (error) => onErrorState(context, error.localizedString(context)),
-            errorUpdating: (error) => onErrorState(context, error.localizedString(context)),
-            errorDeleting: (error) => onErrorState(context, error.localizedString(context)),
-            errorFetchingByProject: (error) => onErrorState(context, error.localizedString(context)),
-            created: (_) => _fetchTasks(context),
-            updated: (_) => _fetchTasks(context),
-            deleted: () => _fetchTasks(context),
-          );
-        },
-        buildWhen: (_, current) => current.maybeWhen(
-            fetchingByProject: () => true,
-            creating: () => true,
-            updating: () => true,
-            deleting: () => true,
-            fetchedByProject: (_) => true,
-            orElse: () => false),
+        listener: (context, state) => switch (state) {
+              ErrorCreatingTaskState(:final error) =>
+                onErrorState(context, error.localizedString(context)),
+              ErrorUpdatingTaskState(:final error) =>
+                onErrorState(context, error.localizedString(context)),
+              ErrorDeletingTaskState(:final error) =>
+                onErrorState(context, error.localizedString(context)),
+              ErrorFetchingByProjectTaskState(:final error) =>
+                onErrorState(context, error.localizedString(context)),
+              CreatedTaskState() => _fetchTasks(context),
+              UpdatedTaskState() => _fetchTasks(context),
+              DeletedTaskState() => _fetchTasks(context),
+              _ => null,
+            },
+        buildWhen: (_, current) => switch (current) {
+              FetchingByProjectTaskState() => true,
+              CreatingTaskState() => true,
+              UpdatingTaskState() => true,
+              DeletingTaskState() => true,
+              FetchedByProjectTaskState() => true,
+              _ => false
+            },
         builder: (context, state) {
-          return state.maybeWhen(
-              fetchingByProject: () => const LoadingTasksState(),
-              creating: () => const LoadingTasksState(),
-              updating: () => const LoadingTasksState(),
-              deleting: () => const LoadingTasksState(),
-              fetchedByProject: (tasks) {
-                List<Task> completedTasks = tasks
-                    .where((task) => (task.pomodoroCompleted ?? 0) >= task.pomodoro)
-                    .toList()
-                  ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
-
-                List<Task> inProgressTasks = tasks
-                    .where((task) => task.pomodoro > (task.pomodoroCompleted ?? 0))
-                    .toList()
-                  ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
-
-                return tasks.isEmpty
-                    ? NoTaskView(project: project)
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(t.projects.in_progress, style: Theme.of(context).textTheme.titleMedium),
-                              InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: () => showModalBottomSheet(
-                                      useRootNavigator: true,
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) => TaskBottomSheet(project: project)),
-                                  child: const Icon(Icons.add_circle_outline_rounded))
-                            ],
-                          ),
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: inProgressTasks.length,
-                              itemBuilder: (context, index) => TaskCard(task: inProgressTasks[index])),
-                          Text(t.projects.already_done, style: Theme.of(context).textTheme.titleMedium),
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: completedTasks.length,
-                              itemBuilder: (context, index) => TaskCard(task: completedTasks[index])),
-                        ],
-                      );
-              },
-              orElse: () => SizedBox.shrink());
+          return switch (state) {
+            FetchingByProjectTaskState() => const LoadingTasksState(),
+            CreatingTaskState() => const LoadingTasksState(),
+            UpdatingTaskState() => const LoadingTasksState(),
+            DeletingTaskState() => const LoadingTasksState(),
+            FetchedByProjectTaskState(:final tasks) => _buildTasksList(tasks, context),
+            _ => SizedBox.shrink(),
+          };
         });
+  }
+
+  Widget _buildTasksList(List<Task> tasks, BuildContext context) {
+    List<Task> completedTasks = tasks
+        .where((task) => (task.pomodoroCompleted ?? 0) >= task.pomodoro)
+        .toList()
+      ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
+    List<Task> inProgressTasks = tasks
+        .where((task) => task.pomodoro > (task.pomodoroCompleted ?? 0))
+        .toList()
+      ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
+    return tasks.isEmpty
+        ? NoTaskView(project: project)
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(t.projects.in_progress, style: Theme.of(context).textTheme.titleMedium),
+                  InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () => showModalBottomSheet(
+                          useRootNavigator: true,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => TaskBottomSheet(project: project)),
+                      child: const Icon(Icons.add_circle_outline_rounded))
+                ],
+              ),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: inProgressTasks.length,
+                  itemBuilder: (context, index) => TaskCard(task: inProgressTasks[index])),
+              Text(t.projects.already_done, style: Theme.of(context).textTheme.titleMedium),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: completedTasks.length,
+                  itemBuilder: (context, index) => TaskCard(task: completedTasks[index])),
+            ],
+          );
   }
 }
 

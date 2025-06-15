@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,133 +10,30 @@ part of 'sign_in_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-SignInRequest _$SignInRequestFromJson(Map<String, dynamic> json) {
-  return _SignInRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$SignInRequest {
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-
-  /// Serializes this SignInRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get email;
+  String get password;
 
   /// Create a copy of SignInRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $SignInRequestCopyWith<SignInRequest> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$SignInRequestCopyWithImpl<SignInRequest>(
+          this as SignInRequest, _$identity);
 
-/// @nodoc
-abstract class $SignInRequestCopyWith<$Res> {
-  factory $SignInRequestCopyWith(
-          SignInRequest value, $Res Function(SignInRequest) then) =
-      _$SignInRequestCopyWithImpl<$Res, SignInRequest>;
-  @useResult
-  $Res call({String email, String password});
-}
-
-/// @nodoc
-class _$SignInRequestCopyWithImpl<$Res, $Val extends SignInRequest>
-    implements $SignInRequestCopyWith<$Res> {
-  _$SignInRequestCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$SignInRequestImplCopyWith<$Res>
-    implements $SignInRequestCopyWith<$Res> {
-  factory _$$SignInRequestImplCopyWith(
-          _$SignInRequestImpl value, $Res Function(_$SignInRequestImpl) then) =
-      __$$SignInRequestImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String email, String password});
-}
-
-/// @nodoc
-class __$$SignInRequestImplCopyWithImpl<$Res>
-    extends _$SignInRequestCopyWithImpl<$Res, _$SignInRequestImpl>
-    implements _$$SignInRequestImplCopyWith<$Res> {
-  __$$SignInRequestImplCopyWithImpl(
-      _$SignInRequestImpl _value, $Res Function(_$SignInRequestImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_$SignInRequestImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$SignInRequestImpl implements _SignInRequest {
-  const _$SignInRequestImpl({required this.email, required this.password});
-
-  factory _$SignInRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SignInRequestImplFromJson(json);
-
-  @override
-  final String email;
-  @override
-  final String password;
-
-  @override
-  String toString() {
-    return 'SignInRequest(email: $email, password: $password)';
-  }
+  /// Serializes this SignInRequest to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SignInRequestImpl &&
+            other is SignInRequest &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password));
@@ -145,39 +43,136 @@ class _$SignInRequestImpl implements _SignInRequest {
   @override
   int get hashCode => Object.hash(runtimeType, email, password);
 
-  /// Create a copy of SignInRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SignInRequestImplCopyWith<_$SignInRequestImpl> get copyWith =>
-      __$$SignInRequestImplCopyWithImpl<_$SignInRequestImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SignInRequestImplToJson(
-      this,
-    );
+  String toString() {
+    return 'SignInRequest(email: $email, password: $password)';
   }
 }
 
-abstract class _SignInRequest implements SignInRequest {
-  const factory _SignInRequest(
-      {required final String email,
-      required final String password}) = _$SignInRequestImpl;
+/// @nodoc
+abstract mixin class $SignInRequestCopyWith<$Res> {
+  factory $SignInRequestCopyWith(
+          SignInRequest value, $Res Function(SignInRequest) _then) =
+      _$SignInRequestCopyWithImpl;
+  @useResult
+  $Res call({String email, String password});
+}
 
-  factory _SignInRequest.fromJson(Map<String, dynamic> json) =
-      _$SignInRequestImpl.fromJson;
+/// @nodoc
+class _$SignInRequestCopyWithImpl<$Res>
+    implements $SignInRequestCopyWith<$Res> {
+  _$SignInRequestCopyWithImpl(this._self, this._then);
+
+  final SignInRequest _self;
+  final $Res Function(SignInRequest) _then;
+
+  /// Create a copy of SignInRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+  }) {
+    return _then(_self.copyWith(
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _self.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _SignInRequest extends SignInRequest {
+  const _SignInRequest({required this.email, required this.password})
+      : super._();
+  factory _SignInRequest.fromJson(Map<String, dynamic> json) =>
+      _$SignInRequestFromJson(json);
 
   @override
-  String get email;
+  final String email;
   @override
-  String get password;
+  final String password;
 
   /// Create a copy of SignInRequest
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SignInRequestImplCopyWith<_$SignInRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$SignInRequestCopyWith<_SignInRequest> get copyWith =>
+      __$SignInRequestCopyWithImpl<_SignInRequest>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$SignInRequestToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _SignInRequest &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, email, password);
+
+  @override
+  String toString() {
+    return 'SignInRequest(email: $email, password: $password)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$SignInRequestCopyWith<$Res>
+    implements $SignInRequestCopyWith<$Res> {
+  factory _$SignInRequestCopyWith(
+          _SignInRequest value, $Res Function(_SignInRequest) _then) =
+      __$SignInRequestCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String email, String password});
+}
+
+/// @nodoc
+class __$SignInRequestCopyWithImpl<$Res>
+    implements _$SignInRequestCopyWith<$Res> {
+  __$SignInRequestCopyWithImpl(this._self, this._then);
+
+  final _SignInRequest _self;
+  final $Res Function(_SignInRequest) _then;
+
+  /// Create a copy of SignInRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+  }) {
+    return _then(_SignInRequest(
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _self.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+// dart format on

@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 
 @freezed
-class User with _$User {
-  const User._();
+sealed class User with _$User {
+  const User._() : super();
 
   const factory User({
     required String id,
@@ -14,11 +14,7 @@ class User with _$User {
     String? avatar,
   }) = _User;
 
-  static User generateFakeData() {
-    return User(
-        id: "",
-        username: "username",
-        email: "email@email.com",
-        createdAt: DateTime.now());
+  static User fake() {
+    return User(id: "", username: "username", email: "email@email.com", createdAt: DateTime.now());
   }
 }

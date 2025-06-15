@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pomo/components/widgets/destruction_bottomsheet.dart';
 import 'package:pomo/components/widgets/profile_picture.dart';
-import 'package:pomo/components/widgets/title_page.dart';
 import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/sized_box_extension.dart';
+import 'package:pomo/models/user/user.dart';
 import 'package:pomo/pages/profile/widget/language_bottom_sheet.dart';
 import 'package:pomo/pages/profile/widget/set_timer_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,9 +32,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) =>
-          state.whenOrNull(notAuthenticated: () => context.router.replaceAll([const RootRoute()])),
+      listener: (context, state) => switch (state) {
+        NotAuthenticatedAuthState() => context.router.replaceAll([const RootRoute()]),
+        _ => null
+      },
       builder: (context, state) {
+        final user = switch (state) {
+          AuthenticatedAuthState(:final user) => user,
+          _ => User.fake(),
+        };
         return Scaffold(
           body: SingleChildScrollView(
             child: SafeArea(
@@ -73,19 +79,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                        state.maybeWhen(
-                                            authenticated: (user) => "@${user.username}", orElse: () => "??"),
+                                    Text("@${user.username}",
                                         style: Theme.of(context).textTheme.titleMedium),
                                     Text(
-                                        state.maybeWhen(
-                                            authenticated: (user) =>
-                                                "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}",
-                                            orElse: () => "??"),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+                                        "Since: ${DateFormat("EEEE, dd MMMM yyyy").format(user.createdAt)}",
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                            color: Theme.of(context).colorScheme.onSecondary)),
                                   ],
                                 );
                               },
@@ -106,7 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       InkWell(
                           onTap: () {
                             showModalBottomSheet(
-                                context: context, useRootNavigator: true, builder: (context) => const SetTimer());
+                                context: context,
+                                useRootNavigator: true,
+                                builder: (context) => const SetTimer());
                           },
                           borderRadius: BorderRadius.circular(20),
                           child: Row(
@@ -133,7 +134,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 activeColor: Theme.of(context).primaryColor,
                                 value: state.mode == ThemeMode.dark,
                                 onChanged: (bool value) {
-                                  context.read<ThemeCubit>().changeMode(value ? ThemeMode.dark : ThemeMode.light);
+                                  context
+                                      .read<ThemeCubit>()
+                                      .changeMode(value ? ThemeMode.dark : ThemeMode.light);
                                 },
                               ),
                             );

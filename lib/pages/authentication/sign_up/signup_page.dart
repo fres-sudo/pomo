@@ -64,17 +64,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
-                        Text(
-                          "${t.authentication.signup.title} 👋",
-                          style: kSerzif(context),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(t.authentication.signup.description,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer)),
-                      ]),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${t.authentication.signup.title} 👋",
+                              style: kSerzif(context),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(t.authentication.signup.description,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                          ]),
                     )
                   ],
                 ),
@@ -124,14 +128,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                           onTap: () async {
                                             const url = 'https://pomo.fres.space/terms';
                                             if (await canLaunchUrl(Uri.parse(url))) {
-                                              await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                                              await launchUrl(Uri.parse(url),
+                                                  mode: LaunchMode.externalApplication);
                                             } else {
                                               throw 'Could not launch $url';
                                             }
                                           },
                                           child: Text(
                                             t.authentication.signup.terms_and_conditions,
-                                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(color: Theme.of(context).primaryColor),
                                           ),
                                         ),
                                       ],
@@ -142,16 +150,19 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             Gap.SM,
                             const Divider(),
-                            state.maybeWhen(
-                                errorSignUp: (error) => Padding(
+                            switch (state) {
+                              ErrorSignUpSignUpState(:final error) => Padding(
                                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
                                   child: CustomAlert.error(message: error.localizedString(context)),
                                 ),
-                                signedUp: (_) => Padding(
+                              SignedUpSignUpState() => Padding(
                                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
-                                  child: CustomAlert.success(title: t.authentication.signup.success_title, message: t.authentication.signup.success),
+                                  child: CustomAlert.success(
+                                      title: t.authentication.signup.success_title,
+                                      message: t.authentication.signup.success),
                                 ),
-                                orElse: () => Gap.MD),
+                              _ => Gap.MD
+                            },
                             ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate() && _checkedValue) {
@@ -168,14 +179,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                     onInvalidInput(context);
                                   }
                                 },
-                                child: state.maybeWhen(
-                                    signingUp: () => const CustomCircularProgressIndicator(),
-                                    orElse: () => Center(
-                                          child: Text(
-                                            t.authentication.signup.title,
-                                            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite),
-                                          ),
-                                        )))
+                                child: switch (state) {
+                                  SigningUpSignUpState() => const CustomCircularProgressIndicator(),
+                                  _ => Center(
+                                      child: Text(t.authentication.signup.title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium
+                                              ?.copyWith(color: kNeutralWhite)),
+                                    ),
+                                })
                           ],
                         ),
                       ),
@@ -183,14 +196,18 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(t.authentication.signup.already_have_an_account, style: Theme.of(context).textTheme.titleSmall),
+                          Text(t.authentication.signup.already_have_an_account,
+                              style: Theme.of(context).textTheme.titleSmall),
                           const SizedBox(
                             width: 5,
                           ),
                           GestureDetector(
                             onTap: () => context.pushRoute(const LoginRoute()),
                             child: Text(t.authentication.login.title,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).primaryColor)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(color: Theme.of(context).primaryColor)),
                           )
                         ],
                       ),

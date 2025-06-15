@@ -46,14 +46,13 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
-      listener: (BuildContext context, RecoverPasswordState state) {
-        state.whenOrNull(resettedPassword: () {
-          onSuccessState(context, t.authentication.forgot_password.success.success_recover);
-          context.router.replaceAll([const LoginRoute()]);
-        }, errorResettingPassword: (error) {
-          onErrorState(context, error.localizedString(context));
-          context.router.replaceAll([const LoginRoute()]);
-        });
+      listener: (BuildContext context, RecoverPasswordState state) => switch (state) {
+        ResettedPasswordRecoverPasswordState() => context.router.replaceAll([const LoginRoute()]),
+        ErrorResettingPasswordRecoverPasswordState(error: final error) => {
+            onErrorState(context, error.localizedString(context)),
+            context.router.replaceAll([const LoginRoute()])
+          },
+        _ => null,
       },
       builder: (BuildContext context, state) => Scaffold(
         body: SafeArea(
@@ -67,28 +66,37 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(t.authentication.forgot_password.change_password,
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                     Gap.XS,
                     Text(
                       t.authentication.forgot_password.description_change_password,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Theme.of(context).dividerColor),
                     ),
                     Gap.XL,
-                    Text(t.authentication.forgot_password.new_password, style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.authentication.forgot_password.new_password,
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.SM,
                     PasswordField(
                       controller: _passwordTextController,
                       focusNode: _focusNode,
                     ),
                     Gap.MD,
-                    Text(t.authentication.forgot_password.confirm_password, style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.authentication.forgot_password.confirm_password,
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     PasswordField(controller: _confirmPasswordTextController),
                     Gap.XL,
                     ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            if (_passwordTextController.text != _confirmPasswordTextController.text) {
+                            if (_passwordTextController.text !=
+                                _confirmPasswordTextController.text) {
                               onDoesNotMatch(context);
                             } else {
                               context.read<RecoverPasswordBloc>().resetPassword(
@@ -101,14 +109,16 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                             onInvalidInput(context);
                           }
                         },
-                        child: state.maybeWhen(
-                            resettingPassword: () => const CustomCircularProgressIndicator(),
-                            orElse: () => Center(
-                                  child: Text(
-                                    t.general.done,
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                )))
+                        child: switch (state) {
+                          ResettingPasswordRecoverPasswordState() =>
+                            const CustomCircularProgressIndicator(),
+                          _ => Center(
+                              child: Text(
+                                t.general.done,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                        })
                   ],
                 ),
               ),

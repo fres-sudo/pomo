@@ -56,12 +56,15 @@ class _EditProjectViewState extends State<EditProjectView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
-      listener: (context, state) {
-        state.whenOrNull(
-            updated: (project) => context.read<ProjectBloc>().updateProjectById(
-                id: widget.project.id ?? "",
-                project: widget.project.copyWith(
-                    name: _nameTextController.text, description: _descriptionTextController.text, startDate: _startDate!, endDate: _endDate!)));
+      listener: (context, state) => switch (state) {
+        UpdatedProjectState() => context.read<ProjectBloc>().updateProjectById(
+            id: widget.project.id ?? "",
+            project: widget.project.copyWith(
+                name: _nameTextController.text,
+                description: _descriptionTextController.text,
+                startDate: _startDate!,
+                endDate: _endDate!)),
+        _ => null
       },
       child: Container(
         height: MediaQuery.of(context).size.height - 100,
@@ -77,11 +80,14 @@ class _EditProjectViewState extends State<EditProjectView> {
                   width: 40,
                 ),
                 const Spacer(),
-                Text("${t.general.edit} ${t.projects.title}", style: Theme.of(context).textTheme.titleMedium),
+                Text("${t.general.edit} ${t.projects.title}",
+                    style: Theme.of(context).textTheme.titleMedium),
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    if (_endDate == null || _startDate == null || _nameTextController.text.length < 3) {
+                    if (_endDate == null ||
+                        _startDate == null ||
+                        _nameTextController.text.length < 3) {
                       onInvalidInput(context, isAlert: true);
                       return;
                     }
@@ -90,7 +96,8 @@ class _EditProjectViewState extends State<EditProjectView> {
                     //  return;
                     //}
                     if (image != null) {
-                      context.read<ProjectBloc>().uploadProjectImageCover(id: widget.project.id ?? "", imageCover: File(image!.path));
+                      context.read<ProjectBloc>().uploadProjectImageCover(
+                          id: widget.project.id ?? "", imageCover: File(image!.path));
                     } else {
                       context.read<ProjectBloc>().updateProjectById(
                           id: widget.project.id ?? "",
@@ -103,7 +110,11 @@ class _EditProjectViewState extends State<EditProjectView> {
                     context.router.maybePop();
                     context.router.replaceAll([const ProjectRoute()]);
                   },
-                  child: Text(t.general.edit, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).primaryColor)),
+                  child: Text(t.general.edit,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Theme.of(context).primaryColor)),
                 ),
               ],
             ),
@@ -139,7 +150,9 @@ class _EditProjectViewState extends State<EditProjectView> {
                                             borderRadius: BorderRadius.circular(50),
                                           )),
                                       onPressed: () {
-                                        context.read<ProjectBloc>().deleteProjectImageCover(id: widget.project.id ?? "");
+                                        context
+                                            .read<ProjectBloc>()
+                                            .deleteProjectImageCover(id: widget.project.id ?? "");
                                         context.router.maybePop();
                                       },
                                       icon: Icon(
@@ -162,10 +175,9 @@ class _EditProjectViewState extends State<EditProjectView> {
                               ],
                             )
                           : Text(t.projects.create.add_cover,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontSize: 14, color: Theme.of(context).colorScheme.onSecondaryContainer))
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontSize: 14,
+                                  color: Theme.of(context).colorScheme.onSecondaryContainer))
                       : Stack(
                           children: [
                             Image.file(
@@ -203,11 +215,15 @@ class _EditProjectViewState extends State<EditProjectView> {
               style: Theme.of(context).textTheme.bodyMedium,
               decoration: InputDecoration(
                 hintText: t.general.name,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor)),
-                focusedBorder:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor)),
-                enabledBorder:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
               ),
               onChanged: (_) => setState(() {}),
               validator: (value) {
@@ -226,11 +242,15 @@ class _EditProjectViewState extends State<EditProjectView> {
               maxLines: 5,
               decoration: InputDecoration(
                   hintText: t.general.description,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor)),
-                  focusedBorder:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor)),
-                  enabledBorder:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Theme.of(context).dividerColor))),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Theme.of(context).dividerColor))),
             ),
             Gap.MD,
             Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),

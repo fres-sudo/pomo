@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,135 +10,85 @@ part of 'sign_up_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-SignUpRequest _$SignUpRequestFromJson(Map<String, dynamic> json) {
-  return _SignUpRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$SignUpRequest {
-  String get username => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  String get passwordConfirmation => throw _privateConstructorUsedError;
-
-  /// Serializes this SignUpRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get name;
+  String get email;
+  String get password;
 
   /// Create a copy of SignUpRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SignUpRequestCopyWith<SignUpRequest> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SignUpRequestCopyWith<$Res> {
-  factory $SignUpRequestCopyWith(
-          SignUpRequest value, $Res Function(SignUpRequest) then) =
-      _$SignUpRequestCopyWithImpl<$Res, SignUpRequest>;
-  @useResult
-  $Res call(
-      {String username,
-      String email,
-      String password,
-      String passwordConfirmation});
-}
-
-/// @nodoc
-class _$SignUpRequestCopyWithImpl<$Res, $Val extends SignUpRequest>
-    implements $SignUpRequestCopyWith<$Res> {
-  _$SignUpRequestCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SignUpRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $SignUpRequestCopyWith<SignUpRequest> get copyWith =>
+      _$SignUpRequestCopyWithImpl<SignUpRequest>(
+          this as SignUpRequest, _$identity);
+
+  /// Serializes this SignUpRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? username = null,
-    Object? email = null,
-    Object? password = null,
-    Object? passwordConfirmation = null,
-  }) {
-    return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      passwordConfirmation: null == passwordConfirmation
-          ? _value.passwordConfirmation
-          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SignUpRequest &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, email, password);
+
+  @override
+  String toString() {
+    return 'SignUpRequest(name: $name, email: $email, password: $password)';
   }
 }
 
 /// @nodoc
-abstract class _$$SignUpRequestImplCopyWith<$Res>
-    implements $SignUpRequestCopyWith<$Res> {
-  factory _$$SignUpRequestImplCopyWith(
-          _$SignUpRequestImpl value, $Res Function(_$SignUpRequestImpl) then) =
-      __$$SignUpRequestImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $SignUpRequestCopyWith<$Res> {
+  factory $SignUpRequestCopyWith(
+          SignUpRequest value, $Res Function(SignUpRequest) _then) =
+      _$SignUpRequestCopyWithImpl;
   @useResult
-  $Res call(
-      {String username,
-      String email,
-      String password,
-      String passwordConfirmation});
+  $Res call({String name, String email, String password});
 }
 
 /// @nodoc
-class __$$SignUpRequestImplCopyWithImpl<$Res>
-    extends _$SignUpRequestCopyWithImpl<$Res, _$SignUpRequestImpl>
-    implements _$$SignUpRequestImplCopyWith<$Res> {
-  __$$SignUpRequestImplCopyWithImpl(
-      _$SignUpRequestImpl _value, $Res Function(_$SignUpRequestImpl) _then)
-      : super(_value, _then);
+class _$SignUpRequestCopyWithImpl<$Res>
+    implements $SignUpRequestCopyWith<$Res> {
+  _$SignUpRequestCopyWithImpl(this._self, this._then);
+
+  final SignUpRequest _self;
+  final $Res Function(SignUpRequest) _then;
 
   /// Create a copy of SignUpRequest
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? name = null,
     Object? email = null,
     Object? password = null,
-    Object? passwordConfirmation = null,
   }) {
-    return _then(_$SignUpRequestImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+    return _then(_self.copyWith(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
-          ? _value.email
+          ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
-          ? _value.password
+          ? _self.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      passwordConfirmation: null == passwordConfirmation
-          ? _value.passwordConfirmation
-          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -145,88 +96,99 @@ class __$$SignUpRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SignUpRequestImpl implements _SignUpRequest {
-  const _$SignUpRequestImpl(
-      {required this.username,
-      required this.email,
-      required this.password,
-      required this.passwordConfirmation});
-
-  factory _$SignUpRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SignUpRequestImplFromJson(json);
+class _SignUpRequest extends SignUpRequest {
+  const _SignUpRequest(
+      {required this.name, required this.email, required this.password})
+      : super._();
+  factory _SignUpRequest.fromJson(Map<String, dynamic> json) =>
+      _$SignUpRequestFromJson(json);
 
   @override
-  final String username;
+  final String name;
   @override
   final String email;
   @override
   final String password;
+
+  /// Create a copy of SignUpRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  final String passwordConfirmation;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SignUpRequestCopyWith<_SignUpRequest> get copyWith =>
+      __$SignUpRequestCopyWithImpl<_SignUpRequest>(this, _$identity);
 
   @override
-  String toString() {
-    return 'SignUpRequest(username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation)';
+  Map<String, dynamic> toJson() {
+    return _$SignUpRequestToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SignUpRequestImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            other is _SignUpRequest &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.passwordConfirmation, passwordConfirmation) ||
-                other.passwordConfirmation == passwordConfirmation));
+                other.password == password));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, username, email, password, passwordConfirmation);
+  int get hashCode => Object.hash(runtimeType, name, email, password);
+
+  @override
+  String toString() {
+    return 'SignUpRequest(name: $name, email: $email, password: $password)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$SignUpRequestCopyWith<$Res>
+    implements $SignUpRequestCopyWith<$Res> {
+  factory _$SignUpRequestCopyWith(
+          _SignUpRequest value, $Res Function(_SignUpRequest) _then) =
+      __$SignUpRequestCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String name, String email, String password});
+}
+
+/// @nodoc
+class __$SignUpRequestCopyWithImpl<$Res>
+    implements _$SignUpRequestCopyWith<$Res> {
+  __$SignUpRequestCopyWithImpl(this._self, this._then);
+
+  final _SignUpRequest _self;
+  final $Res Function(_SignUpRequest) _then;
 
   /// Create a copy of SignUpRequest
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SignUpRequestImplCopyWith<_$SignUpRequestImpl> get copyWith =>
-      __$$SignUpRequestImplCopyWithImpl<_$SignUpRequestImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SignUpRequestImplToJson(
-      this,
-    );
+  $Res call({
+    Object? name = null,
+    Object? email = null,
+    Object? password = null,
+  }) {
+    return _then(_SignUpRequest(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _self.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
-abstract class _SignUpRequest implements SignUpRequest {
-  const factory _SignUpRequest(
-      {required final String username,
-      required final String email,
-      required final String password,
-      required final String passwordConfirmation}) = _$SignUpRequestImpl;
-
-  factory _SignUpRequest.fromJson(Map<String, dynamic> json) =
-      _$SignUpRequestImpl.fromJson;
-
-  @override
-  String get username;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  String get passwordConfirmation;
-
-  /// Create a copy of SignUpRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SignUpRequestImplCopyWith<_$SignUpRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

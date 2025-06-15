@@ -6,13 +6,13 @@ part 'reset_password_request.g.dart';
 part 'reset_password_request.freezed.dart';
 
 @freezed
-class ResetPasswordRequest extends DTO with _$ResetPasswordRequest {
-  const factory ResetPasswordRequest({
-    required String email,
-    required String newPassword,
-    required String confirmNewPassword
-}) = _ResetPasswordRequest;
+sealed class ResetPasswordRequest extends DTO with _$ResetPasswordRequest {
+  const ResetPasswordRequest._() : super();
+  const factory ResetPasswordRequest(
+      {required String email,
+      required String newPassword,
+      required String confirmNewPassword}) = _ResetPasswordRequest;
 
   factory ResetPasswordRequest.fromJson(Map<String, dynamic> json) =>
-    _$ResetPasswordRequestFromJson(json);
+      _$ResetPasswordRequestFromJson(json);
 }

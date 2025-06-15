@@ -42,10 +42,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
-      listener: (BuildContext context, RecoverPasswordState state) {
-        state.whenOrNull(
-            forgottedPassword: () => context.router.push(ForgotPasswordOTPRoute(email: _emailTextController.text)),
-            errorForgottingPassword: (error) => onErrorState(context, error.localizedString(context)));
+      listener: (BuildContext context, RecoverPasswordState state) => switch (state) {
+        ForgottedPasswordRecoverPasswordState() =>
+          context.router.push(ForgotPasswordOTPRoute(email: _emailTextController.text)),
+        ErrorForgottingPasswordRecoverPasswordState() =>
+          onErrorState(context, state.error.localizedString(context)),
+        _ => null,
       },
       builder: (BuildContext context, RecoverPasswordState state) => Scaffold(
         body: SafeArea(
@@ -64,13 +66,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           child: const Icon(Icons.chevron_left_rounded)),
                       Gap.XS_H,
                       Text(t.authentication.forgot_password.reset_password,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontWeight: FontWeight.w600)),
                     ],
                   ),
                   Gap.XS,
                   Text(
                     t.authentication.forgot_password.description_forgot,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).dividerColor),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Theme.of(context).dividerColor),
                   ),
                   Gap.XL,
                   Text("Email", style: Theme.of(context).textTheme.titleMedium),
@@ -82,20 +90,24 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const Spacer(),
                   ElevatedButton(
                       onPressed: () {
-                        if(_formKey.currentState!.validate()){
-                          context.read<RecoverPasswordBloc>().forgotPassword(email: _emailTextController.text);
+                        if (_formKey.currentState!.validate()) {
+                          context
+                              .read<RecoverPasswordBloc>()
+                              .forgotPassword(email: _emailTextController.text);
                         } else {
                           onInvalidInput(context);
                         }
                       },
-                      child: state.maybeWhen(
-                          orElse: () => Center(
-                              child: Text(t.authentication.forgot_password.send_email,
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                        fontSize: 14,
-                                        color: kNeutral100,
-                                      ))),
-                          forgottingPassword: () => const CustomCircularProgressIndicator())),
+                      child: switch (state) {
+                        ForgottingPasswordRecoverPasswordState() =>
+                          const CustomCircularProgressIndicator(),
+                        _ => Center(
+                            child: Text(t.authentication.forgot_password.send_email,
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      fontSize: 14,
+                                      color: kNeutral100,
+                                    )))
+                      }),
                   Gap.SM,
                 ],
               ),

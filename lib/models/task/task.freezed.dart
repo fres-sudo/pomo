@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,139 +10,84 @@ part of 'task.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Task {
-  String? get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  int get pomodoro => throw _privateConstructorUsedError;
-  int? get pomodoroCompleted => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  String? get projectId => throw _privateConstructorUsedError;
-  DateTime get dueDate => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-  bool get highPriority => throw _privateConstructorUsedError;
-  DateTime? get completedAt => throw _privateConstructorUsedError;
+  String? get id;
+  String get name;
+  String? get description;
+  int get pomodoro;
+  int? get pomodoroCompleted;
+  String get userId;
+  String? get projectId;
+  DateTime get dueDate;
+  DateTime get createdAt;
+  DateTime? get updatedAt;
+  bool get highPriority;
+  DateTime? get completedAt;
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TaskCopyWith<$Res> {
-  factory $TaskCopyWith(Task value, $Res Function(Task) then) =
-      _$TaskCopyWithImpl<$Res, Task>;
-  @useResult
-  $Res call(
-      {String? id,
-      String name,
-      String? description,
-      int pomodoro,
-      int? pomodoroCompleted,
-      String userId,
-      String? projectId,
-      DateTime dueDate,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      bool highPriority,
-      DateTime? completedAt});
-}
-
-/// @nodoc
-class _$TaskCopyWithImpl<$Res, $Val extends Task>
-    implements $TaskCopyWith<$Res> {
-  _$TaskCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Task
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $TaskCopyWith<Task> get copyWith =>
+      _$TaskCopyWithImpl<Task>(this as Task, _$identity);
+
   @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = null,
-    Object? description = freezed,
-    Object? pomodoro = null,
-    Object? pomodoroCompleted = freezed,
-    Object? userId = null,
-    Object? projectId = freezed,
-    Object? dueDate = null,
-    Object? createdAt = null,
-    Object? updatedAt = freezed,
-    Object? highPriority = null,
-    Object? completedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      pomodoro: null == pomodoro
-          ? _value.pomodoro
-          : pomodoro // ignore: cast_nullable_to_non_nullable
-              as int,
-      pomodoroCompleted: freezed == pomodoroCompleted
-          ? _value.pomodoroCompleted
-          : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
-              as int?,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      projectId: freezed == projectId
-          ? _value.projectId
-          : projectId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      highPriority: null == highPriority
-          ? _value.highPriority
-          : highPriority // ignore: cast_nullable_to_non_nullable
-              as bool,
-      completedAt: freezed == completedAt
-          ? _value.completedAt
-          : completedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Task &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.pomodoro, pomodoro) ||
+                other.pomodoro == pomodoro) &&
+            (identical(other.pomodoroCompleted, pomodoroCompleted) ||
+                other.pomodoroCompleted == pomodoroCompleted) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.projectId, projectId) ||
+                other.projectId == projectId) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.highPriority, highPriority) ||
+                other.highPriority == highPriority) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      pomodoro,
+      pomodoroCompleted,
+      userId,
+      projectId,
+      dueDate,
+      createdAt,
+      updatedAt,
+      highPriority,
+      completedAt);
+
+  @override
+  String toString() {
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, projectId: $projectId, dueDate: $dueDate, createdAt: $createdAt, updatedAt: $updatedAt, highPriority: $highPriority, completedAt: $completedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
-  factory _$$TaskImplCopyWith(
-          _$TaskImpl value, $Res Function(_$TaskImpl) then) =
-      __$$TaskImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $TaskCopyWith<$Res> {
+  factory $TaskCopyWith(Task value, $Res Function(Task) _then) =
+      _$TaskCopyWithImpl;
   @useResult
   $Res call(
       {String? id,
@@ -159,11 +105,11 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$TaskImplCopyWithImpl<$Res>
-    extends _$TaskCopyWithImpl<$Res, _$TaskImpl>
-    implements _$$TaskImplCopyWith<$Res> {
-  __$$TaskImplCopyWithImpl(_$TaskImpl _value, $Res Function(_$TaskImpl) _then)
-      : super(_value, _then);
+class _$TaskCopyWithImpl<$Res> implements $TaskCopyWith<$Res> {
+  _$TaskCopyWithImpl(this._self, this._then);
+
+  final Task _self;
+  final $Res Function(Task) _then;
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -183,53 +129,53 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? highPriority = null,
     Object? completedAt = freezed,
   }) {
-    return _then(_$TaskImpl(
+    return _then(_self.copyWith(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       pomodoro: null == pomodoro
-          ? _value.pomodoro
+          ? _self.pomodoro
           : pomodoro // ignore: cast_nullable_to_non_nullable
               as int,
       pomodoroCompleted: freezed == pomodoroCompleted
-          ? _value.pomodoroCompleted
+          ? _self.pomodoroCompleted
           : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
               as int?,
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
       projectId: freezed == projectId
-          ? _value.projectId
+          ? _self.projectId
           : projectId // ignore: cast_nullable_to_non_nullable
               as String?,
       dueDate: null == dueDate
-          ? _value.dueDate
+          ? _self.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       updatedAt: freezed == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       highPriority: null == highPriority
-          ? _value.highPriority
+          ? _self.highPriority
           : highPriority // ignore: cast_nullable_to_non_nullable
               as bool,
       completedAt: freezed == completedAt
-          ? _value.completedAt
+          ? _self.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
@@ -238,8 +184,8 @@ class __$$TaskImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskImpl extends _Task {
-  const _$TaskImpl(
+class _Task extends Task {
+  const _Task(
       {this.id,
       required this.name,
       this.description,
@@ -279,16 +225,19 @@ class _$TaskImpl extends _Task {
   @override
   final DateTime? completedAt;
 
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, projectId: $projectId, dueDate: $dueDate, createdAt: $createdAt, updatedAt: $updatedAt, highPriority: $highPriority, completedAt: $completedAt)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$TaskCopyWith<_Task> get copyWith =>
+      __$TaskCopyWithImpl<_Task>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskImpl &&
+            other is _Task &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -327,60 +276,109 @@ class _$TaskImpl extends _Task {
       highPriority,
       completedAt);
 
+  @override
+  String toString() {
+    return 'Task(id: $id, name: $name, description: $description, pomodoro: $pomodoro, pomodoroCompleted: $pomodoroCompleted, userId: $userId, projectId: $projectId, dueDate: $dueDate, createdAt: $createdAt, updatedAt: $updatedAt, highPriority: $highPriority, completedAt: $completedAt)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
+  factory _$TaskCopyWith(_Task value, $Res Function(_Task) _then) =
+      __$TaskCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? id,
+      String name,
+      String? description,
+      int pomodoro,
+      int? pomodoroCompleted,
+      String userId,
+      String? projectId,
+      DateTime dueDate,
+      DateTime createdAt,
+      DateTime? updatedAt,
+      bool highPriority,
+      DateTime? completedAt});
+}
+
+/// @nodoc
+class __$TaskCopyWithImpl<$Res> implements _$TaskCopyWith<$Res> {
+  __$TaskCopyWithImpl(this._self, this._then);
+
+  final _Task _self;
+  final $Res Function(_Task) _then;
+
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
-      __$$TaskImplCopyWithImpl<_$TaskImpl>(this, _$identity);
+  $Res call({
+    Object? id = freezed,
+    Object? name = null,
+    Object? description = freezed,
+    Object? pomodoro = null,
+    Object? pomodoroCompleted = freezed,
+    Object? userId = null,
+    Object? projectId = freezed,
+    Object? dueDate = null,
+    Object? createdAt = null,
+    Object? updatedAt = freezed,
+    Object? highPriority = null,
+    Object? completedAt = freezed,
+  }) {
+    return _then(_Task(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pomodoro: null == pomodoro
+          ? _self.pomodoro
+          : pomodoro // ignore: cast_nullable_to_non_nullable
+              as int,
+      pomodoroCompleted: freezed == pomodoroCompleted
+          ? _self.pomodoroCompleted
+          : pomodoroCompleted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      projectId: freezed == projectId
+          ? _self.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dueDate: null == dueDate
+          ? _self.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      highPriority: null == highPriority
+          ? _self.highPriority
+          : highPriority // ignore: cast_nullable_to_non_nullable
+              as bool,
+      completedAt: freezed == completedAt
+          ? _self.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
 
-abstract class _Task extends Task {
-  const factory _Task(
-      {final String? id,
-      required final String name,
-      final String? description,
-      required final int pomodoro,
-      final int? pomodoroCompleted,
-      required final String userId,
-      final String? projectId,
-      required final DateTime dueDate,
-      required final DateTime createdAt,
-      final DateTime? updatedAt,
-      required final bool highPriority,
-      final DateTime? completedAt}) = _$TaskImpl;
-  const _Task._() : super._();
-
-  @override
-  String? get id;
-  @override
-  String get name;
-  @override
-  String? get description;
-  @override
-  int get pomodoro;
-  @override
-  int? get pomodoroCompleted;
-  @override
-  String get userId;
-  @override
-  String? get projectId;
-  @override
-  DateTime get dueDate;
-  @override
-  DateTime get createdAt;
-  @override
-  DateTime? get updatedAt;
-  @override
-  bool get highPriority;
-  @override
-  DateTime? get completedAt;
-
-  /// Create a copy of Task
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

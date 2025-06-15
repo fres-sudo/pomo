@@ -8,7 +8,8 @@ part 'sign_up_response.g.dart';
 part 'sign_up_response.freezed.dart';
 
 @freezed
-class SignUpResponse extends DTO with _$SignUpResponse {
+sealed class SignUpResponse extends DTO with _$SignUpResponse {
+  const SignUpResponse._() : super();
   const factory SignUpResponse({
     required String status,
     required String token,
@@ -16,5 +17,5 @@ class SignUpResponse extends DTO with _$SignUpResponse {
   }) = _SignUpResponse;
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) =>
-    _$SignUpResponseFromJson(json);
+      _$SignUpResponseFromJson(json);
 }

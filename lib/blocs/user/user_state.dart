@@ -1,10 +1,9 @@
 part of 'user_bloc.dart';
 
-enum UserOperation { updated , deleted , updatedImage, read, deletedPhoto }
+enum UserOperation { updated, deleted, updatedImage, read, deletedPhoto }
 
 @freezed
-class UserState with _$UserState {
-
+sealed class UserState with _$UserState {
   const factory UserState({
     User? user,
     @Default(false) bool isLoading,
@@ -17,7 +16,7 @@ class UserState with _$UserState {
 
   /*
   const factory UserState.updating() = UpdatingUserState;
-  
+
   const factory UserState.updated(User user) = UpdatedUserState;
 
   const factory UserState.errorUpdating() = ErrorUpdatingUserState;

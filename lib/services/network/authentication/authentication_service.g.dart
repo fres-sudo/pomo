@@ -22,13 +22,12 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<SignInResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/login',
+            '/auth/sing-in/email',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -50,13 +49,12 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<UserJTO>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/signup',
+            '/auth/sign-up/email',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -78,8 +76,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<String>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -106,8 +103,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<String>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -137,8 +133,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<String>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -167,8 +162,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(refreshToken.toJson());
+    final _data = refreshToken;
     final _options = _setStreamType<RefreshTokenResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -195,8 +189,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<SignInResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -223,8 +216,7 @@ class _AuthenticationService implements AuthenticationService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
+    final _data = request;
     final _options = _setStreamType<SignInResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(

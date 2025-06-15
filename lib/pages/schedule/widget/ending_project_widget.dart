@@ -18,17 +18,21 @@ class EndingProjectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, projectState) {
-        final endingProjects = projectState.maybeWhen(
-            fetched: (projects) => projects.where((p) => isSameDay(p.endDate, focusedDay)).toList(growable: false),
-            orElse: () => []);
+        final endingProjects = switch (projectState) {
+          FetchedProjectState(:final projects) =>
+            projects.where((p) => isSameDay(p.endDate, focusedDay)).toList(growable: false),
+          _ => []
+        };
+        final isLoading = switch (projectState) { FetchingProjectState() => true, _ => false };
         return endingProjects.isNotEmpty
             ? Skeletonizer(
-                enabled: projectState.maybeWhen(fetching: () => true, orElse: () => false),
+                enabled: isLoading,
                 child: Column(
                   children: [
                     Container(
                       height: 35,
-                      decoration: BoxDecoration(color: kPrimary500, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          color: kPrimary500, borderRadius: BorderRadius.circular(12)),
                       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

@@ -31,8 +31,11 @@ class _StatsPageState extends State<StatsPage> {
   List<String> days = [t.general.today, t.general.yesterday, t.general.all_times];
 
   Future<void> _fetchStats() async {
-    String id = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
-    context.read<StatsBloc>().fetchStats(userId: id);
+    final userId = switch (context.read<AuthCubit>().state) {
+      AuthenticatedAuthState(:final user) => user.id,
+      _ => ""
+    };
+    context.read<StatsBloc>().fetchStats(userId: userId);
   }
 
   String _formatTime(int? time, int factor) {
@@ -59,13 +62,11 @@ class _StatsPageState extends State<StatsPage> {
     final breakTime = context.select<TimerCubit, int>((cubit) => cubit.state.breakTime);
 
     return BlocConsumer<StatsBloc, StatsState>(
-      listener: (BuildContext context, StatsState state) {
-        print(state);
-        state.whenOrNull(
-          error: (error) => onErrorState(context, error.localizedString(context)),
-        );
+      listener: (BuildContext context, StatsState state) => switch (state) {
+        ErrorStatsState(:final error) => onErrorState(context, error.localizedString(context)),
+        _ => null
       },
-      buildWhen: (_, next) => next.maybeWhen(error: (_) => false, orElse: () => true),
+      buildWhen: (_, next) => switch (next) { ErrorStatsState() => false, _ => true },
       builder: (BuildContext context, state) => Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
@@ -78,139 +79,168 @@ class _StatsPageState extends State<StatsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Align(
-                      alignment: Alignment.topLeft, child: TitlePage(title: t.stats.title, subtitle: t.stats.subtitle)),
+                      alignment: Alignment.topLeft,
+                      child: TitlePage(title: t.stats.title, subtitle: t.stats.subtitle)),
                   Gap.MD,
-                  state.maybeWhen(
-                      fetching: () => StatsLoading(),
-                      fetched: (statistics) => (statistics.totalTasksAll) == 0
-                          ? const NoStatsPage()
-                          : Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    boxShadow: const [
-                                      BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 10),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ToggleButtons(
-                                        renderBorder: false,
-                                        isSelected: selectedMode,
-                                        onPressed: (int index) {
-                                          setState(() {
-                                            for (int buttonIndex = 0;
-                                                buttonIndex < selectedMode.length;
-                                                buttonIndex++) {
-                                              selectedMode[buttonIndex] = buttonIndex == index;
-                                            }
-                                          });
-                                        },
-                                        children: [
-                                          TimeSelector(text: t.general.today, isSelected: selectedMode[0]),
-                                          TimeSelector(text: t.general.yesterday, isSelected: selectedMode[1]),
-                                          TimeSelector(text: t.general.all_times, isSelected: selectedMode[2])
-                                        ],
-                                      ),
-                                      Gap.MD,
-                                      Row(
-                                        children: [
-                                          const ProfilePicture(
-                                            width: 83,
-                                            height: 83,
-                                          ),
-                                          Gap.MD_H,
-                                          Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  t.tasks.focus_time,
-                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                ),
-                                                Text(
-                                                  t.tasks.break_time,
-                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                ),
-                                                Text(
-                                                  t.tasks.total_tasks,
-                                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                                      color: Theme.of(context).colorScheme.onSecondaryContainer),
-                                                )
-                                              ]),
-                                          const Spacer(),
-                                          Column(
+                  switch (state) {
+                    FetchingStatsState() => const StatsLoading(),
+                    FetchedStatsState(:final statistics) => (statistics.totalTasksAll) == 0
+                        ? const NoStatsPage()
+                        : Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.black12, spreadRadius: 0, blurRadius: 10),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ToggleButtons(
+                                      renderBorder: false,
+                                      isSelected: selectedMode,
+                                      onPressed: (int index) {
+                                        setState(() {
+                                          for (int buttonIndex = 0;
+                                              buttonIndex < selectedMode.length;
+                                              buttonIndex++) {
+                                            selectedMode[buttonIndex] = buttonIndex == index;
+                                          }
+                                        });
+                                      },
+                                      children: [
+                                        TimeSelector(
+                                            text: t.general.today, isSelected: selectedMode[0]),
+                                        TimeSelector(
+                                            text: t.general.yesterday, isSelected: selectedMode[1]),
+                                        TimeSelector(
+                                            text: t.general.all_times, isSelected: selectedMode[2])
+                                      ],
+                                    ),
+                                    Gap.MD,
+                                    Row(
+                                      children: [
+                                        const ProfilePicture(
+                                          width: 83,
+                                          height: 83,
+                                        ),
+                                        Gap.MD_H,
+                                        Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                selectedMode[0]
-                                                    ? _formatTime(statistics.totalTasksToday, focusTime)
-                                                    : selectedMode[1]
-                                                        ? _formatTime(statistics.totalTasksYesterday, focusTime)
-                                                        : _formatTime(statistics.totalTasksAll, focusTime),
-                                                style: Theme.of(context).textTheme.titleMedium,
+                                                t.tasks.focus_time,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall
+                                                    ?.copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSecondaryContainer),
                                               ),
                                               Text(
-                                                selectedMode[0]
-                                                    ? _formatTime(statistics.totalTasksToday, breakTime)
-                                                    : selectedMode[1]
-                                                        ? _formatTime(statistics.totalTasksYesterday, breakTime)
-                                                        : _formatTime(statistics.totalTasksAll, breakTime),
-                                                style: Theme.of(context).textTheme.titleMedium,
+                                                t.tasks.break_time,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall
+                                                    ?.copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSecondaryContainer),
                                               ),
                                               Text(
-                                                "${selectedMode[0] ? statistics.totalTasksToday : selectedMode[1] ? statistics.totalTasksYesterday : statistics.totalTasksAll}",
-                                                style: Theme.of(context).textTheme.titleMedium,
+                                                t.tasks.total_tasks,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall
+                                                    ?.copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onSecondaryContainer),
                                               )
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                            ]),
+                                        const Spacer(),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              selectedMode[0]
+                                                  ? _formatTime(
+                                                      statistics.totalTasksToday, focusTime)
+                                                  : selectedMode[1]
+                                                      ? _formatTime(
+                                                          statistics.totalTasksYesterday, focusTime)
+                                                      : _formatTime(
+                                                          statistics.totalTasksAll, focusTime),
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            ),
+                                            Text(
+                                              selectedMode[0]
+                                                  ? _formatTime(
+                                                      statistics.totalTasksToday, breakTime)
+                                                  : selectedMode[1]
+                                                      ? _formatTime(
+                                                          statistics.totalTasksYesterday, breakTime)
+                                                      : _formatTime(
+                                                          statistics.totalTasksAll, breakTime),
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            ),
+                                            Text(
+                                              "${selectedMode[0] ? statistics.totalTasksToday : selectedMode[1] ? statistics.totalTasksYesterday : statistics.totalTasksAll}",
+                                              style: Theme.of(context).textTheme.titleMedium,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
                                 ),
-                                Gap.MD,
-                                Container(
-                                  padding: const EdgeInsets.all(16),
-                                  width: MediaQuery.sizeOf(context).width,
-                                  height: MediaQuery.sizeOf(context).height / 3.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    boxShadow: const [
-                                      BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 10),
-                                    ],
-                                  ),
-                                  child: CustomBarChart(
-                                    barBackgroundColor: kNeutral500,
-                                    barColor: Theme.of(context).primaryColor,
-                                    touchedBarColor: Theme.of(context).primaryColor,
-                                    stats: statistics,
-                                  ),
+                              ),
+                              Gap.MD,
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                width: MediaQuery.sizeOf(context).width,
+                                height: MediaQuery.sizeOf(context).height / 3.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.black12, spreadRadius: 0, blurRadius: 10),
+                                  ],
                                 ),
-                                Gap.MD,
-                                Container(
-                                  padding: const EdgeInsets.all(16),
-                                  height: MediaQuery.sizeOf(context).height / 4.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    boxShadow: const [
-                                      BoxShadow(color: Colors.black12, spreadRadius: 0, blurRadius: 10),
-                                    ],
-                                  ),
-                                  child: CustomLineChart(
-                                    stats: statistics,
-                                  ),
+                                child: CustomBarChart(
+                                  barBackgroundColor: kNeutral500,
+                                  barColor: Theme.of(context).primaryColor,
+                                  touchedBarColor: Theme.of(context).primaryColor,
+                                  stats: statistics,
                                 ),
-                              ],
-                            ),
-                      orElse: () => SizedBox.shrink()),
+                              ),
+                              Gap.MD,
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                height: MediaQuery.sizeOf(context).height / 4.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.black12, spreadRadius: 0, blurRadius: 10),
+                                  ],
+                                ),
+                                child: CustomLineChart(
+                                  stats: statistics,
+                                ),
+                              ),
+                            ],
+                          ),
+                    _ => const SizedBox.shrink()
+                  }
                 ],
               ),
             ),

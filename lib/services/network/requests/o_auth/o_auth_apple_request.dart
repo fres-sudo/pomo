@@ -6,7 +6,9 @@ part 'o_auth_apple_request.g.dart';
 part 'o_auth_apple_request.freezed.dart';
 
 @freezed
-class OAuthAppleRequest extends DTO with _$OAuthAppleRequest {
+sealed class OAuthAppleRequest extends DTO with _$OAuthAppleRequest {
+  const OAuthAppleRequest._() : super();
+
   const factory OAuthAppleRequest({
     String? email,
     required String authorizationCode,

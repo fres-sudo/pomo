@@ -37,14 +37,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
-    _usernameTextController.text =
-        context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.username, orElse: () => "");
+    final username = switch (context.read<AuthCubit>().state) {
+      AuthenticatedAuthState(:final user) => user.username,
+      _ => ""
+    };
+    _usernameTextController.text = username;
     super.initState();
   }
 
-  User? get user => context.read<AuthCubit>().state.whenOrNull(
-        authenticated: (user) => user,
-      );
+  User? get user => switch (context.read<AuthCubit>().state) {
+        AuthenticatedAuthState(:final user) => user,
+        _ => null
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           context.read<AuthCubit>().signOut();
           context.router.replaceAll([const RootRoute()]);
         }
-        if (state.operation == UserOperation.updated || state.operation == UserOperation.updatedImage) {
+        if (state.operation == UserOperation.updated ||
+            state.operation == UserOperation.updatedImage) {
           context
               .read<StorageService>()
               .updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
@@ -90,17 +95,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ]),
                   TextButton(
                       onPressed: () async {
-                        if (_usernameTextController.text == "" && _usernameTextController.text.length < 4) {
+                        if (_usernameTextController.text == "" &&
+                            _usernameTextController.text.length < 4) {
                           onInvalidInput(context);
                         } else {
-                          final user = context.read<AuthCubit>().state.whenOrNull(authenticated: (user) => user);
+                          final user = switch (context.read<AuthCubit>().state) {
+                            AuthenticatedAuthState(:final user) => user,
+                            _ => null
+                          };
                           if (image != null && user != null) {
-                            context.read<UserBloc>().updateUserPhoto(id: user.id, photo: File(image!.path));
+                            context
+                                .read<UserBloc>()
+                                .updateUserPhoto(id: user.id, photo: File(image!.path));
                           } else {
                             if (user != null) {
-                              context
-                                  .read<UserBloc>()
-                                  .updateUser(id: user.id, user: user.copyWith(username: _usernameTextController.text));
+                              context.read<UserBloc>().updateUser(
+                                  id: user.id,
+                                  user: user.copyWith(username: _usernameTextController.text));
                             }
                           }
                         }
@@ -109,7 +120,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ? CustomCircularProgressIndicator(color: Theme.of(context).primaryColor)
                           : Text(t.general.update,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: (_usernameTextController.text != "" && _usernameTextController.text.length > 4)
+                                  color: (_usernameTextController.text != "" &&
+                                          _usernameTextController.text.length > 4)
                                       ? Theme.of(context).primaryColor
                                       : kNeutral400))),
                 ],
@@ -118,32 +130,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Center(
                 child: Stack(
                   children: [
-                    context.read<AuthCubit>().state.maybeWhen(
-                        authenticated: (user) {
-                          if (image == null) {
-                            if (user.avatar == null) {
-                              return const CircleAvatar(
-                                maxRadius: 75,
-                                backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
-                              );
-                            } else {
-                              return ClipOval(
-                                  child: SizedBox(
-                                      height: 150,
-                                      width: 150,
-                                      child: FancyShimmerImage(
-                                        imageUrl: user.avatar!,
-                                        boxFit: BoxFit.cover,
-                                      )));
-                            }
-                          } else {
-                            return CircleAvatar(radius: 75, backgroundImage: FileImage(File(image!.path)));
-                          }
-                        },
-                        orElse: () => const CircleAvatar(
+                    switch (context.read<AuthCubit>().state) {
+                      AuthenticatedAuthState(:final user) => user.avatar == null
+                          ? const CircleAvatar(
                               radius: 75,
                               backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
-                            )),
+                            )
+                          : ClipOval(
+                              child: SizedBox(
+                                  height: 150,
+                                  width: 150,
+                                  child: FancyShimmerImage(
+                                    imageUrl: user.avatar!,
+                                    boxFit: BoxFit.cover,
+                                  ))),
+                      _ => const CircleAvatar(
+                          radius: 75,
+                          backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                        )
+                    },
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -220,19 +225,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Text("Email", style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextFormField(
-                      initialValue: context
-                          .watch<AuthCubit>()
-                          .state
-                          .maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.como"),
+                      initialValue: switch (context.watch<AuthCubit>().state) {
+                        AuthenticatedAuthState(:final user) => user.email,
+                        _ => "email@pomo.com"
+                      },
                       readOnly: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.lock, size: 20, color: kNeutral500),
-                        hintText: context
-                            .watch<AuthCubit>()
-                            .state
-                            .maybeWhen(authenticated: (user) => user.email, orElse: () => "email@pomo.com"),
-                        hintStyle: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red),
+                        hintText: switch (context.watch<AuthCubit>().state) {
+                          AuthenticatedAuthState(:final user) => user.email,
+                          _ => "email@pomo.com"
+                        },
+                        hintStyle:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red),
                       ),
                     ),
                     Gap.MD,
@@ -252,10 +258,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               description: t.profile.settings.delete_account.description,
                               onPress: () {
                                 context.read<UserBloc>().deleteUser(
-                                    id: context
-                                        .read<AuthCubit>()
-                                        .state
-                                        .maybeWhen(authenticated: (user) => user.id, orElse: () => ""));
+                                        id: switch (context.read<AuthCubit>().state) {
+                                      AuthenticatedAuthState(:final user) => user.id,
+                                      _ => ""
+                                    });
                                 context.router.maybePop();
                               })),
                       child: state.isLoading

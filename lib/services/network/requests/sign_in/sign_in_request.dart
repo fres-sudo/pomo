@@ -6,12 +6,13 @@ part 'sign_in_request.g.dart';
 part 'sign_in_request.freezed.dart';
 
 @freezed
-class SignInRequest extends DTO with _$SignInRequest {
+sealed class SignInRequest extends DTO with _$SignInRequest {
+  const SignInRequest._() : super();
   const factory SignInRequest({
     required String email,
     required String password,
-}) = _SignInRequest;
+  }) = _SignInRequest;
 
   factory SignInRequest.fromJson(Map<String, dynamic> json) =>
-    _$SignInRequestFromJson(json);
+      _$SignInRequestFromJson(json);
 }

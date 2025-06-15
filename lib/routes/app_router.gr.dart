@@ -20,7 +20,7 @@ import 'package:pomo/pages/authentication/forgot_password/forgotpassword_page.da
     as _i5;
 import 'package:pomo/pages/authentication/forgot_password/forgotpassword_recover_page.dart'
     as _i6;
-import 'package:pomo/pages/authentication/login_in/login_page.dart' as _i7;
+import 'package:pomo/pages/authentication/log_in/login_page.dart' as _i7;
 import 'package:pomo/pages/authentication/sign_up/choose_username.dart' as _i1;
 import 'package:pomo/pages/authentication/sign_up/signup_page.dart' as _i19;
 import 'package:pomo/pages/pomodoro_session/pomodoro_session_page.dart' as _i15;
@@ -46,10 +46,10 @@ class ChooseUsernameRoute extends _i21.PageRouteInfo<ChooseUsernameRouteArgs> {
     required _i23.User user,
     List<_i21.PageRouteInfo>? children,
   }) : super(
-         ChooseUsernameRoute.name,
-         args: ChooseUsernameRouteArgs(key: key, user: user),
-         initialChildren: children,
-       );
+          ChooseUsernameRoute.name,
+          args: ChooseUsernameRouteArgs(key: key, user: user),
+          initialChildren: children,
+        );
 
   static const String name = 'ChooseUsernameRoute';
 
@@ -73,6 +73,16 @@ class ChooseUsernameRouteArgs {
   String toString() {
     return 'ChooseUsernameRouteArgs{key: $key, user: $user}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ChooseUsernameRouteArgs) return false;
+    return key == other.key && user == other.user;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ user.hashCode;
 }
 
 /// generated route for
@@ -87,17 +97,17 @@ class CreateProjectRoute extends _i21.PageRouteInfo<CreateProjectRouteArgs> {
     _i24.XFile? image,
     List<_i21.PageRouteInfo>? children,
   }) : super(
-         CreateProjectRoute.name,
-         args: CreateProjectRouteArgs(
-           key: key,
-           startDate: startDate,
-           endDate: endDate,
-           name: name,
-           description: description,
-           image: image,
-         ),
-         initialChildren: children,
-       );
+          CreateProjectRoute.name,
+          args: CreateProjectRouteArgs(
+            key: key,
+            startDate: startDate,
+            endDate: endDate,
+            name: name,
+            description: description,
+            image: image,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'CreateProjectRoute';
 
@@ -145,13 +155,34 @@ class CreateProjectRouteArgs {
   String toString() {
     return 'CreateProjectRouteArgs{key: $key, startDate: $startDate, endDate: $endDate, name: $name, description: $description, image: $image}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CreateProjectRouteArgs) return false;
+    return key == other.key &&
+        startDate == other.startDate &&
+        endDate == other.endDate &&
+        name == other.name &&
+        description == other.description &&
+        image == other.image;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      startDate.hashCode ^
+      endDate.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      image.hashCode;
 }
 
 /// generated route for
 /// [_i3.EditProfilePage]
 class EditProfileRoute extends _i21.PageRouteInfo<void> {
   const EditProfileRoute({List<_i21.PageRouteInfo>? children})
-    : super(EditProfileRoute.name, initialChildren: children);
+      : super(EditProfileRoute.name, initialChildren: children);
 
   static const String name = 'EditProfileRoute';
 
@@ -172,10 +203,10 @@ class ForgotPasswordOTPRoute
     _i22.Key? key,
     List<_i21.PageRouteInfo>? children,
   }) : super(
-         ForgotPasswordOTPRoute.name,
-         args: ForgotPasswordOTPRouteArgs(email: email, key: key),
-         initialChildren: children,
-       );
+          ForgotPasswordOTPRoute.name,
+          args: ForgotPasswordOTPRouteArgs(email: email, key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'ForgotPasswordOTPRoute';
 
@@ -199,13 +230,23 @@ class ForgotPasswordOTPRouteArgs {
   String toString() {
     return 'ForgotPasswordOTPRouteArgs{email: $email, key: $key}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ForgotPasswordOTPRouteArgs) return false;
+    return email == other.email && key == other.key;
+  }
+
+  @override
+  int get hashCode => email.hashCode ^ key.hashCode;
 }
 
 /// generated route for
 /// [_i5.ForgotPasswordPage]
 class ForgotPasswordRoute extends _i21.PageRouteInfo<void> {
   const ForgotPasswordRoute({List<_i21.PageRouteInfo>? children})
-    : super(ForgotPasswordRoute.name, initialChildren: children);
+      : super(ForgotPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ForgotPasswordRoute';
 
@@ -227,14 +268,14 @@ class ForgotPasswordRecoverRoute
     required String token,
     List<_i21.PageRouteInfo>? children,
   }) : super(
-         ForgotPasswordRecoverRoute.name,
-         args: ForgotPasswordRecoverRouteArgs(
-           key: key,
-           email: email,
-           token: token,
-         ),
-         initialChildren: children,
-       );
+          ForgotPasswordRecoverRoute.name,
+          args: ForgotPasswordRecoverRouteArgs(
+            key: key,
+            email: email,
+            token: token,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ForgotPasswordRecoverRoute';
 
@@ -268,13 +309,23 @@ class ForgotPasswordRecoverRouteArgs {
   String toString() {
     return 'ForgotPasswordRecoverRouteArgs{key: $key, email: $email, token: $token}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ForgotPasswordRecoverRouteArgs) return false;
+    return key == other.key && email == other.email && token == other.token;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ email.hashCode ^ token.hashCode;
 }
 
 /// generated route for
 /// [_i7.LoginPage]
 class LoginRoute extends _i21.PageRouteInfo<void> {
   const LoginRoute({List<_i21.PageRouteInfo>? children})
-    : super(LoginRoute.name, initialChildren: children);
+      : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -290,7 +341,7 @@ class LoginRoute extends _i21.PageRouteInfo<void> {
 /// [_i8.OnBoardingPage]
 class OnBoardingRoute extends _i21.PageRouteInfo<void> {
   const OnBoardingRoute({List<_i21.PageRouteInfo>? children})
-    : super(OnBoardingRoute.name, initialChildren: children);
+      : super(OnBoardingRoute.name, initialChildren: children);
 
   static const String name = 'OnBoardingRoute';
 
@@ -306,7 +357,7 @@ class OnBoardingRoute extends _i21.PageRouteInfo<void> {
 /// [_i9.PrivacyPolicyPage]
 class PrivacyPolicyRoute extends _i21.PageRouteInfo<void> {
   const PrivacyPolicyRoute({List<_i21.PageRouteInfo>? children})
-    : super(PrivacyPolicyRoute.name, initialChildren: children);
+      : super(PrivacyPolicyRoute.name, initialChildren: children);
 
   static const String name = 'PrivacyPolicyRoute';
 
@@ -322,7 +373,7 @@ class PrivacyPolicyRoute extends _i21.PageRouteInfo<void> {
 /// [_i10.ProfileNavigation]
 class ProfileNavigation extends _i21.PageRouteInfo<void> {
   const ProfileNavigation({List<_i21.PageRouteInfo>? children})
-    : super(ProfileNavigation.name, initialChildren: children);
+      : super(ProfileNavigation.name, initialChildren: children);
 
   static const String name = 'ProfileNavigation';
 
@@ -338,7 +389,7 @@ class ProfileNavigation extends _i21.PageRouteInfo<void> {
 /// [_i11.ProfilePage]
 class ProfileRoute extends _i21.PageRouteInfo<void> {
   const ProfileRoute({List<_i21.PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
+      : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -359,14 +410,14 @@ class ProjectDetailsRoute extends _i21.PageRouteInfo<ProjectDetailsRouteArgs> {
     bool isCreatedProject = false,
     List<_i21.PageRouteInfo>? children,
   }) : super(
-         ProjectDetailsRoute.name,
-         args: ProjectDetailsRouteArgs(
-           key: key,
-           project: project,
-           isCreatedProject: isCreatedProject,
-         ),
-         initialChildren: children,
-       );
+          ProjectDetailsRoute.name,
+          args: ProjectDetailsRouteArgs(
+            key: key,
+            project: project,
+            isCreatedProject: isCreatedProject,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ProjectDetailsRoute';
 
@@ -402,13 +453,26 @@ class ProjectDetailsRouteArgs {
   String toString() {
     return 'ProjectDetailsRouteArgs{key: $key, project: $project, isCreatedProject: $isCreatedProject}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProjectDetailsRouteArgs) return false;
+    return key == other.key &&
+        project == other.project &&
+        isCreatedProject == other.isCreatedProject;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ project.hashCode ^ isCreatedProject.hashCode;
 }
 
 /// generated route for
 /// [_i13.ProjectNavigation]
 class ProjectNavigation extends _i21.PageRouteInfo<void> {
   const ProjectNavigation({List<_i21.PageRouteInfo>? children})
-    : super(ProjectNavigation.name, initialChildren: children);
+      : super(ProjectNavigation.name, initialChildren: children);
 
   static const String name = 'ProjectNavigation';
 
@@ -424,7 +488,7 @@ class ProjectNavigation extends _i21.PageRouteInfo<void> {
 /// [_i14.ProjectPage]
 class ProjectRoute extends _i21.PageRouteInfo<void> {
   const ProjectRoute({List<_i21.PageRouteInfo>? children})
-    : super(ProjectRoute.name, initialChildren: children);
+      : super(ProjectRoute.name, initialChildren: children);
 
   static const String name = 'ProjectRoute';
 
@@ -440,7 +504,7 @@ class ProjectRoute extends _i21.PageRouteInfo<void> {
 /// [_i15.QuickSessionPage]
 class QuickSessionRoute extends _i21.PageRouteInfo<void> {
   const QuickSessionRoute({List<_i21.PageRouteInfo>? children})
-    : super(QuickSessionRoute.name, initialChildren: children);
+      : super(QuickSessionRoute.name, initialChildren: children);
 
   static const String name = 'QuickSessionRoute';
 
@@ -456,7 +520,7 @@ class QuickSessionRoute extends _i21.PageRouteInfo<void> {
 /// [_i16.RootPage]
 class RootRoute extends _i21.PageRouteInfo<void> {
   const RootRoute({List<_i21.PageRouteInfo>? children})
-    : super(RootRoute.name, initialChildren: children);
+      : super(RootRoute.name, initialChildren: children);
 
   static const String name = 'RootRoute';
 
@@ -472,7 +536,7 @@ class RootRoute extends _i21.PageRouteInfo<void> {
 /// [_i17.SchedulePage]
 class ScheduleRoute extends _i21.PageRouteInfo<void> {
   const ScheduleRoute({List<_i21.PageRouteInfo>? children})
-    : super(ScheduleRoute.name, initialChildren: children);
+      : super(ScheduleRoute.name, initialChildren: children);
 
   static const String name = 'ScheduleRoute';
 
@@ -488,7 +552,7 @@ class ScheduleRoute extends _i21.PageRouteInfo<void> {
 /// [_i18.SessionCompletePage]
 class SessionCompleteRoute extends _i21.PageRouteInfo<void> {
   const SessionCompleteRoute({List<_i21.PageRouteInfo>? children})
-    : super(SessionCompleteRoute.name, initialChildren: children);
+      : super(SessionCompleteRoute.name, initialChildren: children);
 
   static const String name = 'SessionCompleteRoute';
 
@@ -504,7 +568,7 @@ class SessionCompleteRoute extends _i21.PageRouteInfo<void> {
 /// [_i19.SignUpPage]
 class SignUpRoute extends _i21.PageRouteInfo<void> {
   const SignUpRoute({List<_i21.PageRouteInfo>? children})
-    : super(SignUpRoute.name, initialChildren: children);
+      : super(SignUpRoute.name, initialChildren: children);
 
   static const String name = 'SignUpRoute';
 
@@ -520,7 +584,7 @@ class SignUpRoute extends _i21.PageRouteInfo<void> {
 /// [_i20.StatsPage]
 class StatsRoute extends _i21.PageRouteInfo<void> {
   const StatsRoute({List<_i21.PageRouteInfo>? children})
-    : super(StatsRoute.name, initialChildren: children);
+      : super(StatsRoute.name, initialChildren: children);
 
   static const String name = 'StatsRoute';
 

@@ -32,26 +32,31 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   initState() {
-    final userId = context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+    final userId = switch (context.read<AuthCubit>().state) {
+      AuthenticatedAuthState(:final user) => user.id,
+      _ => ""
+    };
     context.read<ProjectBloc>().fetch(userId: userId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final userId = switch (context.read<AuthCubit>().state) {
+      AuthenticatedAuthState(:final user) => user.id,
+      _ => ""
+    };
     return BlocConsumer<ProjectBloc, ProjectState>(
-        listener: (BuildContext context, ProjectState state) => state.whenOrNull(
-              created: (_) => context.read<ProjectBloc>().fetch(
-                  userId:
-                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
-              updated: (_) => context.read<ProjectBloc>().fetch(
-                  userId:
-                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
-              deleted: () => context.read<ProjectBloc>().fetch(
-                  userId:
-                      context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "")),
-              errorFetching: (error) => onErrorState(context, error.localizedString(context)),
-            ),
+        listener: (BuildContext context, ProjectState state) => switch (state) {
+              CreatedProjectState(:final project) =>
+                context.read<ProjectBloc>().fetch(userId: userId),
+              UpdatedProjectState(:final project) =>
+                context.read<ProjectBloc>().fetch(userId: userId),
+              DeletedProjectState() => context.read<ProjectBloc>().fetch(userId: userId),
+              ErrorFetchigProjectState(:final error) =>
+                onErrorState(context, error.localizedString(context)),
+              _ => null,
+            },
         builder: (context, projectState) => Scaffold(
               floatingActionButton: CustomFloatingActionButton(
                 herTag: "fab-project",
@@ -65,7 +70,9 @@ class _ProjectPageState extends State<ProjectPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitlePage(
-                          title: showArchivedProjects ? t.projects.archive.projects : t.projects.plural,
+                          title: showArchivedProjects
+                              ? t.projects.archive.projects
+                              : t.projects.plural,
                           subtitle: t.projects.subtitle),
                       Gap.MD,
                       Row(children: [
@@ -96,67 +103,21 @@ class _ProjectPageState extends State<ProjectPage> {
                               padding: const EdgeInsets.all(12),
                             ),
                             icon: Icon(
-                              showArchivedProjects ? Icons.unarchive_outlined : Icons.archive_outlined,
+                              showArchivedProjects
+                                  ? Icons.unarchive_outlined
+                                  : Icons.archive_outlined,
                               size: 20,
                             ),
-                            onPressed: () => setState(() => showArchivedProjects = !showArchivedProjects))
+                            onPressed: () =>
+                                setState(() => showArchivedProjects = !showArchivedProjects))
                       ]),
                       Gap.MD,
-                      projectState.maybeWhen(
-                        fetching: () => const LoadingProjects(),
-                        creating: () => const LoadingProjects(),
-                        fetched: (projects) {
-                          List<Project> filteredProjects = projects
-                              .where((project) =>
-                                  (!showArchivedProjects ? project.status != ProjectStatus.archived : true) &&
-                                  project.name.toLowerCase().contains(searchController.text.toLowerCase()))
-                              .toList();
-                          List<Project> archivedProjects = projects
-                              .where((project) =>
-                                  (showArchivedProjects ? project.status == ProjectStatus.archived : true) &&
-                                  project.name.toLowerCase().contains(searchController.text.toLowerCase()))
-                              .toList();
-
-                          return projects.isEmpty
-                              ? Center(child: const NoProjectView())
-                              : filteredProjects.isEmpty || (showArchivedProjects && archivedProjects.isEmpty)
-                                  ? EmptySearchProjectView(
-                                      text: showArchivedProjects ? t.projects.archive.no_project : null)
-                                  : SizedBox(
-                                      height: Platform.isAndroid
-                                          ? MediaQuery.of(context).size.height - 210
-                                          : MediaQuery.of(context).size.height - 300,
-                                      child: RefreshIndicator.adaptive(
-                                        onRefresh: _onRefresh,
-                                        child: Responsive.isMobile(context)
-                                            ? ListView.builder(
-                                                itemCount: showArchivedProjects
-                                                    ? archivedProjects.length
-                                                    : filteredProjects.length,
-                                                itemBuilder: (context, index) => ProjectCard(
-                                                    project: showArchivedProjects
-                                                        ? archivedProjects[index]
-                                                        : filteredProjects[index]),
-                                              )
-                                            : GridView.builder(
-                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 20,
-                                                ),
-                                                shrinkWrap: false,
-                                                itemCount: showArchivedProjects
-                                                    ? archivedProjects.length
-                                                    : filteredProjects.length,
-                                                itemBuilder: (context, index) => ProjectCard(
-                                                    project: showArchivedProjects
-                                                        ? archivedProjects[index]
-                                                        : filteredProjects[index]),
-                                              ),
-                                      ),
-                                    );
-                        },
-                        orElse: () => const SizedBox.shrink(),
-                      ),
+                      switch (projectState) {
+                        FetchingProjectState() => const LoadingProjects(),
+                        CreatingProjectState() => const LoadingProjects(),
+                        FetchedProjectState(:final projects) => _buildProjectList(projects),
+                        _ => const SizedBox.shrink(),
+                      }
                     ],
                   ),
                 ),
@@ -164,11 +125,62 @@ class _ProjectPageState extends State<ProjectPage> {
             ));
   }
 
+  Widget _buildProjectList(List<Project> projects) {
+    List<Project> filteredProjects = projects
+        .where((project) =>
+            (!showArchivedProjects ? project.status != ProjectStatus.archived : true) &&
+            project.name.toLowerCase().contains(searchController.text.toLowerCase()))
+        .toList();
+    List<Project> archivedProjects = projects
+        .where((project) =>
+            (showArchivedProjects ? project.status == ProjectStatus.archived : true) &&
+            project.name.toLowerCase().contains(searchController.text.toLowerCase()))
+        .toList();
+
+    return projects.isEmpty
+        ? Center(child: const NoProjectView())
+        : filteredProjects.isEmpty || (showArchivedProjects && archivedProjects.isEmpty)
+            ? EmptySearchProjectView(
+                text: showArchivedProjects ? t.projects.archive.no_project : null)
+            : SizedBox(
+                height: Platform.isAndroid
+                    ? MediaQuery.of(context).size.height - 210
+                    : MediaQuery.of(context).size.height - 300,
+                child: RefreshIndicator.adaptive(
+                  onRefresh: _onRefresh,
+                  child: Responsive.isMobile(context)
+                      ? ListView.builder(
+                          itemCount: showArchivedProjects
+                              ? archivedProjects.length
+                              : filteredProjects.length,
+                          itemBuilder: (context, index) => ProjectCard(
+                              project: showArchivedProjects
+                                  ? archivedProjects[index]
+                                  : filteredProjects[index]),
+                        )
+                      : GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20,
+                          ),
+                          shrinkWrap: false,
+                          itemCount: showArchivedProjects
+                              ? archivedProjects.length
+                              : filteredProjects.length,
+                          itemBuilder: (context, index) => ProjectCard(
+                              project: showArchivedProjects
+                                  ? archivedProjects[index]
+                                  : filteredProjects[index]),
+                        ),
+                ),
+              );
+  }
+
   Future<void> _onRefresh() async {
-    final String userId = context.read<AuthCubit>().state.maybeWhen(
-          authenticated: (user) => user.id,
-          orElse: () => "",
-        );
+    final userId = switch (context.read<AuthCubit>().state) {
+      AuthenticatedAuthState(:final user) => user.id,
+      _ => ""
+    };
     context.read<ProjectBloc>().fetch(userId: userId);
   }
 }

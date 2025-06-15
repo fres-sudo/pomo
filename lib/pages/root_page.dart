@@ -19,13 +19,18 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        state.whenOrNull(notAuthenticated: () {
-          context.router.replaceAll([RootRoute()]);
-        });
+      listener: (context, state) => switch (state) {
+        NotAuthenticatedAuthState() => context.router.replaceAll([RootRoute()]),
+        _ => null
       },
       child: AutoTabsRouter(
-        routes: const [ScheduleRoute(), ProjectNavigation(), QuickSessionRoute(), StatsRoute(), ProfileRoute()],
+        routes: const [
+          ScheduleRoute(),
+          ProjectNavigation(),
+          QuickSessionRoute(),
+          StatsRoute(),
+          ProfileRoute()
+        ],
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
@@ -44,15 +49,18 @@ class RootPage extends StatelessWidget {
                 child: BottomNavigationBar(
                   currentIndex: tabsRouter.activeIndex,
                   onTap: (value) {
-                    final userId =
-                        context.read<AuthCubit>().state.maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                    final userId = switch (context.read<AuthCubit>().state) {
+                      AuthenticatedAuthState(:final user) => user.id,
+                      _ => ""
+                    };
                     if (value == 0 /* && context.read<TaskBloc>().state is! FetchedTaskState */) {
                       context.read<TaskBloc>().fetch(
                           userId: userId,
                           date: context.read<ScheduleCubit>().state.selectedDay,
                           format: CalendarFormat.month);
                     }
-                    if (value == 1 /* && context.read<ProjectBloc>().state is! FetchedProjectState */) {
+                    if (value ==
+                        1 /* && context.read<ProjectBloc>().state is! FetchedProjectState */) {
                       context.read<ProjectBloc>().fetch(userId: userId);
                     }
                     tabsRouter.setActiveIndex(value);
@@ -62,20 +70,29 @@ class RootPage extends StatelessWidget {
                         activeIcon: const Icon(Icons.edit_calendar_rounded),
                         icon: Icon(
                           Icons.edit_calendar_rounded,
-                          color: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                          color: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .unselectedIconTheme
+                                  ?.color ??
+                              Colors.white,
                         ),
                         label: t.general.schedule),
                     BottomNavigationBarItem(
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Document.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context)
+                                      .bottomNavigationBarTheme
+                                      .unselectedIconTheme
+                                      ?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         label: t.projects.title),
@@ -83,13 +100,18 @@ class RootPage extends StatelessWidget {
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Play.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Play.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context)
+                                      .bottomNavigationBarTheme
+                                      .unselectedIconTheme
+                                      ?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         label: "Pomodoro"),
@@ -97,13 +119,18 @@ class RootPage extends StatelessWidget {
                         activeIcon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context).bottomNavigationBarTheme.selectedIconTheme?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         icon: SvgPicture.asset(
                           'assets/icons/nav-bar/Light/Graph.svg',
                           colorFilter: ColorFilter.mode(
-                              Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme?.color ?? Colors.white,
+                              Theme.of(context)
+                                      .bottomNavigationBarTheme
+                                      .unselectedIconTheme
+                                      ?.color ??
+                                  Colors.white,
                               BlendMode.srcIn),
                         ),
                         label: t.stats.title),

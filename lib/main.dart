@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 import 'constants/theme.dart';
 import 'i18n/strings.g.dart';
-import 'services/notification/notification_service.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +27,15 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  final directory = await getApplicationDocumentsDirectory(); // from path provider
-
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: directory,
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
-  await NotificationService.init();
   tz.initializeTimeZones();
 
   LocaleSettings.useDeviceLocale();
-
 
   // Remove splash screen.
   //FlutterNativeSplash.remove();
@@ -55,25 +53,25 @@ class PomoApp extends StatelessWidget {
     return DependencyInjector(
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-              return MaterialApp.router(
-                title: "Pomo",
-                debugShowCheckedModeBanner: false,
-                locale: TranslationProvider.of(context).flutterLocale,
-                supportedLocales: AppLocaleUtils.supportedLocales,
-                routerDelegate: AutoRouterDelegate(
-                  appRouter,
-                  navigatorObservers: () => [AutoRouteObserver()],
-                ),
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                routeInformationParser: appRouter.defaultRouteParser(),
-                theme: LightTheme.make,
-                darkTheme: DarkTheme.make,
-                themeMode: state.mode,
-              );
+          return MaterialApp.router(
+            title: "Pomo",
+            debugShowCheckedModeBanner: false,
+            locale: TranslationProvider.of(context).flutterLocale,
+            supportedLocales: AppLocaleUtils.supportedLocales,
+            routerDelegate: AutoRouterDelegate(
+              appRouter,
+              navigatorObservers: () => [AutoRouteObserver()],
+            ),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            routeInformationParser: appRouter.defaultRouteParser(),
+            theme: LightTheme.make,
+            darkTheme: DarkTheme.make,
+            themeMode: state.mode,
+          );
         },
       ),
     );

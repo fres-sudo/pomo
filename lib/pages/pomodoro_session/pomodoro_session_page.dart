@@ -13,7 +13,6 @@ import 'package:pomo/pages/pomodoro_session/views/pomodoro_break_view.dart';
 import 'package:pomo/pages/pomodoro_session/views/pomodoro_timer_view.dart';
 import 'package:pomo/pages/pomodoro_session/widgets/current_task_widget.dart';
 import 'package:pomo/pages/projects/widget/custom_toggle_button.dart';
-import 'package:pomo/services/notification/notification_service.dart';
 
 import '../../blocs/task/task_bloc.dart';
 import '../../constants/colors.dart';
@@ -35,11 +34,10 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          updated: (task) => context.read<WorkSessionCubit>().set(task),
-          got: (task) => context.read<WorkSessionCubit>().set(task),
-        );
+      listener: (context, state) => switch (state) {
+        UpdatedTaskState(:final task) => context.read<WorkSessionCubit>().set(task),
+        GotTaskState(:final task) => context.read<WorkSessionCubit>().set(task),
+        _ => null
       },
       builder: (context, state) => Scaffold(
         body: BlocBuilder<SoundCubit, int>(
@@ -97,15 +95,19 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                                 renderBorder: false,
                                 onPressed: (int index) {
                                   setState(() {
-                                    for (int buttonIndex = 0; buttonIndex < selectedMode.length; buttonIndex++) {
+                                    for (int buttonIndex = 0;
+                                        buttonIndex < selectedMode.length;
+                                        buttonIndex++) {
                                       selectedMode[buttonIndex] = buttonIndex == index;
                                     }
                                   });
                                 },
                                 isSelected: selectedMode,
                                 children: [
-                                  CustomToggleButton(text: t.tasks.timer, selectedMode: selectedMode[0]),
-                                  CustomToggleButton(text: t.tasks.breaktime, selectedMode: selectedMode[1])
+                                  CustomToggleButton(
+                                      text: t.tasks.timer, selectedMode: selectedMode[0]),
+                                  CustomToggleButton(
+                                      text: t.tasks.breaktime, selectedMode: selectedMode[1])
                                 ],
                               ),
                             ),
@@ -115,19 +117,20 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                             ? PomodoroTimerView(
                                 isQuickSession: true,
                                 onComplete: () async {
-                                  final userId = context
-                                      .read<AuthCubit>()
-                                      .state
-                                      .maybeWhen(authenticated: (user) => user.id, orElse: () => "");
+                                  final userId = switch (context.read<AuthCubit>().state) {
+                                    AuthenticatedAuthState(:final user) => user.id,
+                                    _ => ""
+                                  };
                                   final task = context.read<WorkSessionCubit>().state;
                                   if (task != null) {
                                     context.read<TaskBloc>().update(
                                           id: task.id!,
                                           task: task.copyWith(
                                             pomodoroCompleted: (task.pomodoroCompleted ?? 0) + 1,
-                                            completedAt: (task.pomodoroCompleted ?? 0) + 1 >= task.pomodoro
-                                                ? DateTime.now()
-                                                : null,
+                                            completedAt:
+                                                (task.pomodoroCompleted ?? 0) + 1 >= task.pomodoro
+                                                    ? DateTime.now()
+                                                    : null,
                                           ),
                                         );
                                   } else {
@@ -148,9 +151,9 @@ class _QuickSessionPageState extends State<QuickSessionPage> {
                                   setState(() {
                                     selectedMode = [false, true];
                                   });
-                                  await NotificationService.showInstantNotification(
-                                      "${t.notifications.instant.title} 🎉",
-                                      "${t.notifications.instant.description} ☕️");
+                                  // await NotificationService.showInstantNotification(
+                                  //     "${t.notifications.instant.title} 🎉",
+                                  //     "${t.notifications.instant.description} ☕️");
                                 },
                               )
                             : PomodoroBreakView(
