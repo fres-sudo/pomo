@@ -11,34 +11,35 @@ class AppRouter extends RootStackRouter {
           OnBoardingGuard(),
           AuthGuard()
         ], children: [
-          AutoRoute(page: ProjectNavigation.page, fullscreenDialog: true, children: [
-            CustomRoute(page: ProjectRoute.page, transitionsBuilder: TransitionsBuilders.fadeIn, initial: true, fullscreenDialog: true),
-          ]),
-          CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: StatsRoute.page),
-          CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: QuickSessionRoute.page),
-          CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ScheduleRoute.page),
-          CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: ProfileRoute.page),
+          AutoRoute(
+              page: ProjectNavigation.page,
+              fullscreenDialog: true,
+              children: [
+                AutoRoute(
+                    page: ProjectRoute.page,
+                    initial: true,
+                    fullscreenDialog: true),
+              ]),
+          AutoRoute(page: StatsRoute.page),
+          AutoRoute(page: QuickSessionRoute.page),
+          AutoRoute(page: ScheduleRoute.page),
+          AutoRoute(page: ProfileRoute.page),
         ]),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+        AutoRoute(
           page: LoginRoute.page,
           fullscreenDialog: true,
         ),
-        CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SignUpRoute.page, fullscreenDialog: true),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+        AutoRoute(page: SignUpRoute.page, fullscreenDialog: true),
+        AutoRoute(
           page: ForgotPasswordOTPRoute.page,
         ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+        AutoRoute(
           page: ForgotPasswordRoute.page,
         ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+        AutoRoute(
           page: ForgotPasswordRecoverRoute.page,
         ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+        AutoRoute(
           page: OnBoardingRoute.page,
         ),
         AutoRoute(
@@ -46,8 +47,8 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(page: EditProfileRoute.page),
         AutoRoute(page: ChooseUsernameRoute.page),
-        CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: SessionCompleteRoute.page),
-        CustomRoute(transitionsBuilder: TransitionsBuilders.fadeIn, page: PrivacyPolicyRoute.page),
+        AutoRoute(page: SessionCompleteRoute.page),
+        AutoRoute(page: PrivacyPolicyRoute.page),
         AutoRoute(page: ProjectDetailsRoute.page)
       ];
 }

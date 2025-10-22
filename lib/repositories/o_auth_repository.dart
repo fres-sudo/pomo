@@ -32,14 +32,13 @@ class OAuthRepositoryImpl implements OAuthRepository {
   @override
   Future<User> signInWithApple() async {
     final appleAccount = await oAuthService.signInWithApple();
-    final response =
-        await authenticationService.retrieveAppleUser(OAuthAppleRequest(
+    final response = await authenticationService.retrieveAppleUser(OAuthAppleRequest(
       authorizationCode: appleAccount?.authorizationCode ?? "",
       email: appleAccount?.email,
     ));
     final user = userMapper.fromDTO(response.user);
 
-    await storageService.storeRefreshToken(response.refreshToken);
+    // await storageService.storeRefreshToken(response.refreshToken);
     await storageService.storeAccessToken(response.accessToken);
     await storageService.storeUserData(user: user);
 
@@ -49,17 +48,15 @@ class OAuthRepositoryImpl implements OAuthRepository {
   @override
   Future<User> signInWithGoogle() async {
     final googleAccount = await oAuthService.signInWithGoogle();
-    final response =
-        await authenticationService.retrieveGoogleUser(OAuthGoogleRequest(
-      username:
-          "guest-google-${DateTime.now().millisecondsSinceEpoch.toString()}",
+    final response = await authenticationService.retrieveGoogleUser(OAuthGoogleRequest(
+      username: "guest-google-${DateTime.now().millisecondsSinceEpoch.toString()}",
       email: googleAccount?.email ?? "",
       avatar: googleAccount?.photoUrl,
       providerUserId: googleAccount?.id ?? '',
     ));
     final user = userMapper.fromDTO(response.user);
 
-    await storageService.storeRefreshToken(response.refreshToken);
+    // await storageService.storeRefreshToken(response.refreshToken);
     await storageService.storeAccessToken(response.accessToken);
     await storageService.storeUserData(user: user);
 

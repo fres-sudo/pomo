@@ -33,10 +33,11 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   /// Method used to add the [GetProjectsByUserProjectEvent] event
-  void fetch({required String userId}) => add(ProjectEvent.fetch(id: userId));
+  void fetch() => add(ProjectEvent.fetch());
 
   /// Method used to add the [CreateProjectProjectEvent] event
-  void createProject({required Project project}) => add(ProjectEvent.createProject(project: project));
+  void createProject({required Project project}) =>
+      add(ProjectEvent.createProject(project: project));
 
   /// Method used to add the [UploadImageCoverProjectEvent] event
   void uploadProjectImageCover({required String id, required File imageCover}) =>
@@ -46,7 +47,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   void getProjectById({required String id}) => add(ProjectEvent.getProjectById(id: id));
 
   /// Method used to add the [UpdateProjectByIdProjectEvent] event
-  void updateProjectById({required String id, required Project project}) => add(ProjectEvent.updateProjectById(id: id, project: project));
+  void updateProjectById({required String id, required Project project}) =>
+      add(ProjectEvent.updateProjectById(id: id, project: project));
 
   void updateProjectsTasks({required String projectId, required List<Task> tasks}) =>
       add(ProjectEvent.updateProjectsTasks(projectId: projectId, tasks: tasks));
@@ -54,7 +56,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   /// Method used to add the [DeleteProjectByIdProjectEvent] event
   void deleteProjectById({required String id}) => add(ProjectEvent.deleteProjectById(id: id));
 
-  void deleteProjectImageCover({required String id}) => add(ProjectEvent.deleteProjectImageCover(id: id));
+  void deleteProjectImageCover({required String id}) =>
+      add(ProjectEvent.deleteProjectImageCover(id: id));
 
   FutureOr<void> _onFetchProjects(
     FetchProjectEvent event,
@@ -62,7 +65,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     emit(ProjectState.fetching());
     try {
-      final projects = await projectRepository.getProjectsByUser(userId: event.id);
+      final projects = await projectRepository.getProjectsByUser();
       emit(ProjectState.fetched(projects));
     } catch (_) {
       emit(ProjectState.errorFetching(FetchingProjectsError()));
@@ -88,7 +91,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     emit(ProjectState.uploadingImageCover());
     try {
-      final project = await projectRepository.uploadProjectImageCover(id: event.id, imageCover: event.imageCover);
+      final project = await projectRepository.uploadProjectImageCover(
+          id: event.id, imageCover: event.imageCover);
       emit(ProjectState.updated(project));
     } catch (_) {
       emit(ProjectState.errorUploadingImageCover(UpdatingProjectsError()));
@@ -114,7 +118,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ) async {
     emit(ProjectState.updating());
     try {
-      final project = await projectRepository.updateProjectById(id: event.id, project: event.project);
+      final project =
+          await projectRepository.updateProjectById(id: event.id, project: event.project);
       emit(ProjectState.updated(project));
     } catch (_) {
       emit(ProjectState.errorUpdating(UpdatingProjectsError()));

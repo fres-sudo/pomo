@@ -97,7 +97,8 @@ class _EditProjectViewState extends State<EditProjectView> {
                     //}
                     if (image != null) {
                       context.read<ProjectBloc>().uploadProjectImageCover(
-                          id: widget.project.id ?? "", imageCover: File(image!.path));
+                          id: widget.project.id ?? "",
+                          imageCover: File(image!.path));
                     } else {
                       context.read<ProjectBloc>().updateProjectById(
                           id: widget.project.id ?? "",
@@ -122,24 +123,20 @@ class _EditProjectViewState extends State<EditProjectView> {
             const Divider(),
             Gap.SM,
             DottedBorder(
-              strokeWidth: 2,
-              color: Theme.of(context).dividerColor,
-              dashPattern: const [3, 10],
-              strokeCap: StrokeCap.round,
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(30),
               child: InkResponse(
                 splashColor: Colors.transparent,
                 onTap: handleImageSelection,
                 child: Container(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(30)),
                   height: MediaQuery.sizeOf(context).height / 7,
                   child: image == null
                       ? widget.project.imageCover != null
                           ? Stack(
                               children: [
-                                CachedNetworkImage(imageUrl: widget.project.imageCover!),
+                                CachedNetworkImage(
+                                    imageUrl: widget.project.imageCover!),
                                 Positioned(
                                   right: 0,
                                   child: IconButton(
@@ -147,17 +144,20 @@ class _EditProjectViewState extends State<EditProjectView> {
                                           padding: const EdgeInsets.all(8.0),
                                           backgroundColor: kNeutral100,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(50),
+                                            borderRadius:
+                                                BorderRadius.circular(50),
                                           )),
                                       onPressed: () {
                                         context
                                             .read<ProjectBloc>()
-                                            .deleteProjectImageCover(id: widget.project.id ?? "");
+                                            .deleteProjectImageCover(
+                                                id: widget.project.id ?? "");
                                         context.router.maybePop();
                                       },
                                       icon: Icon(
                                         Icons.delete_forever,
-                                        color: Theme.of(context).colorScheme.error,
+                                        color:
+                                            Theme.of(context).colorScheme.error,
                                       )),
                                 ),
                                 IconButton(
@@ -165,19 +165,27 @@ class _EditProjectViewState extends State<EditProjectView> {
                                         padding: const EdgeInsets.all(8.0),
                                         backgroundColor: kNeutral100,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         )),
                                     onPressed: handleImageSelection,
                                     icon: Icon(
                                       Icons.edit,
-                                      color: Theme.of(context).colorScheme.onPrimary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
                                     )),
                               ],
                             )
                           : Text(t.projects.create.add_cover,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.onSecondaryContainer))
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer))
                       : Stack(
                           children: [
                             Image.file(
@@ -208,7 +216,8 @@ class _EditProjectViewState extends State<EditProjectView> {
             ),
             Gap.MD,
             Gap.XS,
-            Text("${t.general.name}*", style: Theme.of(context).textTheme.titleMedium),
+            Text("${t.general.name}*",
+                style: Theme.of(context).textTheme.titleMedium),
             Gap.XS,
             TextFormField(
               controller: _nameTextController,
@@ -217,13 +226,16 @@ class _EditProjectViewState extends State<EditProjectView> {
                 hintText: t.general.name,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).dividerColor)),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).dividerColor)),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).dividerColor)),
               ),
               onChanged: (_) => setState(() {}),
               validator: (value) {
@@ -234,7 +246,8 @@ class _EditProjectViewState extends State<EditProjectView> {
               },
             ),
             Gap.MD,
-            Text(t.general.description, style: Theme.of(context).textTheme.titleMedium),
+            Text(t.general.description,
+                style: Theme.of(context).textTheme.titleMedium),
             Gap.XS,
             TextFormField(
               controller: _descriptionTextController,
@@ -244,16 +257,20 @@ class _EditProjectViewState extends State<EditProjectView> {
                   hintText: t.general.description,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).dividerColor)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Theme.of(context).dividerColor)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).dividerColor)),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Theme.of(context).dividerColor))),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).dividerColor))),
             ),
             Gap.MD,
-            Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
+            Text(t.general.start_date,
+                style: Theme.of(context).textTheme.titleMedium),
             Gap.XS,
             DateField(
                 selectedDate: _startDate,
@@ -266,7 +283,8 @@ class _EditProjectViewState extends State<EditProjectView> {
                       _startDate = null;
                     })),
             Gap.MD,
-            Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
+            Text("${t.general.due_date}*",
+                style: Theme.of(context).textTheme.titleMedium),
             Gap.XS,
             DateField(
                 firstDate: _startDate,

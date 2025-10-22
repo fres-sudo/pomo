@@ -17,17 +17,17 @@ abstract class TaskService {
   @GET('/tasks/{id}')
   Future<TaskJTO> getTaskById(@Path('id') String id);
   @PATCH('/tasks/{taskId}')
-  Future<TaskJTO> updateTaskById(@Path('taskId') String id ,@Body() TaskJTO task);
+  Future<TaskJTO> updateTaskById(@Path('taskId') String id, @Body() TaskJTO task);
   @DELETE('/tasks/{taskId}')
   Future<TaskJTO> deleteTaskById(@Path('taskId') String id);
 
   @GET('/tasks/user')
-  Future<List<TaskJTO>> getScheduledTask(@Query('userId') String userId, @Query('date') String date, @Query('format') CalendarFormat format);
+  Future<List<TaskJTO>> getScheduledTask(
+      @Query('date') String date, @Query('format') CalendarFormat format);
 
   @GET('/tasks/project/{projectId}')
   Future<List<TaskJTO>> getTasksByProject(@Path('projectId') String id);
 
   @GET('/tasks/user/{userId}')
   Future<List<TaskJTO>> getTasksByUser(@Path('userId') String id);
-
 }

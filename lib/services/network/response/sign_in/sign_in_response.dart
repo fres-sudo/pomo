@@ -11,11 +11,9 @@ part 'sign_in_response.freezed.dart';
 sealed class SignInResponse extends DTO with _$SignInResponse {
   const SignInResponse._() : super();
   const factory SignInResponse({
-    required String accessToken,
-    required String refreshToken,
+    @JsonKey(name: 'token') required String accessToken,
     required UserJTO user,
   }) = _SignInResponse;
 
-  factory SignInResponse.fromJson(Map<String, dynamic> json) =>
-      _$SignInResponseFromJson(json);
+  factory SignInResponse.fromJson(Map<String, dynamic> json) => _$SignInResponseFromJson(json);
 }

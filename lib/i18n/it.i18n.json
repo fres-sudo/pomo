@@ -1,0 +1,344 @@
+{
+	"general": {
+		"loading": "Caricamento",
+		"search": "Cerca",
+		"save": "Salva",
+		"apply": "Applica",
+		"confirm": "Conferma",
+		"archive": "Archivia",
+		"delete": "Elimina",
+		"create": "Crea",
+		"name": "Nome",
+		"description": "Descrizione",
+		"username": "Username",
+		"collaborator": "Collaboratore",
+		"due_date": "Data di fine",
+		"start_date": "Data di inizio",
+		"select_date": "Seleziona una data",
+		"actions": "Azioni",
+		"share": "Condividi",
+		"reset": "Resetta",
+		"update": "Aggiorna",
+		"edit": "Modifica",
+		"today": "Oggi",
+		"yesterday": "Ieri",
+		"all_times": "Tutto",
+		"pomodoro_done": "Pomodori completati",
+		"done": "Fatto",
+		"quick_session": "Sessione Veloce",
+		"quick_session_description": "Inizia a concentrarti su cosa stai facendo ora.",
+		"session": "Sessione",
+		"still_dont_have": "Non hai ancora",
+		"no_description": "Nessuna descrizione",
+		"continue_with": "Continua con",
+		"continue_title": "Continua",
+		"completed_at": "Completata",
+		"completed": "Completate",
+		"uncompleted": "Incompletate",
+		"created_at": "Creata",
+		"or": "o",
+		"work_session": "Sessione di lavoro",
+		"hours": "ore",
+		"filter_and_sort": "Filtra e Ordina",
+		"ascending": "Crescente",
+		"descending": "Decrescente",
+		"order": "Ordine",
+		"completed_task": "Task completate",
+		"week": "Settimana",
+		"month": "Mese",
+		"weeks": "Settimane",
+		"schedule": "Agenda",
+		"warning": "Attenzione",
+		"success": "Ottimo"
+	},
+	"schedule": {
+		"title": "Ciao",
+		"subtitle": "Ecco la tua agenda per questo mese!"
+	},
+	"projects": {
+		"title": "Progetto",
+		"subtitle": "Gestisci i tuoi progetti e le tue task.",
+		"plural": "Progetti",
+		"header_project_page": "Mettiti a Lavoro",
+		"invite_friends": "Invita i tuoi amici",
+		"any_project": "nessun progetto",
+		"has_been_found": "è stato trovato",
+		"in_progress": "In corso",
+		"already_done": "Completate",
+		"ending_today": "In scadenza oggi",
+		"create": {
+			"title": "Nuovo Progetto",
+			"add_cover": "Aggiungi copertina"
+		},
+		"collaborator": {
+			"invite_collaborator": "Invita un collaboratore",
+			"project_code": "I have a project code invitation",
+			"join": "Join",
+			"code_invitation": "Code invitation"
+		},
+		"delete": {
+			"title": "Elimina progetto",
+			"description": "Sei sicuro di voler elminare questo progetto?"
+		},
+		"archive": {
+			"action": "Archivia",
+			"title": "Archivia progetto",
+			"projects": "Progetti archiviati",
+			"description": "Sei sicuro di voler archiviare questo progetto? Non sarà più visibile nella tua lista dei progetti.",
+			"no_project": "Nessun progetto archiviato"
+		},
+		"unarchive": {
+			"action": "Ripristina",
+			"title": "Ripristina progetto",
+			"description": "Sei sicuro di voler ripristinare questo progetto? Sarà nuovamente visibile nella tua lista dei progetti."
+		}
+	},
+	"profile": {
+		"title": "Profilo",
+		"subtitle": "Gestisci le tue informazioni personali e le impostazioni.",
+		"account": "Account",
+		"my_profile": "Il mio profilo",
+		"settings": {
+			"general": {
+				"title": "Generali",
+				"timer_options": "Opzioni Timer",
+				"set_timer_options": "Imposta il Timer",
+				"dark_mode": "Dark Mode",
+				"notifications": "Notifiche",
+				"languages": {
+					"title": "Lingua",
+					"select_language": "Seleziona una lingua"
+				}
+			},
+			"delete_account": {
+				"title": "Elimina Account",
+				"description": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i dati associati al tuo account andranno persi."
+			},
+			"update": {
+				"updated_info": "Le tue informazioni sono state correttamente aggionrate",
+				"updated_photo": "La tua immagine profilo è stata correttamente aggiornata"
+			},
+			"about_us": {
+				"title": "About us",
+				"privacy_policy": "Privacy Policy",
+				"terms_and_conditions": "Termini e Condizioni",
+				"find_out_more": "Scopri di più"
+			},
+			"logout": {
+				"title": "Esci",
+				"description": "Sei sicuro di voler uscire da questo account?"
+			}
+		}
+	},
+	"stats": {
+		"title": "Statistiche",
+		"subtitle": "Tieni d'occhio i tuoi progressi e le tue abitudini.",
+		"short_title": "Stats",
+		"weekly_focus": "Overview Focus Settimanale",
+		"weekly_productivity": "Produttività Media Settimanale",
+		"any_stats": "nessuna statistica."
+	},
+	"tasks": {
+		"title": "Task",
+		"plural": "Tasks",
+		"focus_time": "Tempo di focus",
+		"break_time": "Tempo di pausa",
+		"total_tasks": "Tasks Totali",
+		"timer": "Timer",
+		"task_info": "Informazioni Task",
+		"breaktime": "Pausa",
+		"reset_timer": {
+			"title": "Resetta il Timer",
+			"description": "Sei sicuro di voler resettare il timer?"
+		},
+		"any_tasks": "nessuna task.",
+		"update": {
+			"edit": "Modifica Task"
+		},
+		"create": {
+			"title": "Nuova Task",
+			"working_on": "Sto lavorando a...",
+			"description": "Scrivi una descrizione della task...",
+			"pomodoros": "Pomodori",
+			"due_date": "Data di fine",
+			"high_priority": "Alta priorità",
+			"end_in": "Da finire entro...",
+			"project": "Progetto",
+			"select_a_project": "Seleziona un progetto..."
+		},
+		"delete": {
+			"title": "Elimina task",
+			"description": "Sei sicuro di voler eliminare questa task?"
+		},
+		"start_quick_session": "Inizia una Sessione Veloce",
+		"completed_task": {
+			"session_complete": "Task Completata",
+			"share_this_moment": "Condividi questo momento",
+			"back_home": "Torna alla home",
+			"first_part_desc": "Ottimo! Hai dimostrato di essere un buon compagno",
+			"second_part_desc": "di lavoro. Prenditi una pausa per riflettere e ",
+			"third_part_desc": "condividi i tuoi successi."
+		}
+	},
+	"authentication": {
+		"login": {
+			"title": "Accedi",
+			"welcome": "Bentornato!",
+			"description": "Al tuo account per rimetterti in sesto con i tuoi lavori!",
+			"forgot_password": "Hai dimenticato la password?",
+			"dont_have_an_account": "Non hai un account?",
+			"google": "Continua con Google",
+			"apple": "Continua con Apple"
+		},
+		"signup": {
+			"title": "Registrati",
+			"welcome": "Benvenuto!",
+			"description": "Crea il tuo account e mettiti a lavoro seriamente",
+			"i_accept": "Accetto",
+			"terms_and_conditions": "termini e condizioni",
+			"already_have_an_account": "Hai già un account?",
+			"choose_username": "Solo un altro step",
+			"available_username": "Username disponibile",
+			"unavailable_username": "Username non disponbile",
+			"choose_username_description": "Scegli il tuo username per completare la registrazione. Questo nome è unico per il tuo account e non potrai modificarlo in seguito.",
+			"success_title": "Benvenuto! Un ultimo step!",
+			"success": "Hai correttamente creato il tuo account! Ti abbiamo inviato una mail alla tua casella postale per confermare il tuo indirizzo email. Controlla anche la cartella SPAM!"
+		},
+		"forgot_password": {
+			"reset_password": "Reimposta la tua password",
+			"description_forgot": "Rinnova il tuo accesso con una reimpostazione della password, salvaguardando il tuo account con semplicità e tranquillità",
+			"secure_access": "Assicuraci che sei tu!",
+			"description_reset": "Inserisci il codice monouso che ti abbiamo appena inviato per sbloccare l'accesso al tuo regno digitale. Veloce, facile e super sicuro!",
+			"dont_recive_email": "Non hai ancora ricevuto un'email?",
+			"send_email": "Invia Email",
+			"you_can": "Puoi",
+			"resend": "inviare di nuovo il codice",
+			"seconds": "secondi",
+			"change_password": "Crea il tuo scudo",
+			"description_change_password": "Crea una nuova password robusta per mantenere sicuro il tuo mondo digitale e proteggere le tue informazioni. La tua fortezza, le tue regole.",
+			"new_password": "Nuova password",
+			"confirm_password": "Conferma la nuova password",
+			"success": {
+				"email_sent": "E' stata inviata correttamente l'email, perfavore controlla anche gli SPAM",
+				"success_recover": "La tua password è stata reimpostata con successo, prosegui facendo il login"
+			}
+		}
+	},
+	"errors": {
+		"error": "Errore",
+		"general_error": "Si è verificato un errore inaspettato.",
+		"please_restart": "Si prega di riavviare l'applicazione.",
+		"please_retry": "Si prega di riprovare",
+		"valid_info": "Perfavore inserisci delle informazioni corrette.",
+		"due_date_before_today": "La data di fine non può essere nel passato.",
+		"sorry": "Perdonaci.",
+		"operation_not_allowed": "Non sei autorizzato a eseguire questa operazione.",
+		"available_soon": "Questa feature sarà disponibile presto!",
+		"error_processing": "Si è verificato un errore processando la tua richiesta, riprova più tardi",
+		"accept_terms_and_condition": "Per iscriverti devi accettare i Termini e le Condizioni",
+		"form": {
+			"valid_email": "Inserisci una email valida",
+			"valid_password": "Inserisci una password valida",
+			"valid_name": "Inserisci un nome valido",
+			"valid_project_name": "Inserisci un nome del progetto valido",
+			"valid": "Inserisci un $name valido"
+		},
+		"projects": {
+			"fetching_project": "Si è verificato un errore durante il recupero dei tuoi progetti.",
+			"creating_project": "Si è verificato un errore durante la creazione di un nuovo progetto.",
+			"updating_project": "Si è verificato un errore durante l'aggiornamento del tuo progetto.",
+			"deleting_project": "Si è verificato un errore durante l'eliminazione del tuo progetto."
+		},
+		"users": {
+			"updating_user": "Si è verificato un errore durante l'aggionramento dei tuoi dati.",
+			"updating_user_photo": "Si è verificato un errore durante l'aggionramento della tua immagine di profilo.",
+			"deleting_user": "Si è verificato un errore durante l'eliminazione del tuo account.",
+			"searching_username": "Si è verificato un errore durante la verifica dell'username."
+		},
+		"tasks": {
+			"creating_task": "Si è verificato un errore durante la creazione di un nuovo task.",
+			"updating_task": "Si è verificato un errore durante l'aggiornamento della tua task.",
+			"deleting_task": "Si è verificato un errore durante l'eliminazione della tua task",
+			"fetching_task": "Si è verificato un errore durante il recupero delle tasks"
+		},
+		"stats": {
+			"fetching_stats": "Si è verificato un errore durante il caricamento delle statistiche"
+		},
+		"login": {
+			"general_error": "Si è verificato un errore durante l'accesso.",
+			"wrong_password": "Hai inserito la password sbagliata.",
+			"user_not_existing": "Questa email non è associata a nessun utente.",
+			"email_not_verified": "L'email associata a questo account non è stata verificata, ne abbiamo inviata un'altra, controlla la tua casella postale!"
+		},
+		"register": {
+			"general_error": "Si è verificato un errore durante la registrazione.",
+			"email_already_associated": "Questa email è già associata a un account.",
+			"username_already_in_use": "Questo useraname è già in uso.",
+			"invalid_password": "La password inserita non è valida."
+		},
+		"forgot_password": {
+			"forgot_password_email_error": "Si è verificato un errore durante l'invio della email di recupero",
+			"verify_token_invalid_error": "Il codice OTP inserito non è valido o è scaduto",
+			"verify_token_error": "Si è verificato un errore durante il controllo della validità del codice OTP",
+			"reset_password_error": "Si è verificato un errore durante il reset della password",
+			"reset_password_not_match_error": "Le due password non coincidono"
+		}
+	},
+	"notifications": {
+		"instant": {
+			"title": "Ottimo!",
+			"description": "Hai completato la tua sessione, prenditi una breve pausa!"
+		},
+		"scheduled": {
+			"task": {
+				"title": "Sbrigati!",
+				"description": "Ehi, la tua attività sta per scadere! Meglio darsi da fare e finirla in tempo!"
+			},
+			"project": {
+				"title": "Sbrigati!",
+				"description": "Attenzione! La scadenza del tuo progetto è vicina. Dai, è l'ultimo sforzo per chiuderlo al meglio!"
+			}
+		}
+	},
+	"week_days": {
+		"monday": {
+			"short": "Lun",
+			"long": "Lunedì"
+		},
+		"tuesday": {
+			"short": "Mar",
+			"long": "Martedì"
+		},
+		"wednesday": {
+			"short": "Mer",
+			"long": "Mercoledì"
+		},
+		"thursday": {
+			"short": "Gio",
+			"long": "Giovedì"
+		},
+		"friday": {
+			"short": "Ven",
+			"long": "Venerdì"
+		},
+		"saturday": {
+			"short": "Sab",
+			"long": "Sabato"
+		},
+		"sunday": {
+			"short": "Dom",
+			"long": "Domenica"
+		}
+	},
+	"on_boarding": {
+		"page_1": {
+			"title": "Gestisci il tuo tempo \n come più desideri!",
+			"description": "Goditi un timer super customizzabile e \n una gestione efficiente delle task."
+		},
+		"page_2": {
+			"title": "Gestisci le tue task \n come mai hai fatto prima!",
+			"description": "Organizza le tue giornate, controlla i tuoi progressi \n con la nostra timer app intuitiva \n che ti aiuta a raggiungere i tuoi obiettivi."
+		},
+		"finish_button": "Sono pronto"
+	}
+}

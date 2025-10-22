@@ -9,6 +9,15 @@ final List<SingleChildWidget> _providers = [
         compact: true,
       ),
     ),
+  Provider<supabase.SupabaseClient>.value(
+    value: supabase.Supabase.instance.client,
+  ),
+  Provider<NotificationService>(
+    create: (context) => NotificationServiceImpl(
+      logger: context.read(),
+      supabase: context.read(),
+    ),
+  ),
   Provider<Dio>(
     create: (context) => Dio(
       BaseOptions(contentType: 'application/json'),
@@ -20,7 +29,8 @@ final List<SingleChildWidget> _providers = [
     create: (_) => const FlutterSecureStorage(),
   ),
   Provider<StorageService>(
-    create: (context) => StorageService(userStringMapper: context.read(), secureStorage: context.read()),
+    create: (context) => StorageService(
+        userStringMapper: context.read(), secureStorage: context.read()),
   ),
   Provider<AuthenticationService>(
     create: (context) => AuthenticationService(
@@ -30,13 +40,10 @@ final List<SingleChildWidget> _providers = [
   ),
   Provider<OAuthService>(
     create: (context) => OAuthServiceImpl(
-      appleSignInFactory: ({required scopes, nonce}) => SignInWithApple.getAppleIDCredential(
+      appleSignInFactory: ({required scopes, nonce}) =>
+          SignInWithApple.getAppleIDCredential(
         scopes: scopes,
         nonce: nonce,
-      ),
-      googleSignInFactory: (scopes) => GoogleSignIn(
-        clientId: Platform.isIOS ? googleClientId : null,
-        scopes: scopes,
       ),
     ),
   ),

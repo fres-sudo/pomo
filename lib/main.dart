@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +10,7 @@ import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/di/dependency_injector.dart';
 import 'package:pomo/routes/app_router.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'constants/theme.dart';
 import 'i18n/strings.g.dart';
@@ -26,6 +25,10 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  await Supabase.initialize(
+      url: const String.fromEnvironment("SUPABASE_URL"),
+      anonKey: const String.fromEnvironment("SUPABASE_ANONKEY"));
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
@@ -68,8 +71,8 @@ class PomoApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             routeInformationParser: appRouter.defaultRouteParser(),
-            theme: LightTheme.make,
-            darkTheme: DarkTheme.make,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
             themeMode: state.mode,
           );
         },

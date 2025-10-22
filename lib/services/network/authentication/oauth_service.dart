@@ -17,16 +17,15 @@ abstract class OAuthService {
 
 class OAuthServiceImpl with EncryptedCredentialsMixin implements OAuthService {
   final AppleSignInFactory appleSignInFactory;
-  final GoogleSignInFactory googleSignInFactory;
+  // final GoogleSignInFactory googleSignInFactory;
 
   const OAuthServiceImpl({
     required this.appleSignInFactory,
-    required this.googleSignInFactory,
   });
 
   @override
   Future<GoogleSignInAccount?> signInWithGoogle() async {
-    return await googleSignInFactory(['email']).signIn();
+    // return await googleSignInFactory(['email']).();
   }
 
   @override

@@ -1,0 +1,11 @@
+{
+	"configurations": [
+		{
+			"name": "Flutter with Env",
+			"request": "launch",
+			"type": "dart",
+			"program": "lib/main.dart",
+			"args": ["--dart-define-from-file=.vscode/env.json"]
+		}
+	]
+}

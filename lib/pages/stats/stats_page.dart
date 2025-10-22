@@ -31,11 +31,7 @@ class _StatsPageState extends State<StatsPage> {
   List<String> days = [t.general.today, t.general.yesterday, t.general.all_times];
 
   Future<void> _fetchStats() async {
-    final userId = switch (context.read<AuthCubit>().state) {
-      AuthenticatedAuthState(:final user) => user.id,
-      _ => ""
-    };
-    context.read<StatsBloc>().fetchStats(userId: userId);
+    context.read<StatsBloc>().fetchStats();
   }
 
   String _formatTime(int? time, int factor) {

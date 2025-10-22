@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/fres/dev/projects/pomo/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

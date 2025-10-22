@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:pine/pine.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,12 +12,11 @@ sealed class UserJTO extends DTO with _$UserJTO {
   const UserJTO._() : super();
   const factory UserJTO({
     required String id,
-    required String username,
+    @JsonKey(name: 'name') required String username,
     required String email,
-    String? avatar,
+    @JsonKey(name: 'image') String? avatar,
     required DateTime createdAt,
   }) = _UserJTO;
 
-  factory UserJTO.fromJson(Map<String, dynamic> json) =>
-      _$UserJTOFromJson(json);
+  factory UserJTO.fromJson(Map<String, dynamic> json) => _$UserJTOFromJson(json);
 }
