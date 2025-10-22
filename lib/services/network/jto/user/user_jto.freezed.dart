@@ -16,8 +16,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserJTO {
   String get id;
+  @JsonKey(name: 'name')
   String get username;
   String get email;
+  @JsonKey(name: 'image')
   String? get avatar;
   DateTime get createdAt;
 
@@ -63,9 +65,9 @@ abstract mixin class $UserJTOCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String username,
+      @JsonKey(name: 'name') String username,
       String email,
-      String? avatar,
+      @JsonKey(name: 'image') String? avatar,
       DateTime createdAt});
 }
 
@@ -117,9 +119,9 @@ class _$UserJTOCopyWithImpl<$Res> implements $UserJTOCopyWith<$Res> {
 class _UserJTO extends UserJTO {
   const _UserJTO(
       {required this.id,
-      required this.username,
+      @JsonKey(name: 'name') required this.username,
       required this.email,
-      this.avatar,
+      @JsonKey(name: 'image') this.avatar,
       required this.createdAt})
       : super._();
   factory _UserJTO.fromJson(Map<String, dynamic> json) =>
@@ -128,10 +130,12 @@ class _UserJTO extends UserJTO {
   @override
   final String id;
   @override
+  @JsonKey(name: 'name')
   final String username;
   @override
   final String email;
   @override
+  @JsonKey(name: 'image')
   final String? avatar;
   @override
   final DateTime createdAt;
@@ -184,9 +188,9 @@ abstract mixin class _$UserJTOCopyWith<$Res> implements $UserJTOCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String username,
+      @JsonKey(name: 'name') String username,
       String email,
-      String? avatar,
+      @JsonKey(name: 'image') String? avatar,
       DateTime createdAt});
 }
 

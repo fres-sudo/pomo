@@ -27,7 +27,12 @@ import '../../routes/app_router.gr.dart';
 @RoutePage()
 class CreateProjectPage extends StatefulWidget {
   const CreateProjectPage(
-      {super.key, this.startDate, this.endDate, this.name, this.description, this.image});
+      {super.key,
+      this.startDate,
+      this.endDate,
+      this.name,
+      this.description,
+      this.image});
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -41,7 +46,8 @@ class CreateProjectPage extends StatefulWidget {
 
 class _CreateProjectPageState extends State<CreateProjectPage> {
   final TextEditingController _nameTextController = TextEditingController();
-  final TextEditingController _descriptionTextController = TextEditingController();
+  final TextEditingController _descriptionTextController =
+      TextEditingController();
 
   XFile? image;
 
@@ -73,26 +79,28 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 onErrorState(context, error.localizedString(context)),
               CreatedProjectState(:final project) => () {
                   final int notificationId = Random().nextInt(1000);
-                  final existingNotificationId =
-                      context.read<NotificationCubit>().state.scheduledNotifications[project.id];
+                  final existingNotificationId = context
+                      .read<NotificationCubit>()
+                      .state
+                      .scheduledNotifications[project.id];
                   if (existingNotificationId == null) {
                     // NotificationService.scheduleNotification(
                     //     notificationId,
                     //     "${t.notifications.scheduled.project.title} ⏰",
                     //     "${t.notifications.scheduled.project.description} 👀",
                     //     project.endDate);
-                    context
-                        .read<NotificationCubit>()
-                        .addScheduledNotification(project.id ?? "", notificationId);
+                    context.read<NotificationCubit>().addScheduledNotification(
+                        project.id ?? "", notificationId);
                   }
                   image != null
                       ? context.read<ProjectBloc>().uploadProjectImageCover(
                           id: project.id ?? '', imageCover: File(image!.path))
-                      : context.router
-                          .push(ProjectDetailsRoute(project: project, isCreatedProject: true));
+                      : context.router.push(ProjectDetailsRoute(
+                          project: project, isCreatedProject: true));
                 },
-              UpdatedProjectState(:final project) =>
-                context.router.push(ProjectDetailsRoute(project: project, isCreatedProject: true)),
+              UpdatedProjectState(:final project) => context.router.push(
+                  ProjectDetailsRoute(
+                      project: project, isCreatedProject: true)),
               _ => null
             },
         builder: (context, state) {
@@ -115,22 +123,27 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         const Spacer(),
                         TextButton(
                             onPressed: () {
-                              final user = switch (context.read<AuthCubit>().state) {
+                              final user =
+                                  switch (context.read<AuthCubit>().state) {
                                 AuthenticatedAuthState(:final user) => user,
                                 _ => User.fake(),
                               };
-                              if (_endDate == null || _nameTextController.text.length < 3) {
+                              if (_endDate == null ||
+                                  _nameTextController.text.length < 3) {
                                 onInvalidInput(context);
                                 return;
                               }
-                              if (_endDate != null && _endDate!.isBeforeDay(DateTime.now())) {
-                                onInvalidInput(context, text: t.errors.due_date_before_today);
+                              if (_endDate != null &&
+                                  _endDate!.isBeforeDay(DateTime.now())) {
+                                onInvalidInput(context,
+                                    text: t.errors.due_date_before_today);
                                 return;
                               }
                               context.read<ProjectBloc>().createProject(
                                       project: Project(
                                     name: _nameTextController.text,
-                                    description: _descriptionTextController.text,
+                                    description:
+                                        _descriptionTextController.text,
                                     startDate: _startDate ?? DateTime.now(),
                                     endDate: _endDate ?? DateTime.now(),
                                     userId: user.id,
@@ -138,14 +151,22 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   ));
                             },
                             child: switch (state) {
-                              CreatingProjectState() => const CustomCircularProgressIndicator(),
+                              CreatingProjectState() =>
+                                const CustomCircularProgressIndicator(),
                               _ => Text(
                                   t.general.create,
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color:
-                                          _nameTextController.text.length >= 3 && _endDate != null
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                          color: _nameTextController
+                                                          .text.length >=
+                                                      3 &&
+                                                  _endDate != null
                                               ? Theme.of(context).primaryColor
-                                              : Theme.of(context).colorScheme.onSecondary),
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary),
                                 ),
                             })
                       ],
@@ -167,12 +188,6 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 ),
                 Gap.MD,*/
                     DottedBorder(
-                      strokeWidth: 2,
-                      color: Theme.of(context).dividerColor,
-                      dashPattern: const [3, 10],
-                      strokeCap: StrokeCap.round,
-                      borderType: BorderType.RRect,
-                      radius: const Radius.circular(30),
                       child: InkResponse(
                         splashColor: Colors.transparent,
                         onTap: () async {
@@ -187,13 +202,19 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30)),
                           height: MediaQuery.sizeOf(context).height / 7,
                           child: image == null
                               ? Text(t.projects.create.add_cover,
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontSize: 14,
-                                      color: Theme.of(context).colorScheme.onSecondaryContainer))
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer))
                               : Stack(
                                   children: [
                                     Image.file(
@@ -208,7 +229,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                         width: 40,
                                         decoration: BoxDecoration(
                                           color: kNeutral100,
-                                          borderRadius: BorderRadius.circular(200),
+                                          borderRadius:
+                                              BorderRadius.circular(200),
                                         ),
                                         child: IconButton(
                                             onPressed: () {
@@ -218,7 +240,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                             },
                                             icon: Icon(
                                               Icons.delete_forever,
-                                              color: Theme.of(context).colorScheme.error,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .error,
                                             )),
                                       ),
                                     ),
@@ -228,7 +252,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       ),
                     ),
                     Gap.MD,
-                    Text("${t.general.name}*", style: Theme.of(context).textTheme.titleMedium),
+                    Text("${t.general.name}*",
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextFormField(
                       controller: _nameTextController,
@@ -238,14 +263,17 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                       ),
                       onChanged: (_) => setState(() {}),
                       validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 3) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 3) {
                           return 'Please enter a valid project name';
                         }
                         return null;
                       },
                     ),
                     Gap.SM,
-                    Text(t.general.start_date, style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.general.start_date,
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     DateField(
                         selectedDate: _startDate,
@@ -256,7 +284,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                               _startDate = null;
                             })),
                     Gap.SM,
-                    Text("${t.general.due_date}*", style: Theme.of(context).textTheme.titleMedium),
+                    Text("${t.general.due_date}*",
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     DateField(
                         firstDate: _startDate,
@@ -268,12 +297,14 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                               _endDate = null;
                             })),
                     Gap.SM,
-                    Text(t.general.collaborator, style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.general.collaborator,
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextButton(
                       onPressed: () => onAvailableSoon(context),
                       style: TextButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -281,15 +312,19 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(t.projects.collaborator.invite_collaborator,
-                                style: Theme.of(context).inputDecorationTheme.hintStyle),
+                                style: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle),
                             Icon(Icons.keyboard_arrow_down_rounded,
-                                color: Theme.of(context).colorScheme.onSecondary)
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary)
                           ],
                         ),
                       ),
                     ),
                     Gap.SM,
-                    Text(t.general.description, style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.general.description,
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextFormField(
                       controller: _descriptionTextController,

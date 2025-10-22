@@ -12,7 +12,7 @@ class GenericError extends LocalizedError {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is GenericError && runtimeType == other.runtimeType;
+      other is GenericError && runtimeType == other.runtimeType;
 
   @override
   int get hashCode => runtimeType.hashCode;
@@ -23,5 +23,11 @@ class ErrorProcessing extends LocalizedError {
   String localizedString(BuildContext context) {
     return context.t.errors.error_processing;
   }
+}
 
+class OperationNotAllowedError extends LocalizedError {
+  @override
+  String localizedString(BuildContext context) {
+    return context.t.errors.operation_not_allowed;
+  }
 }

@@ -55,13 +55,12 @@ class RootPage extends StatelessWidget {
                     };
                     if (value == 0 /* && context.read<TaskBloc>().state is! FetchedTaskState */) {
                       context.read<TaskBloc>().fetch(
-                          userId: userId,
                           date: context.read<ScheduleCubit>().state.selectedDay,
                           format: CalendarFormat.month);
                     }
                     if (value ==
                         1 /* && context.read<ProjectBloc>().state is! FetchedProjectState */) {
-                      context.read<ProjectBloc>().fetch(userId: userId);
+                      context.read<ProjectBloc>().fetch();
                     }
                     tabsRouter.setActiveIndex(value);
                   },

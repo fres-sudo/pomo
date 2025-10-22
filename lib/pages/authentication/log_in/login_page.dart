@@ -2,15 +2,21 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
 import 'package:pomo/components/fields/email_field.dart';
 import 'package:pomo/components/fields/password_field.dart';
 import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
+import 'package:pomo/components/utils/utils.dart';
 import 'package:pomo/components/widgets/or_separator.dart';
 import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/constants/assets.dart';
 import 'package:pomo/constants/colors.dart';
+import 'package:pomo/constants/device.dart';
 import 'package:pomo/constants/text.dart';
 import 'package:pomo/cubits/auth/auth_cubit.dart';
+import 'package:pomo/cubits/theme/theme_cubit.dart';
+import 'package:pomo/extension/extensions.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
 import '../../../components/widgets/alert.dart';
@@ -67,178 +73,64 @@ class _LoginPageState extends State<LoginPage> {
       },
       builder: (BuildContext context, SignInState state) {
         return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Container(
-                        height: MediaQuery.sizeOf(context).height / 4,
-                        decoration: const BoxDecoration(
-                          gradient: kGradientPurple2,
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("${t.authentication.login.welcome} 🍅", style: kSerzif(context)),
-                          Gap.XS,
-                          Text(t.authentication.login.description,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondaryContainer)),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
-                    child: Column(
-                      children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Email", style: Theme.of(context).textTheme.titleMedium),
-                              Gap.SM,
-                              EmailField(controller: _emailTextController),
-                              Gap.SM,
-                              Text("Password", style: Theme.of(context).textTheme.titleMedium),
-                              Gap.SM,
-                              PasswordField(controller: _passwordTextController),
-                              Gap.SM,
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
-                                  child: Text(
-                                    t.authentication.login.forgot_password,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium
-                                        ?.copyWith(color: kPrimary500),
-                                  ),
-                                ),
-                              ),
-                              Gap.SM,
-                              switch (state) {
-                                ErrorSignInSignInState(:final error) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child:
-                                        CustomAlert.error(message: error.localizedString(context)),
-                                  ),
-                                _ => const SizedBox(),
-                              },
-                              Gap.SM,
-                            ]),
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                _formKey.currentState!.validate()
-                                    ? context.read<SignInBloc>().perform(
-                                        email: _emailTextController.text,
-                                        password: _passwordTextController.text)
-                                    : onInvalidInput(context);
-                              },
-                              child: switch (state) {
-                                SigningInSignInState() => const CustomCircularProgressIndicator(),
-                                _ => Center(
-                                      child: Text(
-                                    t.authentication.login.title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(fontSize: 14, color: kNeutral100),
-                                  )),
-                              },
-                            ),
-                            Gap.MD,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  t.authentication.login.dont_have_an_account,
-                                  style: Theme.of(context).textTheme.labelMedium,
-                                ),
-                                Gap.XS_H,
-                                GestureDetector(
-                                  onTap: () => context.pushRoute(const SignUpRoute()),
-                                  child: Text(
-                                    t.authentication.signup.title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium
-                                        ?.copyWith(color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Gap.MD,
-                        const OrSeparator(),
-                        Gap.MD,
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: TextButton(
-                              onPressed: () => context.read<SignInBloc>().google(),
-                              style: TextButton.styleFrom(
-                                  side: BorderSide(color: Theme.of(context).dividerColor),
-                                  backgroundColor: Colors.transparent),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/google-logo.svg",
-                                    width: 19,
-                                    height: 19,
-                                  ),
-                                  Gap.SM_H,
-                                  Text(
-                                    t.authentication.login.google,
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                        color: Theme.of(context).colorScheme.onSecondary),
-                                  )
-                                ],
-                              )),
-                        ),
-                        if (false)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: TextButton(
-                                onPressed: () => context.read<SignInBloc>().apple(),
-                                style: TextButton.styleFrom(
-                                    side: BorderSide(color: Theme.of(context).dividerColor),
-                                    backgroundColor: Colors.transparent),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/icons/apple-logo.svg",
-                                      width: 19,
-                                      height: 19,
-                                    ),
-                                    Gap.SM_H,
-                                    Text(
-                                      t.authentication.login.apple,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                          color: Theme.of(context).colorScheme.onSecondary),
-                                    )
-                                  ],
-                                )),
-                          ),
-                      ],
-                    ),
+          bottomNavigationBar: SafeArea(
+            bottom: true,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Sizes.responsiveInsets(context),
+                  vertical: Sizes.md),
+              child: Column(
+                spacing: Sizes.xs,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    spacing: Sizes.md,
+                    children: [
+                      Expanded(
+                          child: FilledButton.tonal(
+                              onPressed: () =>
+                                  context.read<SignInBloc>().google(),
+                              child: SvgPicture.asset(
+                                PomoAssets.googleLogo,
+                                width: Sizes.lg + 4,
+                                height: Sizes.lg + 4,
+                              ))),
+                      Expanded(
+                          child: FilledButton.tonal(
+                              onPressed: () =>
+                                  context.read<SignInBloc>().apple(),
+                              child: SvgPicture.asset(
+                                context.isDarkMode
+                                    ? PomoAssets.appleLightLogo
+                                    : PomoAssets.appleDarkLogo,
+                                width: Sizes.lg + 4,
+                                height: Sizes.lg + 4,
+                              ))),
+                    ],
                   ),
-                ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: FilledButton(
+                              onPressed: () {},
+                              child: Text("Continue with Email".hardcoded()))),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body: Padding(
+            padding: EdgeInsets.all(Sizes.responsiveInsets(context)),
+            child: Column(
+              spacing: Sizes.xl,
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(Sizes.borderRadius),
+                    child: Image.asset("assets/images/login-image.png")),
+                Text("Welcome to Pomo".hardcoded(),
+                    style: Theme.of(context).textTheme.displayLarge),
               ],
             ),
           ),

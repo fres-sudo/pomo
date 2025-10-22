@@ -38,12 +38,7 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   void fetchTasks() {
-    final userId = switch (context.read<AuthCubit>().state) {
-      AuthenticatedAuthState(:final user) => user.id,
-      _ => ""
-    };
     context.read<TaskBloc>().fetch(
-        userId: userId,
         date: context.read<ScheduleCubit>().state.selectedDay,
         format: context.read<ScheduleCubit>().state.calendarFormat);
   }
@@ -51,11 +46,9 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     switch (context.watch<AuthCubit>()) {
-      case AuthenticatedAuthState(:final user):
+      case AuthenticatedAuthState():
         context.read<TaskBloc>().fetch(
-            userId: user.id,
-            date: context.read<ScheduleCubit>().state.selectedDay,
-            format: CalendarFormat.month);
+            date: context.read<ScheduleCubit>().state.selectedDay, format: CalendarFormat.month);
         break;
       default:
         break;
@@ -208,6 +201,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                 ),
                                 availableCalendarFormats: {
                                   CalendarFormat.month: t.general.month,
+                                  CalendarFormat.week: t.general.week,
                                 },
                                 onPageChanged: (date) {
                                   context.read<ScheduleCubit>().onDaySelected(
@@ -215,22 +209,14 @@ class _SchedulePageState extends State<SchedulePage> {
                                         focusedDay: date,
                                       );
                                   context.read<TaskBloc>().fetch(
-                                      userId: switch (context.read<AuthCubit>().state) {
-                                        AuthenticatedAuthState(:final user) => user.id,
-                                        _ => ""
-                                      },
                                       date: date,
                                       format: context.read<ScheduleCubit>().state.calendarFormat);
                                 },
                                 calendarFormat: scheduleState.calendarFormat,
                                 onFormatChanged: (format) {
-                                  context.read<TaskBloc>().fetch(
-                                      userId: switch (context.read<AuthCubit>().state) {
-                                        AuthenticatedAuthState(:final user) => user.id,
-                                        _ => ""
-                                      },
-                                      date: scheduleState.selectedDay,
-                                      format: format);
+                                  context
+                                      .read<TaskBloc>()
+                                      .fetch(date: scheduleState.selectedDay, format: format);
                                   context
                                       .read<ScheduleCubit>()
                                       .changeCalendarFormat(format: format);

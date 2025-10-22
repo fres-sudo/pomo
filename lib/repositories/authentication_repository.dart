@@ -65,8 +65,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   final _authController = StreamController<bool>.broadcast();
 
-  void notifySignedOut() =>
-      _authController.add(false); // false == not authenticated
+  void notifySignedOut() => _authController.add(false); // false == not authenticated
 
   final AuthenticationService authenticationService;
   final DTOMapper<SignUpResponse, User> signUpMapper;
@@ -83,7 +82,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
     final user = userMapper.fromDTO(response.user);
 
-    await storageService.storeRefreshToken(response.refreshToken);
+    // await storageService.storeRefreshToken(response.refreshToken);
     await storageService.storeAccessToken(response.accessToken);
     await storageService.storeUserData(user: user);
 
@@ -109,8 +108,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<String> forgotPassword({required String email}) async {
-    final result = await authenticationService
-        .forgotPassword(ForgotPasswordRequest(email: email));
+    final result = await authenticationService.forgotPassword(ForgotPasswordRequest(email: email));
     return result;
   }
 
@@ -131,14 +129,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<String?> get getAccessToken async => await storageService.accessToken;
 
   @override
-  Future<String?> get getRefreshToken async =>
-      await storageService.refreshToken;
+  Future<String?> get getRefreshToken async => await storageService.refreshToken;
 
   @override
-  Future<RefreshTokenResponse> refreshToken(
-      {required String refreshToken}) async {
-    final response = await authenticationService
-        .refreshToken(RefreshTokenRequest(refreshToken: refreshToken));
+  Future<RefreshTokenResponse> refreshToken({required String refreshToken}) async {
+    final response =
+        await authenticationService.refreshToken(RefreshTokenRequest(refreshToken: refreshToken));
     await storageService.storeAccessToken(response.accessToken);
     await storageService.storeRefreshToken(response.refreshToken);
     return response;
@@ -153,17 +149,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     final result = await authenticationService.resetPassword(
         token,
         ResetPasswordRequest(
-            email: email,
-            newPassword: newPassword,
-            confirmNewPassword: confirmNewPassword));
+            email: email, newPassword: newPassword, confirmNewPassword: confirmNewPassword));
     return result;
   }
 
   @override
-  Future<String> verifyToken(
-      {required String token, required String email}) async {
-    final result = await authenticationService
-        .verifyToken(VerifyTokenRequest(email: email, token: token));
+  Future<String> verifyToken({required String token, required String email}) async {
+    final result =
+        await authenticationService.verifyToken(VerifyTokenRequest(email: email, token: token));
     return result;
   }
 

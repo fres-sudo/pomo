@@ -16,29 +16,27 @@ part 'stats_bloc.freezed.dart';
 
 /// The StatsBloc
 class StatsBloc extends Bloc<StatsEvent, StatsState> {
-
   final StatsRepository statsRepository;
+
   /// Create a new instance of [StatsBloc].
-  StatsBloc({ required this.statsRepository}) : super(StatsState.initial()) {
+  StatsBloc({required this.statsRepository}) : super(StatsState.initial()) {
     on<FetchStatsStatsEvent>(_onFetchStats);
   }
-  
+
   /// Method used to add the [FetchStatsStatsEvent] event
-  void fetchStats({required String userId}) => add(StatsEvent.fetchStats(userId: userId));
-  
-  
+  void fetchStats() => add(StatsEvent.fetchStats());
+
   FutureOr<void> _onFetchStats(
     FetchStatsStatsEvent event,
     Emitter<StatsState> emit,
   ) async {
     emit(StatsState.fetching());
-    try{
-      final stats = await statsRepository.fetchStats(userId: event.userId);
+    try {
+      final stats = await statsRepository.fetchStats();
       emit(StatsState.fetched(stats));
-    }catch(e, stack) {
+    } catch (e, stack) {
       logger.e("_onFetchStats", error: e, stackTrace: stack);
       emit(StatsState.error(FetchingStatsError()));
     }
   }
-  
 }

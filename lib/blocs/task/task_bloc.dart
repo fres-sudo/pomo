@@ -34,17 +34,19 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   void create({required Task task}) => add(TaskEvent.createTask(task: task));
 
   /// Method used to add the [UpdateTaskByIdTaskEvent] event
-  void update({required String id, required Task task}) => add(TaskEvent.updateTaskById(id: id, task: task));
+  void update({required String id, required Task task}) =>
+      add(TaskEvent.updateTaskById(id: id, task: task));
 
   /// Method used to add the [DeleteTaskByIdTaskEvent] event
   void delete({required String id}) => add(TaskEvent.deleteTaskById(id: id));
 
   /// Method used to add the [GetTasksByProjectTaskEvent] event
-  void getByProject({required String projectId}) => add(TaskEvent.getTasksByProject(projectId: projectId));
+  void getByProject({required String projectId}) =>
+      add(TaskEvent.getTasksByProject(projectId: projectId));
 
   /// Method used to add the [GetTasksByDayTaskEvent] event
-  void fetch({required String userId, required DateTime date, required CalendarFormat format}) =>
-      add(TaskEvent.fetchTasks(userId: userId, date: date, format: format));
+  void fetch({required DateTime date, required CalendarFormat format}) =>
+      add(TaskEvent.fetchTasks(date: date, format: format));
 
   void getOneById({required String id}) => add(TaskEvent.getTaskById(id: id));
 
@@ -54,7 +56,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     emit(TaskState.fetching());
     try {
-      final tasks = await taskRepository.fetchTasks(userId: event.userId, date: event.date, format: event.format);
+      final tasks = await taskRepository.fetchTasks(date: event.date, format: event.format);
       emit(TaskState.fetched(tasks));
     } catch (error, stack) {
       logger.e("_onFetchTasks", error: error, stackTrace: stack);

@@ -50,11 +50,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     });
     if (widget.dueDate != null) {
       _selectedDate = widget.dueDate;
-      final userId = switch (context.read<AuthCubit>().state) {
-        AuthenticatedAuthState(:final user) => user.id,
-        _ => ""
-      };
-      context.read<ProjectBloc>().fetch(userId: userId);
+      context.read<ProjectBloc>().fetch();
     }
     if (widget.task != null) {
       _nameTextEditingController.text = widget.task!.name;

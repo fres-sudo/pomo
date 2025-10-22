@@ -8,7 +8,6 @@ part 'stats_service.g.dart';
 abstract class StatsService {
   factory StatsService(Dio dio, {String baseUrl}) = _StatsService;
 
-  @GET('/stats/{userId}')
-  Future<StatsJTO> getStatsByUser(@Path('userId') String userId);
-
+  @GET('/stats')
+  Future<StatsJTO> getStatsByUser();
 }

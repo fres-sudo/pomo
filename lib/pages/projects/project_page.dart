@@ -32,27 +32,17 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   initState() {
-    final userId = switch (context.read<AuthCubit>().state) {
-      AuthenticatedAuthState(:final user) => user.id,
-      _ => ""
-    };
-    context.read<ProjectBloc>().fetch(userId: userId);
+    context.read<ProjectBloc>().fetch();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userId = switch (context.read<AuthCubit>().state) {
-      AuthenticatedAuthState(:final user) => user.id,
-      _ => ""
-    };
     return BlocConsumer<ProjectBloc, ProjectState>(
         listener: (BuildContext context, ProjectState state) => switch (state) {
-              CreatedProjectState(:final project) =>
-                context.read<ProjectBloc>().fetch(userId: userId),
-              UpdatedProjectState(:final project) =>
-                context.read<ProjectBloc>().fetch(userId: userId),
-              DeletedProjectState() => context.read<ProjectBloc>().fetch(userId: userId),
+              CreatedProjectState() => context.read<ProjectBloc>().fetch(),
+              UpdatedProjectState() => context.read<ProjectBloc>().fetch(),
+              DeletedProjectState() => context.read<ProjectBloc>().fetch(),
               ErrorFetchigProjectState(:final error) =>
                 onErrorState(context, error.localizedString(context)),
               _ => null,
@@ -177,11 +167,7 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Future<void> _onRefresh() async {
-    final userId = switch (context.read<AuthCubit>().state) {
-      AuthenticatedAuthState(:final user) => user.id,
-      _ => ""
-    };
-    context.read<ProjectBloc>().fetch(userId: userId);
+    context.read<ProjectBloc>().fetch();
   }
 }
 

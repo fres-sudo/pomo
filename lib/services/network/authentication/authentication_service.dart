@@ -17,10 +17,9 @@ part 'authentication_service.g.dart';
 /// Abstract class of AuthenticationService
 @RestApi()
 abstract class AuthenticationService {
-  factory AuthenticationService(Dio dio, {String baseUrl}) =
-      _AuthenticationService;
+  factory AuthenticationService(Dio dio, {String baseUrl}) = _AuthenticationService;
 
-  @POST('/auth/sing-in/email')
+  @POST('/auth/sign-in/email')
   Future<SignInResponse> signIn(@Body() SignInRequest request);
 
   @POST('/auth/sign-up/email')
@@ -33,12 +32,10 @@ abstract class AuthenticationService {
   Future<String> verifyToken(@Body() VerifyTokenRequest request);
 
   @POST('/auth/resetpassword/{token}')
-  Future<String> resetPassword(
-      @Path('token') String token, @Body() ResetPasswordRequest request);
+  Future<String> resetPassword(@Path('token') String token, @Body() ResetPasswordRequest request);
 
   @POST('/auth/refresh-token')
-  Future<RefreshTokenResponse> refreshToken(
-      @Body() RefreshTokenRequest refreshToken);
+  Future<RefreshTokenResponse> refreshToken(@Body() RefreshTokenRequest refreshToken);
 
   @POST('/auth/google')
   Future<SignInResponse> retrieveGoogleUser(@Body() OAuthGoogleRequest request);

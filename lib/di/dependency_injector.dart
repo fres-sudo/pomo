@@ -28,6 +28,7 @@ import 'package:pomo/services/network/authentication/authentication_service.dart
 import 'package:pomo/services/network/authentication/oauth_service.dart';
 import 'package:pomo/services/network/jto/stats/stats_jto.dart';
 import 'package:pomo/services/network/jto/task/task_jto.dart';
+import 'package:pomo/services/network/notifications/notification_service.dart';
 import 'package:pomo/services/network/response/sign_up/sign_up_response.dart';
 import 'package:pomo/services/network/stats/stats_service.dart';
 import 'package:pomo/services/network/user/user_service.dart';
@@ -37,6 +38,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import '../blocs/project/project_bloc.dart';
 import '../blocs/sign_up/sign_up_bloc.dart';
 import '../blocs/task/task_bloc.dart';
