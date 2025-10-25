@@ -12,6 +12,7 @@ final List<SingleChildWidget> _providers = [
   Provider<supabase.SupabaseClient>.value(
     value: supabase.Supabase.instance.client,
   ),
+  Provider<Logger>(create: (_) => Logger(printer: PrettyPrinter())),
   Provider<NotificationService>(
     create: (context) => NotificationServiceImpl(
       logger: context.read(),
@@ -40,11 +41,16 @@ final List<SingleChildWidget> _providers = [
   ),
   Provider<OAuthService>(
     create: (context) => OAuthServiceImpl(
-      appleSignInFactory: ({required scopes, nonce}) =>
-          SignInWithApple.getAppleIDCredential(
-        scopes: scopes,
-        nonce: nonce,
-      ),
+        appleSignInFactory: ({required scopes, nonce}) =>
+            SignInWithApple.getAppleIDCredential(
+              scopes: scopes,
+              nonce: nonce,
+            )),
+  ),
+  Provider<AuthService>(
+    create: (context) => AuthServiceImpl(
+      logger: context.read(),
+      supabase: context.read(),
     ),
   ),
   Provider<ProjectService>(

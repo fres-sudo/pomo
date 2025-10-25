@@ -27,42 +27,71 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     required this.authenticationRepository,
     required this.oAuthRepository,
   }) : super(const SignInState.notSignedIn()) {
-    on<PerformSignInEvent>(_onPerform);
+    on<EmailSignInEvent>(_onEmailSignIn);
+    on<VerifyOtpSignInEvent>(_onVerifyOtp);
     on<GoogleSignInEvent>(_onGoogleSignIn);
     on<AppleSignInEvent>(_onAppleSignIn);
   }
 
-  /// Method used to add the [PerformSignInEvent] event
-  void perform({
+  /// Method used to add the [EmailSignInEvent] event
+  void email({
     required String email,
-    required String password,
   }) =>
-      add(SignInEvent.perform(
+      add(SignInEvent.email(
         email: email,
-        password: password,
+      ));
+
+  void verifyOtp({
+    required String email,
+    required String otp,
+  }) =>
+      add(SignInEvent.verifyOtp(
+        email: email,
+        otp: otp,
       ));
 
   void google() => add(const SignInEvent.google());
 
   void apple() => add(const SignInEvent.apple());
 
-  FutureOr<void> _onPerform(
-    PerformSignInEvent event,
+  FutureOr<void> _onEmailSignIn(
+    EmailSignInEvent event,
     Emitter<SignInState> emit,
   ) async {
     emit(const SignInState.signingIn());
     try {
-      final user = await authenticationRepository.signIn(
+      await authenticationRepository.signIn(
         email: event.email,
-        password: event.password,
       );
-      emit(SignInState.signedIn(user));
+      emit(SignInState.signedIn(event.email));
     } on DioException catch (error, stack) {
-      logger.e("_onPerform", error: error, stackTrace: stack);
-      emit(SignInState.errorSignIn(AuthError.fromMessage(error.response?.data)));
+      logger.e("_onEmailSignIn", error: error, stackTrace: stack);
+      emit(
+          SignInState.errorSignIn(AuthError.fromMessage(error.response?.data)));
     } catch (e, stack) {
       logger.e("_onPerform", error: e, stackTrace: stack);
       emit(SignInState.errorSignIn(GeneralSignInError()));
+    }
+  }
+
+  FutureOr<void> _onVerifyOtp(
+    VerifyOtpSignInEvent event,
+    Emitter<SignInState> emit,
+  ) async {
+    emit(const SignInState.verifyingEmail());
+    try {
+      await authenticationRepository.verifyOtp(
+        email: event.email,
+        otp: event.otp,
+      );
+      emit(const SignInState.verificationSuccessful());
+    } on DioException catch (error, stack) {
+      logger.e("_onVerifyOtp", error: error, stackTrace: stack);
+      emit(SignInState.verificationError(
+          AuthError.fromMessage(error.response?.data)));
+    } catch (e, stack) {
+      logger.e("_onVerifyOtp", error: e, stackTrace: stack);
+      emit(SignInState.verificationError(GeneralSignInError()));
     }
   }
 

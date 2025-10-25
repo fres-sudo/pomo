@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pomo/constants/colors.dart';
 
-class CustomCircularProgressIndicator extends StatelessWidget {
-  const CustomCircularProgressIndicator({
-    super.key,
-    this.color
-  });
+class LoadingSpinner extends StatelessWidget {
+  const LoadingSpinner({super.key, this.color});
 
   final Color? color;
 
@@ -16,7 +12,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
             width: 21,
             height: 21,
             child: CircularProgressIndicator.adaptive(
-              backgroundColor: color ?? kNeutralWhite,
+              backgroundColor: color ?? Theme.of(context).colorScheme.surface,
             )));
   }
 }

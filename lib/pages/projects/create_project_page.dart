@@ -151,8 +151,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   ));
                             },
                             child: switch (state) {
-                              CreatingProjectState() =>
-                                const CustomCircularProgressIndicator(),
+                              CreatingProjectState() => const LoadingSpinner(),
                               _ => Text(
                                   t.general.create,
                                   style: Theme.of(context)

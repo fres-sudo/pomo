@@ -64,6 +64,21 @@ const Color kRed300 = Color(0xfff39890);
 const Color kRed200 = Color(0xfff8c3be);
 const Color kRed100 = Color(0xfffef1f0);
 
+// --- S O L I D ---
+
+abstract class SolidColors {
+  static const Color deepBlue = Color(0xFF101B2C);
+  static const Color darkBlue = Color(0xFF3C43F0);
+  static const Color blue = Color(0xFF62D6EE);
+  static const Color purple = Color(0xFF7658CC);
+  static const Color pink = Color(0xFFED6EF7);
+  static const Color darkPink = Color(0xFFEA3C67);
+  static const Color orange = Color(0xFFFFD600);
+  static const Color lightGreen = Color(0xFFC6FD55);
+  static const Color green = Color(0xFFA7E84B);
+  static const Color darkGreen = Color(0xFF0A3A17);
+}
+
 // --- P A S T E L ---
 
 Color kPastelBlue = const Color(0xff346cf6).withValues(alpha: 0.57);

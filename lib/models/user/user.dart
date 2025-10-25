@@ -11,10 +11,13 @@ sealed class User with _$User {
     required String username,
     required String email,
     required DateTime createdAt,
+    DateTime? onboardingCompletedAt,
     String? avatar,
   }) = _User;
 
-  static User fake() {
-    return User(id: "", username: "username", email: "email@email.com", createdAt: DateTime.now());
-  }
+  factory User.fake() => User(
+      id: "",
+      username: "username",
+      email: "email@email.com",
+      createdAt: DateTime.now());
 }

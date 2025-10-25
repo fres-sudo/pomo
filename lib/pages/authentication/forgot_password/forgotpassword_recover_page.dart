@@ -12,17 +12,20 @@ import '../../../i18n/strings.g.dart';
 
 @RoutePage()
 class ForgotPasswordRecoverPage extends StatefulWidget {
-  const ForgotPasswordRecoverPage({super.key, required this.email, required this.token});
+  const ForgotPasswordRecoverPage(
+      {super.key, required this.email, required this.token});
 
   final String email;
   final String token;
 
   @override
-  State<ForgotPasswordRecoverPage> createState() => _ForgotPasswordRecoverPageState();
+  State<ForgotPasswordRecoverPage> createState() =>
+      _ForgotPasswordRecoverPageState();
 }
 
 class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
-  final TextEditingController _confirmPasswordTextController = TextEditingController();
+  final TextEditingController _confirmPasswordTextController =
+      TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
@@ -46,11 +49,13 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
-      listener: (BuildContext context, RecoverPasswordState state) => switch (state) {
-        ResettedPasswordRecoverPasswordState() => context.router.replaceAll([const LoginRoute()]),
+      listener: (BuildContext context, RecoverPasswordState state) =>
+          switch (state) {
+        ResettedPasswordRecoverPasswordState() =>
+          context.router.replaceAll([const AuthRootRoute()]),
         ErrorResettingPasswordRecoverPasswordState(error: final error) => {
             onErrorState(context, error.localizedString(context)),
-            context.router.replaceAll([const LoginRoute()])
+            context.router.replaceAll([const AuthRootRoute()])
           },
         _ => null,
       },
@@ -58,7 +63,8 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: 44.0, left: 16, right: 16, bottom: 16),
+              padding: const EdgeInsets.only(
+                  top: 44.0, left: 16, right: 16, bottom: 16),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -72,7 +78,8 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Gap.XS,
                     Text(
-                      t.authentication.forgot_password.description_change_password,
+                      t.authentication.forgot_password
+                          .description_change_password,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
@@ -103,7 +110,8 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                                   email: widget.email,
                                   token: widget.token,
                                   newPassword: _passwordTextController.text,
-                                  confirmNewPassword: _confirmPasswordTextController.text);
+                                  confirmNewPassword:
+                                      _confirmPasswordTextController.text);
                             }
                           } else {
                             onInvalidInput(context);
@@ -111,7 +119,7 @@ class _ForgotPasswordRecoverPageState extends State<ForgotPasswordRecoverPage> {
                         },
                         child: switch (state) {
                           ResettingPasswordRecoverPasswordState() =>
-                            const CustomCircularProgressIndicator(),
+                            const LoadingSpinner(),
                           _ => Center(
                               child: Text(
                                 t.general.done,

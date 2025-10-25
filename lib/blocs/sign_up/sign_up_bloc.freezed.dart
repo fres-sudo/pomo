@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -96,6 +95,168 @@ class _$SignUpEventCopyWithImpl<$Res> implements $SignUpEventCopyWith<$Res> {
           : confirmPassword // ignore: cast_nullable_to_non_nullable
               as String,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [SignUpEvent].
+extension SignUpEventPatterns on SignUpEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PerformSignUpEvent value)? perform,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent() when perform != null:
+        return perform(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PerformSignUpEvent value) perform,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent():
+        return perform(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PerformSignUpEvent value)? perform,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent() when perform != null:
+        return perform(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String username, String email, String password,
+            String confirmPassword)?
+        perform,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent() when perform != null:
+        return perform(
+            _that.username, _that.email, _that.password, _that.confirmPassword);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String username, String email, String password,
+            String confirmPassword)
+        perform,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent():
+        return perform(
+            _that.username, _that.email, _that.password, _that.confirmPassword);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String username, String email, String password,
+            String confirmPassword)?
+        perform,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case PerformSignUpEvent() when perform != null:
+        return perform(
+            _that.username, _that.email, _that.password, _that.confirmPassword);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -220,6 +381,217 @@ mixin _$SignUpState {
 /// @nodoc
 class $SignUpStateCopyWith<$Res> {
   $SignUpStateCopyWith(SignUpState _, $Res Function(SignUpState) __);
+}
+
+/// Adds pattern-matching-related methods to [SignUpState].
+extension SignUpStatePatterns on SignUpState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NotSignedUpSignUpState value)? notSignedUp,
+    TResult Function(SigningUpSignUpState value)? signingUp,
+    TResult Function(SignedUpSignUpState value)? signedUp,
+    TResult Function(ErrorSignUpSignUpState value)? errorSignUp,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState() when notSignedUp != null:
+        return notSignedUp(_that);
+      case SigningUpSignUpState() when signingUp != null:
+        return signingUp(_that);
+      case SignedUpSignUpState() when signedUp != null:
+        return signedUp(_that);
+      case ErrorSignUpSignUpState() when errorSignUp != null:
+        return errorSignUp(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NotSignedUpSignUpState value) notSignedUp,
+    required TResult Function(SigningUpSignUpState value) signingUp,
+    required TResult Function(SignedUpSignUpState value) signedUp,
+    required TResult Function(ErrorSignUpSignUpState value) errorSignUp,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState():
+        return notSignedUp(_that);
+      case SigningUpSignUpState():
+        return signingUp(_that);
+      case SignedUpSignUpState():
+        return signedUp(_that);
+      case ErrorSignUpSignUpState():
+        return errorSignUp(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NotSignedUpSignUpState value)? notSignedUp,
+    TResult? Function(SigningUpSignUpState value)? signingUp,
+    TResult? Function(SignedUpSignUpState value)? signedUp,
+    TResult? Function(ErrorSignUpSignUpState value)? errorSignUp,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState() when notSignedUp != null:
+        return notSignedUp(_that);
+      case SigningUpSignUpState() when signingUp != null:
+        return signingUp(_that);
+      case SignedUpSignUpState() when signedUp != null:
+        return signedUp(_that);
+      case ErrorSignUpSignUpState() when errorSignUp != null:
+        return errorSignUp(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? notSignedUp,
+    TResult Function()? signingUp,
+    TResult Function(User user)? signedUp,
+    TResult Function(LocalizedError error)? errorSignUp,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState() when notSignedUp != null:
+        return notSignedUp();
+      case SigningUpSignUpState() when signingUp != null:
+        return signingUp();
+      case SignedUpSignUpState() when signedUp != null:
+        return signedUp(_that.user);
+      case ErrorSignUpSignUpState() when errorSignUp != null:
+        return errorSignUp(_that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() notSignedUp,
+    required TResult Function() signingUp,
+    required TResult Function(User user) signedUp,
+    required TResult Function(LocalizedError error) errorSignUp,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState():
+        return notSignedUp();
+      case SigningUpSignUpState():
+        return signingUp();
+      case SignedUpSignUpState():
+        return signedUp(_that.user);
+      case ErrorSignUpSignUpState():
+        return errorSignUp(_that.error);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? notSignedUp,
+    TResult? Function()? signingUp,
+    TResult? Function(User user)? signedUp,
+    TResult? Function(LocalizedError error)? errorSignUp,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NotSignedUpSignUpState() when notSignedUp != null:
+        return notSignedUp();
+      case SigningUpSignUpState() when signingUp != null:
+        return signingUp();
+      case SignedUpSignUpState() when signedUp != null:
+        return signedUp(_that.user);
+      case ErrorSignUpSignUpState() when errorSignUp != null:
+        return errorSignUp(_that.error);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

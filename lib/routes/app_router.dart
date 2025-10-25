@@ -25,8 +25,14 @@ class AppRouter extends RootStackRouter {
           AutoRoute(page: ScheduleRoute.page),
           AutoRoute(page: ProfileRoute.page),
         ]),
+        AutoRoute(page: HomeRoute.page),
+        AutoRoute(page: AuthRootRoute.page),
         AutoRoute(
-          page: LoginRoute.page,
+          page: EmailLoginRoute.page,
+          fullscreenDialog: true,
+        ),
+        AutoRoute(
+          page: OtpVerificationRoute.page,
           fullscreenDialog: true,
         ),
         AutoRoute(page: SignUpRoute.page, fullscreenDialog: true),

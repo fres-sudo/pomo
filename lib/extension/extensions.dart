@@ -23,6 +23,9 @@ extension TextStyleX on TextStyle {
 
   TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
 
+  TextStyle muted(BuildContext context) =>
+      copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);
+
   TextStyle color(Color color) => copyWith(color: color);
 }
 

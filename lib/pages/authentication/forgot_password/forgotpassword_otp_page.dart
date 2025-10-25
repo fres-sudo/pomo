@@ -73,7 +73,8 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
       listener: (context, state) => switch (state) {
         VerifiedTokenRecoverPasswordState() => context.router.push(
-            ForgotPasswordRecoverRoute(email: widget.email, token: _otpEditingController.text),
+            ForgotPasswordRecoverRoute(
+                email: widget.email, token: _otpEditingController.text),
           ),
         ErrorVerifyingTokenRecoverPasswordState(error: final error) =>
           onErrorState(context, error.localizedString(context)),
@@ -86,7 +87,8 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 44.0, left: 16, right: 16),
+                  padding:
+                      const EdgeInsets.only(top: 44.0, left: 16, right: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,12 +104,15 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
-                              ?.copyWith(color: Theme.of(context).dividerColor)),
+                              ?.copyWith(
+                                  color: Theme.of(context).dividerColor)),
                       Gap.XL,
                       Pinput(
                           controller: _otpEditingController,
                           focusNode: _focusNode,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           textInputAction: TextInputAction.done,
                           length: 6,
                           cursor: Container(
@@ -124,7 +129,8 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                             textStyle: Theme.of(context).textTheme.titleLarge,
                             decoration: BoxDecoration(
                                 color: Colors.transparent,
-                                border: Border.all(color: Theme.of(context).dividerColor),
+                                border: Border.all(
+                                    color: Theme.of(context).dividerColor),
                                 borderRadius: BorderRadius.circular(12)),
                           )),
                       //onCompleted: (pin) => pin == context.read<UserBloc>().otp ? context.router.push(const ForgotPasswordRecoverRoute()) : onOTPInvalid(context)
@@ -132,14 +138,19 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                       Center(
                         child: Column(
                           children: [
-                            Text(t.authentication.forgot_password.dont_recive_email,
+                            Text(
+                                t.authentication.forgot_password
+                                    .dont_recive_email,
                                 style: Theme.of(context).textTheme.bodyMedium),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "${t.authentication.forgot_password.you_can} ",
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
                                         color: Theme.of(context).dividerColor,
                                       ),
                                 ),
@@ -151,7 +162,10 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                                       : null,
                                   child: Text(
                                     t.authentication.forgot_password.resend,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
                                           color: _seconds == 0
                                               ? Theme.of(context).primaryColor
                                               : Theme.of(context).dividerColor,
@@ -160,19 +174,28 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                                 ),
                                 Text(
                                   " in ",
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
                                         color: Theme.of(context).dividerColor,
                                       ),
                                 ),
                                 Text(
                                   _formatTime(_seconds),
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
                                         color: Theme.of(context).dividerColor,
                                       ),
                                 ),
                                 Text(
                                   " ${t.authentication.forgot_password.seconds}.",
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
                                         color: Theme.of(context).dividerColor,
                                       ),
                                 ),
@@ -192,14 +215,14 @@ class _ForgotPasswordOTPPageState extends State<ForgotPasswordOTPPage> {
                         if (_otpEditingController.text.length < 6) {
                           onInvalidInput(context);
                         } else {
-                          context
-                              .read<RecoverPasswordBloc>()
-                              .verifyToken(email: widget.email, token: _otpEditingController.text);
+                          context.read<RecoverPasswordBloc>().verifyToken(
+                              email: widget.email,
+                              token: _otpEditingController.text);
                         }
                       },
                       child: switch (state) {
                         VerifyingTokenRecoverPasswordState() =>
-                          const CustomCircularProgressIndicator(),
+                          const LoadingSpinner(),
                         _ => Center(
                               child: Text(
                             t.general.continue_title,

@@ -2,11 +2,14 @@ part of 'sign_in_bloc.dart';
 
 @freezed
 class SignInEvent with _$SignInEvent {
-  
-  const factory SignInEvent.perform({
+  const factory SignInEvent.email({
     required String email,
-    required String password,
-  }) = PerformSignInEvent;
+  }) = EmailSignInEvent;
+
+  const factory SignInEvent.verifyOtp({
+    required String email,
+    required String otp,
+  }) = VerifyOtpSignInEvent;
 
   const factory SignInEvent.google() = GoogleSignInEvent;
   const factory SignInEvent.apple() = AppleSignInEvent;

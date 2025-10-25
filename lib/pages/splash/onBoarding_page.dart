@@ -16,13 +16,17 @@ class OnBoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnBoardingSlider(
         finishButtonText: t.on_boarding.finish_button,
-        finishButtonTextStyle:
-            Theme.of(context).textTheme.titleMedium?.copyWith(color: kNeutralWhite) ?? const TextStyle(),
+        finishButtonTextStyle: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: kNeutralWhite) ??
+            const TextStyle(),
         totalPage: 2,
         headerBackgroundColor: Theme.of(context).colorScheme.onSurface,
         finishButtonStyle: FinishButtonStyle(
             backgroundColor: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16))),
         indicatorAbove: true,
         controllerColor: Theme.of(context).colorScheme.onSurface,
         background: [
@@ -39,7 +43,8 @@ class OnBoardingPage extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                    color:
+                        Theme.of(context).primaryColor.withValues(alpha: 0.5),
                     spreadRadius: 30,
                     blurRadius: 100,
                   )
@@ -51,17 +56,18 @@ class OnBoardingPage extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium
-                            ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                            ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color:
+                                    Theme.of(context).colorScheme.onSurface)),
                     const SizedBox(
                       height: 12,
                     ),
                     Text(
                       t.on_boarding.page_1.description,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary),
                     ),
                   ],
                 ),
@@ -76,7 +82,10 @@ class OnBoardingPage extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(boxShadow: [
                   BoxShadow(
-                      color: Theme.of(context).primaryColor.withValues(alpha: 0.5), spreadRadius: 10, blurRadius: 100)
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: 0.5),
+                      spreadRadius: 10,
+                      blurRadius: 100)
                 ]),
                 child: Column(
                   children: [
@@ -85,17 +94,18 @@ class OnBoardingPage extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium
-                            ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                            ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color:
+                                    Theme.of(context).colorScheme.onSurface)),
                     const SizedBox(
                       height: 12,
                     ),
                     Text(
                       t.on_boarding.page_2.description,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary),
                     ),
                   ],
                 ),
@@ -106,6 +116,6 @@ class OnBoardingPage extends StatelessWidget {
         onFinish: () async => await context
             .read<StorageService>()
             .setFirstAccess()
-            .whenComplete(() => context.router.push(const LoginRoute())));
+            .whenComplete(() => context.router.push(const AuthRootRoute())));
   }
 }
