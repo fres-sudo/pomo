@@ -42,9 +42,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecoverPasswordBloc, RecoverPasswordState>(
-      listener: (BuildContext context, RecoverPasswordState state) => switch (state) {
-        ForgottedPasswordRecoverPasswordState() =>
-          context.router.push(ForgotPasswordOTPRoute(email: _emailTextController.text)),
+      listener: (BuildContext context, RecoverPasswordState state) =>
+          switch (state) {
+        ForgottedPasswordRecoverPasswordState() => context.router
+            .push(ForgotPasswordOTPRoute(email: _emailTextController.text)),
         ErrorForgottingPasswordRecoverPasswordState() =>
           onErrorState(context, state.error.localizedString(context)),
         _ => null,
@@ -100,10 +101,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       },
                       child: switch (state) {
                         ForgottingPasswordRecoverPasswordState() =>
-                          const CustomCircularProgressIndicator(),
+                          const LoadingSpinner(),
                         _ => Center(
-                            child: Text(t.authentication.forgot_password.send_email,
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            child: Text(
+                                t.authentication.forgot_password.send_email,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
                                       fontSize: 14,
                                       color: kNeutral100,
                                     )))

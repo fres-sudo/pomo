@@ -51,12 +51,14 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
 
   void _updateValidationState(BuildContext context, UserState state) {
     final isUsernameAvailable =
-        state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() != widget.controller.text.trim().toLowerCase();
+        state.searchedUsername?.replaceAll('"', '').trim().toLowerCase() !=
+            widget.controller.text.trim().toLowerCase();
 
     setState(() {
       if (state.isLoading) {
         _debounceState = DebounceState.loading;
-      } else if (isUsernameAvailable || widget.controller.text != state.user?.username) {
+      } else if (isUsernameAvailable ||
+          widget.controller.text != state.user?.username) {
         _debounceState = DebounceState.success;
       } else {
         _debounceState = DebounceState.error;
@@ -100,8 +102,9 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Gap.SM_H,
-            _debounceState == DebounceState.loading || _debounceState == DebounceState.idle
-                ? CustomCircularProgressIndicator(color: Theme.of(context).dividerColor)
+            _debounceState == DebounceState.loading ||
+                    _debounceState == DebounceState.idle
+                ? LoadingSpinner(color: Theme.of(context).dividerColor)
                 : Icon(
                     Icons.verified_outlined,
                     color: _debounceState == DebounceState.success
@@ -111,7 +114,8 @@ class DebouncedUserSearchState extends State<DebouncedUserSearch> {
                   ),
             Gap.SM_H,
             Text(
-              _debounceState == DebounceState.loading || _debounceState == DebounceState.idle
+              _debounceState == DebounceState.loading ||
+                      _debounceState == DebounceState.idle
                   ? "${t.general.loading} ..."
                   : _debounceState == DebounceState.success
                       ? t.authentication.signup.available_username

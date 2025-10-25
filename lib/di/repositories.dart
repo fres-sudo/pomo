@@ -6,7 +6,8 @@ final List<RepositoryProvider> _repositories = [
       signUpMapper: context.read(),
       authenticationService: context.read(),
       userMapper: context.read(),
-      storageService: context.read()
+      storageService: context.read(),
+      authService: context.read(),
     );
     context.read<Dio>().interceptors.insert(
           0,

@@ -2,73 +2,44 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo/blocs/sign_in/sign_in_bloc.dart';
-import 'package:pomo/components/fields/email_field.dart';
-import 'package:pomo/components/fields/password_field.dart';
-import 'package:pomo/components/utils/custom_circular_progress_indicator.dart';
 import 'package:pomo/components/utils/utils.dart';
-import 'package:pomo/components/widgets/or_separator.dart';
-import 'package:pomo/components/widgets/snack_bars.dart';
+import 'package:pomo/components/widgets/adaptive_bottom_sheet.dart';
+import 'package:pomo/components/widgets/toast.dart';
 import 'package:pomo/constants/assets.dart';
-import 'package:pomo/constants/colors.dart';
 import 'package:pomo/constants/device.dart';
-import 'package:pomo/constants/text.dart';
-import 'package:pomo/cubits/auth/auth_cubit.dart';
-import 'package:pomo/cubits/theme/theme_cubit.dart';
 import 'package:pomo/extension/extensions.dart';
+import 'package:pomo/pages/authentication/_widgets/email_login_sheet.dart';
 import 'package:pomo/routes/app_router.gr.dart';
 
-import '../../../components/widgets/alert.dart';
-import '../../../extension/sized_box_extension.dart';
-import '../../../i18n/strings.g.dart';
-
 @RoutePage()
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _passwordTextController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    super.dispose();
-  }
+class AuthRootPage extends StatelessWidget {
+  const AuthRootPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
       listener: (BuildContext context, state) => switch (state) {
         SignedInWithAppleSignInState(user: final user) => {
-            context.read<AuthCubit>().authenticated(user),
-            if (user.username.startsWith("guest-apple"))
-              {context.router.push(ChooseUsernameRoute(user: user))}
-            else
-              {
-                context.router.replaceAll([const RootRoute()]),
-              }
+            // context.read<AuthCubit>().authenticated(user),
+            // if (user.username.startsWith("guest-apple"))
+            //   {context.router.push(ChooseUsernameRoute(user: user))}
+            // else
+            //   {
+            //     context.router.replaceAll([const RootRoute()]),
+            //   }
           },
         SignedInWithGoogleSignInState(user: final user) => {
-            context.read<AuthCubit>().authenticated(user),
-            if (user.username.startsWith("guest-google"))
-              {context.router.push(ChooseUsernameRoute(user: user))}
-            else
-              {
-                context.router.replaceAll([const RootRoute()]),
-              }
+            // context.read<AuthCubit>().authenticated(user),
+            // if (user.username.startsWith("guest-google"))
+            //   {context.router.push(ChooseUsernameRoute(user: user))}
+            // else
+            //   {
+            //     context.router.replaceAll([const RootRoute()]),
+            //   }
           },
-        SignedInSignInState(user: final user) => {
-            context.read<AuthCubit>().authenticated(user),
-            context.router.replaceAll([const RootRoute()]),
-          },
+        ErrorSignInSignInState(error: final error) =>
+          Toast.error(context, error.localizedString(context)),
         _ => {}
       },
       builder: (BuildContext context, SignInState state) {
@@ -113,7 +84,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Expanded(
                           child: FilledButton(
-                              onPressed: () {},
+                              onPressed: () =>
+                                  context.router.push(const EmailLoginRoute()),
                               child: Text("Continue with Email".hardcoded()))),
                     ],
                   ),
@@ -128,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(Sizes.borderRadius),
-                    child: Image.asset("assets/images/login-image.png")),
+                    child: Image.asset(PomoAssets.loginImage)),
                 Text("Welcome to Pomo".hardcoded(),
                     style: Theme.of(context).textTheme.displayLarge),
               ],

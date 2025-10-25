@@ -63,9 +63,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         }
         if (state.operation == UserOperation.updated ||
             state.operation == UserOperation.updatedImage) {
-          context
-              .read<StorageService>()
-              .updateUserSecureStorage(username: state.user!.username, photo: state.user!.avatar);
+          context.read<StorageService>().updateUserSecureStorage(
+              username: state.user!.username, photo: state.user!.avatar);
           onSuccessState(
               context,
               state.operation == UserOperation.updatedImage
@@ -99,31 +98,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             _usernameTextController.text.length < 4) {
                           onInvalidInput(context);
                         } else {
-                          final user = switch (context.read<AuthCubit>().state) {
+                          final user = switch (
+                              context.read<AuthCubit>().state) {
                             AuthenticatedAuthState(:final user) => user,
                             _ => null
                           };
                           if (image != null && user != null) {
-                            context
-                                .read<UserBloc>()
-                                .updateUserPhoto(id: user.id, photo: File(image!.path));
+                            context.read<UserBloc>().updateUserPhoto(
+                                id: user.id, photo: File(image!.path));
                           } else {
                             if (user != null) {
                               context.read<UserBloc>().updateUser(
                                   id: user.id,
-                                  user: user.copyWith(username: _usernameTextController.text));
+                                  user: user.copyWith(
+                                      username: _usernameTextController.text));
                             }
                           }
                         }
                       },
                       child: state.isLoading
-                          ? CustomCircularProgressIndicator(color: Theme.of(context).primaryColor)
+                          ? LoadingSpinner(
+                              color: Theme.of(context).primaryColor)
                           : Text(t.general.update,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: (_usernameTextController.text != "" &&
-                                          _usernameTextController.text.length > 4)
-                                      ? Theme.of(context).primaryColor
-                                      : kNeutral400))),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color:
+                                          (_usernameTextController.text != "" &&
+                                                  _usernameTextController
+                                                          .text.length >
+                                                      4)
+                                              ? Theme.of(context).primaryColor
+                                              : kNeutral400))),
                 ],
               ),
               Gap.XL,
@@ -134,7 +141,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       AuthenticatedAuthState(:final user) => user.avatar == null
                           ? const CircleAvatar(
                               radius: 75,
-                              backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                              backgroundImage: AssetImage(
+                                  "assets/images/propic-placeholder.jpg"),
                             )
                           : ClipOval(
                               child: SizedBox(
@@ -146,7 +154,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ))),
                       _ => const CircleAvatar(
                           radius: 75,
-                          backgroundImage: AssetImage("assets/images/propic-placeholder.jpg"),
+                          backgroundImage: AssetImage(
+                              "assets/images/propic-placeholder.jpg"),
                         )
                     },
                     Positioned(
@@ -222,7 +231,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       controller: _usernameTextController,
                     ),
                     Gap.MD,
-                    Text("Email", style: Theme.of(context).textTheme.titleMedium),
+                    Text("Email",
+                        style: Theme.of(context).textTheme.titleMedium),
                     Gap.XS,
                     TextFormField(
                       initialValue: switch (context.watch<AuthCubit>().state) {
@@ -232,13 +242,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       readOnly: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.lock, size: 20, color: kNeutral500),
+                        suffixIcon: const Icon(Icons.lock,
+                            size: 20, color: kNeutral500),
                         hintText: switch (context.watch<AuthCubit>().state) {
                           AuthenticatedAuthState(:final user) => user.email,
                           _ => "email@pomo.com"
                         },
-                        hintStyle:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.red),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.red),
                       ),
                     ),
                     Gap.MD,
@@ -252,20 +265,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           context: context,
                           isDismissible: true,
                           useRootNavigator: true,
-                          builder: (BuildContext context) => DestructionBottomSheet(
-                              title: t.profile.settings.delete_account.title,
-                              buttonText: t.general.delete,
-                              description: t.profile.settings.delete_account.description,
-                              onPress: () {
-                                context.read<UserBloc>().deleteUser(
-                                        id: switch (context.read<AuthCubit>().state) {
-                                      AuthenticatedAuthState(:final user) => user.id,
-                                      _ => ""
-                                    });
-                                context.router.maybePop();
-                              })),
+                          builder: (BuildContext context) =>
+                              DestructionBottomSheet(
+                                  title:
+                                      t.profile.settings.delete_account.title,
+                                  buttonText: t.general.delete,
+                                  description: t.profile.settings.delete_account
+                                      .description,
+                                  onPress: () {
+                                    context.read<UserBloc>().deleteUser(
+                                            id: switch (context
+                                                .read<AuthCubit>()
+                                                .state) {
+                                          AuthenticatedAuthState(:final user) =>
+                                            user.id,
+                                          _ => ""
+                                        });
+                                    context.router.maybePop();
+                                  })),
                       child: state.isLoading
-                          ? CustomCircularProgressIndicator(
+                          ? LoadingSpinner(
                               color: Theme.of(context).colorScheme.error,
                             )
                           : Center(
@@ -274,7 +293,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
-                                    ?.copyWith(color: Theme.of(context).colorScheme.error),
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                               ),
                             ),
                     )

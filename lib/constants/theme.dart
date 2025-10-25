@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pomo/constants/device.dart';
 
 abstract final class AppTheme {
   static const scheme = FlexScheme.blackWhite;
@@ -12,6 +13,8 @@ abstract final class AppTheme {
     splashType: FlexSplashType.inkSparkle,
     filledButtonRadius: 40.0,
     inputDecoratorIsFilled: true,
+    inputDecoratorUnfocusedHasBorder: false,
+    inputDecoratorRadius: Sizes.borderRadius,
     inputDecoratorBorderType: FlexInputBorderType.outline,
     alignedDropdown: true,
     navigationRailUseIndicator: true,

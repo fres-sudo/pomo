@@ -63,7 +63,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 16, bottom: 30),
+                      padding: const EdgeInsets.only(
+                          top: 16.0, left: 16, bottom: 30),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -76,14 +77,20 @@ class _SignUpPageState extends State<SignUpPage> {
                               height: 4,
                             ),
                             Text(t.authentication.signup.description,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer)),
                           ]),
                     )
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 36),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16, top: 36),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -94,15 +101,20 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Username", style: Theme.of(context).textTheme.titleMedium),
+                            Text("Username",
+                                style: Theme.of(context).textTheme.titleMedium),
                             Gap.SM,
-                            NameField(controller: _usernameTextController, hintText: "username"),
+                            NameField(
+                                controller: _usernameTextController,
+                                hintText: "username"),
                             Gap.SM,
-                            Text("Email", style: Theme.of(context).textTheme.titleMedium),
+                            Text("Email",
+                                style: Theme.of(context).textTheme.titleMedium),
                             Gap.SM,
                             EmailField(controller: _emailTextController),
                             Gap.SM,
-                            Text("Password", style: Theme.of(context).textTheme.titleMedium),
+                            Text("Password",
+                                style: Theme.of(context).textTheme.titleMedium),
                             Gap.SM,
                             PasswordField(controller: _passwordTextController),
                             Gap.SM,
@@ -122,24 +134,32 @@ class _SignUpPageState extends State<SignUpPage> {
                                       children: [
                                         Text(
                                           "${t.authentication.signup.i_accept} ",
-                                          style: Theme.of(context).textTheme.titleSmall,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
                                         ),
                                         GestureDetector(
                                           onTap: () async {
-                                            const url = 'https://pomo.fres.space/terms';
-                                            if (await canLaunchUrl(Uri.parse(url))) {
+                                            const url =
+                                                'https://pomo.fres.space/terms';
+                                            if (await canLaunchUrl(
+                                                Uri.parse(url))) {
                                               await launchUrl(Uri.parse(url),
-                                                  mode: LaunchMode.externalApplication);
+                                                  mode: LaunchMode
+                                                      .externalApplication);
                                             } else {
                                               throw 'Could not launch $url';
                                             }
                                           },
                                           child: Text(
-                                            t.authentication.signup.terms_and_conditions,
+                                            t.authentication.signup
+                                                .terms_and_conditions,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall
-                                                ?.copyWith(color: Theme.of(context).primaryColor),
+                                                ?.copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
                                           ),
                                         ),
                                       ],
@@ -152,25 +172,31 @@ class _SignUpPageState extends State<SignUpPage> {
                             const Divider(),
                             switch (state) {
                               ErrorSignUpSignUpState(:final error) => Padding(
-                                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
-                                  child: CustomAlert.error(message: error.localizedString(context)),
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, bottom: 16),
+                                  child: CustomAlert.error(
+                                      message: error.localizedString(context)),
                                 ),
                               SignedUpSignUpState() => Padding(
-                                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, bottom: 16),
                                   child: CustomAlert.success(
-                                      title: t.authentication.signup.success_title,
+                                      title:
+                                          t.authentication.signup.success_title,
                                       message: t.authentication.signup.success),
                                 ),
                               _ => Gap.MD
                             },
                             ElevatedButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate() && _checkedValue) {
+                                  if (_formKey.currentState!.validate() &&
+                                      _checkedValue) {
                                     context.read<SignUpBloc>().perform(
                                         username: _usernameTextController.text,
                                         email: _emailTextController.text,
                                         password: _passwordTextController.text,
-                                        confirmPassword: _passwordTextController.text);
+                                        confirmPassword:
+                                            _passwordTextController.text);
                                     _formKey.currentState?.reset();
                                   } else if (!_checkedValue) {
                                     onAcceptTermsCondition(context);
@@ -180,7 +206,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   }
                                 },
                                 child: switch (state) {
-                                  SigningUpSignUpState() => const CustomCircularProgressIndicator(),
+                                  SigningUpSignUpState() =>
+                                    const LoadingSpinner(),
                                   _ => Center(
                                       child: Text(t.authentication.signup.title,
                                           style: Theme.of(context)
@@ -202,12 +229,14 @@ class _SignUpPageState extends State<SignUpPage> {
                             width: 5,
                           ),
                           GestureDetector(
-                            onTap: () => context.pushRoute(const LoginRoute()),
+                            onTap: () =>
+                                context.pushRoute(const AuthRootRoute()),
                             child: Text(t.authentication.login.title,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall
-                                    ?.copyWith(color: Theme.of(context).primaryColor)),
+                                    ?.copyWith(
+                                        color: Theme.of(context).primaryColor)),
                           )
                         ],
                       ),

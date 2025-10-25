@@ -40,25 +40,26 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         confirmPassword: confirmPassword,
       ));
 
-
-  FutureOr<void> _onPerform(PerformSignUpEvent event,
-      Emitter<SignUpState> emit,) async {
+  FutureOr<void> _onPerform(
+    PerformSignUpEvent event,
+    Emitter<SignUpState> emit,
+  ) async {
     emit(const SignUpState.signingUp());
     try {
-      final user = await authenticationRepository.signUp(
-          username: event.username,
-          email: event.email,
-          password: event.password,
-          confirmPassword: event.confirmPassword);
+      //   final user = await authenticationRepository.signUp(
+      //       username: event.username,
+      //       email: event.email,
+      //       password: event.password,
+      //       confirmPassword: event.confirmPassword);
 
-      emit(SignUpState.signedUp(user));
+      //   emit(SignUpState.signedUp(user));
     } on DioException catch (error, stack) {
       logger.e("_onPerform", error: error, stackTrace: stack);
-      emit(SignUpState.errorSignUp(AuthError.fromMessage(error.response?.data)));
+      emit(
+          SignUpState.errorSignUp(AuthError.fromMessage(error.response?.data)));
     } catch (e, stack) {
       logger.e("_onPerform", error: e, stackTrace: stack);
       emit(SignUpState.errorSignUp(GeneralSignUpError()));
     }
   }
-
 }
