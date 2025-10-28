@@ -5,7 +5,6 @@ import 'package:pine/pine.dart';
 import 'package:pomo/constants/constants.dart';
 import 'package:pomo/error/generic_error.dart';
 import 'package:pomo/error/localized.dart';
-import 'package:pomo/repositories/mappers/user_mapper_v2.dart';
 import 'package:pomo/services/network/authentication/auth_service.dart';
 import 'package:pomo/services/network/authentication/authentication_service.dart';
 import 'package:pomo/services/network/requests/forgot_pass/forgot_pass_request.dart';
@@ -16,10 +15,8 @@ import 'package:pomo/services/network/response/refresh_token/refresh_token_respo
 import 'package:pomo/services/network/user/user_service_v2.dart';
 import 'package:pomo/services/storage/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 
 import '../models/user/user.dart';
-import '../services/network/jto/user/user_jto.dart';
 import '../services/network/response/sign_up/sign_up_response.dart';
 
 /// Abstract class of AuthenticationRepository
@@ -141,6 +138,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<User?> get currentUser async {
+    // FIXME: move this logic inside a DTOMapper<ProfileDTO, User>
+    // and so create a ProfileDTO class that will be used only in this kind of scenario,
+    // there won't be any Profile model in the app since the app know only about User
     if (authService.currentUser == null) {
       return null;
     }

@@ -51,4 +51,4 @@ app.*.map.json
 **/*.mocks.dart
 
 # FVM Version Cache
-.fvm/
+.fvm/.vscode/env.json
